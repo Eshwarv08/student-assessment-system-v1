@@ -1,0 +1,24 @@
+import { assessmentQuestions as question1 } from './questions';
+import { assessmentQuestions as question2 } from './questions2';
+
+// Instructions for adding new questions in the future:
+// 1. Create a new file (e.g., questions2.ts) based on questions.ts
+// 2. Import it here: import { assessmentQuestions as question2 } from './questions2';
+// 3. Add it to the questionSets object below with the corresponding token name as the key.
+
+export const questionSets: Record<string, any> = {
+  'question-1': question1,
+  'question-2': question2,
+};
+
+export const availableQuestions = [
+  { id: 'question-1', name: 'Question 1' },
+  { id: 'question-2', name: 'Question 2' },
+];
+
+export const getQuestionsForAssessment = (token: string | null) => {
+  if (!token) return question1;
+  const normalizedToken = token.toLowerCase();
+  // Fallback to question1 if token is not found in the map
+  return questionSets[normalizedToken] || question1;
+};

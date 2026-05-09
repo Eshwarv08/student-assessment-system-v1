@@ -1,0 +1,60 @@
+/* Exact styles from index.html */
+.legacy-q-block {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  color: #111;
+}
+
+.legacy-q-num {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.legacy-opt-label {
+  display: block;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.legacy-task-header {
+  background: #333;
+  color: #fff;
+  padding: 8px 15px;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-size: 11pt;
+}
+
+.legacy-review-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 9.5pt;
+}
+
+.legacy-review-tbl th, .legacy-review-tbl td {
+  border: 1px solid #aaa;
+  padding: 6px 8px;
+}
+
+.legacy-review-tbl th {
+  background: #f0f0f0;
+  text-align: left;
+}
+
+.legacy-chk-col {
+  width: 40px;
+  text-align: center;
+}
+
+.legacy-cmt-input {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid #ccc;
+}

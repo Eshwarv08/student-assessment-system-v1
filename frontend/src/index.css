@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for the assessment portal */
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+}
+
+/* Assessment Page Specific Styles */
+.paper {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+.task-banner {
+  margin-left: -48px; /* Offset the padding of the paper */
+  position: relative;
+  z-index: 10;
+}
+
+.task-banner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  border-left: 10px solid transparent;
+  border-top: 10px solid #1e3a8a; 
+  filter: brightness(0.7);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .paper {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .task-banner {
+    margin-left: 0 !important;
+    background-color: #1e3a8a !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .task-banner::after {
+    display: none;
+  }
+
+  /* Force page breaks */
+  section {
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Custom Scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
