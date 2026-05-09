@@ -28,4 +28,3 @@ dist-ssr
 .env.production
 .env.local
 .vercel
-.vite

@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const getHeaders = () => {
   const token = localStorage.getItem('auth_token');
@@ -20,7 +20,7 @@ export const api = {
     if (data.token) localStorage.setItem('auth_token', data.token);
     return data;
   },
-  
+
   logout: () => {
     localStorage.removeItem('auth_token');
   },
