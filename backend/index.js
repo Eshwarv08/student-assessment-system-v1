@@ -36,16 +36,50 @@ if (!MONGODB_URI) {
 }
 
 // Connect to MongoDB
-console.log('⏳ Connecting to MongoDB Atlas...');
-mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 15000,
-  socketTimeoutMS: 45000,
-})
-  .then(() => console.log('✅ Connected to MongoDB Atlas'))
-  .catch(err => {
+let cachedDb = null;
+
+const connectToDatabase = async () => {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
+  if (!MONGODB_URI) {
+    throw new Error('MONGODB_URI is not defined in environment variables');
+  }
+
+  console.log('⏳ Connecting to MongoDB Atlas...');
+  try {
+    const conn = await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000, // Reduced for faster failure
+      socketTimeoutMS: 45000,
+    });
+    console.log('✅ Connected to MongoDB Atlas');
+    return conn;
+  } catch (err) {
     console.error('❌ MongoDB Connection Error:', err.message);
-    console.warn('⚠️ Server is running without a database connection. Please update MONGODB_URI in backend/.env');
+    throw err;
+  }
+};
+
+// Initial connection for local development
+if (process.env.NODE_ENV !== 'production') {
+  connectToDatabase().catch(err => {
+    console.warn('⚠️ Initial connection failed. Will retry on first request.');
   });
+}
+
+// Middleware to ensure DB is connected
+const checkDbConnection = async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (err) {
+    res.status(500).json({ 
+      error: 'Database connection failed. Please check your MONGODB_URI and IP whitelist.',
+      details: err.message 
+    });
+  }
+};
 
 // --- Auth Middleware ---
 const authenticate = (req, res, next) => {
@@ -68,7 +102,7 @@ app.get('/api/health', (req, res) => {
 // --- Auth Routes ---
 
 // Register (initial setup)
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', checkDbConnection, async (req, res) => {
   try {
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
@@ -82,7 +116,7 @@ app.post('/api/auth/register', async (req, res) => {
 });
 
 // Login
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', checkDbConnection, async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -97,7 +131,7 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // Get current user
-app.get('/api/auth/me', authenticate, async (req, res) => {
+app.get('/api/auth/me', checkDbConnection, authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-password');
     res.json(user);
@@ -109,7 +143,7 @@ app.get('/api/auth/me', authenticate, async (req, res) => {
 // --- Assessment Routes ---
 
 // Create Assessment Link
-app.post('/api/assessments', authenticate, async (req, res) => {
+app.post('/api/assessments', checkDbConnection, authenticate, async (req, res) => {
   try {
     const { name } = req.body;
     const templateName = name || 'Question 1';
@@ -138,7 +172,7 @@ app.post('/api/assessments', authenticate, async (req, res) => {
 });
 
 // Get all assessments (assessor's own)
-app.get('/api/assessments', authenticate, async (req, res) => {
+app.get('/api/assessments', checkDbConnection, authenticate, async (req, res) => {
   try {
     const assessments = await Assessment.find({ assessor_id: req.userId }).sort({ created_at: -1 });
     res.json(assessments);
@@ -148,7 +182,7 @@ app.get('/api/assessments', authenticate, async (req, res) => {
 });
 
 // Validate token (public — student access)
-app.get('/api/assessments/validate/:token', async (req, res) => {
+app.get('/api/assessments/validate/:token', checkDbConnection, async (req, res) => {
   try {
     const assessment = await Assessment.findOne({ token: req.params.token });
     if (!assessment) return res.status(404).json({ error: 'Invalid or expired assessment link.' });
@@ -161,7 +195,7 @@ app.get('/api/assessments/validate/:token', async (req, res) => {
 // --- Common Assessment Routes ---
 
 // Create Common Assessment Link (Multi-select)
-app.post('/api/common-assessments', authenticate, async (req, res) => {
+app.post('/api/common-assessments', checkDbConnection, authenticate, async (req, res) => {
   try {
     const { question_ids } = req.body;
     if (!question_ids || !Array.isArray(question_ids) || question_ids.length === 0) {
@@ -185,7 +219,7 @@ app.post('/api/common-assessments', authenticate, async (req, res) => {
 });
 
 // Get all common assessments (assessor's own)
-app.get('/api/common-assessments', authenticate, async (req, res) => {
+app.get('/api/common-assessments', checkDbConnection, authenticate, async (req, res) => {
   try {
     const assessments = await CommonAssessment.find({ assessor_id: req.userId }).sort({ created_at: -1 });
     res.json(assessments);
@@ -195,7 +229,7 @@ app.get('/api/common-assessments', authenticate, async (req, res) => {
 });
 
 // Validate common token (public — student access)
-app.get('/api/common-assessments/validate/:token', async (req, res) => {
+app.get('/api/common-assessments/validate/:token', checkDbConnection, async (req, res) => {
   try {
     const assessment = await CommonAssessment.findOne({ token: req.params.token });
     if (!assessment) return res.status(404).json({ error: 'Invalid or expired common assessment link.' });
@@ -209,7 +243,7 @@ app.get('/api/common-assessments/validate/:token', async (req, res) => {
 // --- Submission Routes ---
 
 // Submit Assessment (public — no auth needed)
-app.post('/api/submissions', async (req, res) => {
+app.post('/api/submissions', checkDbConnection, async (req, res) => {
   try {
     const { assessment_id, student_name, student_id, answers, signature_url } = req.body;
     const submission = new Submission({
@@ -228,7 +262,7 @@ app.post('/api/submissions', async (req, res) => {
 });
 
 // Get all submissions (assessor only)
-app.get('/api/submissions', authenticate, async (req, res) => {
+app.get('/api/submissions', checkDbConnection, authenticate, async (req, res) => {
   try {
     const assessments = await Assessment.find({ assessor_id: req.userId });
     const assessmentIds = assessments.map(a => a._id);
@@ -242,7 +276,7 @@ app.get('/api/submissions', authenticate, async (req, res) => {
 });
 
 // Get single submission for grading
-app.get('/api/submissions/:id', authenticate, async (req, res) => {
+app.get('/api/submissions/:id', checkDbConnection, authenticate, async (req, res) => {
   try {
     const submission = await Submission.findById(req.params.id).populate('assessment_id');
     if (!submission) return res.status(404).json({ error: 'Submission not found' });
@@ -253,7 +287,7 @@ app.get('/api/submissions/:id', authenticate, async (req, res) => {
 });
 
 // Update grades
-app.put('/api/submissions/:id', authenticate, async (req, res) => {
+app.put('/api/submissions/:id', checkDbConnection, authenticate, async (req, res) => {
   try {
     const { grades, task_results, final_result, comp_record, status } = req.body;
     const submission = await Submission.findByIdAndUpdate(
@@ -268,7 +302,7 @@ app.put('/api/submissions/:id', authenticate, async (req, res) => {
 });
 
 // Check submission status for a student (public)
-app.get('/api/submissions/status/:studentId', async (req, res) => {
+app.get('/api/submissions/status/:studentId', checkDbConnection, async (req, res) => {
   try {
     const { studentId } = req.params;
     // Find all submissions by this student
