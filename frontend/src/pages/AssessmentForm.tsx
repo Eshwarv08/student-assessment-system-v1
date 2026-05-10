@@ -14,6 +14,9 @@ const AssessmentForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [assessment, setAssessment] = useState<any>(null)
+  const [isStudentVerified, setIsStudentVerified] = useState(false)
+  const [tempStudentInfo, setTempStudentInfo] = useState({ name: '', id: '' })
+  const [checkingStatus, setCheckingStatus] = useState(false)
   const [answers, setAnswers] = useState<any>({})
   const assessmentQuestions = getQuestionsForAssessment(token)
 
@@ -77,6 +80,28 @@ const AssessmentForm: React.FC = () => {
 
   const clearSignature = () => signaturePad.current?.clear()
 
+  const handleVerifyStudent = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!tempStudentInfo.name || !tempStudentInfo.id) {
+      alert('Please enter both your name and Student ID/NID.')
+      return
+    }
+
+    setCheckingStatus(true)
+    try {
+      const { completedTokens } = await api.getSubmissionStatus(tempStudentInfo.id)
+      if (completedTokens && completedTokens.includes(token!)) {
+        setError('You have already submitted this assessment. Multiple submissions are not allowed.')
+      } else {
+        setIsStudentVerified(true)
+      }
+    } catch (err: any) {
+      alert('Error verifying status: ' + err.message)
+    } finally {
+      setCheckingStatus(false)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!signaturePad.current || signaturePad.current.isEmpty()) {
@@ -99,6 +124,10 @@ const AssessmentForm: React.FC = () => {
         answers[key] = value
       }
     })
+
+    // Ensure student info from verification is used
+    answers['st-name'] = tempStudentInfo.name
+    answers['st-id'] = tempStudentInfo.id
 
     const questionKeys = Object.keys(answers).filter(key => !['st-name', 'st-id', 'st-date'].includes(key));
     if (questionKeys.length === 0) {
@@ -157,6 +186,18 @@ const AssessmentForm: React.FC = () => {
             </div>
           )}
         </div>
+
+        {/* Optional image for question */}
+        {q.image && (
+          <div className="flex flex-col items-center gap-2 mt-3 mb-2 px-2">
+            <div className="bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full max-w-[600px]">
+              <img src={q.image} alt={q.imageCaption || `Question ${q.id} diagram`} className="w-full h-auto rounded" />
+            </div>
+            {q.imageCaption && (
+              <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">{q.imageCaption}</span>
+            )}
+          </div>
+        )}
 
         <div className="ml-0 md:ml-11">
           {q.type === 'text' ? (
@@ -275,6 +316,64 @@ const AssessmentForm: React.FC = () => {
     )
   }
 
+  if (!isStudentVerified && !submitted) {
+    return (
+      <div className="min-h-screen bg-[#eff6ff] flex items-center justify-center p-4">
+        <div className="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl w-full max-w-lg border border-blue-100 text-center">
+          <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+            <AlertCircle size={40} className="text-[#1e3a8a]" />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-gray-800 mb-2 uppercase tracking-tighter">Student Verification</h2>
+          <p className="text-gray-500 mb-8 font-bold text-sm">Please provide your details to access the assessment.</p>
+          
+          <form onSubmit={handleVerifyStudent} className="space-y-6">
+            <div className="text-left">
+              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+              <input 
+                type="text"
+                required
+                className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none focus:border-[#1e3a8a] focus:bg-white transition-all font-bold text-gray-700 shadow-sm"
+                placeholder="Enter your full name"
+                value={tempStudentInfo.name}
+                onChange={(e) => setTempStudentInfo({ ...tempStudentInfo, name: e.target.value })}
+              />
+            </div>
+            <div className="text-left">
+              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Student ID / NID</label>
+              <input 
+                type="text"
+                required
+                className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none focus:border-[#1e3a8a] focus:bg-white transition-all font-bold text-gray-700 shadow-sm"
+                placeholder="Enter your Student ID or NID"
+                value={tempStudentInfo.id}
+                onChange={(e) => setTempStudentInfo({ ...tempStudentInfo, id: e.target.value })}
+              />
+            </div>
+            
+            <button
+              type="submit"
+              disabled={checkingStatus}
+              className="w-full py-4 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-black rounded-2xl shadow-xl shadow-blue-200 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {checkingStatus ? (
+                <>
+                  <Loader2 className="animate-spin" size={20} />
+                  <span>Verifying...</span>
+                </>
+              ) : (
+                <span>START ASSESSMENT</span>
+              )}
+            </button>
+          </form>
+          
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Secured Assessment Portal</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
       {submitted && (
@@ -305,8 +404,23 @@ const AssessmentForm: React.FC = () => {
               alt="Skilscope Logo"
               className="w-20 h-20 sm:w-32 sm:h-32 object-contain mb-4 drop-shadow-xl"
             />
+            
+            {assessmentQuestions.metadata?.rtoName && (
+              <div className="mb-2">
+                <p className="text-[#1e3a8a] font-black text-sm sm:text-xl tracking-[0.2em] uppercase">{assessmentQuestions.metadata.rtoName}</p>
+                {assessmentQuestions.metadata.rtoCode && (
+                  <p className="text-gray-400 font-bold text-[10px] sm:text-xs tracking-widest uppercase">{assessmentQuestions.metadata.rtoCode}</p>
+                )}
+              </div>
+            )}
+
             <div className="text-[#1e3a8a] mb-6 sm:mb-8 flex flex-col items-center w-full px-2">
-              <h1 className="text-xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter mb-2 sm:mb-4 text-center leading-tight">{assessmentQuestions.metadata?.title || 'Assessment Booklet'}</h1>
+              <h1 className="text-xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter mb-2 sm:mb-4 text-center leading-tight">
+                {assessmentQuestions.metadata?.title || 'Assessment Booklet'}
+                {assessmentQuestions.metadata?.code && (
+                  <span className="block text-lg sm:text-2xl mt-1 opacity-80">{assessmentQuestions.metadata.code}</span>
+                )}
+              </h1>
               <div className="w-24 sm:w-48 h-1 sm:h-1.5 bg-[#d4af37] rounded-full"></div>
             </div>
             <p className="text-gray-500 font-bold tracking-widest uppercase text-[10px] sm:text-sm px-4">{assessmentQuestions.metadata?.subtitle || 'Open Registration - Customer Cabling (Tasks 4, 5 & 6)'}</p>
@@ -316,11 +430,11 @@ const AssessmentForm: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 bg-gray-50 p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-100 shadow-inner">
               <label className="block">
                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student Name</span>
-                <input name="st-name" defaultValue={searchParams.get('st-name') || ''} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="Full Name" />
+                <input name="st-name" value={tempStudentInfo.name} readOnly className="w-full p-2.5 sm:p-3 border-2 border-white bg-white/50 rounded-lg sm:rounded-xl shadow-sm outline-none font-bold text-sm sm:text-base cursor-not-allowed" />
               </label>
               <label className="block">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student ID</span>
-                <input name="st-id" defaultValue={searchParams.get('st-id') || ''} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="ID Number" />
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student ID / NID</span>
+                <input name="st-id" value={tempStudentInfo.id} readOnly className="w-full p-2.5 sm:p-3 border-2 border-white bg-white/50 rounded-lg sm:rounded-xl shadow-sm outline-none font-bold text-sm sm:text-base cursor-not-allowed" />
               </label>
               <label className="block">
                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Assessment Date</span>
@@ -335,7 +449,12 @@ const AssessmentForm: React.FC = () => {
               .map((taskKey) => {
                 const tNum = parseInt(taskKey.replace('task', ''));
                 const taskData = assessmentQuestions[taskKey];
-                const isChecklist = !Array.isArray(taskData) || (Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'string');
+                // Case 1: plain array of question objects
+                const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
+                // Case 2: object with a nested .questions array (e.g. ICTCBL322 task1)
+                const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
+                // Case 3: observation/checklist object
+                const isChecklist = !isPlainArray && !hasNestedQuestions;
 
                 if (isChecklist) {
                   return (
@@ -355,13 +474,13 @@ const AssessmentForm: React.FC = () => {
                           </div>
 
                           {taskData.sections && (
-                            <div className="space-y-6 sm:space-y-8">
+                            <div className="space-y-4 sm:space-y-6 mt-2">
                               {taskData.sections.map((section: any, sIdx: number) => (
-                                <div key={sIdx} className="space-y-3 sm:space-y-4 px-2">
+                                <div key={sIdx} className="space-y-2 sm:space-y-3 px-2">
                                   {section.type === 'text' && (
-                                    <div className="space-y-2 sm:space-y-3">
+                                    <div className={`space-y-2 sm:space-y-3 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
                                       {section.title && (
-                                        <h3 className="font-bold text-slate-800 text-base sm:text-lg border-b-2 border-slate-100 pb-1">
+                                        <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-[15px] sm:text-base border-b border-slate-200' : 'text-sm sm:text-base text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
                                           {section.title}
                                         </h3>
                                       )}
@@ -382,28 +501,102 @@ const AssessmentForm: React.FC = () => {
                                       )}
                                     </div>
                                   )}
+                                  {section.type === 'table' && (
+                                    <div className="space-y-3 px-2">
+                                      {section.title && (
+                                        <h3 className="font-bold text-slate-800 pb-1 text-sm sm:text-base border-b border-slate-200">
+                                          {section.title}
+                                        </h3>
+                                      )}
+                                      <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+                                        <table className="w-full text-left border-collapse">
+                                          <thead>
+                                            <tr className="bg-slate-50 border-b border-slate-200">
+                                              {section.headers.map((header: string, hIdx: number) => (
+                                                <th key={hIdx} className="p-3 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                                  {header}
+                                                </th>
+                                              ))}
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {section.rows.map((row: any, rIdx: number) => (
+                                              <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                                <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
+                                                  {row.label}
+                                                </td>
+                                                <td className="p-2">
+                                                  {row.editable ? (
+                                                    <input
+                                                      type="text"
+                                                      className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                      placeholder="Enter result..."
+                                                      value={answers[row.id] || ''}
+                                                      onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                                    />
+                                                  ) : (
+                                                    <span className="p-2 text-sm text-slate-600">{row.value}</span>
+                                                  )}
+                                                </td>
+                                              </tr>
+                                            ))}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               ))}
                             </div>
                           )}
                         </div>
                       )}
-
                     </section>
                   );
                 }
 
-                // Standard written questions loop
+                // Written questions: resolve the actual array and title
+                const questionsArray: any[] = isPlainArray
+                  ? taskData
+                  : (taskData as any).questions;
+
                 let taskTitle = `Task ${tNum}`;
-                if (tNum === 4) taskTitle += ' – Knowledge Questions';
-                else if (tNum === 5) taskTitle += ' – Questions and Answers';
-                else if (tNum === 6) taskTitle += ' – Multi Choice Questions';
+                if ((taskData as any).title) {
+                  taskTitle = (taskData as any).title;
+                } else if (assessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
+                  taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
+                } else if (tNum === 4) {
+                  taskTitle += ' – Knowledge Questions';
+                } else if (tNum === 5) {
+                  taskTitle += ' – Questions and Answers';
+                } else if (tNum === 6) {
+                  taskTitle += ' – Multi Choice Questions';
+                }
 
                 return (
                   <section key={taskKey} className="mb-10 sm:mb-12">
                     <div className="task-banner-ribbon text-xs sm:text-base py-2 sm:py-3 px-4 sm:px-6">{taskTitle}</div>
+
+                    {/* Show instruction sections (if any) above the questions */}
+                    {hasNestedQuestions && (taskData as any).sections && (
+                      <div className="space-y-4 mt-4 mb-6 px-2">
+                        {(taskData as any).sections.map((section: any, sIdx: number) => (
+                          <div key={sIdx} className="space-y-2">
+                            {section.title && (
+                              <h3 className="font-bold text-slate-800 text-sm sm:text-base border-b border-slate-200 pb-1">
+                                {section.title}
+                              </h3>
+                            )}
+                            <div className="text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-blue-50/40 border border-blue-100 rounded-xl p-4">
+                              {section.content}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     <div className="space-y-0">
-                      {taskData.map((q: any, i: number) => renderQuestion(q, i, tNum))}
+                      {questionsArray.map((q: any, i: number) => renderQuestion(q, i, tNum))}
                     </div>
                   </section>
                 );

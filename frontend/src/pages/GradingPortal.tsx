@@ -205,6 +205,18 @@ const GradingPortal: React.FC = () => {
           <span className="flex-1">{q.text}</span>
         </div>
 
+        {/* Optional image for question */}
+        {q.image && (
+          <div className="flex flex-col items-center gap-2 mt-3 mb-2 px-2">
+            <div className="bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full max-w-[600px]">
+              <img src={q.image} alt={q.imageCaption || `Question ${q.id} diagram`} className="w-full h-auto rounded" />
+            </div>
+            {q.imageCaption && (
+              <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">{q.imageCaption}</span>
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-4 print:grid-cols-4 gap-4 sm:gap-8 items-start ml-0 md:ml-11">
           <div className="md:col-span-3 print:col-span-3">
             <div className={`p-4 sm:p-6 rounded-2xl border-2 mb-4 transition-all ${q.type === 'text' ? 'bg-blue-50/50 border-blue-100' : 'bg-slate-50 border-slate-100'}`}>
@@ -335,7 +347,7 @@ const GradingPortal: React.FC = () => {
                     <div className="space-y-4 sm:space-y-6">
                       <div className="flex flex-col gap-2">
                         <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Signature</span>
-                        <div className="border-b-2 border-slate-200 h-12 sm:h-14 flex items-center justify-center overflow-hidden">
+                        <div className="border-b-2 border-slate-200 h-12 sm:h-14 flex items-center justify-center overflow-hidden p-1">
                           {submission.signature_url ? (
                             <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
                           ) : (
@@ -405,7 +417,7 @@ const GradingPortal: React.FC = () => {
                       <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Signature</span>
                       <div
                         onClick={() => openSigModal('assessor_signature', 'comp')}
-                        className="border-b-2 border-slate-200 h-14 sm:h-16 flex items-center justify-center cursor-pointer relative group bg-slate-50/30 rounded-t-lg transition-all hover:bg-blue-50/50 overflow-hidden"
+                        className="border-b-2 border-slate-200 h-14 sm:h-16 flex items-center justify-center cursor-pointer relative group bg-slate-50/30 rounded-t-lg transition-all hover:bg-blue-50/50 overflow-hidden p-1"
                       >
                         {compRecord.assessor_signature ? (
                           <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
@@ -558,7 +570,7 @@ const GradingPortal: React.FC = () => {
         {/* New Header UI matching the image */}
         <div className="space-y-6 mb-12">
           {/* Student Info Box */}
-          <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30">
+          <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
             <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
               <span className="font-bold text-sm">Student Name:</span>
               <span className="font-bold text-base">{submission.student_name}</span>
@@ -573,7 +585,7 @@ const GradingPortal: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
               <span className="font-bold text-sm">Signature:</span>
-              <div className="border border-black h-20 flex items-center justify-center bg-white w-full overflow-hidden">
+              <div className="border border-black h-20 flex items-center justify-center bg-white w-full overflow-hidden p-1">
                 {submission.signature_url ? (
                   <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain" />
                 ) : <span className="text-gray-400 italic text-sm">No signature</span>}
@@ -582,7 +594,7 @@ const GradingPortal: React.FC = () => {
           </div>
 
           {/* Assessor Info Box */}
-          <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30">
+          <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
             <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
               <span className="font-bold text-sm">Assessor's Name:</span>
               <input
@@ -619,7 +631,7 @@ const GradingPortal: React.FC = () => {
               <span className="font-bold text-sm">Signature:</span>
               <div
                 onClick={() => openSigModal('assessor_signature', 'comp')}
-                className="relative cursor-pointer border border-black bg-white h-20 flex items-center justify-center overflow-hidden group w-full"
+                className="relative cursor-pointer border border-black bg-white h-20 flex items-center justify-center overflow-hidden group w-full p-1"
               >
                 {compRecord.assessor_signature ? (
                   <img src={compRecord.assessor_signature} alt="Signature" className="max-h-full max-w-full object-contain" />
@@ -636,8 +648,8 @@ const GradingPortal: React.FC = () => {
 
         {/* Administrative Use Only Section - Match PDF exactly */}
         {currentAssessmentQuestions.adminInfo && (
-          <div className="border-2 border-slate-400 mb-12 overflow-hidden no-print-section">
-            <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+          <div className="border-2 border-slate-400 mb-12 no-print-section break-inside-avoid">
+            <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
               Administrative Use Only:
             </div>
             <div className="p-4 bg-white space-y-4 text-sm">
@@ -649,7 +661,7 @@ const GradingPortal: React.FC = () => {
                   <span className="font-medium text-slate-600">Signature/Initial:</span>
                   <div
                     onClick={() => openSigModal('assessor_signature', 'comp')}
-                    className="border-b border-slate-400 min-w-0 sm:min-w-[120px] h-10 flex items-center justify-center cursor-pointer relative bg-slate-50/50 hover:bg-slate-100 transition-colors group flex-1 overflow-hidden"
+                    className="border-b border-slate-400 min-w-0 sm:min-w-[120px] h-10 flex items-center justify-center cursor-pointer relative bg-slate-50/50 hover:bg-slate-100 transition-colors group flex-1 overflow-hidden p-1"
                   >
                     {compRecord.assessor_signature ? (
                       <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
@@ -692,6 +704,9 @@ const GradingPortal: React.FC = () => {
                   ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
                   ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
                   ["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description],
+                  ...(currentAssessmentQuestions.adminInfo.task5Description
+                    ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
+                    : []),
                   ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
                 ].map(([label, value], idx) => (
                   <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
@@ -702,8 +717,8 @@ const GradingPortal: React.FC = () => {
               </div>
 
               {/* Reasonable Adjustment Section */}
-              <div className="mt-8 border-2 border-slate-400 overflow-hidden">
-                <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+              <div className="mt-8 border-2 border-slate-400 break-inside-avoid">
+                <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
                   Reasonable Adjustment
                 </div>
                 <div className="p-4 bg-white space-y-4 text-[11px]">
@@ -829,8 +844,14 @@ const GradingPortal: React.FC = () => {
               const tNum = parseInt(taskKey.replace('task', ''));
               const taskData = currentAssessmentQuestions[taskKey];
 
-              // Check if it's a checklist task (Tasks 1-3)
-              if (tNum <= 3) {
+              // Case 1: plain array of question objects
+              const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
+              // Case 2: object with a nested .questions array (e.g. ICTCBL322 task1)
+              const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
+              // Case 3: observation/checklist object
+              const isChecklist = !isPlainArray && !hasNestedQuestions;
+
+              if (isChecklist) {
                 const isCategorized = !Array.isArray(taskData);
                 const oralQuestions = isCategorized ? (taskData.checklistItems || taskData.oral || taskData.items || []) : taskData;
                 const perfQuestions = isCategorized ? (taskData.performance || []) : [];
@@ -841,25 +862,25 @@ const GradingPortal: React.FC = () => {
                     {/* Observation Section - Only show if observation data exists */}
                     {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections) && (
                       <div className="space-y-6">
-                        <div className="text-center space-y-2">
-                          <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">
+                        <div className="text-center">
+                          <div className="task-banner-ribbon">
                             {taskData.observationTitle || `ASSESSMENT TASK ${tNum} OBSERVATION`}
-                          </h2>
+                          </div>
                           {taskData.observationSubtitle && (
-                            <div className="text-lg font-bold text-slate-600 border-y border-slate-200 py-2">
+                            <div className="text-lg font-bold text-slate-600 border-y border-slate-200 py-2 mt-4">
                               {taskData.observationSubtitle}
                             </div>
                           )}
                         </div>
 
                         {taskData.sections && (
-                          <div className="space-y-8">
+                          <div className="space-y-4">
                             {taskData.sections.map((section: any, sIdx: number) => (
-                              <div key={sIdx} className="space-y-4">
+                              <div key={sIdx} className="space-y-3">
                                 {section.type === 'text' && (
-                                  <div className="space-y-3">
+                                  <div className={`space-y-2 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
                                     {section.title && (
-                                      <h3 className="font-bold text-slate-800 text-lg border-b-2 border-slate-100 pb-1">
+                                      <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-base border-b border-slate-200' : 'text-sm text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
                                         {section.title}
                                       </h3>
                                     )}
@@ -878,6 +899,42 @@ const GradingPortal: React.FC = () => {
                                         {section.caption}
                                       </span>
                                     )}
+                                  </div>
+                                )}
+                                {section.type === 'table' && (
+                                  <div className="space-y-4 px-2">
+                                    {section.title && (
+                                      <h3 className="font-bold text-slate-800 pb-2 text-base border-b border-slate-200">
+                                        {section.title}
+                                      </h3>
+                                    )}
+                                    <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
+                                      <table className="w-full text-left border-collapse">
+                                        <thead>
+                                          <tr className="bg-slate-50 border-b border-slate-200">
+                                            {section.headers.map((header: string, hIdx: number) => (
+                                              <th key={hIdx} className="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                                {header}
+                                              </th>
+                                            ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {section.rows.map((row: any, rIdx: number) => (
+                                            <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                              <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
+                                                {row.label}
+                                              </td>
+                                              <td className="p-4">
+                                                <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl text-[#1e3a8a] font-black text-sm min-h-[40px] flex items-center">
+                                                  {submission?.answers?.[row.id] || <span className="text-slate-300 font-normal italic">(No result provided)</span>}
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      </table>
+                                    </div>
                                   </div>
                                 )}
                               </div>
@@ -959,7 +1016,7 @@ const GradingPortal: React.FC = () => {
                               const isIncorrect = grades[qKey] === 'incorrect';
                               return (
                                 <tr key={i}>
-                                  <td className="text-sm py-4">{i + 1}. {q}</td>
+                                  <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + 1}. {q}</td>
                                   <td className="legacy-chk-col">
                                     <div className="flex items-center gap-1">
                                       <input
@@ -1006,7 +1063,7 @@ const GradingPortal: React.FC = () => {
                                   const isIncorrect = grades[qKey] === 'incorrect';
                                   return (
                                     <tr key={i}>
-                                      <td className="text-sm py-4">{i + oralQuestions.length + 1}. {q}</td>
+                                      <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + oralQuestions.length + 1}. {q}</td>
                                       <td className="legacy-chk-col">
                                         <input
                                           type="checkbox"
@@ -1059,7 +1116,7 @@ const GradingPortal: React.FC = () => {
                             const qKey = `t${tNum}q${i + 1}`;
                             return (
                               <div key={i} className="py-6 space-y-4">
-                                <div className="text-sm text-slate-800 font-medium leading-relaxed">{i + 1}. {q}</div>
+                                <div className="text-sm text-slate-800 font-medium leading-relaxed whitespace-pre-wrap">{i + 1}. {q}</div>
                                 <div className="flex flex-wrap items-center gap-4">
                                   <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
                                     <input
@@ -1144,14 +1201,45 @@ const GradingPortal: React.FC = () => {
                   </section>
                 );
               } else {
-                // Written questions (Task 4+)
+                // Written questions
+                const questionsArray: any[] = isPlainArray
+                  ? taskData
+                  : (taskData as any).questions;
+
+                let taskTitle: string;
+                if ((taskData as any).title) {
+                  taskTitle = (taskData as any).title;
+                } else if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
+                  taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
+                } else {
+                  const typeLabel = tNum === 4 ? 'WRITTEN QUESTIONS AND ANSWERS' : tNum === 5 ? 'WRITTEN ASSESSMENT' : 'MULTIPLE CHOICE QUESTIONS';
+                  taskTitle = `ASSESSMENT TASK ${tNum} – ${typeLabel}`;
+                }
+
                 return (
                   <section key={taskKey} className="space-y-8">
                     <div className="task-banner-ribbon">
-                      Task {tNum} – {tNum === 4 ? 'Written Questions' : tNum === 5 ? 'Questions & Answers' : 'Multi Choice'}
+                      {taskTitle}
                     </div>
+                    {/* Show instruction sections if nested-questions task */}
+                    {hasNestedQuestions && (taskData as any).sections && (
+                      <div className="space-y-4 px-4">
+                        {(taskData as any).sections.map((section: any, sIdx: number) => (
+                          <div key={sIdx} className="space-y-2">
+                            {section.title && (
+                              <h3 className="font-bold text-slate-800 text-base border-b border-slate-200 pb-1">
+                                {section.title}
+                              </h3>
+                            )}
+                            <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-blue-50/40 border border-blue-100 rounded-xl p-4">
+                              {section.content}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     <div className="space-y-10 px-4">
-                      {taskData.map((q: any, i: number) => renderQuestionReview(q, i, tNum))}
+                      {questionsArray.map((q: any, i: number) => renderQuestionReview(q, i, tNum))}
                     </div>
                     {renderFinalResultBlock(tNum)}
                   </section>
@@ -1181,7 +1269,7 @@ const GradingPortal: React.FC = () => {
           </div>
 
           {/* Basic Info Table */}
-          <div className="overflow-hidden border border-slate-200 rounded-2xl mb-12 shadow-sm bg-white">
+          <div className="overflow-hidden border border-slate-200 rounded-2xl mb-12 shadow-sm bg-white break-inside-avoid">
             <div className="flex flex-col">
               <div className="flex flex-col md:flex-row border-b border-slate-200">
                 <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Student's Name</div>
@@ -1215,8 +1303,8 @@ const GradingPortal: React.FC = () => {
           </div>
 
           {/* Assessor Declaration Block */}
-          <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white">
-            <div className="bg-[#1e3a8a] p-3 font-bold text-sm text-white uppercase tracking-widest">Assessor Declaration</div>
+          <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
+            <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-sm text-white uppercase tracking-widest border-l-4 border-[#fbbf24]">Assessor Declaration</div>
             <div className="p-4 border-b border-slate-200 text-xs leading-relaxed italic text-slate-500 bg-slate-50/50">
               In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.
             </div>
@@ -1262,12 +1350,17 @@ const GradingPortal: React.FC = () => {
                       const id = `t${tNum}`;
                       const result = taskResults[id];
                       let taskLabel = '';
-                      if (tNum <= 3) taskLabel = `Observation ${tNum}`;
-                      else if (tNum === 4) taskLabel = 'Written question and answers';
-                      else taskLabel = 'Written assessment';
+                      if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322') {
+                        if (tNum === 1) taskLabel = 'Written question and answers';
+                        else taskLabel = `Observation ${tNum - 1}`;
+                      } else {
+                        if (tNum <= 3) taskLabel = `Observation ${tNum}`;
+                        else if (tNum === 4) taskLabel = 'Written question and answers';
+                        else taskLabel = 'Written assessment';
+                      }
 
                       return (
-                        <tr key={idx} className="border-b border-slate-200 last:border-0 group hover:bg-slate-50/50 transition-colors">
+                        <tr key={idx} className="border-b border-slate-200 last:border-0 group hover:bg-slate-50/50 transition-colors break-inside-avoid">
                           <td className="border-r border-slate-200 p-3 h-[52px]">
                             <div className="flex items-center gap-4">
                               <span className="font-black text-[10px] text-slate-800 w-28 shrink-0 uppercase tracking-tighter">Task {tNum}</span>
@@ -1339,7 +1432,7 @@ const GradingPortal: React.FC = () => {
                     else taskLabel = 'Written assessment';
 
                     return (
-                      <div key={idx} className="p-4 space-y-4 bg-white">
+                      <div key={idx} className="p-4 space-y-4 bg-white break-inside-avoid">
                         <div className="flex items-center justify-between">
                           <span className="font-black text-[11px] text-slate-800 uppercase tracking-tighter">Task {tNum}</span>
                           <div className="flex items-center gap-2">
@@ -1383,7 +1476,7 @@ const GradingPortal: React.FC = () => {
           </div>
 
           {/* Attempts Table */}
-          <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white">
+          <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
             <div className="hidden md:block">
               <table className="w-full border-collapse">
                 <thead>
@@ -1484,7 +1577,7 @@ const GradingPortal: React.FC = () => {
           </div>
 
           {/* Declaration Section */}
-          <div className="mt-12 bg-white rounded-xl border border-slate-300 overflow-hidden shadow-md">
+          <div className="mt-12 bg-white rounded-xl border border-slate-300 overflow-hidden shadow-md break-inside-avoid">
             <div className="bg-[#1e3a8a] p-4 text-white font-black text-sm uppercase tracking-widest">Declaration</div>
             <div className="divide-y divide-slate-200">
               {/* Assessor Declaration Row */}
@@ -1500,11 +1593,11 @@ const GradingPortal: React.FC = () => {
                     <div className="flex flex-col gap-2">
                       <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
                       <div
-                        className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center cursor-pointer relative group transition-all hover:border-blue-400 bg-slate-50/30 rounded-t-lg"
+                        className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center cursor-pointer relative group transition-all hover:border-blue-400 bg-slate-50/30 rounded-t-lg overflow-hidden p-1"
                         onClick={() => openSigModal('assessor_signature', 'comp')}
                       >
                         {compRecord.assessor_signature ? (
-                          <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full" />
+                          <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
                         ) : (
                           <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest group-hover:text-blue-500">Click to Sign</span>
                         )}
@@ -1543,9 +1636,9 @@ const GradingPortal: React.FC = () => {
                   <div className="space-y-4 md:space-y-5">
                     <div className="flex flex-col gap-2">
                       <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
-                      <div className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center bg-slate-50/30 rounded-t-lg">
+                      <div className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center bg-slate-50/30 rounded-t-lg overflow-hidden p-1">
                         {submission.signature_url ? (
-                          <img src={submission.signature_url} alt="Sig" className="max-h-full opacity-60" />
+                          <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
                         ) : (
                           <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest">Digital Sign</span>
                         )}

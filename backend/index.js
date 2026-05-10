@@ -44,7 +44,7 @@ mongoose.connect(MONGODB_URI, {
   .then(() => console.log('✅ Connected to MongoDB Atlas'))
   .catch(err => {
     console.error('❌ MongoDB Connection Error:', err.message);
-    process.exit(1);
+    console.warn('⚠️ Server is running without a database connection. Please update MONGODB_URI in backend/.env');
   });
 
 // --- Auth Middleware ---

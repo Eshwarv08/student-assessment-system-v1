@@ -93,3 +93,6 @@ ISC License. See `package.json` for details.
 
 - For Question 1 - 
 - For Question 2 - ICTCBL330
+- For Question 3 - ICTCBL322
+- For Question 4 - ICTCBL320
+- For Question 5 - ICTTEN254
