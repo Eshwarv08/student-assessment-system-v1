@@ -14,9 +14,6 @@ const AssessmentForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [assessment, setAssessment] = useState<any>(null)
-  const [isStudentVerified, setIsStudentVerified] = useState(false)
-  const [tempStudentInfo, setTempStudentInfo] = useState({ name: '', id: '' })
-  const [checkingStatus, setCheckingStatus] = useState(false)
   const [answers, setAnswers] = useState<any>({})
   const assessmentQuestions = getQuestionsForAssessment(token)
 
@@ -80,28 +77,6 @@ const AssessmentForm: React.FC = () => {
 
   const clearSignature = () => signaturePad.current?.clear()
 
-  const handleVerifyStudent = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!tempStudentInfo.name || !tempStudentInfo.id) {
-      alert('Please enter both your name and Student ID/NID.')
-      return
-    }
-
-    setCheckingStatus(true)
-    try {
-      const { completedTokens } = await api.getSubmissionStatus(tempStudentInfo.id)
-      if (completedTokens && completedTokens.includes(token!)) {
-        setError('You have already submitted this assessment. Multiple submissions are not allowed.')
-      } else {
-        setIsStudentVerified(true)
-      }
-    } catch (err: any) {
-      alert('Error verifying status: ' + err.message)
-    } finally {
-      setCheckingStatus(false)
-    }
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!signaturePad.current || signaturePad.current.isEmpty()) {
@@ -124,10 +99,6 @@ const AssessmentForm: React.FC = () => {
         answers[key] = value
       }
     })
-
-    // Ensure student info from verification is used
-    answers['st-name'] = tempStudentInfo.name
-    answers['st-id'] = tempStudentInfo.id
 
     const questionKeys = Object.keys(answers).filter(key => !['st-name', 'st-id', 'st-date'].includes(key));
     if (questionKeys.length === 0) {
@@ -316,64 +287,6 @@ const AssessmentForm: React.FC = () => {
     )
   }
 
-  if (!isStudentVerified && !submitted) {
-    return (
-      <div className="min-h-screen bg-[#eff6ff] flex items-center justify-center p-4">
-        <div className="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl w-full max-w-lg border border-blue-100 text-center">
-          <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-            <AlertCircle size={40} className="text-[#1e3a8a]" />
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-gray-800 mb-2 uppercase tracking-tighter">Student Verification</h2>
-          <p className="text-gray-500 mb-8 font-bold text-sm">Please provide your details to access the assessment.</p>
-          
-          <form onSubmit={handleVerifyStudent} className="space-y-6">
-            <div className="text-left">
-              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Full Name</label>
-              <input 
-                type="text"
-                required
-                className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none focus:border-[#1e3a8a] focus:bg-white transition-all font-bold text-gray-700 shadow-sm"
-                placeholder="Enter your full name"
-                value={tempStudentInfo.name}
-                onChange={(e) => setTempStudentInfo({ ...tempStudentInfo, name: e.target.value })}
-              />
-            </div>
-            <div className="text-left">
-              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Student ID / NID</label>
-              <input 
-                type="text"
-                required
-                className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none focus:border-[#1e3a8a] focus:bg-white transition-all font-bold text-gray-700 shadow-sm"
-                placeholder="Enter your Student ID or NID"
-                value={tempStudentInfo.id}
-                onChange={(e) => setTempStudentInfo({ ...tempStudentInfo, id: e.target.value })}
-              />
-            </div>
-            
-            <button
-              type="submit"
-              disabled={checkingStatus}
-              className="w-full py-4 bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-black rounded-2xl shadow-xl shadow-blue-200 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              {checkingStatus ? (
-                <>
-                  <Loader2 className="animate-spin" size={20} />
-                  <span>Verifying...</span>
-                </>
-              ) : (
-                <span>START ASSESSMENT</span>
-              )}
-            </button>
-          </form>
-          
-          <div className="mt-8 pt-6 border-t border-gray-100">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Secured Assessment Portal</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <>
       {submitted && (
@@ -404,7 +317,7 @@ const AssessmentForm: React.FC = () => {
               alt="Skilscope Logo"
               className="w-20 h-20 sm:w-32 sm:h-32 object-contain mb-4 drop-shadow-xl"
             />
-            
+
             {assessmentQuestions.metadata?.rtoName && (
               <div className="mb-2">
                 <p className="text-[#1e3a8a] font-black text-sm sm:text-xl tracking-[0.2em] uppercase">{assessmentQuestions.metadata.rtoName}</p>
@@ -430,11 +343,11 @@ const AssessmentForm: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 bg-gray-50 p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-100 shadow-inner">
               <label className="block">
                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student Name</span>
-                <input name="st-name" value={tempStudentInfo.name} readOnly className="w-full p-2.5 sm:p-3 border-2 border-white bg-white/50 rounded-lg sm:rounded-xl shadow-sm outline-none font-bold text-sm sm:text-base cursor-not-allowed" />
+                <input name="st-name" defaultValue={searchParams.get('st-name') || ''} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="Full Name" />
               </label>
               <label className="block">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student ID / NID</span>
-                <input name="st-id" value={tempStudentInfo.id} readOnly className="w-full p-2.5 sm:p-3 border-2 border-white bg-white/50 rounded-lg sm:rounded-xl shadow-sm outline-none font-bold text-sm sm:text-base cursor-not-allowed" />
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student ID</span>
+                <input name="st-id" defaultValue={searchParams.get('st-id') || ''} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="ID Number" />
               </label>
               <label className="block">
                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Assessment Date</span>
