@@ -160,8 +160,8 @@ const AssessmentForm: React.FC = () => {
 
         {/* Optional image for question */}
         {q.image && (
-          <div className="flex flex-col items-center gap-2 mt-3 mb-2 px-2">
-            <div className="bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full max-w-[600px]">
+          <div className="flex flex-col items-center gap-2 mt-4 mb-3 px-2">
+            <div className={`bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full ${q.smallImage ? 'max-w-[300px]' : 'max-w-[600px]'}`}>
               <img src={q.image} alt={q.imageCaption || `Question ${q.id} diagram`} className="w-full h-auto rounded" />
             </div>
             {q.imageCaption && (
@@ -184,9 +184,11 @@ const AssessmentForm: React.FC = () => {
             <div className="grid grid-cols-1 gap-6 mt-4">
               {q.textInputs.map((ti: any, idx: number) => (
                 <div key={idx} className="flex flex-col md:flex-row items-center gap-6 p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <div className="w-full md:w-64 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
-                    <img src={`/assets/cable${idx + 1}.png`} alt={`Cable Type ${idx + 1}`} className="w-full h-24 object-contain" />
-                  </div>
+                  {ti.image && (
+                    <div className="w-full md:w-64 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+                      <img src={ti.image} alt={ti.placeholder || `Input ${idx + 1}`} className="w-full h-24 object-contain" />
+                    </div>
+                  )}
                   <div className="flex-1 w-full">
                     <p className="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">{ti.placeholder}</p>
                     <input
@@ -199,6 +201,76 @@ const AssessmentForm: React.FC = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          ) : q.type === 'table' ? (
+            <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white mt-4">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200">
+                    {q.headers.map((header: string, hIdx: number) => (
+                      <th key={hIdx} className="p-3 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {q.rows.map((row: any, rIdx: number) => (
+                    <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                      <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
+                        {row.label}
+                      </td>
+                      {row.cells ? (
+                        row.cells.map((cell: any, cIdx: number) => (
+                          <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                            <div className="flex flex-col gap-1.5 p-1">
+                              {cell.options.map((opt: any, oIdx: number) => (
+                                <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                  <input
+                                    type={cell.type || 'radio'}
+                                    name={cell.name}
+                                    value={opt.value}
+                                    checked={cell.type === 'checkbox' 
+                                      ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                      : answers[cell.name] === opt.value}
+                                    onChange={(e) => {
+                                      if (cell.type === 'checkbox') {
+                                        const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                        const updated = e.target.checked 
+                                          ? [...current, opt.value]
+                                          : current.filter((v: string) => v !== opt.value);
+                                        setAnswers({ ...answers, [cell.name]: updated });
+                                      } else {
+                                        setAnswers({ ...answers, [cell.name]: e.target.value });
+                                      }
+                                    }}
+                                    className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                  />
+                                  <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                </label>
+                              ))}
+                            </div>
+                          </td>
+                        ))
+                      ) : (
+                        <td className="p-2" colSpan={q.headers.length - 1}>
+                          {row.editable ? (
+                            <input
+                              type="text"
+                              className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] transition-all"
+                              placeholder="Enter answer..."
+                              value={answers[row.id] || ''}
+                              onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                            />
+                          ) : (
+                            <span className="p-2 text-sm text-slate-600">{row.value}</span>
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           ) : q.type === 'multipart_radio' ? (
             <div className="flex flex-col gap-6 mt-4">
@@ -221,6 +293,107 @@ const AssessmentForm: React.FC = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          ) : q.type === 'jsa_table' ? (
+            <div className="mt-4 border-2 border-slate-200 rounded-xl overflow-hidden bg-white shadow-md">
+              {/* Top metadata grid */}
+              <div className="grid grid-cols-1 md:grid-cols-4 border-b border-slate-200">
+                {q.fields.slice(0, 4).map((f: any, idx: number) => (
+                  <div key={idx} className={`p-3 border-r border-slate-100 last:border-r-0 ${idx === 3 ? 'bg-slate-50' : ''}`}>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                    {f.options ? (
+                      <div className="flex gap-4 mt-1">
+                        {f.options.map((opt: string) => (
+                          <label key={opt} className="flex items-center gap-1.5 cursor-pointer">
+                            <input
+                              type="radio"
+                              name={f.name}
+                              value={opt}
+                              checked={answers[f.name] === opt}
+                              onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                              className="w-3.5 h-3.5 accent-[#1e3a8a]"
+                            />
+                            <span className="text-xs font-bold text-slate-700">{opt}</span>
+                          </label>
+                        ))}
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        className="w-full bg-transparent border-b border-slate-100 outline-none text-sm font-bold text-[#1e3a8a]"
+                        value={answers[f.name] || ''}
+                        onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Middle metadata grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200">
+                {q.fields.slice(4, 10).map((f: any, idx: number) => (
+                  <div key={idx} className="p-3 border-r border-b border-slate-100">
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                    <input
+                      type="text"
+                      className="w-full bg-transparent border-b border-slate-100 outline-none text-sm font-bold text-[#1e3a8a]"
+                      value={answers[f.name] || ''}
+                      onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Bottom metadata grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 border-b border-slate-200">
+                {q.fields.slice(10).map((f: any, idx: number) => (
+                  <div key={idx} className="p-3 border-r border-slate-100 last:border-r-0">
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                    <input
+                      type="text"
+                      className="w-full bg-transparent border-b border-slate-100 outline-none text-sm font-bold text-[#1e3a8a]"
+                      value={answers[f.name] || ''}
+                      onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Main JSA Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-slate-800 text-white">
+                      {q.steps.headers.map((h: string, idx: number) => (
+                        <th key={idx} className="p-3 text-xs font-bold uppercase tracking-widest border-r border-slate-700 last:border-0">{h}</th>
+                      ))}
+                    </tr>
+                    <tr className="bg-slate-100 italic text-slate-500">
+                      {q.steps.subHeaders.map((sh: string, idx: number) => (
+                        <td key={idx} className="p-2 text-[10px] border-r border-slate-200 last:border-0">{sh}</td>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...Array(q.steps.rowCount)].map((_, rIdx) => (
+                      <tr key={rIdx} className="border-t border-slate-200">
+                        {[0, 1, 2].map((cIdx) => {
+                          const stepKey = `t${tNum}q${q.id}_r${rIdx}c${cIdx}`;
+                          return (
+                            <td key={cIdx} className="p-1 border-r border-slate-200 last:border-0">
+                              <textarea
+                                className="w-full p-2 text-sm outline-none bg-transparent min-h-[60px] resize-none focus:bg-blue-50/30 transition-colors"
+                                value={answers[stepKey] || ''}
+                                onChange={(e) => setAnswers({ ...answers, [stepKey]: e.target.value })}
+                              />
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           ) : (
             <div className="flex flex-col gap-1 mt-2">
@@ -355,6 +528,27 @@ const AssessmentForm: React.FC = () => {
               </label>
             </div>
 
+            {assessmentQuestions.adminInfo && (
+              <div className="mb-12 border-2 border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm px-0">
+                <table className="w-full text-left border-collapse">
+                  <tbody>
+                    <tr className="border-b border-slate-200">
+                      <td className="p-4 bg-slate-50 text-slate-700 font-bold w-1/4 align-top border-r border-slate-200 text-xs sm:text-sm">Assessment Instruction</td>
+                      <td className="p-4 text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                        {assessmentQuestions.adminInfo.assessmentInstruction}
+                      </td>
+                    </tr>
+                    {assessmentQuestions.adminInfo.taskOverviews?.map((task: any, idx: number) => (
+                      <tr key={idx} className="border-b border-slate-100 last:border-0">
+                        <td className="p-4 bg-slate-50 text-slate-700 font-bold w-1/4 align-top border-r border-slate-200 text-xs sm:text-sm">{task.id}</td>
+                        <td className="p-4 text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">{task.text}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
 
             {Object.keys(assessmentQuestions)
               .filter(key => key.startsWith('task'))
@@ -438,19 +632,55 @@ const AssessmentForm: React.FC = () => {
                                                 <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
                                                   {row.label}
                                                 </td>
-                                                <td className="p-2">
-                                                  {row.editable ? (
-                                                    <input
-                                                      type="text"
-                                                      className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                      placeholder="Enter result..."
-                                                      value={answers[row.id] || ''}
-                                                      onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
-                                                    />
-                                                  ) : (
-                                                    <span className="p-2 text-sm text-slate-600">{row.value}</span>
-                                                  )}
-                                                </td>
+                                                {row.cells ? (
+                                                  row.cells.map((cell: any, cIdx: number) => (
+                                                    <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                                                      <div className="flex flex-col gap-1.5 p-1">
+                                                        {cell.options.map((opt: any, oIdx: number) => (
+                                                          <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                            <div className="relative flex items-center justify-center">
+                                                              <input
+                                                                type={cell.type || 'radio'}
+                                                                name={cell.name}
+                                                                value={opt.value}
+                                                                checked={cell.type === 'checkbox' 
+                                                                  ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                                                  : answers[cell.name] === opt.value}
+                                                                onChange={(e) => {
+                                                                  if (cell.type === 'checkbox') {
+                                                                    const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                                                    const updated = e.target.checked 
+                                                                      ? [...current, opt.value]
+                                                                      : current.filter((v: string) => v !== opt.value);
+                                                                    setAnswers({ ...answers, [cell.name]: updated });
+                                                                  } else {
+                                                                    setAnswers({ ...answers, [cell.name]: e.target.value });
+                                                                  }
+                                                                }}
+                                                                className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                              />
+                                                            </div>
+                                                            <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                          </label>
+                                                        ))}
+                                                      </div>
+                                                    </td>
+                                                  ))
+                                                ) : (
+                                                  <td className="p-2" colSpan={section.headers.length - 1}>
+                                                    {row.editable ? (
+                                                      <input
+                                                        type="text"
+                                                        className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                        placeholder="Enter result..."
+                                                        value={answers[row.id] || ''}
+                                                        onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                                      />
+                                                    ) : (
+                                                      <span className="p-2 text-sm text-slate-600">{row.value}</span>
+                                                    )}
+                                                  </td>
+                                                )}
                                               </tr>
                                             ))}
                                           </tbody>
@@ -490,25 +720,132 @@ const AssessmentForm: React.FC = () => {
                   <section key={taskKey} className="mb-10 sm:mb-12">
                     <div className="task-banner-ribbon text-xs sm:text-base py-2 sm:py-3 px-4 sm:px-6">{taskTitle}</div>
 
+                    {(taskData as any).observationSubtitle && (
+                      <div className="text-center mt-4 mb-2">
+                        <div className="text-sm sm:text-lg font-bold text-slate-600 border-y border-slate-200 py-3">
+                          {(taskData as any).observationSubtitle}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Show instruction sections (if any) above the questions */}
                     {hasNestedQuestions && (taskData as any).sections && (
-                      <div className="space-y-4 mt-4 mb-6 px-2">
+                      <div className="space-y-6 mt-4 mb-8 px-2">
                         {(taskData as any).sections.map((section: any, sIdx: number) => (
-                          <div key={sIdx} className="space-y-2">
-                            {section.title && (
-                              <h3 className="font-bold text-slate-800 text-sm sm:text-base border-b border-slate-200 pb-1">
-                                {section.title}
-                              </h3>
+                          <div key={sIdx} className="space-y-3">
+                            {section.type === 'text' && (
+                              <div className="space-y-2">
+                                {section.title && (
+                                  <h3 className="font-bold text-slate-800 text-sm sm:text-base border-b border-slate-200 pb-1">
+                                    {section.title}
+                                  </h3>
+                                )}
+                                <div className="text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-blue-50/40 border border-blue-100 rounded-xl p-4">
+                                  {section.content}
+                                </div>
+                              </div>
                             )}
-                            <div className="text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-blue-50/40 border border-blue-100 rounded-xl p-4">
-                              {section.content}
-                            </div>
+                            
+                            {section.type === 'image' && (
+                              <div className="flex flex-col items-center gap-2 py-2">
+                                <div className={`bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full ${section.smallImage ? 'max-w-[300px]' : 'max-w-[600px]'}`}>
+                                  <img src={section.src} alt={section.caption || 'Instruction diagram'} className="w-full h-auto rounded" />
+                                </div>
+                                {section.caption && (
+                                  <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest text-center">{section.caption}</span>
+                                )}
+                              </div>
+                            )}
+
+                            {section.type === 'table' && (
+                              <div className="space-y-3">
+                                {section.title && (
+                                  <h3 className="font-bold text-slate-800 pb-1 text-sm sm:text-base border-b border-slate-200">
+                                    {section.title}
+                                  </h3>
+                                )}
+                                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+                                  <table className="w-full text-left border-collapse">
+                                    <thead>
+                                      <tr className="bg-slate-50 border-b border-slate-200">
+                                        {section.headers.map((header: string, hIdx: number) => (
+                                          <th key={hIdx} className="p-3 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                            {header}
+                                          </th>
+                                        ))}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {section.rows.map((row: any, rIdx: number) => (
+                                        <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                          <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
+                                            {row.label}
+                                          </td>
+                                          {row.cells ? (
+                                            row.cells.map((cell: any, cIdx: number) => (
+                                              <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                                                <div className="flex flex-col gap-1.5 p-1">
+                                                  {cell.options.map((opt: any, oIdx: number) => (
+                                                    <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                      <input
+                                                        type={cell.type || 'radio'}
+                                                        name={cell.name}
+                                                        value={opt.value}
+                                                        checked={cell.type === 'checkbox' 
+                                                          ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                                          : answers[cell.name] === opt.value}
+                                                        onChange={(e) => {
+                                                          if (cell.type === 'checkbox') {
+                                                            const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                                            const updated = e.target.checked 
+                                                              ? [...current, opt.value]
+                                                              : current.filter((v: string) => v !== opt.value);
+                                                            setAnswers({ ...answers, [cell.name]: updated });
+                                                          } else {
+                                                            setAnswers({ ...answers, [cell.name]: e.target.value });
+                                                          }
+                                                        }}
+                                                        className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                      />
+                                                      <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                    </label>
+                                                  ))}
+                                                </div>
+                                              </td>
+                                            ))
+                                          ) : (
+                                            <td className="p-2" colSpan={section.headers.length - 1}>
+                                              {row.editable ? (
+                                                <input
+                                                  type="text"
+                                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                  placeholder="Enter result..."
+                                                  value={answers[row.id] || ''}
+                                                  onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                                />
+                                              ) : (
+                                                <span className="p-2 text-sm text-slate-600">{row.value}</span>
+                                              )}
+                                            </td>
+                                          )}
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         ))}
                       </div>
                     )}
 
                     <div className="space-y-0">
+                      {hasNestedQuestions && (taskData as any).sections && (
+                        <div className="bg-slate-200 py-2 sm:py-3 px-4 mb-6 mt-8 rounded-lg shadow-inner border border-slate-300">
+                          <h3 className="text-center font-bold text-slate-700 uppercase tracking-widest text-xs sm:text-sm">Questions</h3>
+                        </div>
+                      )}
                       {questionsArray.map((q: any, i: number) => renderQuestion(q, i, tNum))}
                     </div>
                   </section>

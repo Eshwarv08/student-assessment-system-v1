@@ -208,7 +208,7 @@ const GradingPortal: React.FC = () => {
         {/* Optional image for question */}
         {q.image && (
           <div className="flex flex-col items-center gap-2 mt-3 mb-2 px-2">
-            <div className="bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full max-w-[600px]">
+            <div className={`bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full ${q.smallImage ? 'max-w-[300px]' : 'max-w-[600px]'}`}>
               <img src={q.image} alt={q.imageCaption || `Question ${q.id} diagram`} className="w-full h-auto rounded" />
             </div>
             {q.imageCaption && (
@@ -232,9 +232,11 @@ const GradingPortal: React.FC = () => {
                     const ans = submission?.answers?.[ti.name] || '(No response provided)'
                     return (
                       <div key={idx} className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
-                        <div className="w-32 sm:w-40 bg-slate-50 p-1 rounded-lg border border-slate-100 flex-shrink-0">
-                          <img src={`/assets/cable${idx + 1}.png`} alt={`Cable Type ${idx + 1}`} className="w-full h-12 sm:h-16 object-contain" />
-                        </div>
+                        {ti.image && (
+                          <div className="w-32 sm:w-40 bg-slate-50 p-1 rounded-lg border border-slate-100 flex-shrink-0">
+                            <img src={ti.image} alt={ti.placeholder || `Input ${idx + 1}`} className="w-full h-12 sm:h-16 object-contain" />
+                          </div>
+                        )}
                         <div className="flex-1 w-full text-center sm:text-left">
                           <p className="text-[9px] uppercase text-slate-400 font-black mb-1 tracking-wider">{ti.placeholder}</p>
                           <p className="text-[#1e3a8a] font-black text-base sm:text-lg">{ans}</p>
@@ -270,6 +272,119 @@ const GradingPortal: React.FC = () => {
                       </div>
                     )
                   })}
+                </div>
+              ) : q.type === 'table' ? (
+                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white mt-4">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        {q.headers.map((header: string, hIdx: number) => (
+                          <th key={hIdx} className="p-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {q.rows.map((row: any, rIdx: number) => (
+                        <tr key={rIdx} className="border-b border-slate-100 last:border-0">
+                          <td className="p-3 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
+                            {row.label}
+                          </td>
+                          {row.cells ? (
+                            row.cells.map((cell: any, cIdx: number) => {
+                              const ans = submission?.answers?.[cell.name]
+                              return (
+                                <td key={cIdx} className="p-3 border-l border-slate-100 align-top">
+                                  <div className="flex flex-col gap-1.5">
+                                    {cell.options.map((opt: any, oIdx: number) => {
+                                      const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
+                                      return (
+                                        <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
+                                          <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
+                                            {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+                                          </div>
+                                          <span className="text-[10px] leading-tight">{opt.text}</span>
+                                        </div>
+                                      )
+                                    })}
+                                  </div>
+                                </td>
+                              )
+                            })
+                          ) : (
+                            <td className="p-3" colSpan={q.headers.length - 1}>
+                              <div className="p-2 bg-blue-50 border border-blue-100 rounded text-[#1e3a8a] font-bold text-sm">
+                                {submission?.answers?.[row.id] || '(No response provided)'}
+                              </div>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : q.type === 'jsa_table' ? (
+                <div className="mt-4 border-2 border-slate-200 rounded-xl overflow-hidden bg-white shadow-md">
+                  {/* Top metadata grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-4 border-b border-slate-200">
+                    {q.fields.slice(0, 4).map((f: any, idx: number) => (
+                      <div key={idx} className={`p-3 border-r border-slate-100 last:border-r-0 ${idx === 3 ? 'bg-slate-50' : ''}`}>
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                        <div className="text-sm font-bold text-[#1e3a8a]">{submission?.answers?.[f.name] || '(Not provided)'}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Middle metadata grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200">
+                    {q.fields.slice(4, 10).map((f: any, idx: number) => (
+                      <div key={idx} className="p-3 border-r border-b border-slate-100 last:border-r-0">
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                        <div className="text-sm font-bold text-[#1e3a8a]">{submission?.answers?.[f.name] || '(Not provided)'}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bottom metadata grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 border-b border-slate-200">
+                    {q.fields.slice(10).map((f: any, idx: number) => (
+                      <div key={idx} className="p-3 border-r border-slate-100 last:border-r-0">
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                        <div className="text-sm font-bold text-[#1e3a8a]">{submission?.answers?.[f.name] || '(Not provided)'}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Main JSA Table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-slate-800 text-white">
+                          {q.steps.headers.map((h: string, idx: number) => (
+                            <th key={idx} className="p-3 text-xs font-bold uppercase tracking-widest border-r border-slate-700 last:border-0">{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[...Array(q.steps.rowCount)].map((_, rIdx) => (
+                          <tr key={rIdx} className="border-t border-slate-200">
+                            {[0, 1, 2].map((cIdx) => {
+                              const stepKey = `t${tNum}q${q.id}_r${rIdx}c${cIdx}`;
+                              const ans = submission?.answers?.[stepKey];
+                              return (
+                                <td key={cIdx} className="p-3 border-r border-slate-200 last:border-0 align-top">
+                                  <div className="p-2 bg-blue-50/50 border border-blue-100 rounded text-slate-800 text-[13px] min-h-[40px] italic">
+                                    {ans || '(Empty)'}
+                                  </div>
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-2">
@@ -700,18 +815,27 @@ const GradingPortal: React.FC = () => {
                   ["Assessors Intervention", currentAssessmentQuestions.adminInfo.assessorsIntervention],
                   ["Attaching Documents", currentAssessmentQuestions.adminInfo.attachingDocuments],
                   ["Assessment Instruction", currentAssessmentQuestions.adminInfo.assessmentInstruction],
-                  ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
-                  ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
-                  ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
-                  ["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description],
-                  ...(currentAssessmentQuestions.adminInfo.task5Description
-                    ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
-                    : []),
+                  ...(currentAssessmentQuestions.adminInfo.taskOverviews
+                    ? currentAssessmentQuestions.adminInfo.taskOverviews.map((task: any) => [task.id.replace(':', ''), task.text])
+                    : [
+                      ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
+                      ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
+                      ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
+                      ...(currentAssessmentQuestions.adminInfo.task4Description
+                        ? [["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description]]
+                        : []),
+                      ...(currentAssessmentQuestions.adminInfo.task5Description
+                        ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
+                        : []),
+                      ...(currentAssessmentQuestions.adminInfo.task6Description
+                        ? [["Assessment Task 6", currentAssessmentQuestions.adminInfo.task6Description]]
+                        : [])
+                    ]),
                   ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
                 ].map(([label, value], idx) => (
                   <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
                     <div className="bg-slate-50 p-3 font-bold text-slate-700 md:border-r border-slate-200 text-xs uppercase tracking-wider">{label}</div>
-                    <div className="p-3 text-slate-600 leading-relaxed text-[10px] sm:text-[11px] whitespace-pre-wrap">{value}</div>
+                    <div className="p-3 text-slate-700 leading-relaxed text-xs sm:text-sm whitespace-pre-wrap">{value}</div>
                   </div>
                 ))}
               </div>
@@ -846,105 +970,154 @@ const GradingPortal: React.FC = () => {
 
               // Case 1: plain array of question objects
               const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
-              // Case 2: object with a nested .questions array (e.g. ICTCBL322 task1)
+              // Case 2: object with a nested .questions array
               const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
-              // Case 3: observation/checklist object
-              const isChecklist = !isPlainArray && !hasNestedQuestions;
 
-              if (isChecklist) {
-                const isCategorized = !Array.isArray(taskData);
-                const oralQuestions = isCategorized ? (taskData.checklistItems || taskData.oral || taskData.items || []) : taskData;
-                const perfQuestions = isCategorized ? (taskData.performance || []) : [];
-                const observationItems = isCategorized ? (taskData.observationItems || []) : [];
+              const oralQuestions = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
+              const perfQuestions = (taskData as any).performance || [];
+              const observationItems = (taskData as any).observationItems || [];
+              const hasChecklist = oralQuestions.length > 0 || perfQuestions.length > 0 || observationItems.length > 0;
 
-                return (
-                  <section key={taskKey} className="space-y-12 page-break-before">
-                    {/* Observation Section - Only show if observation data exists */}
-                    {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections) && (
-                      <div className="space-y-6">
-                        <div className="text-center">
-                          <div className="task-banner-ribbon">
-                            {taskData.observationTitle || `ASSESSMENT TASK ${tNum} OBSERVATION`}
-                          </div>
-                          {taskData.observationSubtitle && (
-                            <div className="text-lg font-bold text-slate-600 border-y border-slate-200 py-2 mt-4">
-                              {taskData.observationSubtitle}
-                            </div>
-                          )}
+              const questionsArray: any[] = isPlainArray
+                ? taskData
+                : (taskData as any).questions || [];
+              const hasQuestions = questionsArray.length > 0;
+
+              let taskTitle: string;
+              if ((taskData as any).title) {
+                taskTitle = (taskData as any).title;
+              } else if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
+                taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
+              } else {
+                const typeLabel = tNum === 4 ? 'WRITTEN QUESTIONS AND ANSWERS' : tNum === 5 ? 'WRITTEN ASSESSMENT' : tNum === 6 ? 'MULTIPLE CHOICE QUESTIONS' : `TASK ${tNum}`;
+                taskTitle = `ASSESSMENT TASK ${tNum} – ${typeLabel}`;
+              }
+
+              return (
+                <section key={taskKey} className="space-y-12 page-break-before">
+                  {/* Observation Section - Only show if observation data exists */}
+                  {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections) && (
+                    <div className="space-y-6">
+                      <div className="text-center">
+                        <div className="task-banner-ribbon">
+                          {taskData.observationTitle || (hasQuestions ? taskTitle : `ASSESSMENT TASK ${tNum} OBSERVATION`)}
                         </div>
-
-                        {taskData.sections && (
-                          <div className="space-y-4">
-                            {taskData.sections.map((section: any, sIdx: number) => (
-                              <div key={sIdx} className="space-y-3">
-                                {section.type === 'text' && (
-                                  <div className={`space-y-2 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
-                                    {section.title && (
-                                      <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-base border-b border-slate-200' : 'text-sm text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
-                                        {section.title}
-                                      </h3>
-                                    )}
-                                    <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
-                                      {section.content}
-                                    </div>
-                                  </div>
-                                )}
-                                {section.type === 'image' && (
-                                  <div className="flex flex-col items-center gap-2 py-4">
-                                    <div className="bg-white p-2 border border-slate-200 shadow-sm rounded-lg max-w-[550px]">
-                                      <img src={section.src} alt={section.caption || 'Observation'} className="w-full h-auto rounded" />
-                                    </div>
-                                    {section.caption && (
-                                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                                        {section.caption}
-                                      </span>
-                                    )}
-                                  </div>
-                                )}
-                                {section.type === 'table' && (
-                                  <div className="space-y-4 px-2">
-                                    {section.title && (
-                                      <h3 className="font-bold text-slate-800 pb-2 text-base border-b border-slate-200">
-                                        {section.title}
-                                      </h3>
-                                    )}
-                                    <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
-                                      <table className="w-full text-left border-collapse">
-                                        <thead>
-                                          <tr className="bg-slate-50 border-b border-slate-200">
-                                            {section.headers.map((header: string, hIdx: number) => (
-                                              <th key={hIdx} className="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                                {header}
-                                              </th>
-                                            ))}
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {section.rows.map((row: any, rIdx: number) => (
-                                            <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
-                                              <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
-                                                {row.label}
-                                              </td>
-                                              <td className="p-4">
-                                                <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl text-[#1e3a8a] font-black text-sm min-h-[40px] flex items-center">
-                                                  {submission?.answers?.[row.id] || <span className="text-slate-300 font-normal italic">(No result provided)</span>}
-                                                </div>
-                                              </td>
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            ))}
+                        {taskData.observationSubtitle && (
+                          <div className="text-lg font-bold text-slate-600 border-y border-slate-200 py-2 mt-4">
+                            {taskData.observationSubtitle}
                           </div>
                         )}
                       </div>
-                    )}
 
-                    {/* Assessor Checklist Section */}
+                      {taskData.sections && (
+                        <div className="space-y-4">
+                          {taskData.sections.map((section: any, sIdx: number) => (
+                            <div key={sIdx} className="space-y-3">
+                              {section.type === 'text' && (
+                                <div className={`space-y-2 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
+                                  {section.title && (
+                                    <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-base border-b border-slate-200' : 'text-sm text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
+                                      {section.title}
+                                    </h3>
+                                  )}
+                                  <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                    {section.content}
+                                  </div>
+                                </div>
+                              )}
+                              {section.type === 'image' && (
+                                <div className="flex flex-col items-center gap-2 py-4">
+                                  <div className="bg-white p-2 border border-slate-200 shadow-sm rounded-lg max-w-[550px]">
+                                    <img src={section.src} alt={section.caption || 'Observation'} className="w-full h-auto rounded" />
+                                  </div>
+                                  {section.caption && (
+                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                      {section.caption}
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                              {section.type === 'table' && (
+                                <div className="space-y-4 px-2">
+                                  {section.title && (
+                                    <h3 className="font-bold text-slate-800 pb-2 text-base border-b border-slate-200">
+                                      {section.title}
+                                    </h3>
+                                  )}
+                                  <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
+                                    <table className="w-full text-left border-collapse">
+                                      <thead>
+                                        <tr className="bg-slate-50 border-b border-slate-200">
+                                          {section.headers.map((header: string, hIdx: number) => (
+                                            <th key={hIdx} className="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                              {header}
+                                            </th>
+                                          ))}
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {section.rows.map((row: any, rIdx: number) => (
+                                          <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                            <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
+                                              {row.label}
+                                            </td>
+                                            {row.cells ? (
+                                              row.cells.map((cell: any, cIdx: number) => {
+                                                const ans = submission?.answers?.[cell.name]
+                                                return (
+                                                  <td key={cIdx} className="p-4 border-l border-slate-100 align-top">
+                                                    <div className="flex flex-col gap-1.5">
+                                                      {cell.options.map((opt: any, oIdx: number) => {
+                                                        const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
+                                                        return (
+                                                          <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
+                                                            <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
+                                                              {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+                                                            </div>
+                                                            <span className="text-[10px] leading-tight">{opt.text}</span>
+                                                          </div>
+                                                        )
+                                                      })}
+                                                    </div>
+                                                  </td>
+                                                )
+                                              })
+                                            ) : (
+                                              <td className="p-4" colSpan={section.headers.length - 1}>
+                                                {row.editable === false ? (
+                                                  <div className="text-sm text-slate-700 font-medium">
+                                                    {row.value}
+                                                  </div>
+                                                ) : (
+                                                  <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl text-[#1e3a8a] font-black text-sm min-h-[40px] flex items-center">
+                                                    {submission?.answers?.[row.id] || <span className="text-slate-300 font-normal italic">(No result provided)</span>}
+                                                  </div>
+                                                )}
+                                              </td>
+                                            )}
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Written Questions Section */}
+                  {hasQuestions && (
+                    <div className="space-y-10 px-4">
+                      {questionsArray.map((q: any, i: number) => renderQuestionReview(q, i, tNum))}
+                    </div>
+                  )}
+
+                  {/* Assessor Checklist Section */}
+                  {hasChecklist && (
                     <div className="pt-12 space-y-8 border-t-4 border-double border-slate-200">
                       <div className="text-center">
                         <div className="task-banner-ribbon">
@@ -962,26 +1135,11 @@ const GradingPortal: React.FC = () => {
                       {observationItems.length > 0 && (
                         <div className="space-y-4 w-full max-w-2xl mx-auto py-6 px-4 md:px-0">
                           <h4 className="font-bold text-black text-sm">The following was observed during the observations:</h4>
-                          <div className="grid grid-cols-1 gap-4">
+                          <div className="space-y-2 ml-4">
                             {observationItems.map((item: string, idx: number) => (
-                              <div key={idx} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 group p-3 bg-white rounded-xl border border-slate-100 shadow-sm sm:shadow-none sm:bg-transparent sm:p-0 sm:border-0">
-                                <span className="text-sm text-black flex-1">{item}</span>
-                                <div className="relative flex items-center gap-3">
-                                  <div className="relative flex items-center justify-center">
-                                    <input
-                                      type="checkbox"
-                                      className="w-5 h-5 border-2 border-slate-400 rounded cursor-pointer appearance-none checked:bg-white transition-colors"
-                                      checked={grades[`t${tNum}obs${idx}`] === 'correct'}
-                                      onChange={(e) => setGrades({ ...grades, [`t${tNum}obs${idx}`]: e.target.checked ? 'correct' : null })}
-                                    />
-                                    {grades[`t${tNum}obs${idx}`] === 'correct' && (
-                                      <span className="absolute text-red-600 font-black pointer-events-none text-xl leading-none -top-1">
-                                        ✔
-                                      </span>
-                                    )}
-                                  </div>
-                                  <span className="text-[10px] text-black italic whitespace-nowrap">{tNum <= 3 ? `Observation ${tNum}` : 'Assessment'}</span>
-                                </div>
+                              <div key={idx} className="flex gap-2">
+                                <span className="text-sm font-bold text-black">{idx + 1}.</span>
+                                <span className="text-sm text-black">{item}</span>
                               </div>
                             ))}
                           </div>
@@ -989,11 +1147,14 @@ const GradingPortal: React.FC = () => {
                       )}
 
                       <div className="hidden md:block">
+                        {taskData.oralHeader && (
+                          <h4 className="text-lg font-bold text-slate-800 mt-6 mb-4">{taskData.oralHeader}</h4>
+                        )}
                         <table className="legacy-review-tbl w-full">
                           <thead>
                             <tr>
-                              <th className="left">Checklist</th>
-                              <th colSpan={2} className="text-center">Case 1</th>
+                              <th className="left">{taskData.checklistLabel || 'Checklist'}</th>
+                              <th colSpan={2} className="text-center">Yes / No</th>
                               <th>Comments</th>
                             </tr>
                             <tr className="bg-gray-100">
@@ -1055,7 +1216,9 @@ const GradingPortal: React.FC = () => {
                             {perfQuestions.length > 0 && (
                               <>
                                 <tr className="bg-slate-100">
-                                  <td colSpan={4} className="p-3 font-bold text-slate-800">Evidence of Performance</td>
+                                  <td colSpan={4} className="p-3 font-bold text-slate-800">
+                                    {taskData.performanceHeader || 'Evidence of Performance'}
+                                  </td>
                                 </tr>
                                 {perfQuestions.map((q: string, i: number) => {
                                   const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
@@ -1065,21 +1228,27 @@ const GradingPortal: React.FC = () => {
                                     <tr key={i}>
                                       <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + oralQuestions.length + 1}. {q}</td>
                                       <td className="legacy-chk-col">
-                                        <input
-                                          type="checkbox"
-                                          checked={isCorrect}
-                                          onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
-                                          className="correct-box"
-                                        />
+                                        <div className="flex items-center gap-1">
+                                          <input
+                                            type="checkbox"
+                                            checked={isCorrect}
+                                            onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
+                                            className="correct-box"
+                                          />
+                                          <span className="text-[10px] font-bold">Yes</span>
+                                        </div>
                                         {isCorrect && <span className="print-symbol correct">✔</span>}
                                       </td>
                                       <td className="legacy-chk-col">
-                                        <input
-                                          type="checkbox"
-                                          checked={isIncorrect}
-                                          onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
-                                          className="incorrect-box"
-                                        />
+                                        <div className="flex items-center gap-1">
+                                          <input
+                                            type="checkbox"
+                                            checked={isIncorrect}
+                                            onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
+                                            className="incorrect-box"
+                                          />
+                                          <span className="text-[10px] font-bold">No</span>
+                                        </div>
                                         {isIncorrect && <span className="print-symbol incorrect">✘</span>}
                                       </td>
                                       <td>
@@ -1196,56 +1365,13 @@ const GradingPortal: React.FC = () => {
                           )}
                         </div>
                       </div>
-                      {renderFinalResultBlock(tNum)}
                     </div>
-                  </section>
-                );
-              } else {
-                // Written questions
-                const questionsArray: any[] = isPlainArray
-                  ? taskData
-                  : (taskData as any).questions;
-
-                let taskTitle: string;
-                if ((taskData as any).title) {
-                  taskTitle = (taskData as any).title;
-                } else if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
-                  taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
-                } else {
-                  const typeLabel = tNum === 4 ? 'WRITTEN QUESTIONS AND ANSWERS' : tNum === 5 ? 'WRITTEN ASSESSMENT' : 'MULTIPLE CHOICE QUESTIONS';
-                  taskTitle = `ASSESSMENT TASK ${tNum} – ${typeLabel}`;
-                }
-
-                return (
-                  <section key={taskKey} className="space-y-8">
-                    <div className="task-banner-ribbon">
-                      {taskTitle}
-                    </div>
-                    {/* Show instruction sections if nested-questions task */}
-                    {hasNestedQuestions && (taskData as any).sections && (
-                      <div className="space-y-4 px-4">
-                        {(taskData as any).sections.map((section: any, sIdx: number) => (
-                          <div key={sIdx} className="space-y-2">
-                            {section.title && (
-                              <h3 className="font-bold text-slate-800 text-base border-b border-slate-200 pb-1">
-                                {section.title}
-                              </h3>
-                            )}
-                            <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-blue-50/40 border border-blue-100 rounded-xl p-4">
-                              {section.content}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    <div className="space-y-10 px-4">
-                      {questionsArray.map((q: any, i: number) => renderQuestionReview(q, i, tNum))}
-                    </div>
-                    {renderFinalResultBlock(tNum)}
-                  </section>
-                );
-              }
-            })}
+                  )}
+                  {renderFinalResultBlock(tNum)}
+                </section>
+              );
+            })
+          }
         </div>
 
         {/* Final Result Section */}
@@ -1353,6 +1479,9 @@ const GradingPortal: React.FC = () => {
                       if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322') {
                         if (tNum === 1) taskLabel = 'Written question and answers';
                         else taskLabel = `Observation ${tNum - 1}`;
+                      } else if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
+                        if (tNum <= 2) taskLabel = `Observation ${tNum}`;
+                        else taskLabel = 'Written question and answers';
                       } else {
                         if (tNum <= 3) taskLabel = `Observation ${tNum}`;
                         else if (tNum === 4) taskLabel = 'Written question and answers';
@@ -1427,7 +1556,10 @@ const GradingPortal: React.FC = () => {
                     const id = `t${tNum}`;
                     const result = taskResults[id];
                     let taskLabel = '';
-                    if (tNum <= 3) taskLabel = `Observation ${tNum}`;
+                    if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
+                      if (tNum <= 2) taskLabel = `Observation ${tNum}`;
+                      else taskLabel = 'Written question and answers';
+                    } else if (tNum <= 3) taskLabel = `Observation ${tNum}`;
                     else if (tNum === 4) taskLabel = 'Written question and answers';
                     else taskLabel = 'Written assessment';
 

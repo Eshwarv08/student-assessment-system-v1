@@ -88,11 +88,17 @@ A modern, full-stack web application designed for assessors and students to mana
 ## 📄 License
 
 ISC License. See `package.json` for details. 
-
+ 
 ## 📝 Notes
 
-- For Question 1 - 
+- For Question 1 - ICTCBL246 & ICTCBL247 
 - For Question 2 - ICTCBL330
 - For Question 3 - ICTCBL322
 - For Question 4 - ICTCBL320
 - For Question 5 - ICTTEN254
+- For Question 6 - ICTCBL208
+- For Question 7 - ICTCBL333
+- For Question 8 - ICTICT308
+- For Question 9 - ICTTEN307
+- For Question 10 - ICTCBL204
+
