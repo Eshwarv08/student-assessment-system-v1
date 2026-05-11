@@ -101,4 +101,6 @@ ISC License. See `package.json` for details.
 - For Question 8 - ICTICT308
 - For Question 9 - ICTTEN307
 - For Question 10 - ICTCBL204
+- For Question 11 - ICTCBL318
+- For Question 12 - ICTTEN
 

@@ -765,14 +765,16 @@ const GradingPortal: React.FC = () => {
         {currentAssessmentQuestions.adminInfo && (
           <div className="border-2 border-slate-400 mb-12 no-print-section break-inside-avoid">
             <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
-              Administrative Use Only:
+              {(currentAssessmentQuestions.adminInfo.markingGuide && currentAssessmentQuestions.metadata.code !== 'ICTCBL303') ? "Asseror’s Marking Guide Instructions" : "Administrative Use Only:"}
             </div>
             <div className="p-4 bg-white space-y-4 text-sm">
               <div className="flex flex-wrap gap-8 items-center border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-4">
+                  <span className="text-xl text-slate-400">❑</span>
                   <span className="font-medium text-slate-600">Entered into Student Management Database</span>
                 </div>
                 <div className="flex items-center gap-2">
+
                   <span className="font-medium text-slate-600">Signature/Initial:</span>
                   <div
                     onClick={() => openSigModal('assessor_signature', 'comp')}
@@ -801,38 +803,40 @@ const GradingPortal: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 gap-0 border border-slate-200">
-                {[
-                  ["Unit Code/Name", currentAssessmentQuestions.adminInfo.unitCodeName],
-                  ["Pre-requisites", currentAssessmentQuestions.adminInfo.preRequisites],
-                  ["Co-requisites", currentAssessmentQuestions.adminInfo.coRequisites],
-                  ["Unit Summary", currentAssessmentQuestions.adminInfo.unitSummary],
-                  ["Target Group", currentAssessmentQuestions.adminInfo.targetGroup],
-                  ["Conditions and Context of the Assessments", currentAssessmentQuestions.adminInfo.conditionsAndContext],
-                  ["Specific Resources Required", currentAssessmentQuestions.adminInfo.specificResources],
-                  ["Re-Assessment", currentAssessmentQuestions.adminInfo.reAssessment],
-                  ["Plagiarism", currentAssessmentQuestions.adminInfo.plagiarism],
-                  ["Complaints and Appeals", currentAssessmentQuestions.adminInfo.complaintsAndAppeals],
-                  ["Assessors Intervention", currentAssessmentQuestions.adminInfo.assessorsIntervention],
-                  ["Attaching Documents", currentAssessmentQuestions.adminInfo.attachingDocuments],
-                  ["Assessment Instruction", currentAssessmentQuestions.adminInfo.assessmentInstruction],
-                  ...(currentAssessmentQuestions.adminInfo.taskOverviews
-                    ? currentAssessmentQuestions.adminInfo.taskOverviews.map((task: any) => [task.id.replace(':', ''), task.text])
-                    : [
-                      ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
-                      ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
-                      ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
-                      ...(currentAssessmentQuestions.adminInfo.task4Description
-                        ? [["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description]]
-                        : []),
-                      ...(currentAssessmentQuestions.adminInfo.task5Description
-                        ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
-                        : []),
-                      ...(currentAssessmentQuestions.adminInfo.task6Description
-                        ? [["Assessment Task 6", currentAssessmentQuestions.adminInfo.task6Description]]
-                        : [])
-                    ]),
-                  ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
-                ].map(([label, value], idx) => (
+                {(currentAssessmentQuestions.adminInfo.markingGuide
+                  ? currentAssessmentQuestions.adminInfo.markingGuide.map((item: any) => [item.label, item.content])
+                  : [
+                    ["Unit Code/Name", currentAssessmentQuestions.adminInfo.unitCodeName],
+                    ["Pre-requisites", currentAssessmentQuestions.adminInfo.preRequisites],
+                    ["Co-requisites", currentAssessmentQuestions.adminInfo.coRequisites],
+                    ["Unit Summary", currentAssessmentQuestions.adminInfo.unitSummary],
+                    ["Target Group", currentAssessmentQuestions.adminInfo.targetGroup],
+                    ["Conditions and Context of the Assessments", currentAssessmentQuestions.adminInfo.conditionsAndContext],
+                    ["Specific Resources Required", currentAssessmentQuestions.adminInfo.specificResources],
+                    ["Re-Assessment", currentAssessmentQuestions.adminInfo.reAssessment],
+                    ["Plagiarism", currentAssessmentQuestions.adminInfo.plagiarism],
+                    ["Complaints and appeal", currentAssessmentQuestions.adminInfo.complaintsAndAppeals],
+                    ["Assessors Intervention", currentAssessmentQuestions.adminInfo.assessorsIntervention],
+                    ["Attaching Documents", currentAssessmentQuestions.adminInfo.attachingDocuments],
+                    ["Assessment Instruction", currentAssessmentQuestions.adminInfo.assessmentInstruction],
+                    ...(currentAssessmentQuestions.adminInfo.taskOverviews
+                      ? currentAssessmentQuestions.adminInfo.taskOverviews.map((task: any) => [task.id.replace(':', ''), task.text])
+                      : [
+                        ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
+                        ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
+                        ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
+                        ...(currentAssessmentQuestions.adminInfo.task4Description
+                          ? [["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description]]
+                          : []),
+                        ...(currentAssessmentQuestions.adminInfo.task5Description
+                          ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
+                          : []),
+                        ...(currentAssessmentQuestions.adminInfo.task6Description
+                          ? [["Assessment Task 6", currentAssessmentQuestions.adminInfo.task6Description]]
+                          : [])
+                      ]),
+                    ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
+                  ]).map(([label, value]: any, idx: number) => (
                   <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
                     <div className="bg-slate-50 p-3 font-bold text-slate-700 md:border-r border-slate-200 text-xs uppercase tracking-wider">{label}</div>
                     <div className="p-3 text-slate-700 leading-relaxed text-xs sm:text-sm whitespace-pre-wrap">{value}</div>
@@ -840,7 +844,106 @@ const GradingPortal: React.FC = () => {
                 ))}
               </div>
 
+              {/* New Overview Sections for Question 13 / ICTCBL301 */}
+              {currentAssessmentQuestions.adminInfo.tasksOverview && (
+                <div className="mt-8 space-y-8 no-print-section">
+                  {/* Tasks Overview */}
+                  <div className="border-2 border-slate-400 break-inside-avoid">
+                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                      {currentAssessmentQuestions.adminInfo.tasksOverview.title}
+                    </div>
+                    <div className="p-4 bg-white space-y-4 text-sm text-slate-700">
+                      <p className="whitespace-pre-wrap">{currentAssessmentQuestions.adminInfo.tasksOverview.intro}</p>
+                      <ul className="list-decimal ml-6 space-y-1">
+                        {currentAssessmentQuestions.adminInfo.tasksOverview.elements.map((el: string, i: number) => (
+                          <li key={i}>{el}</li>
+                        ))}
+                      </ul>
+                      <p className="font-bold mt-4">{currentAssessmentQuestions.adminInfo.tasksOverview.evidenceIntro}</p>
+                      <ul className="list-disc ml-6 space-y-1">
+                        {currentAssessmentQuestions.adminInfo.tasksOverview.evidenceItems.map((item: string, i: number) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                      <p className="mt-6 font-medium italic text-blue-800">{currentAssessmentQuestions.adminInfo.tasksOverview.summary}</p>
+                      <div className="overflow-x-auto mt-2">
+                        <table className="w-full border-collapse border border-slate-300">
+                          <tbody>
+                            {currentAssessmentQuestions.adminInfo.tasksOverview.tasks.map((task: any, i: number) => (
+                              <tr key={i}>
+                                <td className="border border-slate-300 p-3 bg-slate-50 font-bold w-[180px]">{task.id}</td>
+                                <td className="border border-slate-300 p-3 bg-slate-50 w-[120px]">{task.type}</td>
+                                <td className="border border-slate-300 p-3 leading-relaxed">{task.text}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recording Assessment */}
+                  <div className="border-2 border-slate-400 break-inside-avoid">
+                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                      {currentAssessmentQuestions.adminInfo.recordingAssessment.title}
+                    </div>
+                    <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                      {currentAssessmentQuestions.adminInfo.recordingAssessment.content}
+                    </div>
+                  </div>
+
+                  {/* Assessment of Competency */}
+                  <div className="border-2 border-slate-400 break-inside-avoid">
+                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                      {currentAssessmentQuestions.adminInfo.competencyAssessment.title}
+                    </div>
+                    <div className="p-4 bg-white space-y-4 text-sm text-slate-700">
+                      <p className="whitespace-pre-wrap leading-relaxed">{currentAssessmentQuestions.adminInfo.competencyAssessment.content}</p>
+                      <div className="flex flex-wrap gap-8 ml-4">
+                        {currentAssessmentQuestions.adminInfo.competencyAssessment.criteria.map((c: string, i: number) => (
+                          <div key={i} className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-blue-600"></div>
+                            <span className="font-bold">{c}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-1 mt-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        {currentAssessmentQuestions.adminInfo.competencyAssessment.codes.map((item: any, i: number) => (
+                          <div key={i} className="flex gap-4 text-xs">
+                            <span className="font-bold w-12 text-blue-700">{item.code}</span>
+                            <span className="text-slate-400">-</span>
+                            <span className="font-medium">{item.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-4 pt-4 border-t border-slate-200 italic text-slate-500 text-xs">{currentAssessmentQuestions.adminInfo.competencyAssessment.footer}</p>
+                    </div>
+                  </div>
+
+                  {/* Assessor Feedback Overview */}
+                  <div className="border-2 border-slate-400 break-inside-avoid">
+                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                      {currentAssessmentQuestions.adminInfo.assessorFeedback.title}
+                    </div>
+                    <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed italic whitespace-pre-wrap">
+                      {currentAssessmentQuestions.adminInfo.assessorFeedback.content}
+                    </div>
+                  </div>
+
+                  {/* Cover Sheet Overview */}
+                  <div className="border-2 border-slate-400 break-inside-avoid">
+                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                      {currentAssessmentQuestions.adminInfo.coverSheet.title}
+                    </div>
+                    <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed font-bold whitespace-pre-wrap">
+                      {currentAssessmentQuestions.adminInfo.coverSheet.content}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Reasonable Adjustment Section */}
+              {currentAssessmentQuestions.adminInfo.reasonableAdjustment && (
               <div className="mt-8 border-2 border-slate-400 break-inside-avoid">
                 <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
                   Reasonable Adjustment
@@ -945,6 +1048,7 @@ const GradingPortal: React.FC = () => {
                   </div>
                 </div>
               </div>
+              )}
 
               {/* Cover Sheet Info */}
               <div className="mt-8 p-6 bg-slate-50 border-4 border-double border-slate-300 text-center space-y-4">
@@ -976,7 +1080,8 @@ const GradingPortal: React.FC = () => {
               const oralQuestions = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
               const perfQuestions = (taskData as any).performance || [];
               const observationItems = (taskData as any).observationItems || [];
-              const hasChecklist = oralQuestions.length > 0 || perfQuestions.length > 0 || observationItems.length > 0;
+              const observationList = (taskData as any).observationList || [];
+              const hasChecklist = oralQuestions.length > 0 || perfQuestions.length > 0 || observationItems.length > 0 || observationList.length > 0;
 
               const questionsArray: any[] = isPlainArray
                 ? taskData
@@ -1126,22 +1231,62 @@ const GradingPortal: React.FC = () => {
                       </div>
 
                       {taskData.assessorInstructions && (
-                        <div className="text-sm text-slate-500 italic bg-blue-50/50 p-6 rounded-2xl border border-blue-100/50 whitespace-pre-wrap">
-                          {taskData.assessorInstructions}
+                        <div className="space-y-4">
+                          {taskData.checklistIntro && (
+                            <div className="text-sm text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 whitespace-pre-wrap">
+                              {taskData.checklistIntro}
+                            </div>
+                          )}
+                          <div className="text-sm text-slate-500 italic bg-blue-50/50 p-6 rounded-2xl border border-blue-100/50 whitespace-pre-wrap">
+                            {taskData.assessorInstructions}
+                          </div>
                         </div>
                       )}
 
-                      {/* Observations List Section - Matching PDF */}
+
+                      {/* Observation List Section (Plain) - Matching PDF */}
+                      {observationList.length > 0 && (
+                        <div className="space-y-4 w-full max-w-2xl mx-auto py-6 px-4 md:px-0">
+                          <h4 className="font-bold text-black text-sm">The following was observed during the observations:</h4>
+                          <div className="space-y-2 ml-4">
+                            {observationList.map((item: string, idx: number) => (
+                              <div key={idx} className="flex gap-2 py-1 border-b border-slate-50 last:border-0">
+                                <span className="text-xs font-bold text-slate-400 w-4">{idx + 1}.</span>
+                                <span className="text-sm text-slate-700">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Observations List Section (With Checkboxes) - Matching PDF */}
                       {observationItems.length > 0 && (
                         <div className="space-y-4 w-full max-w-2xl mx-auto py-6 px-4 md:px-0">
                           <h4 className="font-bold text-black text-sm">The following was observed during the observations:</h4>
                           <div className="space-y-2 ml-4">
-                            {observationItems.map((item: string, idx: number) => (
-                              <div key={idx} className="flex gap-2">
-                                <span className="text-sm font-bold text-black">{idx + 1}.</span>
-                                <span className="text-sm text-black">{item}</span>
-                              </div>
-                            ))}
+                            {observationItems.map((item: string, idx: number) => {
+                              const obsKey = `t${tNum}obs${idx}`;
+                              const isObserved = grades[obsKey] === true;
+                              return (
+                                <div key={idx} className="flex items-center justify-between py-1 border-b border-slate-50 last:border-0">
+                                  <div className="flex gap-2 items-center">
+                                    <span className="text-xs font-bold text-slate-400 w-4">{idx + 1}.</span>
+                                    <span className="text-sm text-slate-700">{item}</span>
+                                  </div>
+                                  <div 
+                                    className="flex items-center gap-2 cursor-pointer group"
+                                    onClick={() => setGrades({ ...grades, [obsKey]: !isObserved })}
+                                  >
+                                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${isObserved ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-300 group-hover:border-blue-400'}`}>
+                                      {isObserved ? <span className="text-xs">✔</span> : <span className="text-transparent">❑</span>}
+                                    </div>
+                                    <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${isObserved ? 'text-blue-600' : 'text-slate-400'}`}>Observation 1</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+
+
                           </div>
                         </div>
                       )}
@@ -1380,9 +1525,9 @@ const GradingPortal: React.FC = () => {
         <div className="mt-12 md:mt-20 border-t-2 border-slate-200 pt-10 md:pt-20">
           <div className="flex flex-col-reverse md:flex-row justify-between items-center md:items-start mb-6 md:mb-4 gap-4">
             <div className="text-center md:text-left w-full">
-              <div className="text-[10px] md:text-sm font-bold border-b border-black inline-block mb-1">Assessment book</div>
+              <div className="text-[10px] md:text-sm font-bold border-b border-black inline-block mb-1">Assessment booklet</div>
               <div className="text-xs md:text-sm font-bold underline leading-tight">
-                {currentAssessmentQuestions.metadata?.code || 'ICTCBL330'} - {currentAssessmentQuestions.metadata?.title || 'Splice and terminate optical fibre cable for telecommunications projects'}
+                {currentAssessmentQuestions.metadata?.code} - {currentAssessmentQuestions.metadata?.subtitle}
               </div>
             </div>
             <img src="/assets/Skilscope.png" alt="Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
@@ -1482,11 +1627,15 @@ const GradingPortal: React.FC = () => {
                       } else if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
                         if (tNum <= 2) taskLabel = `Observation ${tNum}`;
                         else taskLabel = 'Written question and answers';
+                      } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
+                        if (tNum === 1) taskLabel = 'Observation';
+                        else taskLabel = 'Questions and Answers';
                       } else {
                         if (tNum <= 3) taskLabel = `Observation ${tNum}`;
                         else if (tNum === 4) taskLabel = 'Written question and answers';
                         else taskLabel = 'Written assessment';
                       }
+
 
                       return (
                         <tr key={idx} className="border-b border-slate-200 last:border-0 group hover:bg-slate-50/50 transition-colors break-inside-avoid">
@@ -1559,9 +1708,13 @@ const GradingPortal: React.FC = () => {
                     if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
                       if (tNum <= 2) taskLabel = `Observation ${tNum}`;
                       else taskLabel = 'Written question and answers';
+                    } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
+                      if (tNum === 1) taskLabel = 'Observation';
+                      else taskLabel = 'Questions and Answers';
                     } else if (tNum <= 3) taskLabel = `Observation ${tNum}`;
                     else if (tNum === 4) taskLabel = 'Written question and answers';
                     else taskLabel = 'Written assessment';
+
 
                     return (
                       <div key={idx} className="p-4 space-y-4 bg-white break-inside-avoid">
