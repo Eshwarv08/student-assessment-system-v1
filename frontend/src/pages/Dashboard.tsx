@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
-import { Link, Copy, Check, Clock, UserCheck, FileText, ChevronRight, AlertCircle, ExternalLink, ChevronDown, ChevronUp, Printer } from 'lucide-react'
+import { Link, Copy, Check, Clock, UserCheck, FileText, ChevronRight, AlertCircle, ExternalLink, ChevronDown, ChevronUp, Printer, X } from 'lucide-react'
 import Layout from '../components/Layout'
 import { availableQuestions } from '../data'
 
@@ -51,6 +51,7 @@ const Dashboard: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false)
   const [expandedStudent, setExpandedStudent] = useState<string | null>(null)
   const [expandedAssessment, setExpandedAssessment] = useState<string | null>(null)
+  const [activeStudentModal, setActiveStudentModal] = useState<any>(null)
 
   // Group submissions by student
   const groupedSubmissions = React.useMemo(() => {
@@ -193,7 +194,7 @@ const Dashboard: React.FC = () => {
                             </td>
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-2">
-                                <div className="font-black text-slate-800 text-xs uppercase tracking-wider">{a.name || 'Assessment Task 4-6'}</div>
+                                <div className="font-black text-slate-800 text-xs uppercase tracking-wider">{availableQuestions.find(q => q.id === a.token)?.name || a.name || 'Assessment Task 4-6'}</div>
                                 {assessmentSubmissions.length > 0 && (
                                   <span className="bg-blue-50 text-blue-700 text-[9px] font-black px-1.5 py-0.5 rounded-full">
                                     {assessmentSubmissions.length} Submissions
@@ -272,7 +273,7 @@ const Dashboard: React.FC = () => {
                                 className="mt-1 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                               />
                               <div>
-                                <div className="font-black text-slate-800 text-xs uppercase tracking-wider leading-tight">{a.name}</div>
+                                <div className="font-black text-slate-800 text-xs uppercase tracking-wider leading-tight">{availableQuestions.find(q => q.id === a.token)?.name || a.name}</div>
                                 <div className="flex flex-wrap gap-2 mt-1">
                                   <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">{new Date(a.created_at).toLocaleDateString()}</span>
                                   {assessmentSubmissions.length > 0 && (
@@ -350,103 +351,46 @@ const Dashboard: React.FC = () => {
                   </tr>
                 ) : (
                   groupedSubmissions.map((group: any) => (
-                    <React.Fragment key={group.id}>
-                      <tr className="hover:bg-gray-50 transition-colors group cursor-pointer" onClick={() => setExpandedStudent(expandedStudent === group.id ? null : group.id)}>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            <div className="font-black text-gray-900 text-base">{group.student_name}</div>
-                            <span className="bg-blue-50 text-blue-700 text-[10px] font-black px-2 py-0.5 rounded-full">
-                              {group.submissions.length} {group.submissions.length === 1 ? 'Assessment' : 'Assessments'}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 text-gray-600 text-sm hidden lg:table-cell">{group.student_id || '—'}</td>
-                        <td className="px-6 py-4 text-gray-500 text-sm">
-                          <div className="font-bold">{new Date(group.latest_submission).toLocaleDateString()}</div>
-                          <div className="text-[10px] opacity-60">Latest Submission</div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${group.submissions.every((s: any) => s.status === 'graded')
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-amber-100 text-amber-700'
-                            }`}>
-                            {group.submissions.every((s: any) => s.status === 'graded') ? <UserCheck size={10} /> : <Clock size={10} />}
-                            {group.submissions.every((s: any) => s.status === 'graded') ? 'All Graded' : group.submissions.some((s: any) => s.status === 'graded') ? 'Partially Graded' : 'Pending'}
+                    <tr
+                      key={group.id}
+                      className="hover:bg-gray-50 transition-colors group cursor-pointer"
+                      onClick={() => setActiveStudentModal(group)}
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="font-black text-gray-900 text-base">{group.student_name}</div>
+                          <span className="bg-blue-50 text-blue-700 text-[10px] font-black px-2 py-0.5 rounded-full">
+                            {group.submissions.length} {group.submissions.length === 1 ? 'Assessment' : 'Assessments'}
                           </span>
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <button
-                            className="inline-flex items-center gap-1 text-[#1e3a8a] font-black text-[13px] bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 hover:bg-blue-100 transition-all uppercase tracking-tight"
-                          >
-                            {expandedStudent === group.id ? 'Close' : 'Review Student'}
-                            {expandedStudent === group.id ? <ChevronUp size={14} strokeWidth={3} /> : <ChevronDown size={14} strokeWidth={3} />}
-                          </button>
-                        </td>
-                      </tr>
-                      {expandedStudent === group.id && (
-                        <tr>
-                          <td colSpan={5} className="px-6 py-4 bg-gray-50/50">
-                            <div className="bg-white rounded-xl border border-blue-100 shadow-sm overflow-hidden animate-in slide-in-from-top-2 duration-200">
-                              <table className="w-full text-left">
-                                <thead className="bg-blue-50/50">
-                                  <tr className="text-[10px] uppercase font-black text-blue-900 tracking-wider">
-                                    <th className="px-4 py-3">Assessment Template</th>
-                                    <th className="px-4 py-3">Submitted On</th>
-                                    <th className="px-4 py-3">Status</th>
-                                    <th className="px-4 py-3 text-right">Actions</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-blue-50">
-                                  {group.submissions.map((sub: any) => (
-                                    <tr key={sub._id} className="hover:bg-blue-50/30 transition-colors">
-                                      <td className="px-4 py-3">
-                                        <div className="font-bold text-gray-800 text-sm">{sub.assessment_id?.name || 'Question 1'}</div>
-                                        <div className="text-[10px] text-gray-400 font-mono">ID: {sub._id.slice(-8)}</div>
-                                      </td>
-                                      <td className="px-4 py-3 text-xs text-gray-500">
-                                        {new Date(sub.submitted_at).toLocaleString()}
-                                      </td>
-                                      <td className="px-4 py-3">
-                                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tight ${sub.status === 'graded'
-                                          ? 'bg-green-100 text-green-700'
-                                          : 'bg-amber-100 text-amber-700'
-                                          }`}>
-                                          {sub.status === 'graded' ? 'Graded' : 'Pending'}
-                                        </span>
-                                      </td>
-                                      <td className="px-4 py-3 text-right">
-                                        <div className="flex justify-end gap-2">
-                                          {sub.status === 'graded' && (
-                                            <button
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                window.location.href = `/grade/${sub._id}?print=true`;
-                                              }}
-                                              className="text-[10px] font-black uppercase bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700 transition-colors flex items-center gap-1"
-                                            >
-                                              <Printer size={10} /> PDF
-                                            </button>
-                                          )}
-                                          <button
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              window.location.href = `/grade/${sub._id}`;
-                                            }}
-                                            className="text-[10px] font-black uppercase bg-[#1e3a8a] text-white px-3 py-1 rounded-md hover:bg-blue-800 transition-colors"
-                                          >
-                                            Review & Grade
-                                          </button>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </React.Fragment>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-gray-600 text-sm hidden lg:table-cell">{group.student_id || '—'}</td>
+                      <td className="px-6 py-4 text-gray-500 text-sm">
+                        <div className="font-bold">{new Date(group.latest_submission).toLocaleDateString()}</div>
+                        <div className="text-[10px] opacity-60">Latest Submission</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight ${group.submissions.every((s: any) => s.status === 'graded')
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-amber-100 text-amber-700'
+                          }`}>
+                          {group.submissions.every((s: any) => s.status === 'graded') ? <UserCheck size={10} /> : <Clock size={10} />}
+                          {group.submissions.every((s: any) => s.status === 'graded') ? 'All Graded' : group.submissions.some((s: any) => s.status === 'graded') ? 'Partially Graded' : 'Pending'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveStudentModal(group);
+                          }}
+                          className="inline-flex items-center gap-1 text-[#1e3a8a] font-black text-[13px] bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 hover:bg-blue-100 transition-all uppercase tracking-tight"
+                        >
+                          Review Student
+                          <ChevronRight size={14} strokeWidth={3} />
+                        </button>
+                      </td>
+                    </tr>
                   ))
                 )}
               </tbody>
@@ -486,44 +430,12 @@ const Dashboard: React.FC = () => {
                       <span>Last: {new Date(group.latest_submission).toLocaleDateString()}</span>
                     </div>
                     <button
-                      onClick={() => setExpandedStudent(expandedStudent === group.id ? null : group.id)}
+                      onClick={() => setActiveStudentModal(group)}
                       className="flex items-center justify-center gap-2 w-full py-2 bg-blue-50 text-[#1e3a8a] rounded-lg font-black text-xs uppercase tracking-tight border border-blue-100"
                     >
-                      {expandedStudent === group.id ? 'Hide Details' : 'Review Assessments'}
-                      {expandedStudent === group.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                      Review Assessments
+                      <ChevronRight size={14} />
                     </button>
-
-                    {expandedStudent === group.id && (
-                      <div className="mt-2 space-y-2 animate-in slide-in-from-top-2">
-                        {group.submissions.map((sub: any) => (
-                          <div key={sub._id} className="bg-gray-50 p-3 rounded-lg border border-gray-100 space-y-2">
-                            <div className="font-bold text-gray-800 text-xs">{sub.assessment_id?.name || 'Question 1'}</div>
-                            <div className="flex items-center justify-between">
-                              <span className={`text-[9px] font-black px-1.5 py-0.5 rounded uppercase ${sub.status === 'graded' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                                {sub.status}
-                              </span>
-                              <span className="text-[10px] text-gray-400">{new Date(sub.submitted_at).toLocaleDateString()}</span>
-                            </div>
-                            <div className="flex gap-2">
-                              {sub.status === 'graded' && (
-                                <button
-                                  onClick={() => window.location.href = `/grade/${sub._id}?print=true`}
-                                  className="flex-1 flex items-center justify-center gap-1 py-1.5 bg-green-600 text-white rounded text-[10px] font-black uppercase"
-                                >
-                                  <Printer size={12} /> PDF
-                                </button>
-                              )}
-                              <button
-                                onClick={() => window.location.href = `/grade/${sub._id}`}
-                                className="flex-1 py-1.5 bg-[#1e3a8a] text-white rounded text-[10px] font-black uppercase"
-                              >
-                                Grade
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 ))
               )}
@@ -641,6 +553,112 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         </div>
+      {activeStudentModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl shadow-2xl border border-blue-50 w-full max-w-5xl max-h-[85vh] overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col">
+            {/* Modal Header */}
+            <div className="px-6 py-5 bg-[#1e3a8a] text-white flex items-center justify-between flex-shrink-0">
+              <div>
+                <h3 className="font-black text-lg tracking-tight uppercase m-0 p-0 border-none">{activeStudentModal.student_name}</h3>
+                <p className="text-[10px] text-blue-200 font-bold uppercase tracking-widest mt-0.5">
+                  Student ID: {activeStudentModal.student_id || '—'}
+                </p>
+              </div>
+              <button
+                onClick={() => setActiveStudentModal(null)}
+                className="p-2 hover:bg-white/10 rounded-full transition-colors text-white outline-none"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto flex-1 space-y-5">
+              <div className="flex items-center justify-between bg-blue-50/50 px-5 py-4 rounded-2xl border border-blue-100">
+                <span className="text-sm font-black uppercase text-slate-500 tracking-wider">Total Submissions:</span>
+                <span className="bg-blue-600 text-white text-sm font-black px-4 py-1.5 rounded-full">
+                  {activeStudentModal.submissions.length} {activeStudentModal.submissions.length === 1 ? 'Assessment' : 'Assessments'}
+                </span>
+              </div>
+
+              <div className="bg-white rounded-2xl border overflow-hidden shadow-sm">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead className="bg-gray-50 border-b">
+                      <tr className="text-xs uppercase font-black text-gray-500 tracking-wider">
+                        <th className="px-5 py-4">Assessment Template</th>
+                        <th className="px-5 py-4">Submitted On</th>
+                        <th className="px-5 py-4">Status</th>
+                        <th className="px-5 py-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {activeStudentModal.submissions.map((sub: any) => {
+                        const isGraded = sub.status === 'graded';
+                        return (
+                          <tr key={sub._id} className="hover:bg-slate-50/50 transition-colors">
+                            <td className="px-5 py-4">
+                              <div className="font-black text-slate-800 text-sm sm:text-base uppercase tracking-tight">
+                                {availableQuestions.find(q => q.id === sub.assessment_id?.token)?.name || sub.assessment_id?.name || 'Question 1'}
+                              </div>
+                              <div className="text-[10px] text-slate-400 font-mono mt-0.5">ID: {sub._id.slice(-8)}</div>
+                            </td>
+                            <td className="px-5 py-4 text-xs sm:text-sm text-slate-500 font-semibold">
+                              <div>{new Date(sub.submitted_at).toLocaleDateString()}</div>
+                              <div className="text-[10px] opacity-60 mt-0.5">{new Date(sub.submitted_at).toLocaleTimeString()}</div>
+                            </td>
+                            <td className="px-5 py-4">
+                              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-tight ${isGraded
+                                ? 'bg-green-100 text-green-700'
+                                : 'bg-amber-100 text-amber-700'
+                                }`}>
+                                {isGraded ? <UserCheck size={12} /> : <Clock size={12} />}
+                                {isGraded ? 'Graded' : 'Pending'}
+                              </span>
+                            </td>
+                            <td className="px-5 py-4 text-right">
+                              <div className="flex justify-end gap-2">
+                                {isGraded && (
+                                  <button
+                                    onClick={() => {
+                                      window.location.href = `/grade/${sub._id}?print=true`;
+                                    }}
+                                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase bg-green-600 hover:bg-green-700 text-white px-3.5 py-2 rounded-xl shadow-sm transition-colors"
+                                  >
+                                    <Printer size={14} /> PDF
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => {
+                                    window.location.href = `/grade/${sub._id}`;
+                                  }}
+                                  className="inline-flex items-center gap-1.5 text-xs font-black uppercase bg-[#1e3a8a] hover:bg-blue-800 text-white px-3.5 py-2 rounded-xl shadow-sm transition-colors"
+                                >
+                                  Grade
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-6 py-4 bg-gray-50 border-t flex justify-end flex-shrink-0">
+              <button
+                onClick={() => setActiveStudentModal(null)}
+                className="px-6 py-2.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm outline-none"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
     </Layout>
   )

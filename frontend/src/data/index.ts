@@ -38,21 +38,21 @@ export const questionSets: Record<string, any> = {
 };
 
 export const availableQuestions = [
-  { id: 'question-1', name: 'Question 1' },
-  { id: 'question-2', name: 'Question 2' },
-  { id: 'question-3', name: 'Question 3' },
-  { id: 'question-4', name: 'Question 4' },
-  { id: 'question-5', name: 'Question 5' },
-  { id: 'question-6', name: 'Question 6' },
-  { id: 'question-7', name: 'Question 7' },
-  { id: 'question-8', name: 'Question 8' },
-  { id: 'question-9', name: 'Question 9' },
-  { id: 'question-10', name: 'Question 10' },
-  { id: 'question-11', name: 'Question 11' },
-  { id: 'question-12', name: 'Question 12' },
-  { id: 'question-13', name: 'Question 13' },
-  { id: 'question-14', name: 'Question 14' },
-  { id: 'question-15', name: 'Question 15' },
+  { id: 'question-1',  name: 'ICTCBL246 & ICTCBL247' },
+  { id: 'question-2',  name: 'ICTCBL330' },
+  { id: 'question-3',  name: 'ICTCBL322' },
+  { id: 'question-4',  name: 'ICTCBL320' },
+  { id: 'question-5',  name: 'ICTTEN254' },
+  { id: 'question-6',  name: 'ICTCBL208' },
+  { id: 'question-7',  name: 'ICTCBL333' },
+  { id: 'question-8',  name: 'ICTICT308' },
+  { id: 'question-9',  name: 'ICTTEN307' },
+  { id: 'question-10', name: 'ICTCBL204' },
+  { id: 'question-11', name: 'ICTCBL318' },
+  { id: 'question-12', name: 'ICTTEN313' },
+  { id: 'question-13', name: 'ICTCBL301' },
+  { id: 'question-14', name: 'ICTCBL303' },
+  { id: 'question-15', name: 'ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253' },
 ];
 
 
