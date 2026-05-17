@@ -224,7 +224,7 @@ const AssessmentForm: React.FC = () => {
                         row.cells.map((cell: any, cIdx: number) => (
                           <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
                             <div className="flex flex-col gap-1.5 p-1">
-                              {cell.options.map((opt: any, oIdx: number) => (
+                              {cell.options ? cell.options.map((opt: any, oIdx: number) => (
                                 <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
                                   <input
                                     type={cell.type || 'radio'}
@@ -248,7 +248,15 @@ const AssessmentForm: React.FC = () => {
                                   />
                                   <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
                                 </label>
-                              ))}
+                              )) : (
+                                <input
+                                  type="text"
+                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                  placeholder="Comments..."
+                                  value={answers[cell.name] || ''}
+                                  onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
+                                />
+                              )}
                             </div>
                           </td>
                         ))
@@ -403,6 +411,9 @@ const AssessmentForm: React.FC = () => {
                     type={opt.type || 'radio'}
                     name={qKey}
                     value={opt.value}
+                    checked={opt.type === 'checkbox' 
+                      ? (Array.isArray(answers[qKey]) ? answers[qKey].includes(opt.value) : false)
+                      : answers[qKey] === opt.value}
                     className="accent-[#1e3a8a]"
                     onChange={(e) => {
                       if (opt.type === 'checkbox') {
@@ -556,6 +567,9 @@ const AssessmentForm: React.FC = () => {
               .map((taskKey) => {
                 const tNum = parseInt(taskKey.replace('task', ''));
                 const taskData = assessmentQuestions[taskKey];
+                
+                if (taskData.assessorOnly) return null;
+
                 // Case 1: plain array of question objects
                 const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
                 // Case 2: object with a nested .questions array (e.g. ICTCBL322 task1)
@@ -627,62 +641,81 @@ const AssessmentForm: React.FC = () => {
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {section.rows.map((row: any, rIdx: number) => (
-                                              <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
-                                                <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
-                                                  {row.label}
-                                                </td>
-                                                {row.cells ? (
-                                                  row.cells.map((cell: any, cIdx: number) => (
-                                                    <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
-                                                      <div className="flex flex-col gap-1.5 p-1">
-                                                        {cell.options.map((opt: any, oIdx: number) => (
-                                                          <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
-                                                            <div className="relative flex items-center justify-center">
-                                                              <input
-                                                                type={cell.type || 'radio'}
-                                                                name={cell.name}
-                                                                value={opt.value}
-                                                                checked={cell.type === 'checkbox' 
-                                                                  ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
-                                                                  : answers[cell.name] === opt.value}
-                                                                onChange={(e) => {
-                                                                  if (cell.type === 'checkbox') {
-                                                                    const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
-                                                                    const updated = e.target.checked 
-                                                                      ? [...current, opt.value]
-                                                                      : current.filter((v: string) => v !== opt.value);
-                                                                    setAnswers({ ...answers, [cell.name]: updated });
-                                                                  } else {
-                                                                    setAnswers({ ...answers, [cell.name]: e.target.value });
-                                                                  }
-                                                                }}
-                                                                className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
-                                                              />
-                                                            </div>
-                                                            <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                                          </label>
-                                                        ))}
-                                                      </div>
-                                                    </td>
-                                                  ))
-                                                ) : (
-                                                  <td className="p-2" colSpan={section.headers.length - 1}>
-                                                    {row.editable ? (
-                                                      <input
-                                                        type="text"
-                                                        className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                        placeholder="Enter result..."
-                                                        value={answers[row.id] || ''}
-                                                        onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
-                                                      />
-                                                    ) : (
-                                                      <span className="p-2 text-sm text-slate-600">{row.value}</span>
-                                                    )}
-                                                  </td>
-                                                )}
-                                              </tr>
-                                            ))}
+                                             {section.rows.map((row: any, rIdx: number) => {
+                                               if (row.isSubHeader) {
+                                                 return (
+                                                   <tr key={rIdx} className="bg-slate-100 border-b border-slate-200">
+                                                     <td colSpan={section.headers.length} className="p-3 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                                       {row.label}
+                                                     </td>
+                                                   </tr>
+                                                 )
+                                               }
+                                               return (
+                                                 <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                                   <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
+                                                     {row.label}
+                                                   </td>
+                                                   {row.cells ? (
+                                                     row.cells.map((cell: any, cIdx: number) => (
+                                                       <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                                                         <div className="flex flex-col gap-1.5 p-1">
+                                                           {cell.options ? cell.options.map((opt: any, oIdx: number) => (
+                                                             <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                               <div className="relative flex items-center justify-center">
+                                                                 <input
+                                                                   type={cell.type || 'radio'}
+                                                                   name={cell.name}
+                                                                   value={opt.value}
+                                                                   checked={cell.type === 'checkbox' 
+                                                                     ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                                                     : answers[cell.name] === opt.value}
+                                                                   onChange={(e) => {
+                                                                     if (cell.type === 'checkbox') {
+                                                                       const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                                                       const updated = e.target.checked 
+                                                                         ? [...current, opt.value]
+                                                                         : current.filter((v: string) => v !== opt.value);
+                                                                       setAnswers({ ...answers, [cell.name]: updated });
+                                                                     } else {
+                                                                       setAnswers({ ...answers, [cell.name]: e.target.value });
+                                                                     }
+                                                                   }}
+                                                                   className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                                 />
+                                                               </div>
+                                                               <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                             </label>
+                                                           )) : (
+                                                             <input
+                                                               type="text"
+                                                               className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                               placeholder="Comments..."
+                                                               value={answers[cell.name] || ''}
+                                                               onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
+                                                             />
+                                                           )}
+                                                         </div>
+                                                       </td>
+                                                     ))
+                                                   ) : (
+                                                     <td className="p-2" colSpan={section.headers.length - 1}>
+                                                       {row.editable ? (
+                                                         <input
+                                                           type="text"
+                                                           className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                           placeholder="Enter result..."
+                                                           value={answers[row.id] || ''}
+                                                           onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                                         />
+                                                       ) : (
+                                                         <span className="p-2 text-sm text-slate-600">{row.value}</span>
+                                                       )}
+                                                     </td>
+                                                   )}
+                                                 </tr>
+                                               )
+                                             })}
                                           </tbody>
                                         </table>
                                       </div>
@@ -785,7 +818,7 @@ const AssessmentForm: React.FC = () => {
                                             row.cells.map((cell: any, cIdx: number) => (
                                               <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
                                                 <div className="flex flex-col gap-1.5 p-1">
-                                                  {cell.options.map((opt: any, oIdx: number) => (
+                                                  {cell.options ? cell.options.map((opt: any, oIdx: number) => (
                                                     <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
                                                       <input
                                                         type={cell.type || 'radio'}
@@ -809,7 +842,15 @@ const AssessmentForm: React.FC = () => {
                                                       />
                                                       <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
                                                     </label>
-                                                  ))}
+                                                  )) : (
+                                                    <input
+                                                      type="text"
+                                                      className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                      placeholder="Comments..."
+                                                      value={answers[cell.name] || ''}
+                                                      onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
+                                                    />
+                                                  )}
                                                 </div>
                                               </td>
                                             ))

@@ -12,6 +12,7 @@ import { assessmentQuestions as question11 } from './questions11';
 import { assessmentQuestions as question12 } from './questions12';
 import { assessmentQuestions as question13 } from './questions13';
 import { assessmentQuestions as question14 } from './questions14';
+import { assessmentQuestions as question15 } from './questions15';
 
 // Instructions for adding new questions in the future:
 // 1. Create a new file (e.g., questions2.ts) based on questions.ts
@@ -33,6 +34,7 @@ export const questionSets: Record<string, any> = {
   'question-12': question12,
   'question-13': question13,
   'question-14': question14,
+  'question-15': question15,
 };
 
 export const availableQuestions = [
@@ -50,6 +52,7 @@ export const availableQuestions = [
   { id: 'question-12', name: 'Question 12' },
   { id: 'question-13', name: 'Question 13' },
   { id: 'question-14', name: 'Question 14' },
+  { id: 'question-15', name: 'Question 15' },
 ];
 
 

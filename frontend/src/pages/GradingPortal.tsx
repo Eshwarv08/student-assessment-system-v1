@@ -23,7 +23,7 @@ const GradingPortal: React.FC = () => {
   const [grades, setGrades] = useState<any>({})
   const [taskResults, setTaskResults] = useState<any>({})
   const [finalResult, setFinalResult] = useState<string>('')
-  const [sigModal, setSigModal] = useState<{ open: boolean, field: string, type: 'task' | 'comp' } | null>(null)
+  const [sigModal, setSigModal] = useState<{ open: boolean, field: string, type: 'task' | 'comp' | 'grades' } | null>(null)
   const sigCanvasRef = useRef<HTMLCanvasElement>(null)
   const sigPadRef = useRef<SignaturePad | null>(null)
   const [compRecord, setCompRecord] = useState<any>({
@@ -57,6 +57,7 @@ const GradingPortal: React.FC = () => {
   })
 
   const currentAssessmentQuestions = getQuestionsForAssessment(submission?.assessment_id?.token || 'question-1');
+  const isQuestion15 = (submission?.assessment_id?.token || '').toLowerCase() === 'question-15';
 
   useEffect(() => {
     if (submission) {
@@ -124,7 +125,7 @@ const GradingPortal: React.FC = () => {
   const sigModalCanvasRef = useRef<HTMLCanvasElement>(null)
   const sigModalContainerRef = useRef<HTMLDivElement>(null)
 
-  const openSigModal = (field: string, type: 'task' | 'comp') => {
+  const openSigModal = (field: string, type: 'task' | 'comp' | 'grades') => {
     setSigModal({ open: true, field, type })
   }
 
@@ -175,6 +176,8 @@ const GradingPortal: React.FC = () => {
       setTaskResults({ ...taskResults, [sigModal.field]: dataUrl })
     } else if (sigModal?.type === 'comp') {
       setCompRecord({ ...compRecord, [sigModal.field]: dataUrl })
+    } else if (sigModal?.type === 'grades') {
+      setGrades({ ...grades, [sigModal.field]: dataUrl })
     }
     closeSigModal()
   }
@@ -297,7 +300,7 @@ const GradingPortal: React.FC = () => {
                               return (
                                 <td key={cIdx} className="p-3 border-l border-slate-100 align-top">
                                   <div className="flex flex-col gap-1.5">
-                                    {cell.options.map((opt: any, oIdx: number) => {
+                                    {cell.options ? cell.options.map((opt: any, oIdx: number) => {
                                       const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
                                       return (
                                         <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
@@ -307,7 +310,11 @@ const GradingPortal: React.FC = () => {
                                           <span className="text-[10px] leading-tight">{opt.text}</span>
                                         </div>
                                       )
-                                    })}
+                                    }) : (
+                                      <div className="text-[10px] text-slate-700 italic bg-slate-50 p-2 rounded">
+                                        {ans || '(No comments provided)'}
+                                      </div>
+                                    )}
                                   </div>
                                 </td>
                               )
@@ -388,7 +395,7 @@ const GradingPortal: React.FC = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-2">
-                  {q.options.map((opt: any, idx: number) => {
+                  {q.options ? q.options.map((opt: any, idx: number) => {
                     const isSelected = Array.isArray(studentAnswer)
                       ? studentAnswer.includes(opt.value)
                       : studentAnswer === opt.value
@@ -405,7 +412,11 @@ const GradingPortal: React.FC = () => {
                         </span>
                       </div>
                     )
-                  })}
+                  }) : (
+                    <div className="p-3 bg-slate-50 text-slate-500 italic rounded-lg text-sm">
+                      {studentAnswer || '(No options or response provided)'}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -762,7 +773,7 @@ const GradingPortal: React.FC = () => {
         </div>
 
         {/* Administrative Use Only Section - Match PDF exactly */}
-        {currentAssessmentQuestions.adminInfo && (
+        {currentAssessmentQuestions.adminInfo && !currentAssessmentQuestions.adminInfo.hideAdminUseOnly && (
           <div className="border-2 border-slate-400 mb-12 no-print-section break-inside-avoid">
             <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
               {(currentAssessmentQuestions.adminInfo.markingGuide && currentAssessmentQuestions.metadata.code !== 'ICTCBL303') ? "Asseror’s Marking Guide Instructions" : "Administrative Use Only:"}
@@ -837,11 +848,11 @@ const GradingPortal: React.FC = () => {
                       ]),
                     ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
                   ]).map(([label, value]: any, idx: number) => (
-                  <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
-                    <div className="bg-slate-50 p-3 font-bold text-slate-700 md:border-r border-slate-200 text-xs uppercase tracking-wider">{label}</div>
-                    <div className="p-3 text-slate-700 leading-relaxed text-xs sm:text-sm whitespace-pre-wrap">{value}</div>
-                  </div>
-                ))}
+                    <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
+                      <div className="bg-slate-50 p-3 font-bold text-slate-700 md:border-r border-slate-200 text-xs uppercase tracking-wider">{label}</div>
+                      <div className="p-3 text-slate-700 leading-relaxed text-xs sm:text-sm whitespace-pre-wrap">{value}</div>
+                    </div>
+                  ))}
               </div>
 
               {/* New Overview Sections for Question 13 / ICTCBL301 */}
@@ -944,110 +955,110 @@ const GradingPortal: React.FC = () => {
 
               {/* Reasonable Adjustment Section */}
               {currentAssessmentQuestions.adminInfo.reasonableAdjustment && (
-              <div className="mt-8 border-2 border-slate-400 break-inside-avoid">
-                <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
-                  Reasonable Adjustment
-                </div>
-                <div className="p-4 bg-white space-y-4 text-[11px]">
-                  <p className="text-slate-600 leading-relaxed">{currentAssessmentQuestions.adminInfo.reasonableAdjustment}</p>
-                  <div className="hidden md:block">
-                    <table className="w-full border-collapse border border-slate-300">
-                      <thead className="bg-slate-50 text-slate-700">
-                        <tr>
-                          <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reasonable Adjustment Provided</th>
-                          <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reason for Reasonable Adjustment</th>
-                          <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Outcome</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="border border-slate-300 p-2 align-top">
-                            <div className="space-y-2">
-                              {[
-                                "Educational and bilingual support",
-                                "Presenting questions orally",
-                                "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
-                                "Extra time to complete a course or assessment",
-                                "Others:"
-                              ].map((adj, i) => (
-                                <div key={i} className="flex items-start gap-2">
-                                  <span className="text-slate-600 leading-tight">{adj}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </td>
-                          <td className="border border-slate-300 p-2 align-top">
-                            <textarea
-                              className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
-                              placeholder="Enter reason here..."
-                              value={compRecord.reasonable_adjustment?.reason || ''}
-                              onChange={(e) => setCompRecord({
-                                ...compRecord,
-                                reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
-                              })}
-                            />
-                          </td>
-                          <td className="border border-slate-300 p-2 align-top">
-                            <textarea
-                              className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
-                              placeholder="Enter outcome here..."
-                              value={compRecord.reasonable_adjustment?.outcome || ''}
-                              onChange={(e) => setCompRecord({
-                                ...compRecord,
-                                reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
-                              })}
-                            />
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                <div className="mt-8 border-2 border-slate-400 break-inside-avoid">
+                  <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
+                    Reasonable Adjustment
                   </div>
+                  <div className="p-4 bg-white space-y-4 text-[11px]">
+                    <p className="text-slate-600 leading-relaxed">{currentAssessmentQuestions.adminInfo.reasonableAdjustment}</p>
+                    <div className="hidden md:block">
+                      <table className="w-full border-collapse border border-slate-300">
+                        <thead className="bg-slate-50 text-slate-700">
+                          <tr>
+                            <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reasonable Adjustment Provided</th>
+                            <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reason for Reasonable Adjustment</th>
+                            <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Outcome</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="border border-slate-300 p-2 align-top">
+                              <div className="space-y-2">
+                                {[
+                                  "Educational and bilingual support",
+                                  "Presenting questions orally",
+                                  "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
+                                  "Extra time to complete a course or assessment",
+                                  "Others:"
+                                ].map((adj, i) => (
+                                  <div key={i} className="flex items-start gap-2">
+                                    <span className="text-slate-600 leading-tight">{adj}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                            <td className="border border-slate-300 p-2 align-top">
+                              <textarea
+                                className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
+                                placeholder="Enter reason here..."
+                                value={compRecord.reasonable_adjustment?.reason || ''}
+                                onChange={(e) => setCompRecord({
+                                  ...compRecord,
+                                  reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
+                                })}
+                              />
+                            </td>
+                            <td className="border border-slate-300 p-2 align-top">
+                              <textarea
+                                className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
+                                placeholder="Enter outcome here..."
+                                value={compRecord.reasonable_adjustment?.outcome || ''}
+                                onChange={(e) => setCompRecord({
+                                  ...compRecord,
+                                  reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
+                                })}
+                              />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
 
-                  {/* Mobile View */}
-                  <div className="md:hidden space-y-6">
-                    <div className="space-y-3">
-                      <div className="font-bold text-slate-700">Adjustments Provided:</div>
-                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
-                        {[
-                          "Educational and bilingual support",
-                          "Presenting questions orally",
-                          "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
-                          "Extra time to complete a course or assessment",
-                          "Others:"
-                        ].map((adj, i) => (
-                          <div key={i} className="flex items-start gap-2">
-                            <span className="text-slate-600 text-xs leading-tight">• {adj}</span>
-                          </div>
-                        ))}
+                    {/* Mobile View */}
+                    <div className="md:hidden space-y-6">
+                      <div className="space-y-3">
+                        <div className="font-bold text-slate-700">Adjustments Provided:</div>
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
+                          {[
+                            "Educational and bilingual support",
+                            "Presenting questions orally",
+                            "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
+                            "Extra time to complete a course or assessment",
+                            "Others:"
+                          ].map((adj, i) => (
+                            <div key={i} className="flex items-start gap-2">
+                              <span className="text-slate-600 text-xs leading-tight">• {adj}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="font-bold text-slate-700">Reason:</div>
+                        <textarea
+                          className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
+                          placeholder="Enter reason..."
+                          value={compRecord.reasonable_adjustment?.reason || ''}
+                          onChange={(e) => setCompRecord({
+                            ...compRecord,
+                            reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
+                          })}
+                        />
+                      </div>
+                      <div className="space-y-3">
+                        <div className="font-bold text-slate-700">Outcome:</div>
+                        <textarea
+                          className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
+                          placeholder="Enter outcome..."
+                          value={compRecord.reasonable_adjustment?.outcome || ''}
+                          onChange={(e) => setCompRecord({
+                            ...compRecord,
+                            reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
+                          })}
+                        />
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <div className="font-bold text-slate-700">Reason:</div>
-                      <textarea
-                        className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
-                        placeholder="Enter reason..."
-                        value={compRecord.reasonable_adjustment?.reason || ''}
-                        onChange={(e) => setCompRecord({
-                          ...compRecord,
-                          reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
-                        })}
-                      />
-                    </div>
-                    <div className="space-y-3">
-                      <div className="font-bold text-slate-700">Outcome:</div>
-                      <textarea
-                        className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
-                        placeholder="Enter outcome..."
-                        value={compRecord.reasonable_adjustment?.outcome || ''}
-                        onChange={(e) => setCompRecord({
-                          ...compRecord,
-                          reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
-                        })}
-                      />
-                    </div>
                   </div>
                 </div>
-              </div>
               )}
 
               {/* Cover Sheet Info */}
@@ -1101,7 +1112,7 @@ const GradingPortal: React.FC = () => {
               return (
                 <section key={taskKey} className="space-y-12 page-break-before">
                   {/* Observation Section - Only show if observation data exists */}
-                  {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections) && (
+                  {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections || taskData.assessorSections) && (
                     <div className="space-y-6">
                       <div className="text-center">
                         <div className="task-banner-ribbon">
@@ -1114,9 +1125,12 @@ const GradingPortal: React.FC = () => {
                         )}
                       </div>
 
-                      {taskData.sections && (
+                      {(taskData.sections || taskData.assessorSections) && (
                         <div className="space-y-4">
-                          {taskData.sections.map((section: any, sIdx: number) => (
+                          {[
+                            ...(taskData.sections || []),
+                            ...(taskData.assessorSections || []).map((s: any) => ({ ...s, isAssessorOnly: true }))
+                          ].map((section: any, sIdx: number) => (
                             <div key={sIdx} className="space-y-3">
                               {section.type === 'text' && (
                                 <div className={`space-y-2 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
@@ -1161,47 +1175,160 @@ const GradingPortal: React.FC = () => {
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        {section.rows.map((row: any, rIdx: number) => (
-                                          <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
-                                            <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
-                                              {row.label}
-                                            </td>
-                                            {row.cells ? (
-                                              row.cells.map((cell: any, cIdx: number) => {
-                                                const ans = submission?.answers?.[cell.name]
-                                                return (
-                                                  <td key={cIdx} className="p-4 border-l border-slate-100 align-top">
-                                                    <div className="flex flex-col gap-1.5">
-                                                      {cell.options.map((opt: any, oIdx: number) => {
-                                                        const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
-                                                        return (
-                                                          <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
-                                                            <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
-                                                              {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-                                                            </div>
-                                                            <span className="text-[10px] leading-tight">{opt.text}</span>
-                                                          </div>
-                                                        )
-                                                      })}
-                                                    </div>
-                                                  </td>
-                                                )
-                                              })
-                                            ) : (
-                                              <td className="p-4" colSpan={section.headers.length - 1}>
-                                                {row.editable === false ? (
-                                                  <div className="text-sm text-slate-700 font-medium">
-                                                    {row.value}
-                                                  </div>
-                                                ) : (
-                                                  <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl text-[#1e3a8a] font-black text-sm min-h-[40px] flex items-center">
-                                                    {submission?.answers?.[row.id] || <span className="text-slate-300 font-normal italic">(No result provided)</span>}
-                                                  </div>
-                                                )}
+                                        {section.rows.map((row: any, rIdx: number) => {
+                                          if (row.isSubHeader) {
+                                            return (
+                                              <tr key={rIdx} className="bg-slate-100/80 border-b border-slate-200">
+                                                <td colSpan={section.headers.length} className="p-3 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                                  {row.label}
+                                                </td>
+                                              </tr>
+                                            )
+                                          }
+                                          return (
+                                            <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                              <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
+                                                {row.label}
                                               </td>
-                                            )}
-                                          </tr>
-                                        ))}
+                                              {row.cells ? (
+                                                row.cells.map((cell: any, cIdx: number) => {
+                                                  const isAssessorInput = taskData.assessorOnly || section.isAssessorOnly;
+                                                  const ans = isAssessorInput ? grades[cell.name] : submission?.answers?.[cell.name]
+                                                  return (
+                                                    <td key={cIdx} colSpan={row.colSpan || 1} className="p-4 border-l border-slate-100 align-top">
+                                                      <div className="flex flex-col gap-1.5">
+                                                        {cell.options ? cell.options.map((opt: any, oIdx: number) => {
+                                                          const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
+
+                                                          if (isAssessorInput) {
+                                                            if (isQuestion15) {
+                                                              // Q15: each cell has exactly ONE option (Yes OR No per cell).
+                                                              // Detect the intent by the option value itself.
+                                                              const isYes = ['Yes','yes','Satisfactory','S','C','Completed'].includes(opt.value);
+                                                              const q15Checked = grades[cell.name] === opt.value;
+                                                              return (
+                                                                <div
+                                                                  key={oIdx}
+                                                                  className="flex items-center justify-center cursor-pointer select-none"
+                                                                  title={q15Checked ? `Uncheck ${opt.value}` : `Check ${opt.value}`}
+                                                                  onClick={() => {
+                                                                    // Toggle: clicking the same value unchecks it
+                                                                    const newVal = grades[cell.name] === opt.value ? null : opt.value;
+                                                                    setGrades({ ...grades, [cell.name]: newVal });
+                                                                  }}
+                                                                >
+                                                                  <div className={`w-[22px] h-[22px] border-2 rounded flex items-center justify-center flex-shrink-0 transition-all duration-150 ${q15Checked ? (isYes ? 'bg-green-500 border-green-600 shadow-sm' : 'bg-red-500 border-red-600 shadow-sm') : 'bg-white border-slate-300 hover:border-[#1e3a8a] hover:bg-blue-50'}`}>
+                                                                    {q15Checked && (
+                                                                      <span className="text-white font-black text-[13px] leading-none select-none">{isYes ? '✔' : '✘'}</span>
+                                                                    )}
+                                                                  </div>
+                                                                  {/* Hidden checkbox for print/form purposes */}
+                                                                  <input type="checkbox" checked={q15Checked} onChange={() => {}} className="sr-only" />
+                                                                  {/* Print symbols */}
+                                                                  {q15Checked && isYes && <span className="print-symbol correct">✔</span>}
+                                                                  {q15Checked && !isYes && <span className="print-symbol incorrect">✘</span>}
+                                                                  {opt.text && <span className="text-[10px] sm:text-[11px] text-slate-600 leading-tight ml-1.5">{opt.text}</span>}
+                                                                </div>
+                                                              )
+                                                            }
+                                                            return (
+                                                              <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                                <input
+                                                                  type={cell.type || 'radio'}
+                                                                  name={cell.name}
+                                                                  value={opt.value}
+                                                                  checked={isSelected}
+                                                                  onChange={(e) => {
+                                                                    if (cell.type === 'checkbox') {
+                                                                      const current = Array.isArray(grades[cell.name]) ? grades[cell.name] : [];
+                                                                      const updated = e.target.checked
+                                                                        ? [...current, opt.value]
+                                                                        : current.filter((v: string) => v !== opt.value);
+                                                                      setGrades({ ...grades, [cell.name]: updated });
+                                                                    } else {
+                                                                      setGrades({ ...grades, [cell.name]: e.target.value });
+                                                                    }
+                                                                  }}
+                                                                  className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                                />
+                                                                <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                              </label>
+                                                            )
+                                                          }
+
+                                                          return (
+                                                            <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
+                                                              <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
+                                                                {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+                                                              </div>
+                                                              <span className="text-[10px] leading-tight">{opt.text}</span>
+                                                            </div>
+                                                          )
+                                                        }) : (
+                                                          isAssessorInput ? (
+                                                            cell.type === 'signature' ? (
+                                                              <div
+                                                                onClick={() => openSigModal(cell.name, 'grades')}
+                                                                className="relative cursor-pointer border border-slate-200 bg-slate-50/50 h-16 flex items-center justify-center overflow-hidden group w-full p-1 rounded"
+                                                              >
+                                                                {grades[cell.name] ? (
+                                                                  <img src={grades[cell.name]} alt="Signature" className="max-h-full max-w-full object-contain" />
+                                                                ) : (
+                                                                  <span className="text-slate-400 italic text-xs">Click to sign</span>
+                                                                )}
+                                                              </div>
+                                                            ) : cell.type === 'date' ? (
+                                                              <input
+                                                                type="date"
+                                                                className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                                value={grades[cell.name] || ''}
+                                                                onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
+                                                              />
+                                                            ) : (
+                                                              <input
+                                                                type="text"
+                                                                className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                                placeholder={cell.placeholder || "Comments..."}
+                                                                value={grades[cell.name] || ''}
+                                                                onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
+                                                              />
+                                                            )
+                                                          ) : (
+                                                            <div className="text-[10px] text-slate-700 italic bg-slate-50 p-2 rounded">
+                                                              {ans || '(No comments provided)'}
+                                                            </div>
+                                                          )
+                                                        )}
+                                                      </div>
+                                                    </td>
+                                                  )
+                                                })
+                                              ) : (
+                                                <td className="p-4" colSpan={section.headers.length - 1}>
+                                                  {row.editable === false ? (
+                                                    <div className="text-sm text-slate-700 font-medium">
+                                                      {row.value}
+                                                    </div>
+                                                  ) : (
+                                                    (taskData.assessorOnly || section.isAssessorOnly) ? (
+                                                      <input
+                                                        type="text"
+                                                        className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                        placeholder="Enter result..."
+                                                        value={grades[row.id] || ''}
+                                                        onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
+                                                      />
+                                                    ) : (
+                                                      <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl text-[#1e3a8a] font-black text-sm min-h-[40px] flex items-center">
+                                                        {submission?.answers?.[row.id] || <span className="text-slate-300 font-normal italic">(No result provided)</span>}
+                                                      </div>
+                                                    )
+                                                  )}
+                                                </td>
+                                              )}
+                                            </tr>
+                                          )
+                                        })}
                                       </tbody>
                                     </table>
                                   </div>
@@ -1222,7 +1349,7 @@ const GradingPortal: React.FC = () => {
                   )}
 
                   {/* Assessor Checklist Section */}
-                  {hasChecklist && (
+                  {hasChecklist && !currentAssessmentQuestions.adminInfo?.hideAssessorChecklist && (
                     <div className="pt-12 space-y-8 border-t-4 border-double border-slate-200">
                       <div className="text-center">
                         <div className="task-banner-ribbon">
@@ -1273,7 +1400,7 @@ const GradingPortal: React.FC = () => {
                                     <span className="text-xs font-bold text-slate-400 w-4">{idx + 1}.</span>
                                     <span className="text-sm text-slate-700">{item}</span>
                                   </div>
-                                  <div 
+                                  <div
                                     className="flex items-center gap-2 cursor-pointer group"
                                     onClick={() => setGrades({ ...grades, [obsKey]: !isObserved })}
                                   >
@@ -1512,7 +1639,7 @@ const GradingPortal: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  {renderFinalResultBlock(tNum)}
+                  {!currentAssessmentQuestions.adminInfo?.hideCommentsFeedback && renderFinalResultBlock(tNum)}
                 </section>
               );
             })
@@ -1522,97 +1649,182 @@ const GradingPortal: React.FC = () => {
         {/* Final Result Section */}
         {/* LEGACY ASSESSMENT COMPETENCY RECORD SECTION */}
         {/* ASSESSMENT COMPETENCY RECORD SECTION - REDESIGNED TO MATCH IMAGE */}
-        <div className="mt-12 md:mt-20 border-t-2 border-slate-200 pt-10 md:pt-20">
-          <div className="flex flex-col-reverse md:flex-row justify-between items-center md:items-start mb-6 md:mb-4 gap-4">
-            <div className="text-center md:text-left w-full">
-              <div className="text-[10px] md:text-sm font-bold border-b border-black inline-block mb-1">Assessment booklet</div>
-              <div className="text-xs md:text-sm font-bold underline leading-tight">
-                {currentAssessmentQuestions.metadata?.code} - {currentAssessmentQuestions.metadata?.subtitle}
-              </div>
-            </div>
-            <img src="/assets/Skilscope.png" alt="Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
-          </div>
-
-          <h2 className="text-2xl md:text-4xl font-black text-center mb-6 md:mb-10 uppercase tracking-tighter text-slate-800">ASSESSMENT COMPETENCY RECORD</h2>
-
-          <div className="bg-blue-50/50 p-4 md:p-8 border border-blue-100 rounded-2xl mb-8 md:mb-12 text-xs md:text-sm font-medium leading-relaxed text-slate-600 italic shadow-sm">
-            This form is to be completed by the assessor and used as the final record of the student competence in these discipline. All student submissions including any associated documents and checklists are to be attached to this cover sheet before placing on the students file. Student results are not to be entered onto the Student Database unless all relevant paperwork is completed and attached to this form.
-          </div>
-
-          {/* Basic Info Table */}
-          <div className="overflow-hidden border border-slate-200 rounded-2xl mb-12 shadow-sm bg-white break-inside-avoid">
-            <div className="flex flex-col">
-              <div className="flex flex-col md:flex-row border-b border-slate-200">
-                <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Student's Name</div>
-                <div className="p-4 md:p-6 font-black text-lg md:text-xl text-slate-900 bg-white flex-1">{submission.student_name}</div>
-              </div>
-              <div className="flex flex-col md:flex-row border-b border-slate-200">
-                <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessor's Name</div>
-                <div className="p-4 md:p-6 bg-white flex-1">
-                  <input type="text" className="w-full border-none outline-none font-bold text-lg md:text-xl text-slate-800 placeholder:text-slate-200" placeholder="Enter assessor name..." value={compRecord.assessor_name} onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })} />
+        {!isQuestion15 && (
+          <div className="mt-12 md:mt-20 border-t-2 border-slate-200 pt-10 md:pt-20">
+            <div className="flex flex-col-reverse md:flex-row justify-between items-center md:items-start mb-6 md:mb-4 gap-4">
+              <div className="text-center md:text-left w-full">
+                <div className="text-[10px] md:text-sm font-bold border-b border-black inline-block mb-1">Assessment booklet</div>
+                <div className="text-xs md:text-sm font-bold underline leading-tight">
+                  {currentAssessmentQuestions.metadata?.code} - {currentAssessmentQuestions.metadata?.subtitle}
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row border-b border-slate-200">
-                <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessment Site</div>
-                <div className="p-4 md:p-6 bg-white flex-1">
-                  <input type="text" className="w-full border-none outline-none text-base md:text-lg text-slate-600 placeholder:text-slate-200" placeholder="Enter site..." value={compRecord.assessment_site} onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })} />
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row">
-                <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessment Date/s</div>
-                <div className="p-4 md:p-6 bg-white flex-1">
-                  <input
-                    type="date"
-                    className="w-full border-none outline-none text-base md:text-lg text-slate-600 no-print cursor-pointer"
-                    value={compRecord.assessment_date}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline font-bold text-lg md:text-xl text-slate-800">{formatDisplayDate(compRecord.assessment_date)}</span>
-                </div>
-              </div>
+              <img src="/assets/Skilscope.png" alt="Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
             </div>
-          </div>
 
-          {/* Assessor Declaration Block */}
-          <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
-            <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-sm text-white uppercase tracking-widest border-l-4 border-[#fbbf24]">Assessor Declaration</div>
-            <div className="p-4 border-b border-slate-200 text-xs leading-relaxed italic text-slate-500 bg-slate-50/50">
-              In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.
+            <h2 className="text-2xl md:text-4xl font-black text-center mb-6 md:mb-10 uppercase tracking-tighter text-slate-800">ASSESSMENT COMPETENCY RECORD</h2>
+
+            <div className="bg-blue-50/50 p-4 md:p-8 border border-blue-100 rounded-2xl mb-8 md:mb-12 text-xs md:text-sm font-medium leading-relaxed text-slate-600 italic shadow-sm">
+              This form is to be completed by the assessor and used as the final record of the student competence in these discipline. All student submissions including any associated documents and checklists are to be attached to this cover sheet before placing on the students file. Student results are not to be entered onto the Student Database unless all relevant paperwork is completed and attached to this form.
             </div>
-            <div className="flex flex-col md:grid md:grid-cols-[200px_1fr] border-b border-slate-200">
-              <div className="p-4 font-bold text-xs border-b md:border-b-0 md:border-r border-slate-200 flex items-center text-slate-700 uppercase tracking-wider bg-slate-50/30">Evidence is Confirmed as:</div>
-              <div className="flex flex-wrap items-center">
-                {['valid', 'sufficient', 'current', 'authentic'].map((key) => (
-                  <div key={key} className="flex items-center gap-3 border-b sm:border-b-0 sm:border-r border-slate-100 h-full px-4 py-3 last:border-0 flex-1 min-w-0" >
-                    <div className="relative w-5 h-5 flex items-center justify-center">
-                      <input
-                        type="checkbox"
-                        className="w-5 h-5 border-2 border-slate-300 rounded appearance-none cursor-pointer checked:border-blue-600 transition-colors"
-                        checked={compRecord.evidence[key]}
-                        onChange={(e) => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, [key]: e.target.checked } })}
-                      />
-                      {compRecord.evidence[key] && (
-                        <span className="absolute -top-1 text-blue-600 font-black text-xl pointer-events-none">✔</span>
-                      )}
-                    </div>
-                    <span className="text-[11px] font-black uppercase tracking-tight text-slate-700">{key}</span>
+
+            {/* Basic Info Table */}
+            <div className="overflow-hidden border border-slate-200 rounded-2xl mb-12 shadow-sm bg-white break-inside-avoid">
+              <div className="flex flex-col">
+                <div className="flex flex-col md:flex-row border-b border-slate-200">
+                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Student's Name</div>
+                  <div className="p-4 md:p-6 font-black text-lg md:text-xl text-slate-900 bg-white flex-1">{submission.student_name}</div>
+                </div>
+                <div className="flex flex-col md:flex-row border-b border-slate-200">
+                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessor's Name</div>
+                  <div className="p-4 md:p-6 bg-white flex-1">
+                    <input type="text" className="w-full border-none outline-none font-bold text-lg md:text-xl text-slate-800 placeholder:text-slate-200" placeholder="Enter assessor name..." value={compRecord.assessor_name} onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })} />
                   </div>
-                ))}
+                </div>
+                <div className="flex flex-col md:flex-row border-b border-slate-200">
+                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessment Site</div>
+                  <div className="p-4 md:p-6 bg-white flex-1">
+                    <input type="text" className="w-full border-none outline-none text-base md:text-lg text-slate-600 placeholder:text-slate-200" placeholder="Enter site..." value={compRecord.assessment_site} onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })} />
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row">
+                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessment Date/s</div>
+                  <div className="p-4 md:p-6 bg-white flex-1">
+                    <input
+                      type="date"
+                      className="w-full border-none outline-none text-base md:text-lg text-slate-600 no-print cursor-pointer"
+                      value={compRecord.assessment_date}
+                      onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    />
+                    <span className="hidden print:inline font-bold text-lg md:text-xl text-slate-800">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="hidden md:block">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-slate-100 border-b border-slate-300">
-                    <th className="border-r border-slate-300 p-3 font-black text-[9px] uppercase text-slate-600 w-1/3 text-left tracking-tighter">Documentation to be attached</th>
-                    <th className="border-r border-slate-300 p-3 font-black text-[9px] uppercase text-slate-600 w-24 text-center tracking-tighter">Result</th>
-                    <th className="bg-slate-200 p-3 font-black text-xs uppercase text-slate-800 text-center tracking-tight" rowSpan={Object.keys(currentAssessmentQuestions).filter(k => k.startsWith('task')).length + 1}>
-                      FINAL ASSESSMENT RESULT
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
+            {/* Assessor Declaration Block */}
+            <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
+              <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-sm text-white uppercase tracking-widest border-l-4 border-[#fbbf24]">Assessor Declaration</div>
+              <div className="p-4 border-b border-slate-200 text-xs leading-relaxed italic text-slate-500 bg-slate-50/50">
+                In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.
+              </div>
+              <div className="flex flex-col md:grid md:grid-cols-[200px_1fr] border-b border-slate-200">
+                <div className="p-4 font-bold text-xs border-b md:border-b-0 md:border-r border-slate-200 flex items-center text-slate-700 uppercase tracking-wider bg-slate-50/30">Evidence is Confirmed as:</div>
+                <div className="flex flex-wrap items-center">
+                  {['valid', 'sufficient', 'current', 'authentic'].map((key) => (
+                    <div key={key} className="flex items-center gap-3 border-b sm:border-b-0 sm:border-r border-slate-100 h-full px-4 py-3 last:border-0 flex-1 min-w-0" >
+                      <div className="relative w-5 h-5 flex items-center justify-center">
+                        <input
+                          type="checkbox"
+                          className="w-5 h-5 border-2 border-slate-300 rounded appearance-none cursor-pointer checked:border-blue-600 transition-colors"
+                          checked={compRecord.evidence[key]}
+                          onChange={(e) => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, [key]: e.target.checked } })}
+                        />
+                        {compRecord.evidence[key] && (
+                          <span className="absolute -top-1 text-blue-600 font-black text-xl pointer-events-none">✔</span>
+                        )}
+                      </div>
+                      <span className="text-[11px] font-black uppercase tracking-tight text-slate-700">{key}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="hidden md:block">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-slate-100 border-b border-slate-300">
+                      <th className="border-r border-slate-300 p-3 font-black text-[9px] uppercase text-slate-600 w-1/3 text-left tracking-tighter">Documentation to be attached</th>
+                      <th className="border-r border-slate-300 p-3 font-black text-[9px] uppercase text-slate-600 w-24 text-center tracking-tighter">Result</th>
+                      <th className="bg-slate-200 p-3 font-black text-xs uppercase text-slate-800 text-center tracking-tight" rowSpan={Object.keys(currentAssessmentQuestions).filter(k => k.startsWith('task')).length + 1}>
+                        FINAL ASSESSMENT RESULT
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.keys(currentAssessmentQuestions)
+                      .filter(key => key.startsWith('task'))
+                      .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
+                      .map((taskKey, idx) => {
+                        const tNum = parseInt(taskKey.replace('task', ''));
+                        const id = `t${tNum}`;
+                        const result = taskResults[id];
+                        let taskLabel = '';
+                        if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322') {
+                          if (tNum === 1) taskLabel = 'Written question and answers';
+                          else taskLabel = `Observation ${tNum - 1}`;
+                        } else if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
+                          if (tNum <= 2) taskLabel = `Observation ${tNum}`;
+                          else taskLabel = 'Written question and answers';
+                        } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
+                          if (tNum === 1) taskLabel = 'Observation';
+                          else taskLabel = 'Questions and Answers';
+                        } else {
+                          if (tNum <= 3) taskLabel = `Observation ${tNum}`;
+                          else if (tNum === 4) taskLabel = 'Written question and answers';
+                          else taskLabel = 'Written assessment';
+                        }
+
+
+                        return (
+                          <tr key={idx} className="border-b border-slate-200 last:border-0 group hover:bg-slate-50/50 transition-colors break-inside-avoid">
+                            <td className="border-r border-slate-200 p-3 h-[52px]">
+                              <div className="flex items-center gap-4">
+                                <span className="font-black text-[10px] text-slate-800 w-28 shrink-0 uppercase tracking-tighter">Task {tNum}</span>
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="checkbox"
+                                    className="w-4 h-4 border border-slate-300 rounded accent-blue-600"
+                                    checked={compRecord.tasks[id]}
+                                    onChange={(e) => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [id]: e.target.checked } })}
+                                  />
+                                  <span className="text-[11px] text-slate-600 font-medium whitespace-nowrap">{taskLabel}</span>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="border-r border-slate-200 p-3 h-[52px] text-center">
+                              <div className="flex items-center justify-center gap-2">
+                                <div className={`w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center font-black text-xs transition-all ${result === 'S' ? 'bg-green-600 border-green-600 text-white shadow-md shadow-green-100 scale-110' : 'text-slate-400 opacity-40'}`}>S</div>
+                                <span className="text-[10px] font-black text-slate-300">/</span>
+                                <div className={`w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center font-black text-xs transition-all ${result === 'NS' ? 'bg-red-600 border-red-600 text-white shadow-md shadow-red-100 scale-110' : 'text-slate-400 opacity-40'}`}>NS</div>
+                              </div>
+                            </td>
+                            {idx === 0 && (
+                              <td className="bg-slate-200 p-6 align-middle" rowSpan={Object.keys(currentAssessmentQuestions).filter(k => k.startsWith('task')).length}>
+                                <div className="flex flex-col items-center space-y-6">
+                                  <div className="space-y-5 text-left w-full max-w-[200px]">
+                                    <div className="flex items-center gap-4 group cursor-pointer" onClick={() => setFinalResult('C')}>
+                                      <div className="relative w-7 h-7 flex items-center justify-center">
+                                        <div className={`w-7 h-7 border-2 rounded-lg transition-all ${finalResult === 'C' ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-200' : 'bg-white border-slate-300 group-hover:border-blue-400'}`}></div>
+                                        {finalResult === 'C' && (
+                                          <span className="absolute text-white font-black text-xl pointer-events-none">✔</span>
+                                        )}
+                                      </div>
+                                      <span className={`font-black text-sm uppercase tracking-tighter transition-colors ${finalResult === 'C' ? 'text-blue-700' : 'text-slate-500 group-hover:text-slate-800'}`}>Competent</span>
+                                    </div>
+                                    <div className="flex items-center gap-4 group cursor-pointer" onClick={() => setFinalResult('NC')}>
+                                      <div className="relative w-7 h-7 flex items-center justify-center">
+                                        <div className={`w-7 h-7 border-2 rounded-lg transition-all ${finalResult === 'NC' ? 'bg-red-600 border-red-600 shadow-lg shadow-red-200' : 'bg-white border-slate-300 group-hover:border-red-400'}`}></div>
+                                        {finalResult === 'NC' && (
+                                          <span className="absolute text-white font-black text-xl pointer-events-none">✘</span>
+                                        )}
+                                      </div>
+                                      <span className={`font-black text-sm uppercase tracking-tighter transition-colors ${finalResult === 'NC' ? 'text-red-700' : 'text-slate-500 group-hover:text-slate-800'}`}>Not Yet Competent</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Documentation View */}
+              <div className="md:hidden">
+                <div className="bg-slate-100 p-3 font-black text-[10px] uppercase text-slate-600 border-b border-slate-200 tracking-tighter">Documentation & Results</div>
+                <div className="divide-y divide-slate-100">
                   {Object.keys(currentAssessmentQuestions)
                     .filter(key => key.startsWith('task'))
                     .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
@@ -1621,318 +1833,235 @@ const GradingPortal: React.FC = () => {
                       const id = `t${tNum}`;
                       const result = taskResults[id];
                       let taskLabel = '';
-                      if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322') {
-                        if (tNum === 1) taskLabel = 'Written question and answers';
-                        else taskLabel = `Observation ${tNum - 1}`;
-                      } else if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
+                      if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
                         if (tNum <= 2) taskLabel = `Observation ${tNum}`;
                         else taskLabel = 'Written question and answers';
                       } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
                         if (tNum === 1) taskLabel = 'Observation';
                         else taskLabel = 'Questions and Answers';
-                      } else {
-                        if (tNum <= 3) taskLabel = `Observation ${tNum}`;
-                        else if (tNum === 4) taskLabel = 'Written question and answers';
-                        else taskLabel = 'Written assessment';
-                      }
+                      } else if (tNum <= 3) taskLabel = `Observation ${tNum}`;
+                      else if (tNum === 4) taskLabel = 'Written question and answers';
+                      else taskLabel = 'Written assessment';
 
 
                       return (
-                        <tr key={idx} className="border-b border-slate-200 last:border-0 group hover:bg-slate-50/50 transition-colors break-inside-avoid">
-                          <td className="border-r border-slate-200 p-3 h-[52px]">
-                            <div className="flex items-center gap-4">
-                              <span className="font-black text-[10px] text-slate-800 w-28 shrink-0 uppercase tracking-tighter">Task {tNum}</span>
-                              <div className="flex items-center gap-2">
-                                <input
-                                  type="checkbox"
-                                  className="w-4 h-4 border border-slate-300 rounded accent-blue-600"
-                                  checked={compRecord.tasks[id]}
-                                  onChange={(e) => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [id]: e.target.checked } })}
-                                />
-                                <span className="text-[11px] text-slate-600 font-medium whitespace-nowrap">{taskLabel}</span>
-                              </div>
+                        <div key={idx} className="p-4 space-y-4 bg-white break-inside-avoid">
+                          <div className="flex items-center justify-between">
+                            <span className="font-black text-[11px] text-slate-800 uppercase tracking-tighter">Task {tNum}</span>
+                            <div className="flex items-center gap-2">
+                              <div className={`w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center font-black text-[10px] ${result === 'S' ? 'bg-green-600 border-green-600 text-white' : 'text-slate-300'}`}>S</div>
+                              <div className={`w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center font-black text-[10px] ${result === 'NS' ? 'bg-red-600 border-red-600 text-white' : 'text-slate-300'}`}>NS</div>
                             </div>
-                          </td>
-                          <td className="border-r border-slate-200 p-3 h-[52px] text-center">
-                            <div className="flex items-center justify-center gap-2">
-                              <div className={`w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center font-black text-xs transition-all ${result === 'S' ? 'bg-green-600 border-green-600 text-white shadow-md shadow-green-100 scale-110' : 'text-slate-400 opacity-40'}`}>S</div>
-                              <span className="text-[10px] font-black text-slate-300">/</span>
-                              <div className={`w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center font-black text-xs transition-all ${result === 'NS' ? 'bg-red-600 border-red-600 text-white shadow-md shadow-red-100 scale-110' : 'text-slate-400 opacity-40'}`}>NS</div>
-                            </div>
-                          </td>
-                          {idx === 0 && (
-                            <td className="bg-slate-200 p-6 align-middle" rowSpan={Object.keys(currentAssessmentQuestions).filter(k => k.startsWith('task')).length}>
-                              <div className="flex flex-col items-center space-y-6">
-                                <div className="space-y-5 text-left w-full max-w-[200px]">
-                                  <div className="flex items-center gap-4 group cursor-pointer" onClick={() => setFinalResult('C')}>
-                                    <div className="relative w-7 h-7 flex items-center justify-center">
-                                      <div className={`w-7 h-7 border-2 rounded-lg transition-all ${finalResult === 'C' ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-200' : 'bg-white border-slate-300 group-hover:border-blue-400'}`}></div>
-                                      {finalResult === 'C' && (
-                                        <span className="absolute text-white font-black text-xl pointer-events-none">✔</span>
-                                      )}
-                                    </div>
-                                    <span className={`font-black text-sm uppercase tracking-tighter transition-colors ${finalResult === 'C' ? 'text-blue-700' : 'text-slate-500 group-hover:text-slate-800'}`}>Competent</span>
-                                  </div>
-                                  <div className="flex items-center gap-4 group cursor-pointer" onClick={() => setFinalResult('NC')}>
-                                    <div className="relative w-7 h-7 flex items-center justify-center">
-                                      <div className={`w-7 h-7 border-2 rounded-lg transition-all ${finalResult === 'NC' ? 'bg-red-600 border-red-600 shadow-lg shadow-red-200' : 'bg-white border-slate-300 group-hover:border-red-400'}`}></div>
-                                      {finalResult === 'NC' && (
-                                        <span className="absolute text-white font-black text-xl pointer-events-none">✘</span>
-                                      )}
-                                    </div>
-                                    <span className={`font-black text-sm uppercase tracking-tighter transition-colors ${finalResult === 'NC' ? 'text-red-700' : 'text-slate-500 group-hover:text-slate-800'}`}>Not Yet Competent</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                          )}
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile Documentation View */}
-            <div className="md:hidden">
-              <div className="bg-slate-100 p-3 font-black text-[10px] uppercase text-slate-600 border-b border-slate-200 tracking-tighter">Documentation & Results</div>
-              <div className="divide-y divide-slate-100">
-                {Object.keys(currentAssessmentQuestions)
-                  .filter(key => key.startsWith('task'))
-                  .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
-                  .map((taskKey, idx) => {
-                    const tNum = parseInt(taskKey.replace('task', ''));
-                    const id = `t${tNum}`;
-                    const result = taskResults[id];
-                    let taskLabel = '';
-                    if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
-                      if (tNum <= 2) taskLabel = `Observation ${tNum}`;
-                      else taskLabel = 'Written question and answers';
-                    } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
-                      if (tNum === 1) taskLabel = 'Observation';
-                      else taskLabel = 'Questions and Answers';
-                    } else if (tNum <= 3) taskLabel = `Observation ${tNum}`;
-                    else if (tNum === 4) taskLabel = 'Written question and answers';
-                    else taskLabel = 'Written assessment';
-
-
-                    return (
-                      <div key={idx} className="p-4 space-y-4 bg-white break-inside-avoid">
-                        <div className="flex items-center justify-between">
-                          <span className="font-black text-[11px] text-slate-800 uppercase tracking-tighter">Task {tNum}</span>
-                          <div className="flex items-center gap-2">
-                            <div className={`w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center font-black text-[10px] ${result === 'S' ? 'bg-green-600 border-green-600 text-white' : 'text-slate-300'}`}>S</div>
-                            <div className={`w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center font-black text-[10px] ${result === 'NS' ? 'bg-red-600 border-red-600 text-white' : 'text-slate-300'}`}>NS</div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="checkbox"
+                              className="w-5 h-5 border border-slate-300 rounded accent-blue-600"
+                              checked={compRecord.tasks[id]}
+                              onChange={(e) => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [id]: e.target.checked } })}
+                            />
+                            <span className="text-xs text-slate-600 font-bold">{taskLabel}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <input
-                            type="checkbox"
-                            className="w-5 h-5 border border-slate-300 rounded accent-blue-600"
-                            checked={compRecord.tasks[id]}
-                            onChange={(e) => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [id]: e.target.checked } })}
-                          />
-                          <span className="text-xs text-slate-600 font-bold">{taskLabel}</span>
-                        </div>
+                      );
+                    })}
+                </div>
+                <div className="bg-slate-200 p-6 border-t border-slate-300">
+                  <div className="text-center font-black text-xs uppercase text-slate-800 tracking-tight mb-6">FINAL ASSESSMENT RESULT</div>
+                  <div className="flex flex-col gap-4 items-center">
+                    <div className="flex items-center gap-4 w-full max-w-[240px] p-4 bg-white rounded-xl border-2 border-transparent shadow-sm" onClick={() => setFinalResult('C')}>
+                      <div className="relative w-7 h-7 flex items-center justify-center">
+                        <div className={`w-7 h-7 border-2 rounded-lg ${finalResult === 'C' ? 'bg-blue-600 border-blue-600' : 'bg-white border-slate-300'}`}></div>
+                        {finalResult === 'C' && <span className="absolute text-white font-black text-xl">✔</span>}
                       </div>
-                    );
-                  })}
-              </div>
-              <div className="bg-slate-200 p-6 border-t border-slate-300">
-                <div className="text-center font-black text-xs uppercase text-slate-800 tracking-tight mb-6">FINAL ASSESSMENT RESULT</div>
-                <div className="flex flex-col gap-4 items-center">
-                  <div className="flex items-center gap-4 w-full max-w-[240px] p-4 bg-white rounded-xl border-2 border-transparent shadow-sm" onClick={() => setFinalResult('C')}>
-                    <div className="relative w-7 h-7 flex items-center justify-center">
-                      <div className={`w-7 h-7 border-2 rounded-lg ${finalResult === 'C' ? 'bg-blue-600 border-blue-600' : 'bg-white border-slate-300'}`}></div>
-                      {finalResult === 'C' && <span className="absolute text-white font-black text-xl">✔</span>}
+                      <span className={`font-black text-sm uppercase tracking-tighter ${finalResult === 'C' ? 'text-blue-700' : 'text-slate-500'}`}>Competent</span>
                     </div>
-                    <span className={`font-black text-sm uppercase tracking-tighter ${finalResult === 'C' ? 'text-blue-700' : 'text-slate-500'}`}>Competent</span>
-                  </div>
-                  <div className="flex items-center gap-4 w-full max-w-[240px] p-4 bg-white rounded-xl border-2 border-transparent shadow-sm" onClick={() => setFinalResult('NC')}>
-                    <div className="relative w-7 h-7 flex items-center justify-center">
-                      <div className={`w-7 h-7 border-2 rounded-lg ${finalResult === 'NC' ? 'bg-red-600 border-red-600' : 'bg-white border-slate-300'}`}></div>
-                      {finalResult === 'NC' && <span className="absolute text-white font-black text-xl">✘</span>}
+                    <div className="flex items-center gap-4 w-full max-w-[240px] p-4 bg-white rounded-xl border-2 border-transparent shadow-sm" onClick={() => setFinalResult('NC')}>
+                      <div className="relative w-7 h-7 flex items-center justify-center">
+                        <div className={`w-7 h-7 border-2 rounded-lg ${finalResult === 'NC' ? 'bg-red-600 border-red-600' : 'bg-white border-slate-300'}`}></div>
+                        {finalResult === 'NC' && <span className="absolute text-white font-black text-xl">✘</span>}
+                      </div>
+                      <span className={`font-black text-sm uppercase tracking-tighter ${finalResult === 'NC' ? 'text-red-700' : 'text-slate-500'}`}>Not Yet Competent</span>
                     </div>
-                    <span className={`font-black text-sm uppercase tracking-tighter ${finalResult === 'NC' ? 'text-red-700' : 'text-slate-500'}`}>Not Yet Competent</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Attempts Table */}
-          <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
-            <div className="hidden md:block">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-slate-100 border-b border-slate-300">
-                    <th className="p-3 font-black text-[10px] uppercase text-slate-600 w-20 text-center border-r border-slate-200 tracking-tighter">Attempt</th>
-                    <th className="p-3 font-black text-[10px] uppercase text-slate-600 w-48 text-center border-r border-slate-200 tracking-tighter">Date</th>
-                    <th className="p-3 font-black text-[10px] uppercase text-slate-600 text-left tracking-tighter">Assessor's Feedback (as Required)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[0, 1, 2].map((idx) => (
-                    <tr key={idx} className="border-b border-slate-100 last:border-0 group hover:bg-slate-50/30 transition-colors">
-                      <td className="p-3 text-center font-black text-slate-700 border-r border-slate-100">{idx + 1}</td>
-                      <td className="p-3 border-r border-slate-100">
-                        <input
-                          type="date"
-                          className="w-full border-none outline-none text-slate-600 text-center no-print cursor-pointer"
-                          value={compRecord.attempts[idx].date}
-                          onChange={(e) => {
-                            const newAttempts = [...compRecord.attempts];
-                            newAttempts[idx].date = e.target.value;
-                            setCompRecord({ ...compRecord, attempts: newAttempts });
-                          }}
-                        />
-                        <span className="hidden print:inline text-slate-800 font-bold">{formatDisplayDate(compRecord.attempts[idx].date)}</span>
-                      </td>
-                      <td className="p-3">
+            {/* Attempts Table */}
+            <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
+              <div className="hidden md:block">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-slate-100 border-b border-slate-300">
+                      <th className="p-3 font-black text-[10px] uppercase text-slate-600 w-20 text-center border-r border-slate-200 tracking-tighter">Attempt</th>
+                      <th className="p-3 font-black text-[10px] uppercase text-slate-600 w-48 text-center border-r border-slate-200 tracking-tighter">Date</th>
+                      <th className="p-3 font-black text-[10px] uppercase text-slate-600 text-left tracking-tighter">Assessor's Feedback (as Required)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[0, 1, 2].map((idx) => (
+                      <tr key={idx} className="border-b border-slate-100 last:border-0 group hover:bg-slate-50/30 transition-colors">
+                        <td className="p-3 text-center font-black text-slate-700 border-r border-slate-100">{idx + 1}</td>
+                        <td className="p-3 border-r border-slate-100">
+                          <input
+                            type="date"
+                            className="w-full border-none outline-none text-slate-600 text-center no-print cursor-pointer"
+                            value={compRecord.attempts[idx].date}
+                            onChange={(e) => {
+                              const newAttempts = [...compRecord.attempts];
+                              newAttempts[idx].date = e.target.value;
+                              setCompRecord({ ...compRecord, attempts: newAttempts });
+                            }}
+                          />
+                          <span className="hidden print:inline text-slate-800 font-bold">{formatDisplayDate(compRecord.attempts[idx].date)}</span>
+                        </td>
+                        <td className="p-3">
+                          <textarea
+                            className="w-full h-full min-h-[44px] border-none outline-none resize-none text-slate-600 text-sm placeholder:text-slate-300"
+                            placeholder="Provide feedback for this attempt..."
+                            value={compRecord.attempts[idx].feedback}
+                            onChange={(e) => {
+                              const newAttempts = [...compRecord.attempts];
+                              newAttempts[idx].feedback = e.target.value;
+                              setCompRecord({ ...compRecord, attempts: newAttempts });
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                    <tr className="bg-slate-50">
+                      <td colSpan={2} className="p-4 font-black text-[10px] text-center text-slate-700 uppercase tracking-widest border-r border-slate-200 border-t border-slate-200">Final Feedback</td>
+                      <td className="p-4 border-t border-slate-200">
                         <textarea
-                          className="w-full h-full min-h-[44px] border-none outline-none resize-none text-slate-600 text-sm placeholder:text-slate-300"
-                          placeholder="Provide feedback for this attempt..."
-                          value={compRecord.attempts[idx].feedback}
-                          onChange={(e) => {
-                            const newAttempts = [...compRecord.attempts];
-                            newAttempts[idx].feedback = e.target.value;
-                            setCompRecord({ ...compRecord, attempts: newAttempts });
-                          }}
+                          className="w-full h-full min-h-[80px] border-none outline-none resize-none text-slate-800 text-sm font-medium bg-transparent placeholder:text-slate-300"
+                          placeholder="Summarize final assessment findings..."
+                          value={compRecord.final_feedback}
+                          onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
                         />
                       </td>
                     </tr>
-                  ))}
-                  <tr className="bg-slate-50">
-                    <td colSpan={2} className="p-4 font-black text-[10px] text-center text-slate-700 uppercase tracking-widest border-r border-slate-200 border-t border-slate-200">Final Feedback</td>
-                    <td className="p-4 border-t border-slate-200">
-                      <textarea
-                        className="w-full h-full min-h-[80px] border-none outline-none resize-none text-slate-800 text-sm font-medium bg-transparent placeholder:text-slate-300"
-                        placeholder="Summarize final assessment findings..."
-                        value={compRecord.final_feedback}
-                        onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Attempts View */}
+              <div className="md:hidden divide-y divide-slate-100">
+                {[0, 1, 2].map((idx) => (
+                  <div key={idx} className="p-4 space-y-3 bg-white">
+                    <div className="flex justify-between items-center">
+                      <span className="font-black text-xs text-slate-400 uppercase tracking-widest">Attempt {idx + 1}</span>
+                      <input
+                        type="date"
+                        className="border-none outline-none text-slate-600 text-xs no-print cursor-pointer bg-slate-50 px-2 py-1 rounded"
+                        value={compRecord.attempts[idx].date}
+                        onChange={(e) => {
+                          const newAttempts = [...compRecord.attempts];
+                          newAttempts[idx].date = e.target.value;
+                          setCompRecord({ ...compRecord, attempts: newAttempts });
+                        }}
                       />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile Attempts View */}
-            <div className="md:hidden divide-y divide-slate-100">
-              {[0, 1, 2].map((idx) => (
-                <div key={idx} className="p-4 space-y-3 bg-white">
-                  <div className="flex justify-between items-center">
-                    <span className="font-black text-xs text-slate-400 uppercase tracking-widest">Attempt {idx + 1}</span>
-                    <input
-                      type="date"
-                      className="border-none outline-none text-slate-600 text-xs no-print cursor-pointer bg-slate-50 px-2 py-1 rounded"
-                      value={compRecord.attempts[idx].date}
-                      onChange={(e) => {
-                        const newAttempts = [...compRecord.attempts];
-                        newAttempts[idx].date = e.target.value;
-                        setCompRecord({ ...compRecord, attempts: newAttempts });
-                      }}
-                    />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black text-slate-300 uppercase tracking-tight">Assessor's Feedback:</span>
+                      <textarea
+                        className="w-full min-h-[60px] p-3 bg-slate-50 rounded-lg border-none outline-none resize-none text-slate-600 text-xs"
+                        placeholder="Provide feedback..."
+                        value={compRecord.attempts[idx].feedback}
+                        onChange={(e) => {
+                          const newAttempts = [...compRecord.attempts];
+                          newAttempts[idx].feedback = e.target.value;
+                          setCompRecord({ ...compRecord, attempts: newAttempts });
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-black text-slate-300 uppercase tracking-tight">Assessor's Feedback:</span>
-                    <textarea
-                      className="w-full min-h-[60px] p-3 bg-slate-50 rounded-lg border-none outline-none resize-none text-slate-600 text-xs"
-                      placeholder="Provide feedback..."
-                      value={compRecord.attempts[idx].feedback}
-                      onChange={(e) => {
-                        const newAttempts = [...compRecord.attempts];
-                        newAttempts[idx].feedback = e.target.value;
-                        setCompRecord({ ...compRecord, attempts: newAttempts });
-                      }}
-                    />
-                  </div>
+                ))}
+                <div className="p-4 bg-slate-50 space-y-2">
+                  <span className="font-black text-[10px] text-slate-400 uppercase tracking-widest">Final Feedback</span>
+                  <textarea
+                    className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-slate-800 text-sm font-medium"
+                    placeholder="Summarize final findings..."
+                    value={compRecord.final_feedback}
+                    onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
+                  />
                 </div>
-              ))}
-              <div className="p-4 bg-slate-50 space-y-2">
-                <span className="font-black text-[10px] text-slate-400 uppercase tracking-widest">Final Feedback</span>
-                <textarea
-                  className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-slate-800 text-sm font-medium"
-                  placeholder="Summarize final findings..."
-                  value={compRecord.final_feedback}
-                  onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
-                />
               </div>
             </div>
-          </div>
 
-          {/* Declaration Section */}
-          <div className="mt-12 bg-white rounded-xl border border-slate-300 overflow-hidden shadow-md break-inside-avoid">
-            <div className="bg-[#1e3a8a] p-4 text-white font-black text-sm uppercase tracking-widest">Declaration</div>
-            <div className="divide-y divide-slate-200">
-              {/* Assessor Declaration Row */}
-              <div className="flex flex-col md:flex-row">
-                <div className="p-4 md:p-6 md:w-2/3 align-top bg-slate-50/50 border-b md:border-b-0 md:border-r border-slate-200">
-                  <p className="text-[10px] md:text-xs font-black leading-relaxed text-slate-800 uppercase tracking-tighter mb-2">Assessor Declaration</p>
-                  <p className="text-xs text-slate-600 italic leading-relaxed">
-                    I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
-                  </p>
-                </div>
-                <div className="p-4 md:p-6 md:w-1/3 bg-white">
-                  <div className="space-y-4 md:space-y-5">
-                    <div className="flex flex-col gap-2">
-                      <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
-                      <div
-                        className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center cursor-pointer relative group transition-all hover:border-blue-400 bg-slate-50/30 rounded-t-lg overflow-hidden p-1"
-                        onClick={() => openSigModal('assessor_signature', 'comp')}
-                      >
-                        {compRecord.assessor_signature ? (
-                          <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
-                        ) : (
-                          <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest group-hover:text-blue-500">Click to Sign</span>
-                        )}
-                        {compRecord.assessor_signature && (
-                          <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-[0.08]">
-                            <span className="text-blue-600 text-3xl md:text-5xl rotate-[-15deg] font-black uppercase border-4 border-blue-600 px-4 whitespace-nowrap">VERIFIED</span>
-                          </div>
-                        )}
+            {/* Declaration Section */}
+            <div className="mt-12 bg-white rounded-xl border border-slate-300 overflow-hidden shadow-md break-inside-avoid">
+              <div className="bg-[#1e3a8a] p-4 text-white font-black text-sm uppercase tracking-widest">Declaration</div>
+              <div className="divide-y divide-slate-200">
+                {/* Assessor Declaration Row */}
+                <div className="flex flex-col md:flex-row">
+                  <div className="p-4 md:p-6 md:w-2/3 align-top bg-slate-50/50 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p className="text-[10px] md:text-xs font-black leading-relaxed text-slate-800 uppercase tracking-tighter mb-2">Assessor Declaration</p>
+                    <p className="text-xs text-slate-600 italic leading-relaxed">
+                      I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
+                    </p>
+                  </div>
+                  <div className="p-4 md:p-6 md:w-1/3 bg-white">
+                    <div className="space-y-4 md:space-y-5">
+                      <div className="flex flex-col gap-2">
+                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
+                        <div
+                          className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center cursor-pointer relative group transition-all hover:border-blue-400 bg-slate-50/30 rounded-t-lg overflow-hidden p-1"
+                          onClick={() => openSigModal('assessor_signature', 'comp')}
+                        >
+                          {compRecord.assessor_signature ? (
+                            <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
+                          ) : (
+                            <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest group-hover:text-blue-500">Click to Sign</span>
+                          )}
+                          {compRecord.assessor_signature && (
+                            <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-[0.08]">
+                              <span className="text-blue-600 text-3xl md:text-5xl rotate-[-15deg] font-black uppercase border-4 border-blue-600 px-4 whitespace-nowrap">VERIFIED</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date</span>
-                      <div className="flex-1 border-b-2 border-slate-200">
-                        <input
-                          type="date"
-                          className="w-full outline-none text-sm text-slate-800 font-bold no-print bg-transparent py-1"
-                          value={compRecord.assessor_sig_date}
-                          onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })}
-                        />
-                        <span className="hidden print:inline text-sm font-black text-slate-800">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date</span>
+                        <div className="flex-1 border-b-2 border-slate-200">
+                          <input
+                            type="date"
+                            className="w-full outline-none text-sm text-slate-800 font-bold no-print bg-transparent py-1"
+                            value={compRecord.assessor_sig_date}
+                            onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })}
+                          />
+                          <span className="hidden print:inline text-sm font-black text-slate-800">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Student Declaration Row */}
-              <div className="flex flex-col md:flex-row">
-                <div className="p-4 md:p-6 md:w-2/3 align-top bg-slate-50/50 border-b md:border-b-0 md:border-r border-slate-200">
-                  <p className="text-[10px] md:text-xs font-black leading-relaxed text-slate-800 uppercase tracking-tighter mb-2">Student Declaration</p>
-                  <p className="text-xs text-slate-600 italic leading-relaxed">
-                    I declare that I accept the assessment competency outcome and consider the feedback of my assessor positively. I also declare that the work submitted is my own, and has not been copied or plagiarised from any person or source.
-                  </p>
-                </div>
-                <div className="p-4 md:p-6 md:w-1/3 bg-white">
-                  <div className="space-y-4 md:space-y-5">
-                    <div className="flex flex-col gap-2">
-                      <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
-                      <div className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center bg-slate-50/30 rounded-t-lg overflow-hidden p-1">
-                        {submission.signature_url ? (
-                          <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
-                        ) : (
-                          <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest">Digital Sign</span>
-                        )}
+                {/* Student Declaration Row */}
+                <div className="flex flex-col md:flex-row">
+                  <div className="p-4 md:p-6 md:w-2/3 align-top bg-slate-50/50 border-b md:border-b-0 md:border-r border-slate-200">
+                    <p className="text-[10px] md:text-xs font-black leading-relaxed text-slate-800 uppercase tracking-tighter mb-2">Student Declaration</p>
+                    <p className="text-xs text-slate-600 italic leading-relaxed">
+                      I declare that I accept the assessment competency outcome and consider the feedback of my assessor positively. I also declare that the work submitted is my own, and has not been copied or plagiarised from any person or source.
+                    </p>
+                  </div>
+                  <div className="p-4 md:p-6 md:w-1/3 bg-white">
+                    <div className="space-y-4 md:space-y-5">
+                      <div className="flex flex-col gap-2">
+                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
+                        <div className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center bg-slate-50/30 rounded-t-lg overflow-hidden p-1">
+                          {submission.signature_url ? (
+                            <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
+                          ) : (
+                            <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest">Digital Sign</span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date</span>
-                      <div className="border-b-2 border-slate-200 flex-1 text-sm font-black text-slate-800 h-8 flex items-center">
-                        {submission.submitted_at ? formatDisplayDate(new Date(submission.submitted_at).toISOString().split('T')[0]) : ''}
+                      <div className="flex items-center gap-3">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date</span>
+                        <div className="border-b-2 border-slate-200 flex-1 text-sm font-black text-slate-800 h-8 flex items-center">
+                          {submission.submitted_at ? formatDisplayDate(new Date(submission.submitted_at).toISOString().split('T')[0]) : ''}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1940,25 +2069,25 @@ const GradingPortal: React.FC = () => {
               </div>
             </div>
           </div>
+        )}
 
-          {/* Final Submit Button */}
-          <div className="flex justify-center pt-12 no-print">
-            <button
-              onClick={() => {
-                if (!compRecord.assessor_name || !compRecord.assessor_signature || !compRecord.assessment_date) {
-                  alert('CRITICAL: Assessor Name, Signature, and Date must be completed before downloading the final report.');
-                  return;
-                }
-                saveMutation.mutate()
-                setTimeout(() => handlePrint(), 500)
-              }}
-              disabled={saveMutation.isPending}
-              className="flex items-center gap-3 bg-[#1e3a8a] hover:bg-[#1e40af] text-white px-10 py-4 rounded-xl font-bold text-xl transition-all shadow-xl shadow-blue-900/20 active:scale-95 disabled:opacity-50"
-            >
-              {saveMutation.isPending ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
-              SUBMIT & DOWNLOAD PDF
-            </button>
-          </div>
+        {/* Final Submit Button */}
+        <div className="flex justify-center pt-12 no-print">
+          <button
+            onClick={() => {
+              if (!isQuestion15 && (!compRecord.assessor_name || !compRecord.assessor_signature || !compRecord.assessment_date)) {
+                alert('CRITICAL: Assessor Name, Signature, and Date must be completed before downloading the final report.');
+                return;
+              }
+              saveMutation.mutate()
+              setTimeout(() => handlePrint(), 500)
+            }}
+            disabled={saveMutation.isPending}
+            className="flex items-center gap-3 bg-[#1e3a8a] hover:bg-[#1e40af] text-white px-10 py-4 rounded-xl font-bold text-xl transition-all shadow-xl shadow-blue-900/20 active:scale-95 disabled:opacity-50"
+          >
+            {saveMutation.isPending ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
+            SUBMIT & DOWNLOAD PDF
+          </button>
         </div>
       </div>
     </div>
