@@ -785,22 +785,26 @@ export const assessmentQuestions = {
         {
           "id": "t5q28_1",
           "name": "t5q28_1",
-          "placeholder": "Identify type 1..."
+          "placeholder": "Identify type 1...",
+          "image": "/assets/question-1/cable1.png"
         },
         {
           "id": "t5q28_2",
           "name": "t5q28_2",
-          "placeholder": "Identify type 2..."
+          "placeholder": "Identify type 2...",
+          "image": "/assets/question-1/cable2.png"
         },
         {
           "id": "t5q28_3",
           "name": "t5q28_3",
-          "placeholder": "Identify type 3..."
+          "placeholder": "Identify type 3...",
+          "image": "/assets/question-1/cable3.png"
         },
         {
           "id": "t5q28_4",
           "name": "t5q28_4",
-          "placeholder": "Identify type 4..."
+          "placeholder": "Identify type 4...",
+          "image": "/assets/question-1/cable4.png"
         }
       ]
     }
