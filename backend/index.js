@@ -239,6 +239,19 @@ app.get('/api/common-assessments/validate/:token', checkDbConnection, async (req
   }
 });
 
+// Delete common assessment
+app.delete('/api/common-assessments/:id', checkDbConnection, authenticate, async (req, res) => {
+  try {
+    const result = await CommonAssessment.deleteOne({ _id: req.params.id, assessor_id: req.userId });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Common assessment not found or unauthorized' });
+    }
+    res.json({ message: 'Common assessment deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // --- Submission Routes ---
 
@@ -315,6 +328,46 @@ app.get('/api/submissions/status/:studentId', checkDbConnection, async (req, res
       .map(s => s.assessment_id.token);
       
     res.json({ completedTokens });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete single submission
+app.delete('/api/submissions/:id', checkDbConnection, authenticate, async (req, res) => {
+  try {
+    const submission = await Submission.findById(req.params.id).populate('assessment_id');
+    if (!submission) {
+      return res.status(404).json({ error: 'Submission not found' });
+    }
+    
+    if (submission.assessment_id && submission.assessment_id.assessor_id.toString() !== req.userId) {
+      return res.status(403).json({ error: 'Unauthorized to delete this submission' });
+    }
+    
+    await Submission.deleteOne({ _id: req.params.id });
+    res.json({ message: 'Submission deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete all submissions of a student
+app.delete('/api/submissions/student/:studentKey', checkDbConnection, authenticate, async (req, res) => {
+  try {
+    const { studentKey } = req.params;
+    const assessments = await Assessment.find({ assessor_id: req.userId });
+    const assessmentIds = assessments.map(a => a._id);
+    
+    const result = await Submission.deleteMany({
+      assessment_id: { $in: assessmentIds },
+      $or: [
+        { student_id: studentKey },
+        { student_name: studentKey }
+      ]
+    });
+    
+    res.json({ message: `Deleted ${result.deletedCount} submissions for this student` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

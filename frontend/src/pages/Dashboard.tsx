@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
-import { Link, Copy, Check, Clock, UserCheck, FileText, ChevronRight, AlertCircle, ExternalLink, ChevronDown, ChevronUp, Printer, X } from 'lucide-react'
+import { Link, Copy, Check, Clock, UserCheck, FileText, ChevronRight, AlertCircle, ExternalLink, ChevronDown, ChevronUp, Printer, X, Trash2 } from 'lucide-react'
 import Layout from '../components/Layout'
 import { availableQuestions } from '../data'
 
@@ -97,6 +97,55 @@ const Dashboard: React.FC = () => {
       alert('Error: ' + err.message)
     } finally {
       setIsGenerating(false)
+    }
+  }
+
+  const handleDeleteCommonAssessment = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this common assessment link?')) return
+    try {
+      const result = await api.deleteCommonAssessment(id)
+      if (result.error) throw new Error(result.error)
+      alert('✅ Common link deleted successfully!')
+      queryClient.invalidateQueries({ queryKey: ['commonAssessments'] })
+    } catch (err: any) {
+      alert('Error: ' + err.message)
+    }
+  }
+
+  const handleDeleteStudentSubmissions = async (studentKey: string, studentName: string) => {
+    if (!window.confirm(`Are you sure you want to delete all submissions for ${studentName}? This action cannot be undone.`)) return
+    try {
+      const result = await api.deleteStudentSubmissions(studentKey)
+      if (result.error) throw new Error(result.error)
+      alert(`✅ All submissions for ${studentName} deleted successfully!`)
+      queryClient.invalidateQueries({ queryKey: ['submissions'] })
+    } catch (err: any) {
+      alert('Error: ' + err.message)
+    }
+  }
+
+  const handleDeleteSingleSubmission = async (id: string, templateName: string) => {
+    if (!window.confirm(`Are you sure you want to delete the submission for "${templateName}"?`)) return
+    try {
+      const result = await api.deleteSubmission(id)
+      if (result.error) throw new Error(result.error)
+      alert('✅ Submission deleted successfully!')
+      
+      if (activeStudentModal) {
+        const updatedSubmissions = activeStudentModal.submissions.filter((s: any) => s._id !== id)
+        if (updatedSubmissions.length === 0) {
+          setActiveStudentModal(null)
+        } else {
+          setActiveStudentModal({
+            ...activeStudentModal,
+            submissions: updatedSubmissions
+          })
+        }
+      }
+      
+      queryClient.invalidateQueries({ queryKey: ['submissions'] })
+    } catch (err: any) {
+      alert('Error: ' + err.message)
     }
   }
 
@@ -309,6 +358,134 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Common Links Table/Cards */}
+        <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
+          <div className="px-6 py-4 border-b bg-gray-50 flex items-center justify-between">
+            <h3 className="font-bold text-gray-800 flex items-center gap-2">
+              <Link size={18} className="text-gray-400" />
+              Common Assessment Links
+            </h3>
+            <span className="bg-[#1e3a8a] text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter">
+              {commonAssessments?.length || 0} Links
+            </span>
+          </div>
+
+          <div className="overflow-x-auto">
+            {/* Desktop Table */}
+            <table className="w-full text-left hidden sm:table">
+              <thead>
+                <tr className="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider">
+                  <th className="px-6 py-4 font-black">Included Questions</th>
+                  <th className="px-6 py-4 font-black hidden lg:table-cell">Common Link</th>
+                  <th className="px-6 py-4 font-black">Created</th>
+                  <th className="px-6 py-4 font-black text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {commonAssessmentsLoading ? (
+                  <tr><td colSpan={4} className="px-6 py-8 animate-pulse bg-gray-50"></td></tr>
+                ) : !commonAssessments?.length ? (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-12 text-center text-gray-400">
+                      No common links found.
+                    </td>
+                  </tr>
+                ) : (
+                  commonAssessments.map((ca: any) => {
+                    const commonLink = `${window.location.origin}/common-assessment?token=${ca.token}`
+                    return (
+                      <tr key={ca._id} className="hover:bg-gray-50/50">
+                        <td className="px-6 py-4">
+                          <div className="flex flex-wrap gap-1">
+                            {ca.question_ids.map((qid: string) => (
+                              <span key={qid} className="bg-blue-50 text-[#1e3a8a] text-[9px] font-black px-2 py-0.5 rounded border border-blue-100 uppercase">
+                                {availableQuestions.find(q => q.id === qid)?.name || qid}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell">
+                          <a href={commonLink} target="_blank" rel="noopener noreferrer" className="text-[11px] font-mono text-blue-600 underline truncate block max-w-[200px]">
+                            {commonLink}
+                          </a>
+                        </td>
+                        <td className="px-6 py-4 text-xs text-gray-400">
+                          {new Date(ca.created_at).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex gap-2 justify-end">
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(commonLink)
+                                alert('✅ Link copied!')
+                              }}
+                              className="text-white bg-[#1e3a8a] p-2 rounded-lg hover:bg-blue-800 transition-colors"
+                              title="Copy Common Link"
+                            >
+                              <Copy size={14} />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteCommonAssessment(ca._id)}
+                              className="text-white bg-red-600 p-2 rounded-lg hover:bg-red-700 transition-colors"
+                              title="Delete Common Link"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })
+                )}
+              </tbody>
+            </table>
+
+            {/* Mobile View */}
+            <div className="sm:hidden divide-y">
+              {commonAssessments?.map((ca: any) => {
+                const commonLink = `${window.location.origin}/common-assessment?token=${ca.token}`
+                return (
+                  <div key={ca._id} className="p-4 space-y-4 hover:bg-gray-50/50 transition-colors">
+                    <div className="space-y-2">
+                      <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Included Questions:</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {ca.question_ids.map((qid: string) => (
+                          <span key={qid} className="bg-blue-50 text-[#1e3a8a] text-[9px] font-black px-2 py-1 rounded border border-blue-100 uppercase shadow-sm">
+                            {availableQuestions.find(q => q.id === qid)?.name || qid}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <div className="text-[10px] bg-white p-2 rounded border border-gray-100 font-mono text-blue-600 truncate">
+                        {commonLink}
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(commonLink)
+                            alert('✅ Link copied!')
+                          }}
+                          className="flex-1 flex items-center justify-center gap-2 py-2 bg-[#1e3a8a] text-white rounded-lg font-black text-xs uppercase tracking-tight shadow-md active:scale-95 transition-all"
+                        >
+                          <Copy size={14} /> Copy
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCommonAssessment(ca._id)}
+                          className="flex items-center justify-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg font-black text-xs uppercase tracking-tight shadow-md active:scale-95 transition-all hover:bg-red-700"
+                          title="Delete Common Link"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
         {/* Submissions Table/Cards */}
         <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
           <div className="px-6 py-4 border-b bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-2">
@@ -379,16 +556,22 @@ const Dashboard: React.FC = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setActiveStudentModal(group);
-                          }}
-                          className="inline-flex items-center gap-1 text-[#1e3a8a] font-black text-[13px] bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 hover:bg-blue-100 transition-all uppercase tracking-tight"
-                        >
-                          Review Student
-                          <ChevronRight size={14} strokeWidth={3} />
-                        </button>
+                        <div className="flex gap-2 justify-end" onClick={(e) => e.stopPropagation()}>
+                          <button
+                            onClick={() => setActiveStudentModal(group)}
+                            className="inline-flex items-center gap-1 text-[#1e3a8a] font-black text-[13px] bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 hover:bg-blue-100 transition-all uppercase tracking-tight"
+                          >
+                            Review Student
+                            <ChevronRight size={14} strokeWidth={3} />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteStudentSubmissions(group.id, group.student_name)}
+                            className="text-white bg-red-600 p-2 rounded-lg hover:bg-red-700 transition-colors shadow-sm"
+                            title="Delete Student Submissions"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -429,127 +612,25 @@ const Dashboard: React.FC = () => {
                       <span>{group.submissions.length} Assessments</span>
                       <span>Last: {new Date(group.latest_submission).toLocaleDateString()}</span>
                     </div>
-                    <button
-                      onClick={() => setActiveStudentModal(group)}
-                      className="flex items-center justify-center gap-2 w-full py-2 bg-blue-50 text-[#1e3a8a] rounded-lg font-black text-xs uppercase tracking-tight border border-blue-100"
-                    >
-                      Review Assessments
-                      <ChevronRight size={14} />
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Common Links Table/Cards */}
-        <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
-          <div className="px-6 py-4 border-b bg-gray-50 flex items-center justify-between">
-            <h3 className="font-bold text-gray-800 flex items-center gap-2">
-              <Link size={18} className="text-gray-400" />
-              Common Assessment Links
-            </h3>
-            <span className="bg-[#1e3a8a] text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter">
-              {commonAssessments?.length || 0} Links
-            </span>
-          </div>
-
-          <div className="overflow-x-auto">
-            {/* Desktop Table */}
-            <table className="w-full text-left hidden sm:table">
-              <thead>
-                <tr className="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider">
-                  <th className="px-6 py-4 font-black">Included Questions</th>
-                  <th className="px-6 py-4 font-black hidden lg:table-cell">Common Link</th>
-                  <th className="px-6 py-4 font-black">Created</th>
-                  <th className="px-6 py-4 font-black text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {commonAssessmentsLoading ? (
-                  <tr><td colSpan={4} className="px-6 py-8 animate-pulse bg-gray-50"></td></tr>
-                ) : !commonAssessments?.length ? (
-                  <tr>
-                    <td colSpan={4} className="px-6 py-12 text-center text-gray-400">
-                      No common links found.
-                    </td>
-                  </tr>
-                ) : (
-                  commonAssessments.map((ca: any) => {
-                    const commonLink = `${window.location.origin}/common-assessment?token=${ca.token}`
-                    return (
-                      <tr key={ca._id} className="hover:bg-gray-50/50">
-                        <td className="px-6 py-4">
-                          <div className="flex flex-wrap gap-1">
-                            {ca.question_ids.map((qid: string) => (
-                              <span key={qid} className="bg-blue-50 text-[#1e3a8a] text-[9px] font-black px-2 py-0.5 rounded border border-blue-100 uppercase">
-                                {availableQuestions.find(q => q.id === qid)?.name || qid}
-                              </span>
-                            ))}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 hidden lg:table-cell">
-                          <a href={commonLink} target="_blank" rel="noopener noreferrer" className="text-[11px] font-mono text-blue-600 underline truncate block max-w-[200px]">
-                            {commonLink}
-                          </a>
-                        </td>
-                        <td className="px-6 py-4 text-xs text-gray-400">
-                          {new Date(ca.created_at).toLocaleDateString()}
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <div className="flex gap-2 justify-end">
-                            <button
-                              onClick={() => {
-                                navigator.clipboard.writeText(commonLink)
-                                alert('✅ Link copied!')
-                              }}
-                              className="text-white bg-[#1e3a8a] p-2 rounded-lg"
-                            >
-                              <Copy size={14} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })
-                )}
-              </tbody>
-            </table>
-
-            {/* Mobile View */}
-            <div className="sm:hidden divide-y">
-              {commonAssessments?.map((ca: any) => {
-                const commonLink = `${window.location.origin}/common-assessment?token=${ca.token}`
-                return (
-                  <div key={ca._id} className="p-4 space-y-4 hover:bg-gray-50/50 transition-colors">
-                    <div className="space-y-2">
-                      <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Included Questions:</div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {ca.question_ids.map((qid: string) => (
-                          <span key={qid} className="bg-blue-50 text-[#1e3a8a] text-[9px] font-black px-2 py-1 rounded border border-blue-100 uppercase shadow-sm">
-                            {availableQuestions.find(q => q.id === qid)?.name || qid}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <div className="text-[10px] bg-white p-2 rounded border border-gray-100 font-mono text-blue-600 truncate">
-                        {commonLink}
-                      </div>
+                    <div className="flex gap-2">
                       <button
-                        onClick={() => {
-                          navigator.clipboard.writeText(commonLink)
-                          alert('✅ Link copied!')
-                        }}
-                        className="flex items-center justify-center gap-2 w-full py-2 bg-[#1e3a8a] text-white rounded-lg font-black text-xs uppercase tracking-tight shadow-md active:scale-95 transition-all"
+                        onClick={() => setActiveStudentModal(group)}
+                        className="flex-1 flex items-center justify-center gap-2 py-2 bg-blue-50 text-[#1e3a8a] rounded-lg font-black text-xs uppercase tracking-tight border border-blue-100"
                       >
-                        <Copy size={14} /> Copy Common Link
+                        Review Assessments
+                        <ChevronRight size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteStudentSubmissions(group.id, group.student_name)}
+                        className="flex items-center justify-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg font-black text-xs uppercase tracking-tight shadow-md active:scale-95 transition-all hover:bg-red-700"
+                        title="Delete Student Submissions"
+                      >
+                        <Trash2 size={14} />
                       </button>
                     </div>
                   </div>
-                )
-              })}
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -635,6 +716,13 @@ const Dashboard: React.FC = () => {
                                   className="inline-flex items-center gap-1.5 text-xs font-black uppercase bg-[#1e3a8a] hover:bg-blue-800 text-white px-3.5 py-2 rounded-xl shadow-sm transition-colors"
                                 >
                                   Grade
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteSingleSubmission(sub._id, availableQuestions.find(q => q.id === sub.assessment_id?.token)?.name || sub.assessment_id?.name || 'Question')}
+                                  className="inline-flex items-center justify-center text-white bg-red-600 hover:bg-red-700 p-2 rounded-xl shadow-sm transition-colors"
+                                  title="Delete Submission"
+                                >
+                                  <Trash2 size={16} />
                                 </button>
                               </div>
                             </td>

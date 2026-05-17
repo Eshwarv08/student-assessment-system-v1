@@ -98,6 +98,30 @@ export const api = {
   getSubmissionStatus: async (studentId: string) => {
     const res = await fetch(`${API_URL}/submissions/status/${studentId}`);
     return res.json();
+  },
+
+  deleteCommonAssessment: async (id: string) => {
+    const res = await fetch(`${API_URL}/common-assessments/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders()
+    });
+    return res.json();
+  },
+
+  deleteSubmission: async (id: string) => {
+    const res = await fetch(`${API_URL}/submissions/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders()
+    });
+    return res.json();
+  },
+
+  deleteStudentSubmissions: async (studentKey: string) => {
+    const res = await fetch(`${API_URL}/submissions/student/${encodeURIComponent(studentKey)}`, {
+      method: 'DELETE',
+      headers: getHeaders()
+    });
+    return res.json();
   }
 };
 
