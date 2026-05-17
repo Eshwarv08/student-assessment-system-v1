@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api } from '../lib/api'
 import SignaturePad from 'signature_pad'
-import { AlertCircle, CheckCircle2, Save, Send, Loader2, Printer } from 'lucide-react'
+import { AlertCircle, CheckCircle2, Save, Send, Loader2, Printer, X } from 'lucide-react'
 import { getQuestionsForAssessment } from '../data'
 import '../assessment-styles.css'
 
@@ -15,7 +15,23 @@ const AssessmentForm: React.FC = () => {
   const [submitted, setSubmitted] = useState(false)
   const [assessment, setAssessment] = useState<any>(null)
   const [answers, setAnswers] = useState<any>({})
+  const [showErrors, setShowErrors] = useState(false)
+  const [signatureEmpty, setSignatureEmpty] = useState(true)
+  const [toast, setToast] = useState<{ message: string; type: 'error' | 'success' } | null>(null)
   const assessmentQuestions = getQuestionsForAssessment(token)
+
+  const showToast = (message: string, type: 'error' | 'success' = 'error') => {
+    setToast({ message, type });
+  };
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   const sigCanvas = useRef<HTMLCanvasElement>(null)
   const signaturePad = useRef<SignaturePad | null>(null)
@@ -45,6 +61,7 @@ const AssessmentForm: React.FC = () => {
         canvas.height = containerHeight * ratio;
         canvas.getContext("2d")?.scale(ratio, ratio);
         signaturePad.current?.clear();
+        setSignatureEmpty(true);
       }
     }
   };
@@ -54,7 +71,10 @@ const AssessmentForm: React.FC = () => {
     if (!loading && !error && sigCanvas.current && !signaturePad.current) {
       signaturePad.current = new SignaturePad(sigCanvas.current, {
         backgroundColor: 'rgb(255, 255, 255)',
-        penColor: 'rgb(0, 0, 0)'
+        penColor: 'rgb(0, 0, 0)',
+        onEnd: () => {
+          setSignatureEmpty(false);
+        }
       });
 
       // Initial resize
@@ -75,46 +95,223 @@ const AssessmentForm: React.FC = () => {
     setLoading(false)
   }
 
-  const clearSignature = () => signaturePad.current?.clear()
+  const clearSignature = () => {
+    signaturePad.current?.clear()
+    setSignatureEmpty(true)
+  }
+
+  const getMissingFields = (currentAnswers: any) => {
+    const missing = new Set<string>();
+
+    if (!assessmentQuestions) return missing;
+
+    Object.keys(assessmentQuestions)
+      .filter(key => key.startsWith('task'))
+      .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
+      .forEach((taskKey) => {
+        const tNum = parseInt(taskKey.replace('task', ''));
+        const taskData = assessmentQuestions[taskKey];
+
+        if (taskData.assessorOnly) return;
+
+        const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
+        const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
+        const isChecklist = !isPlainArray && !hasNestedQuestions;
+
+        if (isChecklist) {
+          if (taskData.sections) {
+            taskData.sections.forEach((section: any) => {
+              if (section.type === 'table') {
+                section.rows.forEach((row: any) => {
+                  if (row.isSubHeader) return;
+                  if (row.cells) {
+                    row.cells.forEach((cell: any) => {
+                      const val = currentAnswers[cell.name];
+                      const isEmpty = !val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === '');
+                      if (isEmpty) {
+                        missing.add(cell.name);
+                      }
+                    });
+                  } else if (row.editable) {
+                    const val = currentAnswers[row.id];
+                    const isEmpty = !val || String(val).trim() === '';
+                    if (isEmpty) {
+                      missing.add(row.id);
+                    }
+                  }
+                });
+              }
+            });
+          }
+          return;
+        }
+
+        const questionsArray: any[] = isPlainArray
+          ? taskData
+          : (taskData as any).questions;
+
+        if (hasNestedQuestions && (taskData as any).sections) {
+          (taskData as any).sections.forEach((section: any) => {
+            if (section.type === 'table') {
+              section.rows.forEach((row: any) => {
+                if (row.isSubHeader) return;
+                if (row.cells) {
+                  row.cells.forEach((cell: any) => {
+                    const val = currentAnswers[cell.name];
+                    const isEmpty = !val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === '');
+                    if (isEmpty) {
+                      missing.add(cell.name);
+                    }
+                  });
+                } else if (row.editable) {
+                  const val = currentAnswers[row.id];
+                  const isEmpty = !val || String(val).trim() === '';
+                  if (isEmpty) {
+                    missing.add(row.id);
+                  }
+                }
+              });
+            }
+          });
+        }
+
+        if (questionsArray) {
+          questionsArray.forEach((q: any) => {
+            const qKey = `t${tNum}q${q.id}`;
+            if (q.type === 'text') {
+              const val = currentAnswers[qKey];
+              const isEmpty = !val || String(val).trim() === '';
+              if (isEmpty) {
+                missing.add(qKey);
+              }
+            } else if (q.type === 'text_inputs') {
+              q.textInputs.forEach((ti: any) => {
+                const val = currentAnswers[ti.name];
+                const isEmpty = !val || String(val).trim() === '';
+                if (isEmpty) {
+                  missing.add(ti.name);
+                }
+              });
+            } else if (q.type === 'table') {
+              q.rows.forEach((row: any) => {
+                if (row.isSubHeader) return;
+                if (row.cells) {
+                  row.cells.forEach((cell: any) => {
+                    const val = currentAnswers[cell.name];
+                    const isEmpty = !val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === '');
+                    if (isEmpty) {
+                      missing.add(cell.name);
+                    }
+                  });
+                } else if (row.editable) {
+                  const val = currentAnswers[row.id];
+                  const isEmpty = !val || String(val).trim() === '';
+                  if (isEmpty) {
+                    missing.add(row.id);
+                  }
+                }
+              });
+            } else if (q.type === 'multipart_radio') {
+              q.parts.forEach((part: any) => {
+                const val = currentAnswers[part.name];
+                const isEmpty = !val || String(val).trim() === '';
+                if (isEmpty) {
+                  missing.add(part.name);
+                }
+              });
+            } else if (q.type === 'jsa_table' && q.fields) {
+              q.fields.forEach((f: any) => {
+                const val = currentAnswers[f.name];
+                const isEmpty = !val || String(val).trim() === '';
+                if (isEmpty) {
+                  missing.add(f.name);
+                }
+              });
+              for (let rIdx = 0; rIdx < q.steps.rowCount; rIdx++) {
+                for (let cIdx = 0; cIdx < 3; cIdx++) {
+                  const stepKey = `t${tNum}q${q.id}_r${rIdx}c${cIdx}`;
+                  const val = currentAnswers[stepKey];
+                  const isEmpty = !val || String(val).trim() === '';
+                  if (isEmpty) {
+                    missing.add(stepKey);
+                  }
+                }
+              }
+            } else {
+              const val = currentAnswers[qKey];
+              const isEmpty = !val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === '');
+              if (isEmpty) {
+                missing.add(qKey);
+              }
+            }
+          });
+        }
+      });
+
+    return missing;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!signaturePad.current || signaturePad.current.isEmpty()) {
-      alert('Please provide your signature before submitting.')
-      return
+
+    const currentMissingFields = getMissingFields(answers);
+    const isSigEmpty = !signaturePad.current || signaturePad.current.isEmpty();
+
+    if (currentMissingFields.size > 0 || isSigEmpty) {
+      setShowErrors(true);
+
+      const hasMissingAnswers = currentMissingFields.size > 0;
+      let message = '';
+      if (hasMissingAnswers && isSigEmpty) {
+        message = 'Please fill in all answers and provide your signature before submitting.';
+      } else if (hasMissingAnswers) {
+        message = 'Please fill in all answers before submitting.';
+      } else {
+        message = 'Please provide your signature before submitting.';
+      }
+
+      showToast(message, 'error');
+
+      setTimeout(() => {
+        const firstMissing = Array.from(currentMissingFields)[0];
+        let element = null;
+        if (firstMissing) {
+          element = document.getElementsByName(firstMissing)[0] || document.getElementById(firstMissing);
+        } else if (isSigEmpty && sigCanvas.current) {
+          element = sigCanvas.current;
+        }
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          element.focus?.();
+        }
+      }, 100);
+      return;
     }
 
     setSubmitting(true)
     const formData = new FormData(e.currentTarget as HTMLFormElement)
-    const answers: any = {}
+    const answersToSubmit: any = {}
 
     formData.forEach((value, key) => {
       if (typeof value === 'string' && value.trim() === '') {
         return;
       }
-      if (answers[key]) {
-        if (!Array.isArray(answers[key])) answers[key] = [answers[key]]
-        answers[key].push(value)
+      if (answersToSubmit[key]) {
+        if (!Array.isArray(answersToSubmit[key])) answersToSubmit[key] = [answersToSubmit[key]]
+        answersToSubmit[key].push(value)
       } else {
-        answers[key] = value
+        answersToSubmit[key] = value
       }
     })
-
-    const questionKeys = Object.keys(answers).filter(key => !['st-name', 'st-id', 'st-date'].includes(key));
-    if (questionKeys.length === 0) {
-      alert('Please answer at least one question before submitting.');
-      setSubmitting(false);
-      return;
-    }
 
     try {
       const signatureData = signaturePad.current.toDataURL()
 
       const data = await api.submitAssessment({
         assessment_id: assessment._id || assessment.id,
-        student_name: answers['st-name'],
-        student_id: answers['st-id'],
-        answers: answers,
+        student_name: answersToSubmit['st-name'],
+        student_id: answersToSubmit['st-id'],
+        answers: answersToSubmit,
         signature_url: signatureData
       })
 
@@ -172,35 +369,47 @@ const AssessmentForm: React.FC = () => {
 
         <div className="ml-0 md:ml-11">
           {q.type === 'text' ? (
-            <div className="relative">
-              <textarea
-                name={qKey}
-                className="w-full p-4 border-2 border-gray-100 rounded-xl min-h-[120px] outline-none focus:border-[#1e3a8a] focus:ring-4 focus:ring-[#1e3a8a]/10 transition-all bg-gray-50/50"
-                placeholder="Enter your detailed answer here..."
-                onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })}
-              ></textarea>
-            </div>
+            (() => {
+              const isMissing = showErrors && (!answers[qKey] || answers[qKey].trim() === '');
+              return (
+                <div className="relative">
+                  <textarea
+                    name={qKey}
+                    className={`w-full p-4 border-2 rounded-xl min-h-[120px] outline-none focus:border-[#1e3a8a] focus:ring-4 focus:ring-[#1e3a8a]/10 transition-all bg-gray-50/50 ${
+                      isMissing ? 'border-red-500 bg-red-50/10' : 'border-gray-100'
+                    }`}
+                    placeholder="Enter your detailed answer here..."
+                    onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })}
+                  ></textarea>
+                </div>
+              );
+            })()
           ) : q.type === 'text_inputs' ? (
             <div className="grid grid-cols-1 gap-6 mt-4">
-              {q.textInputs.map((ti: any, idx: number) => (
-                <div key={idx} className="flex flex-col md:flex-row items-center gap-6 p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  {ti.image && (
-                    <div className="w-full md:w-64 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
-                      <img src={ti.image} alt={ti.placeholder || `Input ${idx + 1}`} className="w-full h-24 object-contain" />
+              {q.textInputs.map((ti: any, idx: number) => {
+                const isTiMissing = showErrors && (!answers[ti.name] || answers[ti.name].trim() === '');
+                return (
+                  <div key={idx} className="flex flex-col md:flex-row items-center gap-6 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                    {ti.image && (
+                      <div className="w-full md:w-64 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+                        <img src={ti.image} alt={ti.placeholder || `Input ${idx + 1}`} className="w-full h-24 object-contain" />
+                      </div>
+                    )}
+                    <div className="flex-1 w-full">
+                      <p className="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">{ti.placeholder}</p>
+                      <input
+                        type="text"
+                        name={ti.name}
+                        className={`w-full p-3 bg-white border-2 rounded-lg outline-none focus:border-[#1e3a8a] transition-all font-bold ${
+                          isTiMissing ? 'border-red-500 bg-red-50/10' : 'border-gray-200'
+                        }`}
+                        placeholder="Identify this cable type..."
+                        onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })}
+                      />
                     </div>
-                  )}
-                  <div className="flex-1 w-full">
-                    <p className="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">{ti.placeholder}</p>
-                    <input
-                      type="text"
-                      name={ti.name}
-                      className="w-full p-3 bg-white border-2 border-gray-200 rounded-lg outline-none focus:border-[#1e3a8a] transition-all font-bold"
-                      placeholder="Identify this cable type..."
-                      onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })}
-                    />
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : q.type === 'table' ? (
             <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white mt-4">
@@ -221,55 +430,72 @@ const AssessmentForm: React.FC = () => {
                         {row.label}
                       </td>
                       {row.cells ? (
-                        row.cells.map((cell: any, cIdx: number) => (
-                          <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
-                            <div className="flex flex-col gap-1.5 p-1">
-                              {cell.options ? cell.options.map((opt: any, oIdx: number) => (
-                                <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                        row.cells.map((cell: any, cIdx: number) => {
+                          const val = answers[cell.name];
+                          const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
+                          return (
+                            <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                              <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${
+                                isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                              }`}>
+                                {cell.options ? cell.options.map((opt: any, oIdx: number) => (
+                                  <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                    <input
+                                      type={cell.type || 'radio'}
+                                      name={cell.name}
+                                      value={opt.value}
+                                      checked={cell.type === 'checkbox'
+                                        ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                        : answers[cell.name] === opt.value}
+                                      onChange={(e) => {
+                                        if (cell.type === 'checkbox') {
+                                          const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                          const updated = e.target.checked
+                                            ? [...current, opt.value]
+                                            : current.filter((v: string) => v !== opt.value);
+                                          setAnswers({ ...answers, [cell.name]: updated });
+                                        } else {
+                                          setAnswers({ ...answers, [cell.name]: e.target.value });
+                                        }
+                                      }}
+                                      className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                    />
+                                    <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                  </label>
+                                )) : (
                                   <input
-                                    type={cell.type || 'radio'}
+                                    type="text"
                                     name={cell.name}
-                                    value={opt.value}
-                                    checked={cell.type === 'checkbox'
-                                      ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
-                                      : answers[cell.name] === opt.value}
-                                    onChange={(e) => {
-                                      if (cell.type === 'checkbox') {
-                                        const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
-                                        const updated = e.target.checked
-                                          ? [...current, opt.value]
-                                          : current.filter((v: string) => v !== opt.value);
-                                        setAnswers({ ...answers, [cell.name]: updated });
-                                      } else {
-                                        setAnswers({ ...answers, [cell.name]: e.target.value });
-                                      }
-                                    }}
-                                    className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                    className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
+                                      isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                    }`}
+                                    placeholder="Comments..."
+                                    value={answers[cell.name] || ''}
+                                    onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
                                   />
-                                  <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                </label>
-                              )) : (
-                                <input
-                                  type="text"
-                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                  placeholder="Comments..."
-                                  value={answers[cell.name] || ''}
-                                  onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
-                                />
-                              )}
-                            </div>
-                          </td>
-                        ))
+                                )}
+                              </div>
+                            </td>
+                          );
+                        })
                       ) : (
                         <td className="p-2" colSpan={q.headers.length - 1}>
                           {row.editable ? (
-                            <input
-                              type="text"
-                              className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] transition-all"
-                              placeholder="Enter answer..."
-                              value={answers[row.id] || ''}
-                              onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
-                            />
+                            (() => {
+                              const isRowMissing = showErrors && (!answers[row.id] || answers[row.id].trim() === '');
+                              return (
+                                <input
+                                  type="text"
+                                  name={row.id}
+                                  className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] transition-all ${
+                                    isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                  }`}
+                                  placeholder="Enter answer..."
+                                  value={answers[row.id] || ''}
+                                  onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                />
+                              );
+                            })()
                           ) : (
                             <span className="p-2 text-sm text-slate-600">{row.value}</span>
                           )}
@@ -282,89 +508,112 @@ const AssessmentForm: React.FC = () => {
             </div>
           ) : q.type === 'multipart_radio' ? (
             <div className="flex flex-col gap-6 mt-4">
-              {q.parts.map((part: any, pIdx: number) => (
-                <div key={pIdx}>
-                  <div className="text-[13px] text-gray-600 italic mb-2 leading-relaxed">{part.text}</div>
-                  <div className="flex flex-col gap-1">
-                    {part.options.map((opt: any, idx: number) => (
-                      <label key={idx} className="legacy-opt-label hover:shadow-md transition-shadow">
-                        <input
-                          type="radio"
-                          name={part.name}
-                          value={opt.value}
-                          className="accent-[#1e3a8a]"
-                          onChange={(e) => setAnswers({ ...answers, [part.name]: e.target.value })}
-                        />
-                        <span>{opt.text}</span>
-                      </label>
-                    ))}
+              {q.parts.map((part: any, pIdx: number) => {
+                const isPartMissing = showErrors && (!answers[part.name] || answers[part.name].trim() === '');
+                return (
+                  <div key={pIdx}>
+                    <div className="text-[13px] text-gray-600 italic mb-2 leading-relaxed">{part.text}</div>
+                    <div className={`flex flex-col gap-1 p-1 rounded-xl transition-all ${
+                      isPartMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                    }`}>
+                      {part.options.map((opt: any, idx: number) => (
+                        <label key={idx} className="legacy-opt-label hover:shadow-md transition-shadow">
+                          <input
+                            type="radio"
+                            name={part.name}
+                            value={opt.value}
+                            className="accent-[#1e3a8a]"
+                            onChange={(e) => setAnswers({ ...answers, [part.name]: e.target.value })}
+                          />
+                          <span>{opt.text}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : q.type === 'jsa_table' ? (
             <div className="mt-4 border-2 border-slate-200 rounded-xl overflow-hidden bg-white shadow-md">
               {/* Top metadata grid */}
               <div className="grid grid-cols-1 md:grid-cols-4 border-b border-slate-200">
-                {q.fields.slice(0, 4).map((f: any, idx: number) => (
-                  <div key={idx} className={`p-3 border-r border-slate-100 last:border-r-0 ${idx === 3 ? 'bg-slate-50' : ''}`}>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
-                    {f.options ? (
-                      <div className="flex gap-4 mt-1">
-                        {f.options.map((opt: string) => (
-                          <label key={opt} className="flex items-center gap-1.5 cursor-pointer">
-                            <input
-                              type="radio"
-                              name={f.name}
-                              value={opt}
-                              checked={answers[f.name] === opt}
-                              onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
-                              className="w-3.5 h-3.5 accent-[#1e3a8a]"
-                            />
-                            <span className="text-xs font-bold text-slate-700">{opt}</span>
-                          </label>
-                        ))}
-                      </div>
-                    ) : (
-                      <input
-                        type="text"
-                        className="w-full bg-transparent border-b border-slate-100 outline-none text-sm font-bold text-[#1e3a8a]"
-                        value={answers[f.name] || ''}
-                        onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
-                      />
-                    )}
-                  </div>
-                ))}
+                {q.fields.slice(0, 4).map((f: any, idx: number) => {
+                  const isFMissing = showErrors && (!answers[f.name] || answers[f.name].trim() === '');
+                  return (
+                    <div key={idx} className={`p-3 border-r border-slate-100 last:border-r-0 ${idx === 3 ? 'bg-slate-50' : ''}`}>
+                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                      {f.options ? (
+                        <div className={`flex gap-4 mt-1 p-1 rounded transition-all ${isFMissing ? 'border border-red-500 bg-red-50/10' : ''}`}>
+                          {f.options.map((opt: string) => (
+                            <label key={opt} className="flex items-center gap-1.5 cursor-pointer">
+                              <input
+                                type="radio"
+                                name={f.name}
+                                value={opt}
+                                checked={answers[f.name] === opt}
+                                onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                                className="w-3.5 h-3.5 accent-[#1e3a8a]"
+                              />
+                              <span className="text-xs font-bold text-slate-700">{opt}</span>
+                            </label>
+                          ))}
+                        </div>
+                      ) : (
+                        <input
+                          type="text"
+                          name={f.name}
+                          className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${
+                            isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
+                          }`}
+                          value={answers[f.name] || ''}
+                          onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Middle metadata grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 border-b border-slate-200">
-                {q.fields.slice(4, 10).map((f: any, idx: number) => (
-                  <div key={idx} className="p-3 border-r border-b border-slate-100">
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
-                    <input
-                      type="text"
-                      className="w-full bg-transparent border-b border-slate-100 outline-none text-sm font-bold text-[#1e3a8a]"
-                      value={answers[f.name] || ''}
-                      onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
-                    />
-                  </div>
-                ))}
+                {q.fields.slice(4, 10).map((f: any, idx: number) => {
+                  const isFMissing = showErrors && (!answers[f.name] || answers[f.name].trim() === '');
+                  return (
+                    <div key={idx} className="p-3 border-r border-b border-slate-100">
+                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                      <input
+                        type="text"
+                        name={f.name}
+                        className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${
+                          isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
+                        }`}
+                        value={answers[f.name] || ''}
+                        onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                      />
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Bottom metadata grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 border-b border-slate-200">
-                {q.fields.slice(10).map((f: any, idx: number) => (
-                  <div key={idx} className="p-3 border-r border-slate-100 last:border-r-0">
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
-                    <input
-                      type="text"
-                      className="w-full bg-transparent border-b border-slate-100 outline-none text-sm font-bold text-[#1e3a8a]"
-                      value={answers[f.name] || ''}
-                      onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
-                    />
-                  </div>
-                ))}
+                {q.fields.slice(10).map((f: any, idx: number) => {
+                  const isFMissing = showErrors && (!answers[f.name] || answers[f.name].trim() === '');
+                  return (
+                    <div key={idx} className="p-3 border-r border-slate-100 last:border-r-0">
+                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
+                      <input
+                        type="text"
+                        name={f.name}
+                        className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${
+                          isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
+                        }`}
+                        value={answers[f.name] || ''}
+                        onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
+                      />
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Main JSA Table */}
@@ -387,10 +636,14 @@ const AssessmentForm: React.FC = () => {
                       <tr key={rIdx} className="border-t border-slate-200">
                         {[0, 1, 2].map((cIdx) => {
                           const stepKey = `t${tNum}q${q.id}_r${rIdx}c${cIdx}`;
+                          const isStepMissing = showErrors && (!answers[stepKey] || answers[stepKey].trim() === '');
                           return (
                             <td key={cIdx} className="p-1 border-r border-slate-200 last:border-0">
                               <textarea
-                                className="w-full p-2 text-sm outline-none bg-transparent min-h-[60px] resize-none focus:bg-blue-50/30 transition-colors"
+                                name={stepKey}
+                                className={`w-full p-2 text-sm outline-none bg-transparent min-h-[60px] resize-none focus:bg-blue-50/30 transition-colors ${
+                                  isStepMissing ? 'border border-red-500 bg-red-50/10 rounded' : ''
+                                }`}
                                 value={answers[stepKey] || ''}
                                 onChange={(e) => setAnswers({ ...answers, [stepKey]: e.target.value })}
                               />
@@ -404,38 +657,46 @@ const AssessmentForm: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-1 mt-2">
-              {q.options?.map((opt: any, idx: number) => (
-                <label key={idx} className="legacy-opt-label hover:shadow-md transition-shadow">
-                  <input
-                    type={opt.type || 'radio'}
-                    name={qKey}
-                    value={opt.value}
-                    checked={opt.type === 'checkbox'
-                      ? (Array.isArray(answers[qKey]) ? answers[qKey].includes(opt.value) : false)
-                      : answers[qKey] === opt.value}
-                    className="accent-[#1e3a8a]"
-                    onChange={(e) => {
-                      if (opt.type === 'checkbox') {
-                        const current = answers[qKey] || [];
-                        const next = e.target.checked
-                          ? [...current, opt.value]
-                          : current.filter((v: string) => v !== opt.value);
-                        setAnswers({ ...answers, [qKey]: next });
-                      } else {
-                        setAnswers({ ...answers, [qKey]: e.target.value });
-                      }
-                    }}
-                  />
-                  <span>
-                    {opt.value.length === 1 ? (
-                      <strong className="text-[#1e3a8a] mr-2">{opt.value.toUpperCase()})</strong>
-                    ) : null}
-                    {opt.text}
-                  </span>
-                </label>
-              ))}
-            </div>
+            (() => {
+              const val = answers[qKey];
+              const isDefaultQMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
+              return (
+                <div className={`flex flex-col gap-1 mt-2 p-1 rounded-xl transition-all ${
+                  isDefaultQMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                }`}>
+                  {q.options?.map((opt: any, idx: number) => (
+                    <label key={idx} className="legacy-opt-label hover:shadow-md transition-shadow">
+                      <input
+                        type={opt.type || 'radio'}
+                        name={qKey}
+                        value={opt.value}
+                        checked={opt.type === 'checkbox'
+                          ? (Array.isArray(answers[qKey]) ? answers[qKey].includes(opt.value) : false)
+                          : answers[qKey] === opt.value}
+                        className="accent-[#1e3a8a]"
+                        onChange={(e) => {
+                          if (opt.type === 'checkbox') {
+                            const current = answers[qKey] || [];
+                            const next = e.target.checked
+                              ? [...current, opt.value]
+                              : current.filter((v: string) => v !== opt.value);
+                            setAnswers({ ...answers, [qKey]: next });
+                          } else {
+                            setAnswers({ ...answers, [qKey]: e.target.value });
+                          }
+                        }}
+                      />
+                      <span>
+                        {opt.value.length === 1 ? (
+                          <strong className="text-[#1e3a8a] mr-2">{opt.value.toUpperCase()})</strong>
+                        ) : null}
+                        {opt.text}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              );
+            })()
           )}
         </div>
       </div>
@@ -651,63 +912,80 @@ const AssessmentForm: React.FC = () => {
                                                   </tr>
                                                 )
                                               }
-                                              return (
+                                                                              return (
                                                 <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
                                                   <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
                                                     {row.label}
                                                   </td>
                                                   {row.cells ? (
-                                                    row.cells.map((cell: any, cIdx: number) => (
-                                                      <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
-                                                        <div className="flex flex-col gap-1.5 p-1">
-                                                          {cell.options ? cell.options.map((opt: any, oIdx: number) => (
-                                                            <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
-                                                              <div className="relative flex items-center justify-center">
-                                                                <input
-                                                                  type={cell.type || 'radio'}
-                                                                  name={cell.name}
-                                                                  value={opt.value}
-                                                                  checked={cell.type === 'checkbox'
-                                                                    ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
-                                                                    : answers[cell.name] === opt.value}
-                                                                  onChange={(e) => {
-                                                                    if (cell.type === 'checkbox') {
-                                                                      const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
-                                                                      const updated = e.target.checked
-                                                                        ? [...current, opt.value]
-                                                                        : current.filter((v: string) => v !== opt.value);
-                                                                      setAnswers({ ...answers, [cell.name]: updated });
-                                                                    } else {
-                                                                      setAnswers({ ...answers, [cell.name]: e.target.value });
-                                                                    }
-                                                                  }}
-                                                                  className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
-                                                                />
-                                                              </div>
-                                                              <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                                            </label>
-                                                          )) : (
-                                                            <input
-                                                              type="text"
-                                                              className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                              placeholder="Comments..."
-                                                              value={answers[cell.name] || ''}
-                                                              onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
-                                                            />
-                                                          )}
-                                                        </div>
-                                                      </td>
-                                                    ))
+                                                    row.cells.map((cell: any, cIdx: number) => {
+                                                      const val = answers[cell.name];
+                                                      const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
+                                                      return (
+                                                        <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                                                          <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${
+                                                            isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                                                          }`}>
+                                                            {cell.options ? cell.options.map((opt: any, oIdx: number) => (
+                                                              <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                                <div className="relative flex items-center justify-center">
+                                                                  <input
+                                                                    type={cell.type || 'radio'}
+                                                                    name={cell.name}
+                                                                    value={opt.value}
+                                                                    checked={cell.type === 'checkbox'
+                                                                      ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                                                      : answers[cell.name] === opt.value}
+                                                                    onChange={(e) => {
+                                                                      if (cell.type === 'checkbox') {
+                                                                        const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                                                        const updated = e.target.checked
+                                                                          ? [...current, opt.value]
+                                                                          : current.filter((v: string) => v !== opt.value);
+                                                                        setAnswers({ ...answers, [cell.name]: updated });
+                                                                      } else {
+                                                                        setAnswers({ ...answers, [cell.name]: e.target.value });
+                                                                      }
+                                                                    }}
+                                                                    className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                                  />
+                                                                </div>
+                                                                <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                              </label>
+                                                            )) : (
+                                                              <input
+                                                                type="text"
+                                                                name={cell.name}
+                                                                className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
+                                                                  isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                                }`}
+                                                                placeholder="Comments..."
+                                                                value={answers[cell.name] || ''}
+                                                                onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
+                                                              />
+                                                            )}
+                                                          </div>
+                                                        </td>
+                                                      );
+                                                    })
                                                   ) : (
                                                     <td className="p-2" colSpan={section.headers.length - 1}>
                                                       {row.editable ? (
-                                                        <input
-                                                          type="text"
-                                                          className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                          placeholder="Enter result..."
-                                                          value={answers[row.id] || ''}
-                                                          onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
-                                                        />
+                                                        (() => {
+                                                          const isRowMissing = showErrors && (!answers[row.id] || answers[row.id].trim() === '');
+                                                          return (
+                                                            <input
+                                                              type="text"
+                                                              name={row.id}
+                                                              className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
+                                                                isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                              }`}
+                                                              placeholder="Enter result..."
+                                                              value={answers[row.id] || ''}
+                                                              onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                                            />
+                                                          );
+                                                        })()
                                                       ) : (
                                                         <span className="p-2 text-sm text-slate-600">{row.value}</span>
                                                       )}
@@ -815,55 +1093,72 @@ const AssessmentForm: React.FC = () => {
                                             {row.label}
                                           </td>
                                           {row.cells ? (
-                                            row.cells.map((cell: any, cIdx: number) => (
-                                              <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
-                                                <div className="flex flex-col gap-1.5 p-1">
-                                                  {cell.options ? cell.options.map((opt: any, oIdx: number) => (
-                                                    <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                            row.cells.map((cell: any, cIdx: number) => {
+                                              const val = answers[cell.name];
+                                              const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
+                                              return (
+                                                <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                                                  <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${
+                                                    isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                                                  }`}>
+                                                    {cell.options ? cell.options.map((opt: any, oIdx: number) => (
+                                                      <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                        <input
+                                                          type={cell.type || 'radio'}
+                                                          name={cell.name}
+                                                          value={opt.value}
+                                                          checked={cell.type === 'checkbox'
+                                                            ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                                            : answers[cell.name] === opt.value}
+                                                          onChange={(e) => {
+                                                            if (cell.type === 'checkbox') {
+                                                              const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                                              const updated = e.target.checked
+                                                                ? [...current, opt.value]
+                                                                : current.filter((v: string) => v !== opt.value);
+                                                              setAnswers({ ...answers, [cell.name]: updated });
+                                                            } else {
+                                                              setAnswers({ ...answers, [cell.name]: e.target.value });
+                                                            }
+                                                          }}
+                                                          className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                        />
+                                                        <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                      </label>
+                                                    )) : (
                                                       <input
-                                                        type={cell.type || 'radio'}
+                                                        type="text"
                                                         name={cell.name}
-                                                        value={opt.value}
-                                                        checked={cell.type === 'checkbox'
-                                                          ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
-                                                          : answers[cell.name] === opt.value}
-                                                        onChange={(e) => {
-                                                          if (cell.type === 'checkbox') {
-                                                            const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
-                                                            const updated = e.target.checked
-                                                              ? [...current, opt.value]
-                                                              : current.filter((v: string) => v !== opt.value);
-                                                            setAnswers({ ...answers, [cell.name]: updated });
-                                                          } else {
-                                                            setAnswers({ ...answers, [cell.name]: e.target.value });
-                                                          }
-                                                        }}
-                                                        className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                        className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
+                                                          isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                        }`}
+                                                        placeholder="Comments..."
+                                                        value={answers[cell.name] || ''}
+                                                        onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
                                                       />
-                                                      <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                                    </label>
-                                                  )) : (
-                                                    <input
-                                                      type="text"
-                                                      className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                      placeholder="Comments..."
-                                                      value={answers[cell.name] || ''}
-                                                      onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
-                                                    />
-                                                  )}
-                                                </div>
-                                              </td>
-                                            ))
+                                                    )}
+                                                  </div>
+                                                </td>
+                                              );
+                                            })
                                           ) : (
                                             <td className="p-2" colSpan={section.headers.length - 1}>
                                               {row.editable ? (
-                                                <input
-                                                  type="text"
-                                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                  placeholder="Enter result..."
-                                                  value={answers[row.id] || ''}
-                                                  onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
-                                                />
+                                                (() => {
+                                                  const isRowMissing = showErrors && (!answers[row.id] || answers[row.id].trim() === '');
+                                                  return (
+                                                    <input
+                                                      type="text"
+                                                      name={row.id}
+                                                      className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
+                                                        isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                      }`}
+                                                      placeholder="Enter result..."
+                                                      value={answers[row.id] || ''}
+                                                      onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                                    />
+                                                  );
+                                                })()
                                               ) : (
                                                 <span className="p-2 text-sm text-slate-600">{row.value}</span>
                                               )}
@@ -903,7 +1198,14 @@ const AssessmentForm: React.FC = () => {
                 "I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source."
               </p>
               <div className="flex flex-col items-center w-full">
-                <div ref={sigContainerRef} className="bg-white border-2 border-gray-300 rounded-lg shadow-inner overflow-hidden w-full max-w-[600px] h-[200px]">
+                <div
+                  ref={sigContainerRef}
+                  className={`bg-white border-2 rounded-lg shadow-inner overflow-hidden w-full max-w-[600px] h-[200px] transition-all ${
+                    showErrors && signatureEmpty
+                      ? 'border-red-500 bg-red-50/10 ring-4 ring-red-500/10'
+                      : 'border-gray-300'
+                  }`}
+                >
                   <canvas ref={sigCanvas} className="w-full h-full cursor-crosshair" style={{ touchAction: 'none' }} />
                 </div>
                 <div className="flex gap-4 mt-4">
@@ -973,6 +1275,42 @@ const AssessmentForm: React.FC = () => {
           </div>
         </footer>
       </div>
+
+      {toast && (
+        <>
+          <style>{`
+            @keyframes toast-in {
+              from {
+                transform: translateY(1.5rem) scale(0.95);
+                opacity: 0;
+              }
+              to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+              }
+            }
+            .premium-toast {
+              animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+          `}</style>
+          <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border-l-4 border-red-500 premium-toast max-w-sm sm:max-w-md no-print">
+            <div className="bg-red-500/10 p-2 rounded-xl text-red-500">
+              <AlertCircle size={20} className="flex-shrink-0" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Validation Error</p>
+              <p className="text-[13px] sm:text-sm font-bold text-slate-100 leading-snug mt-0.5">{toast.message}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setToast(null)}
+              className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        </>
+      )}
     </>
   )
 }
