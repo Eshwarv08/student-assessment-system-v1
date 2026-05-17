@@ -69,13 +69,16 @@ const AssessmentForm: React.FC = () => {
   // Initialize signature pad and handle resizing
   useEffect(() => {
     if (!loading && !error && sigCanvas.current && !signaturePad.current) {
-      signaturePad.current = new SignaturePad(sigCanvas.current, {
+      const pad = new SignaturePad(sigCanvas.current, {
         backgroundColor: 'rgb(255, 255, 255)',
-        penColor: 'rgb(0, 0, 0)',
-        onEnd: () => {
-          setSignatureEmpty(false);
-        }
+        penColor: 'rgb(0, 0, 0)'
       });
+
+      pad.addEventListener("endStroke", () => {
+        setSignatureEmpty(false);
+      });
+
+      signaturePad.current = pad;
 
       // Initial resize
       setTimeout(resizeCanvas, 100);
@@ -305,7 +308,7 @@ const AssessmentForm: React.FC = () => {
     })
 
     try {
-      const signatureData = signaturePad.current.toDataURL()
+      const signatureData = signaturePad.current ? signaturePad.current.toDataURL() : ''
 
       const data = await api.submitAssessment({
         assessment_id: assessment._id || assessment.id,
