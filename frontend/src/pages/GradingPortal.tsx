@@ -417,9 +417,13 @@ const GradingPortal: React.FC = () => {
                             })
                           ) : (
                             <td className="p-3" colSpan={q.headers.length - 1}>
-                              <div className="p-2 bg-blue-50 border border-blue-100 rounded text-[#1e3a8a] font-bold text-sm">
-                                {submission?.answers?.[row.id] || '(No response provided)'}
-                              </div>
+                              <input
+                                type="text"
+                                className="w-full p-2.5 bg-blue-50/30 border border-slate-200 rounded text-[#1e3a8a] font-bold text-sm outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all print:border-none print:p-0 print:bg-transparent"
+                                placeholder="Enter or edit answer..."
+                                value={grades[row.id] !== undefined ? grades[row.id] : (submission?.answers?.[row.id] || '')}
+                                onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
+                              />
                             </td>
                           )}
                         </tr>
@@ -796,965 +800,9 @@ const GradingPortal: React.FC = () => {
       </div>
 
       <div className="max-w-[850px] mx-auto bg-white mt-0 sm:mt-8 shadow-sm border rounded-sm p-4 sm:p-8 md:p-12 paper review-mode overflow-visible">
-        {/* Header Info */}
-        {/* New Header UI matching the image */}
-        <div className="space-y-6 mb-12">
-          {/* Student Info Box */}
-          <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Student Name:</span>
-              <span className="font-bold text-base">{submission.student_name}</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Student ID:</span>
-              <span className="font-bold text-base">{submission.student_id || '—'}</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Date:</span>
-              <span className="font-bold text-base">{formatDisplayDate(submission.answers?.['st-date'])}</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Signature:</span>
-              <div className="border border-black h-20 flex items-center justify-center bg-white w-full overflow-hidden p-1">
-                {submission.signature_url ? (
-                  <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain" />
-                ) : <span className="text-gray-400 italic text-sm">No signature</span>}
-              </div>
-            </div>
-          </div>
-
-          {/* Assessor Info Box */}
-          <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Assessor's Name:</span>
-              <input
-                type="text"
-                className="w-full border border-black p-2 outline-none focus:bg-blue-50 font-bold"
-                placeholder="Enter assessor name..."
-                value={compRecord.assessor_name}
-                onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })}
-              />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Assessment Site:</span>
-              <input
-                type="text"
-                className="w-full border border-black p-2 outline-none focus:bg-blue-50"
-                placeholder="Enter assessment site..."
-                value={compRecord.assessment_site}
-                onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })}
-              />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Assessment Date/s:</span>
-              <div className="flex-1 flex items-center">
-                <input
-                  type="date"
-                  className="w-full border border-black p-2 outline-none focus:bg-blue-50 no-print"
-                  value={compRecord.assessment_date}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                />
-                <span className="hidden print:inline font-bold text-base ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-              <span className="font-bold text-sm">Signature:</span>
-              <div
-                onClick={() => openSigModal('assessor_signature', 'comp')}
-                className="relative cursor-pointer border border-black bg-white h-20 flex items-center justify-center overflow-hidden group w-full p-1"
-              >
-                {compRecord.assessor_signature ? (
-                  <img src={compRecord.assessor_signature} alt="Signature" className="max-h-full max-w-full object-contain" />
-                ) : (
-                  <span className="text-gray-400 italic text-sm">Click here to sign</span>
-                )}
-                <div className="absolute right-2 bottom-1 text-[9px] text-blue-600 font-bold flex items-center gap-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 px-2 py-0.5 rounded shadow-sm border border-blue-100">
-                  <span>✎ EDIT</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Administrative Use Only Section - Match PDF exactly */}
-        {currentAssessmentQuestions.adminInfo && !currentAssessmentQuestions.adminInfo.hideAdminUseOnly && (
-          <div className="border-2 border-slate-400 mb-12 no-print-section break-inside-avoid">
-            <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
-              {(currentAssessmentQuestions.adminInfo.markingGuide && currentAssessmentQuestions.metadata.code !== 'ICTCBL303') ? "Asseror’s Marking Guide Instructions" : "Administrative Use Only:"}
-            </div>
-            <div className="p-4 bg-white space-y-4 text-sm">
-              <div className="flex flex-wrap gap-8 items-center border-b border-slate-100 pb-4">
-                <div className="flex items-center gap-4">
-                  <span className="text-xl text-slate-400">❑</span>
-                  <span className="font-medium text-slate-600">Entered into Student Management Database</span>
-                </div>
-                <div className="flex items-center gap-2">
-
-                  <span className="font-medium text-slate-600">Signature/Initial:</span>
-                  <div
-                    onClick={() => openSigModal('assessor_signature', 'comp')}
-                    className="border-b border-slate-400 min-w-0 sm:min-w-[120px] h-10 flex items-center justify-center cursor-pointer relative bg-slate-50/50 hover:bg-slate-100 transition-colors group flex-1 overflow-hidden p-1"
-                  >
-                    {compRecord.assessor_signature ? (
-                      <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
-                    ) : (
-                      <span className="text-[10px] text-gray-400 italic">Click to sign</span>
-                    )}
-                    <div className="absolute -right-6 bottom-1 text-[8px] text-blue-600 font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                      EDIT
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-slate-600">Date:</span>
-                  <input
-                    type="date"
-                    className="w-32 border-b border-slate-400 outline-none focus:border-[#1e3a8a] transition-colors bg-transparent px-1 no-print"
-                    value={compRecord.assessment_date}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline border-b border-slate-400 min-w-[100px] px-2">{formatDisplayDate(compRecord.assessment_date)}</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 gap-0 border border-slate-200">
-                {(currentAssessmentQuestions.adminInfo.markingGuide
-                  ? currentAssessmentQuestions.adminInfo.markingGuide.map((item: any) => [item.label, item.content])
-                  : [
-                    ["Unit Code/Name", currentAssessmentQuestions.adminInfo.unitCodeName],
-                    ["Pre-requisites", currentAssessmentQuestions.adminInfo.preRequisites],
-                    ["Co-requisites", currentAssessmentQuestions.adminInfo.coRequisites],
-                    ["Unit Summary", currentAssessmentQuestions.adminInfo.unitSummary],
-                    ["Target Group", currentAssessmentQuestions.adminInfo.targetGroup],
-                    ["Conditions and Context of the Assessments", currentAssessmentQuestions.adminInfo.conditionsAndContext],
-                    ["Specific Resources Required", currentAssessmentQuestions.adminInfo.specificResources],
-                    ["Re-Assessment", currentAssessmentQuestions.adminInfo.reAssessment],
-                    ["Plagiarism", currentAssessmentQuestions.adminInfo.plagiarism],
-                    ["Complaints and appeal", currentAssessmentQuestions.adminInfo.complaintsAndAppeals],
-                    ["Assessors Intervention", currentAssessmentQuestions.adminInfo.assessorsIntervention],
-                    ["Attaching Documents", currentAssessmentQuestions.adminInfo.attachingDocuments],
-                    ["Assessment Instruction", currentAssessmentQuestions.adminInfo.assessmentInstruction],
-                    ...(currentAssessmentQuestions.adminInfo.taskOverviews
-                      ? currentAssessmentQuestions.adminInfo.taskOverviews.map((task: any) => [task.id.replace(':', ''), task.text])
-                      : [
-                        ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
-                        ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
-                        ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
-                        ...(currentAssessmentQuestions.adminInfo.task4Description
-                          ? [["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description]]
-                          : []),
-                        ...(currentAssessmentQuestions.adminInfo.task5Description
-                          ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
-                          : []),
-                        ...(currentAssessmentQuestions.adminInfo.task6Description
-                          ? [["Assessment Task 6", currentAssessmentQuestions.adminInfo.task6Description]]
-                          : [])
-                      ]),
-                    ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
-                  ]).map(([label, value]: any, idx: number) => (
-                    <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
-                      <div className="bg-slate-50 p-3 font-bold text-slate-700 md:border-r border-slate-200 text-xs uppercase tracking-wider">{label}</div>
-                      <div className="p-3 text-slate-700 leading-relaxed text-xs sm:text-sm whitespace-pre-wrap">{value}</div>
-                    </div>
-                  ))}
-              </div>
-
-              {/* New Overview Sections for Question 13 / ICTCBL301 */}
-              {currentAssessmentQuestions.adminInfo.tasksOverview && (
-                <div className="mt-8 space-y-8 no-print-section">
-                  {/* Tasks Overview */}
-                  <div className="border-2 border-slate-400 break-inside-avoid">
-                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
-                      {currentAssessmentQuestions.adminInfo.tasksOverview.title}
-                    </div>
-                    <div className="p-4 bg-white space-y-4 text-sm text-slate-700">
-                      <p className="whitespace-pre-wrap">{currentAssessmentQuestions.adminInfo.tasksOverview.intro}</p>
-                      <ul className="list-decimal ml-6 space-y-1">
-                        {currentAssessmentQuestions.adminInfo.tasksOverview.elements.map((el: string, i: number) => (
-                          <li key={i}>{el}</li>
-                        ))}
-                      </ul>
-                      <p className="font-bold mt-4">{currentAssessmentQuestions.adminInfo.tasksOverview.evidenceIntro}</p>
-                      <ul className="list-disc ml-6 space-y-1">
-                        {currentAssessmentQuestions.adminInfo.tasksOverview.evidenceItems.map((item: string, i: number) => (
-                          <li key={i}>{item}</li>
-                        ))}
-                      </ul>
-                      <p className="mt-6 font-medium italic text-blue-800">{currentAssessmentQuestions.adminInfo.tasksOverview.summary}</p>
-                      <div className="overflow-x-auto mt-2">
-                        <table className="w-full border-collapse border border-slate-300">
-                          <tbody>
-                            {currentAssessmentQuestions.adminInfo.tasksOverview.tasks.map((task: any, i: number) => (
-                              <tr key={i}>
-                                <td className="border border-slate-300 p-3 bg-slate-50 font-bold w-[180px]">{task.id}</td>
-                                <td className="border border-slate-300 p-3 bg-slate-50 w-[120px]">{task.type}</td>
-                                <td className="border border-slate-300 p-3 leading-relaxed">{task.text}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Recording Assessment */}
-                  <div className="border-2 border-slate-400 break-inside-avoid">
-                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
-                      {currentAssessmentQuestions.adminInfo.recordingAssessment.title}
-                    </div>
-                    <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
-                      {currentAssessmentQuestions.adminInfo.recordingAssessment.content}
-                    </div>
-                  </div>
-
-                  {/* Assessment of Competency */}
-                  <div className="border-2 border-slate-400 break-inside-avoid">
-                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
-                      {currentAssessmentQuestions.adminInfo.competencyAssessment.title}
-                    </div>
-                    <div className="p-4 bg-white space-y-4 text-sm text-slate-700">
-                      <p className="whitespace-pre-wrap leading-relaxed">{currentAssessmentQuestions.adminInfo.competencyAssessment.content}</p>
-                      <div className="flex flex-wrap gap-8 ml-4">
-                        {currentAssessmentQuestions.adminInfo.competencyAssessment.criteria.map((c: string, i: number) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-blue-600"></div>
-                            <span className="font-bold">{c}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-1 mt-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                        {currentAssessmentQuestions.adminInfo.competencyAssessment.codes.map((item: any, i: number) => (
-                          <div key={i} className="flex gap-4 text-xs">
-                            <span className="font-bold w-12 text-blue-700">{item.code}</span>
-                            <span className="text-slate-400">-</span>
-                            <span className="font-medium">{item.text}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <p className="mt-4 pt-4 border-t border-slate-200 italic text-slate-500 text-xs">{currentAssessmentQuestions.adminInfo.competencyAssessment.footer}</p>
-                    </div>
-                  </div>
-
-                  {/* Assessor Feedback Overview */}
-                  <div className="border-2 border-slate-400 break-inside-avoid">
-                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
-                      {currentAssessmentQuestions.adminInfo.assessorFeedback.title}
-                    </div>
-                    <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed italic whitespace-pre-wrap">
-                      {currentAssessmentQuestions.adminInfo.assessorFeedback.content}
-                    </div>
-                  </div>
-
-                  {/* Cover Sheet Overview */}
-                  <div className="border-2 border-slate-400 break-inside-avoid">
-                    <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
-                      {currentAssessmentQuestions.adminInfo.coverSheet.title}
-                    </div>
-                    <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed font-bold whitespace-pre-wrap">
-                      {currentAssessmentQuestions.adminInfo.coverSheet.content}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Reasonable Adjustment Section */}
-              {currentAssessmentQuestions.adminInfo.reasonableAdjustment && (
-                <div className="mt-8 border-2 border-slate-400 break-inside-avoid">
-                  <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
-                    Reasonable Adjustment
-                  </div>
-                  <div className="p-4 bg-white space-y-4 text-[11px]">
-                    <p className="text-slate-600 leading-relaxed">{currentAssessmentQuestions.adminInfo.reasonableAdjustment}</p>
-                    <div className="hidden md:block">
-                      <table className="w-full border-collapse border border-slate-300">
-                        <thead className="bg-slate-50 text-slate-700">
-                          <tr>
-                            <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reasonable Adjustment Provided</th>
-                            <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reason for Reasonable Adjustment</th>
-                            <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Outcome</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="border border-slate-300 p-2 align-top">
-                              <div className="space-y-2">
-                                {[
-                                  "Educational and bilingual support",
-                                  "Presenting questions orally",
-                                  "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
-                                  "Extra time to complete a course or assessment",
-                                  "Others:"
-                                ].map((adj, i) => (
-                                  <div key={i} className="flex items-start gap-2">
-                                    <span className="text-slate-600 leading-tight">{adj}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </td>
-                            <td className="border border-slate-300 p-2 align-top">
-                              <textarea
-                                className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
-                                placeholder="Enter reason here..."
-                                value={compRecord.reasonable_adjustment?.reason || ''}
-                                onChange={(e) => setCompRecord({
-                                  ...compRecord,
-                                  reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
-                                })}
-                              />
-                            </td>
-                            <td className="border border-slate-300 p-2 align-top">
-                              <textarea
-                                className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
-                                placeholder="Enter outcome here..."
-                                value={compRecord.reasonable_adjustment?.outcome || ''}
-                                onChange={(e) => setCompRecord({
-                                  ...compRecord,
-                                  reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
-                                })}
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-
-                    {/* Mobile View */}
-                    <div className="md:hidden space-y-6">
-                      <div className="space-y-3">
-                        <div className="font-bold text-slate-700">Adjustments Provided:</div>
-                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
-                          {[
-                            "Educational and bilingual support",
-                            "Presenting questions orally",
-                            "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
-                            "Extra time to complete a course or assessment",
-                            "Others:"
-                          ].map((adj, i) => (
-                            <div key={i} className="flex items-start gap-2">
-                              <span className="text-slate-600 text-xs leading-tight">• {adj}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <div className="font-bold text-slate-700">Reason:</div>
-                        <textarea
-                          className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
-                          placeholder="Enter reason..."
-                          value={compRecord.reasonable_adjustment?.reason || ''}
-                          onChange={(e) => setCompRecord({
-                            ...compRecord,
-                            reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
-                          })}
-                        />
-                      </div>
-                      <div className="space-y-3">
-                        <div className="font-bold text-slate-700">Outcome:</div>
-                        <textarea
-                          className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
-                          placeholder="Enter outcome..."
-                          value={compRecord.reasonable_adjustment?.outcome || ''}
-                          onChange={(e) => setCompRecord({
-                            ...compRecord,
-                            reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
-                          })}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Cover Sheet Info */}
-              <div className="mt-8 p-6 bg-slate-50 border-4 border-double border-slate-300 text-center space-y-4">
-                <h2 className="text-xl font-black text-slate-800 uppercase tracking-tighter">COVER SHEET FOR SUBMISSION OF WORK FOR ASSESSMENT</h2>
-                <p className="text-sm text-slate-600 font-medium">{currentAssessmentQuestions.adminInfo.coverSheetInstruction}</p>
-                <div className="text-xs text-slate-400 italic">Work submitted without a signed cover sheet will be returned unmarked.</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="space-y-16">
-          {Object.keys(currentAssessmentQuestions)
-            .filter(key => key.startsWith('task')) // Only process task1, task2, etc.
-            .sort((a, b) => {
-              const aNum = parseInt(a.replace('task', ''));
-              const bNum = parseInt(b.replace('task', ''));
-              return aNum - bNum;
-            })
-            .map((taskKey) => {
-              const tNum = parseInt(taskKey.replace('task', ''));
-              const taskData = currentAssessmentQuestions[taskKey];
-
-              // Case 1: plain array of question objects
-              const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
-              // Case 2: object with a nested .questions array
-              const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
-
-              const oralQuestions = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
-              const perfQuestions = (taskData as any).performance || [];
-              const observationItems = (taskData as any).observationItems || [];
-              const observationList = (taskData as any).observationList || [];
-              const hasChecklist = oralQuestions.length > 0 || perfQuestions.length > 0 || observationItems.length > 0 || observationList.length > 0;
-
-              const questionsArray: any[] = isPlainArray
-                ? taskData
-                : (taskData as any).questions || [];
-              const hasQuestions = questionsArray.length > 0;
-
-              let taskTitle: string;
-              if ((taskData as any).title) {
-                taskTitle = (taskData as any).title;
-              } else if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
-                taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
-              } else {
-                const typeLabel = tNum === 4 ? 'WRITTEN QUESTIONS AND ANSWERS' : tNum === 5 ? 'WRITTEN ASSESSMENT' : tNum === 6 ? 'MULTIPLE CHOICE QUESTIONS' : `TASK ${tNum}`;
-                taskTitle = `ASSESSMENT TASK ${tNum} – ${typeLabel}`;
-              }
-
-              return (
-                <section key={taskKey} className="space-y-12 page-break-before">
-                  {/* Observation Section - Only show if observation data exists */}
-                  {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections || taskData.assessorSections) && (
-                    <div className="space-y-6">
-                      <div className="text-center">
-                        <div className="task-banner-ribbon">
-                          {taskData.observationTitle || (hasQuestions ? taskTitle : `ASSESSMENT TASK ${tNum} OBSERVATION`)}
-                        </div>
-                        {taskData.observationSubtitle && (
-                          <div className="text-lg font-bold text-slate-600 border-y border-slate-200 py-2 mt-4">
-                            {taskData.observationSubtitle}
-                          </div>
-                        )}
-                      </div>
-
-                      {(taskData.sections || taskData.assessorSections) && (
-                        <div className="space-y-4">
-                          {[
-                            ...(taskData.sections || []),
-                            ...(taskData.assessorSections || []).map((s: any) => ({ ...s, isAssessorOnly: true }))
-                          ].map((section: any, sIdx: number) => (
-                            <div key={sIdx} className="space-y-3">
-                              {section.type === 'text' && (
-                                <div className={`space-y-2 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
-                                  {section.title && (
-                                    <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-base border-b border-slate-200' : 'text-sm text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
-                                      {section.title}
-                                    </h3>
-                                  )}
-                                  <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
-                                    {section.content}
-                                  </div>
-                                </div>
-                              )}
-                              {section.type === 'image' && (
-                                <div className="flex flex-col items-center gap-2 py-4">
-                                  <div className="bg-white p-2 border border-slate-200 shadow-sm rounded-lg max-w-[550px]">
-                                    <img src={section.src} alt={section.caption || 'Observation'} className="w-full h-auto rounded" />
-                                  </div>
-                                  {section.caption && (
-                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                                      {section.caption}
-                                    </span>
-                                  )}
-                                </div>
-                              )}
-                              {section.type === 'table' && (
-                                <div className="space-y-4 px-2">
-                                  {section.title && (
-                                    <h3 className="font-bold text-slate-800 pb-2 text-base border-b border-slate-200">
-                                      {section.title}
-                                    </h3>
-                                  )}
-                                  <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
-                                    <table className="w-full text-left border-collapse">
-                                      <thead>
-                                        <tr className="bg-slate-50 border-b border-slate-200">
-                                          {section.headers.map((header: string, hIdx: number) => (
-                                            <th key={hIdx} className="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                              {header}
-                                            </th>
-                                          ))}
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {section.rows.map((row: any, rIdx: number) => {
-                                          if (row.isSubHeader) {
-                                            return (
-                                              <tr key={rIdx} className="bg-slate-100/80 border-b border-slate-200">
-                                                <td colSpan={section.headers.length} className="p-3 text-xs font-bold text-slate-700 uppercase tracking-wider">
-                                                  {row.label}
-                                                </td>
-                                              </tr>
-                                            )
-                                          }
-                                          return (
-                                            <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
-                                              <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
-                                                {row.label}
-                                              </td>
-                                              {row.cells ? (
-                                                row.cells.map((cell: any, cIdx: number) => {
-                                                  const isAssessorInput = taskData.assessorOnly || section.isAssessorOnly;
-                                                  const ans = isAssessorInput ? grades[cell.name] : submission?.answers?.[cell.name]
-                                                  return (
-                                                    <td key={cIdx} colSpan={row.colSpan || 1} className="p-4 border-l border-slate-100 align-top">
-                                                      <div className="flex flex-col gap-1.5">
-                                                        {cell.options ? cell.options.map((opt: any, oIdx: number) => {
-                                                          const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
-
-                                                          if (isAssessorInput) {
-                                                            if (isQuestion15) {
-                                                              // Q15: each cell has exactly ONE option (Yes OR No per cell).
-                                                              // Detect the intent by the option value itself.
-                                                              const isYes = ['Yes','yes','Satisfactory','S','C','Completed'].includes(opt.value);
-                                                              const q15Checked = grades[cell.name] === opt.value;
-                                                              return (
-                                                                <div
-                                                                  key={oIdx}
-                                                                  className="flex items-center justify-center cursor-pointer select-none"
-                                                                  title={q15Checked ? `Uncheck ${opt.value}` : `Check ${opt.value}`}
-                                                                  onClick={() => {
-                                                                    // Toggle: clicking the same value unchecks it
-                                                                    const newVal = grades[cell.name] === opt.value ? null : opt.value;
-                                                                    setGrades({ ...grades, [cell.name]: newVal });
-                                                                  }}
-                                                                >
-                                                                  <div className={`w-[22px] h-[22px] border-2 rounded flex items-center justify-center flex-shrink-0 transition-all duration-150 ${q15Checked ? (isYes ? 'bg-green-500 border-green-600 shadow-sm' : 'bg-red-500 border-red-600 shadow-sm') : 'bg-white border-slate-300 hover:border-[#1e3a8a] hover:bg-blue-50'}`}>
-                                                                    {q15Checked && (
-                                                                      <span className="text-white font-black text-[13px] leading-none select-none">{isYes ? '✔' : '✘'}</span>
-                                                                    )}
-                                                                  </div>
-                                                                  {/* Hidden checkbox for print/form purposes */}
-                                                                  <input type="checkbox" checked={q15Checked} onChange={() => {}} className="sr-only" />
-                                                                  {/* Print symbols */}
-                                                                  {q15Checked && isYes && <span className="print-symbol correct">✔</span>}
-                                                                  {q15Checked && !isYes && <span className="print-symbol incorrect">✘</span>}
-                                                                  {opt.text && <span className="text-[10px] sm:text-[11px] text-slate-600 leading-tight ml-1.5">{opt.text}</span>}
-                                                                </div>
-                                                              )
-                                                            }
-                                                            return (
-                                                              <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
-                                                                <input
-                                                                  type={cell.type || 'radio'}
-                                                                  name={cell.name}
-                                                                  value={opt.value}
-                                                                  checked={isSelected}
-                                                                  onChange={(e) => {
-                                                                    if (cell.type === 'checkbox') {
-                                                                      const current = Array.isArray(grades[cell.name]) ? grades[cell.name] : [];
-                                                                      const updated = e.target.checked
-                                                                        ? [...current, opt.value]
-                                                                        : current.filter((v: string) => v !== opt.value);
-                                                                      setGrades({ ...grades, [cell.name]: updated });
-                                                                    } else {
-                                                                      setGrades({ ...grades, [cell.name]: e.target.value });
-                                                                    }
-                                                                  }}
-                                                                  className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
-                                                                />
-                                                                <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                                              </label>
-                                                            )
-                                                          }
-
-                                                          return (
-                                                            <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
-                                                              <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
-                                                                {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-                                                              </div>
-                                                              <span className="text-[10px] leading-tight">{opt.text}</span>
-                                                            </div>
-                                                          )
-                                                        }) : (
-                                                          isAssessorInput ? (
-                                                            cell.type === 'signature' ? (
-                                                              <div
-                                                                onClick={() => openSigModal(cell.name, 'grades')}
-                                                                className="relative cursor-pointer border border-slate-200 bg-slate-50/50 h-16 flex items-center justify-center overflow-hidden group w-full p-1 rounded"
-                                                              >
-                                                                {grades[cell.name] ? (
-                                                                  <img src={grades[cell.name]} alt="Signature" className="max-h-full max-w-full object-contain" />
-                                                                ) : (
-                                                                  <span className="text-slate-400 italic text-xs">Click to sign</span>
-                                                                )}
-                                                              </div>
-                                                            ) : cell.type === 'date' ? (
-                                                              <input
-                                                                type="date"
-                                                                className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                                value={grades[cell.name] || ''}
-                                                                onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
-                                                              />
-                                                            ) : (
-                                                              <input
-                                                                type="text"
-                                                                className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                                placeholder={cell.placeholder || "Comments..."}
-                                                                value={grades[cell.name] || ''}
-                                                                onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
-                                                              />
-                                                            )
-                                                          ) : (
-                                                            <div className="text-[10px] text-slate-700 italic bg-slate-50 p-2 rounded">
-                                                              {ans || '(No comments provided)'}
-                                                            </div>
-                                                          )
-                                                        )}
-                                                      </div>
-                                                    </td>
-                                                  )
-                                                })
-                                              ) : (
-                                                <td className="p-4" colSpan={section.headers.length - 1}>
-                                                  {row.editable === false ? (
-                                                    <div className="text-sm text-slate-700 font-medium">
-                                                      {row.value}
-                                                    </div>
-                                                  ) : (
-                                                    (taskData.assessorOnly || section.isAssessorOnly) ? (
-                                                      <input
-                                                        type="text"
-                                                        className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                        placeholder="Enter result..."
-                                                        value={grades[row.id] || ''}
-                                                        onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
-                                                      />
-                                                    ) : (
-                                                      <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl text-[#1e3a8a] font-black text-sm min-h-[40px] flex items-center">
-                                                        {submission?.answers?.[row.id] || <span className="text-slate-300 font-normal italic">(No result provided)</span>}
-                                                      </div>
-                                                    )
-                                                  )}
-                                                </td>
-                                              )}
-                                            </tr>
-                                          )
-                                        })}
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Written Questions Section */}
-                  {hasQuestions && (
-                    <div className="space-y-10 px-4">
-                      {questionsArray.map((q: any, i: number) => renderQuestionReview(q, i, tNum))}
-                    </div>
-                  )}
-
-                  {/* Assessor Checklist Section */}
-                  {hasChecklist && !currentAssessmentQuestions.adminInfo?.hideAssessorChecklist && (
-                    <div className="pt-12 space-y-8 border-t-4 border-double border-slate-200">
-                      <div className="text-center">
-                        <div className="task-banner-ribbon">
-                          {taskData.checklistTitle || `ASSESSMENT TASK ${tNum} – ASSESSOR CHECKLIST`}
-                        </div>
-                      </div>
-
-                      {taskData.assessorInstructions && (
-                        <div className="space-y-4">
-                          {taskData.checklistIntro && (
-                            <div className="text-sm text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 whitespace-pre-wrap">
-                              {taskData.checklistIntro}
-                            </div>
-                          )}
-                          <div className="text-sm text-slate-500 italic bg-blue-50/50 p-6 rounded-2xl border border-blue-100/50 whitespace-pre-wrap">
-                            {taskData.assessorInstructions}
-                          </div>
-                        </div>
-                      )}
-
-
-                      {/* Observation List Section (Plain) - Matching PDF */}
-                      {observationList.length > 0 && (
-                        <div className="space-y-4 w-full max-w-2xl mx-auto py-6 px-4 md:px-0">
-                          <h4 className="font-bold text-black text-sm">The following was observed during the observations:</h4>
-                          <div className="space-y-2 ml-4">
-                            {observationList.map((item: string, idx: number) => (
-                              <div key={idx} className="flex gap-2 py-1 border-b border-slate-50 last:border-0">
-                                <span className="text-xs font-bold text-slate-400 w-4">{idx + 1}.</span>
-                                <span className="text-sm text-slate-700">{item}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Observations List Section (With Checkboxes) - Matching PDF */}
-                      {observationItems.length > 0 && (
-                        <div className="space-y-4 w-full max-w-2xl mx-auto py-6 px-4 md:px-0">
-                          <h4 className="font-bold text-black text-sm">The following was observed during the observations:</h4>
-                          <div className="space-y-2 ml-4">
-                            {observationItems.map((item: string, idx: number) => {
-                              const obsKey = `t${tNum}obs${idx}`;
-                              const isObserved = grades[obsKey] === true;
-                              return (
-                                <div key={idx} className="flex items-center justify-between py-1 border-b border-slate-50 last:border-0">
-                                  <div className="flex gap-2 items-center">
-                                    <span className="text-xs font-bold text-slate-400 w-4">{idx + 1}.</span>
-                                    <span className="text-sm text-slate-700">{item}</span>
-                                  </div>
-                                  <div
-                                    className="flex items-center gap-2 cursor-pointer group"
-                                    onClick={() => setGrades({ ...grades, [obsKey]: !isObserved })}
-                                  >
-                                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${isObserved ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-300 group-hover:border-blue-400'}`}>
-                                      {isObserved ? <span className="text-xs">✔</span> : <span className="text-transparent">❑</span>}
-                                    </div>
-                                    <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${isObserved ? 'text-blue-600' : 'text-slate-400'}`}>Observation 1</span>
-                                  </div>
-                                </div>
-                              );
-                            })}
-
-
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="hidden md:block">
-                        {taskData.oralHeader && (
-                          <h4 className="text-lg font-bold text-slate-800 mt-6 mb-4">{taskData.oralHeader}</h4>
-                        )}
-                        <table className="legacy-review-tbl w-full">
-                          <thead>
-                            <tr>
-                              <th className="left">{taskData.checklistLabel || 'Checklist'}</th>
-                              <th colSpan={2} className="text-center">Yes / No</th>
-                              <th>Comments</th>
-                            </tr>
-                            <tr className="bg-gray-100">
-                              <th className="left text-[10px] py-1">Date Observed:</th>
-                              <th colSpan={3} className="py-1 text-left px-4">
-                                <input
-                                  type="date"
-                                  className="border-none outline-none bg-transparent text-[10px] font-bold no-print"
-                                  value={compRecord.assessment_date}
-                                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                                />
-                                <span className="hidden print:inline text-[10px] font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {oralQuestions.map((q: string, i: number) => {
-                              const qKey = `t${tNum}q${i + 1}`;
-                              const isCorrect = grades[qKey] === 'correct';
-                              const isIncorrect = grades[qKey] === 'incorrect';
-                              return (
-                                <tr key={i}>
-                                  <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + 1}. {q}</td>
-                                  <td className="legacy-chk-col">
-                                    <div className="flex items-center gap-1">
-                                      <input
-                                        type="checkbox"
-                                        checked={isCorrect}
-                                        onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
-                                        className="correct-box"
-                                      />
-                                      <span className="text-[10px] font-bold">Yes</span>
-                                    </div>
-                                    {isCorrect && <span className="print-symbol correct">✔</span>}
-                                  </td>
-                                  <td className="legacy-chk-col">
-                                    <div className="flex items-center gap-1">
-                                      <input
-                                        type="checkbox"
-                                        checked={isIncorrect}
-                                        onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
-                                        className="incorrect-box"
-                                      />
-                                      <span className="text-[10px] font-bold">No</span>
-                                    </div>
-                                    {isIncorrect && <span className="print-symbol incorrect">✘</span>}
-                                  </td>
-                                  <td>
-                                    <input
-                                      type="text"
-                                      className="legacy-cmt-input"
-                                      value={grades[`${qKey}_cmt`] || ''}
-                                      onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                                    />
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                            {perfQuestions.length > 0 && (
-                              <>
-                                <tr className="bg-slate-100">
-                                  <td colSpan={4} className="p-3 font-bold text-slate-800">
-                                    {taskData.performanceHeader || 'Evidence of Performance'}
-                                  </td>
-                                </tr>
-                                {perfQuestions.map((q: string, i: number) => {
-                                  const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
-                                  const isCorrect = grades[qKey] === 'correct';
-                                  const isIncorrect = grades[qKey] === 'incorrect';
-                                  return (
-                                    <tr key={i}>
-                                      <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + oralQuestions.length + 1}. {q}</td>
-                                      <td className="legacy-chk-col">
-                                        <div className="flex items-center gap-1">
-                                          <input
-                                            type="checkbox"
-                                            checked={isCorrect}
-                                            onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
-                                            className="correct-box"
-                                          />
-                                          <span className="text-[10px] font-bold">Yes</span>
-                                        </div>
-                                        {isCorrect && <span className="print-symbol correct">✔</span>}
-                                      </td>
-                                      <td className="legacy-chk-col">
-                                        <div className="flex items-center gap-1">
-                                          <input
-                                            type="checkbox"
-                                            checked={isIncorrect}
-                                            onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
-                                            className="incorrect-box"
-                                          />
-                                          <span className="text-[10px] font-bold">No</span>
-                                        </div>
-                                        {isIncorrect && <span className="print-symbol incorrect">✘</span>}
-                                      </td>
-                                      <td>
-                                        <input
-                                          type="text"
-                                          className="legacy-cmt-input"
-                                          value={grades[`${qKey}_cmt`] || ''}
-                                          onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                                        />
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
-                              </>
-                            )}
-                          </tbody>
-                        </table>
-                      </div>
-
-                      {/* Mobile Checklist View */}
-                      <div className="md:hidden space-y-6">
-                        <div className="bg-slate-100 p-4 rounded-xl space-y-2">
-                          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date Observed</div>
-                          <input
-                            type="date"
-                            className="w-full p-2 bg-white rounded-lg border border-slate-200 outline-none text-sm font-bold no-print"
-                            value={compRecord.assessment_date}
-                            onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                          />
-                        </div>
-
-                        <div className="divide-y divide-slate-100 border-y border-slate-100">
-                          {oralQuestions.map((q: string, i: number) => {
-                            const qKey = `t${tNum}q${i + 1}`;
-                            return (
-                              <div key={i} className="py-6 space-y-4">
-                                <div className="text-sm text-slate-800 font-medium leading-relaxed whitespace-pre-wrap">{i + 1}. {q}</div>
-                                <div className="flex flex-wrap items-center gap-4">
-                                  <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
-                                    <input
-                                      type="checkbox"
-                                      checked={grades[qKey] === 'correct'}
-                                      onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'correct' ? null : 'correct' })}
-                                      className="w-5 h-5 accent-green-600"
-                                    />
-                                    <span className="text-xs font-black uppercase text-slate-600">Yes</span>
-                                  </div>
-                                  <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
-                                    <input
-                                      type="checkbox"
-                                      checked={grades[qKey] === 'incorrect'}
-                                      onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'incorrect' ? null : 'incorrect' })}
-                                      className="w-5 h-5 accent-red-600"
-                                    />
-                                    <span className="text-xs font-black uppercase text-slate-600">No</span>
-                                  </div>
-                                </div>
-                                <div className="space-y-1">
-                                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Assessor Comments</span>
-                                  <input
-                                    type="text"
-                                    className="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl outline-none text-sm"
-                                    placeholder="Add comment..."
-                                    value={grades[`${qKey}_cmt`] || ''}
-                                    onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                                  />
-                                </div>
-                              </div>
-                            );
-                          })}
-
-                          {perfQuestions.length > 0 && (
-                            <div className="pt-8">
-                              <div className="font-black text-xs text-slate-400 uppercase tracking-widest mb-4">Evidence of Performance</div>
-                              {perfQuestions.map((q: string, i: number) => {
-                                const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
-                                return (
-                                  <div key={i} className="py-6 space-y-4 border-t border-slate-100">
-                                    <div className="text-sm text-slate-800 font-medium leading-relaxed">{i + oralQuestions.length + 1}. {q}</div>
-                                    <div className="flex flex-wrap items-center gap-4">
-                                      <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
-                                        <input
-                                          type="checkbox"
-                                          checked={grades[qKey] === 'correct'}
-                                          onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'correct' ? null : 'correct' })}
-                                          className="w-5 h-5 accent-green-600"
-                                        />
-                                        <span className="text-xs font-black uppercase text-slate-600">Yes</span>
-                                      </div>
-                                      <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
-                                        <input
-                                          type="checkbox"
-                                          checked={grades[qKey] === 'incorrect'}
-                                          onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'incorrect' ? null : 'incorrect' })}
-                                          className="w-5 h-5 accent-red-600"
-                                        />
-                                        <span className="text-xs font-black uppercase text-slate-600">No</span>
-                                      </div>
-                                    </div>
-                                    <div className="space-y-1">
-                                      <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Assessor Comments</span>
-                                      <input
-                                        type="text"
-                                        className="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl outline-none text-sm"
-                                        placeholder="Add comment..."
-                                        value={grades[`${qKey}_cmt`] || ''}
-                                        onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                                      />
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {!currentAssessmentQuestions.adminInfo?.hideCommentsFeedback && renderFinalResultBlock(tNum)}
-                </section>
-              );
-            })
-          }
-        </div>
-
-        {/* Final Result Section */}
-        {/* LEGACY ASSESSMENT COMPETENCY RECORD SECTION */}
-        {/* ASSESSMENT COMPETENCY RECORD SECTION - REDESIGNED TO MATCH IMAGE */}
+        {/* ASSESSMENT COMPETENCY RECORD SECTION - MOVED TO PAGE 2 (TOP OF PAPER) */}
         {!isQuestion15 && (
-          <div className="mt-12 md:mt-20 border-t-2 border-slate-200 pt-10 md:pt-20">
+          <div className="comp-record-section mb-12 md:mb-20 pb-10 md:pb-20 border-b-2 border-slate-200">
             <div className="flex flex-col-reverse md:flex-row justify-between items-center md:items-start mb-6 md:mb-4 gap-4">
               <div className="text-center md:text-left w-full">
                 <div className="text-[10px] md:text-sm font-bold border-b border-black inline-block mb-1">Assessment booklet</div>
@@ -1765,7 +813,7 @@ const GradingPortal: React.FC = () => {
               <img src="/assets/Skilscope.png" alt="Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
             </div>
 
-            <h2 className="text-2xl md:text-4xl font-black text-center mb-6 md:mb-10 uppercase tracking-tighter text-slate-800">ASSESSMENT COMPETENCY RECORD</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-10 uppercase tracking-tight text-slate-800">ASSESSMENT COMPETENCY RECORD</h2>
 
             <div className="bg-blue-50/50 p-4 md:p-8 border border-blue-100 rounded-2xl mb-8 md:mb-12 text-xs md:text-sm font-medium leading-relaxed text-slate-600 italic shadow-sm">
               This form is to be completed by the assessor and used as the final record of the student competence in these discipline. All student submissions including any associated documents and checklists are to be attached to this cover sheet before placing on the students file. Student results are not to be entered onto the Student Database unless all relevant paperwork is completed and attached to this form.
@@ -1776,18 +824,18 @@ const GradingPortal: React.FC = () => {
               <div className="flex flex-col">
                 <div className="flex flex-col md:flex-row border-b border-slate-200">
                   <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Student's Name</div>
-                  <div className="p-4 md:p-6 font-black text-lg md:text-xl text-slate-900 bg-white flex-1">{submission.student_name}</div>
+                  <div className="p-4 md:p-6 font-bold text-sm md:text-base text-slate-900 bg-white flex-1">{submission.student_name}</div>
                 </div>
                 <div className="flex flex-col md:flex-row border-b border-slate-200">
                   <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessor's Name</div>
                   <div className="p-4 md:p-6 bg-white flex-1">
-                    <input type="text" className="w-full border-none outline-none font-bold text-lg md:text-xl text-slate-800 placeholder:text-slate-200" placeholder="Enter assessor name..." value={compRecord.assessor_name} onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })} />
+                    <input type="text" className="w-full border-none outline-none font-medium text-sm md:text-base text-slate-800 placeholder:text-slate-200" placeholder="Enter assessor name..." value={compRecord.assessor_name} onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })} />
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row border-b border-slate-200">
                   <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessment Site</div>
                   <div className="p-4 md:p-6 bg-white flex-1">
-                    <input type="text" className="w-full border-none outline-none text-base md:text-lg text-slate-600 placeholder:text-slate-200" placeholder="Enter site..." value={compRecord.assessment_site} onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })} />
+                    <input type="text" className="w-full border-none outline-none text-sm md:text-base text-slate-600 placeholder:text-slate-200" placeholder="Enter site..." value={compRecord.assessment_site} onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })} />
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row">
@@ -1795,11 +843,11 @@ const GradingPortal: React.FC = () => {
                   <div className="p-4 md:p-6 bg-white flex-1">
                     <input
                       type="date"
-                      className="w-full border-none outline-none text-base md:text-lg text-slate-600 no-print cursor-pointer"
+                      className="w-full border-none outline-none text-sm md:text-base text-slate-600 no-print cursor-pointer"
                       value={compRecord.assessment_date}
                       onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
                     />
-                    <span className="hidden print:inline font-bold text-lg md:text-xl text-slate-800">{formatDisplayDate(compRecord.assessment_date)}</span>
+                    <span className="hidden print:inline font-bold text-sm md:text-base text-slate-800">{formatDisplayDate(compRecord.assessment_date)}</span>
                   </div>
                 </div>
               </div>
@@ -2175,26 +1223,987 @@ const GradingPortal: React.FC = () => {
           </div>
         )}
 
-        {/* Final Submit Button */}
-        <div className="flex justify-center pt-12 no-print">
-          <button
-            onClick={() => {
-              if (!isQuestion15 && (!compRecord.assessor_name || !compRecord.assessor_signature || !compRecord.assessment_date)) {
-                alert('CRITICAL: Assessor Name, Signature, and Date must be completed before downloading the final report.');
-                return;
-              }
-              saveMutation.mutate()
-              setTimeout(() => handlePrint(), 500)
-            }}
-            disabled={saveMutation.isPending}
-            className="flex items-center gap-3 bg-[#1e3a8a] hover:bg-[#1e40af] text-white px-10 py-4 rounded-xl font-bold text-xl transition-all shadow-xl shadow-blue-900/20 active:scale-95 disabled:opacity-50"
-          >
-            {saveMutation.isPending ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
-            SUBMIT & DOWNLOAD PDF
-          </button>
+        <div className="max-w-[850px] mx-auto bg-white mt-0 sm:mt-8 shadow-sm border rounded-sm p-4 sm:p-8 paper review-mode overflow-visible">
+          {/* Header Info */}
+          {/* New Header UI matching the image */}
+          <div className="space-y-6 mb-12 no-print">
+            {/* Student Info Box */}
+            <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Student Name:</span>
+                <span className="font-bold text-base">{submission.student_name}</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Student ID:</span>
+                <span className="font-bold text-base">{submission.student_id || '—'}</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Date:</span>
+                <span className="font-bold text-base">{formatDisplayDate(submission.answers?.['st-date'])}</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Signature:</span>
+                <div className="border border-black h-20 flex items-center justify-center bg-white w-full overflow-hidden p-1">
+                  {submission.signature_url ? (
+                    <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain" />
+                  ) : <span className="text-gray-400 italic text-sm">No signature</span>}
+                </div>
+              </div>
+            </div>
+
+            {/* Assessor Info Box */}
+            <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Assessor's Name:</span>
+                <input
+                  type="text"
+                  className="w-full border border-black p-2 outline-none focus:bg-blue-50 font-bold"
+                  placeholder="Enter assessor name..."
+                  value={compRecord.assessor_name}
+                  onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })}
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Assessment Site:</span>
+                <input
+                  type="text"
+                  className="w-full border border-black p-2 outline-none focus:bg-blue-50"
+                  placeholder="Enter assessment site..."
+                  value={compRecord.assessment_site}
+                  onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })}
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Assessment Date/s:</span>
+                <div className="flex-1 flex items-center">
+                  <input
+                    type="date"
+                    className="w-full border border-black p-2 outline-none focus:bg-blue-50 no-print"
+                    value={compRecord.assessment_date}
+                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  />
+                  <span className="hidden print:inline font-bold text-base ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
+                <span className="font-bold text-sm">Signature:</span>
+                <div
+                  onClick={() => openSigModal('assessor_signature', 'comp')}
+                  className="relative cursor-pointer border border-black bg-white h-20 flex items-center justify-center overflow-hidden group w-full p-1"
+                >
+                  {compRecord.assessor_signature ? (
+                    <img src={compRecord.assessor_signature} alt="Signature" className="max-h-full max-w-full object-contain" />
+                  ) : (
+                    <span className="text-gray-400 italic text-sm">Click here to sign</span>
+                  )}
+                  <div className="absolute right-2 bottom-1 text-[9px] text-blue-600 font-bold flex items-center gap-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 px-2 py-0.5 rounded shadow-sm border border-blue-100">
+                    <span>✎ EDIT</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Administrative Use Only Section - Match PDF exactly */}
+          {currentAssessmentQuestions.adminInfo && !currentAssessmentQuestions.adminInfo.hideAdminUseOnly && (
+            <div className="border-2 border-slate-400 mb-12 no-print-section break-inside-avoid">
+              <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
+                {(currentAssessmentQuestions.adminInfo.markingGuide && currentAssessmentQuestions.metadata.code !== 'ICTCBL303') ? "Asseror’s Marking Guide Instructions" : "Administrative Use Only:"}
+              </div>
+              <div className="p-4 bg-white space-y-4 text-sm">
+                <div className="flex flex-wrap gap-8 items-center border-b border-slate-100 pb-4">
+                  <div className="flex items-center gap-4">
+                    <span className="text-xl text-slate-400">❑</span>
+                    <span className="font-medium text-slate-600">Entered into Student Management Database</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+
+                    <span className="font-medium text-slate-600">Signature/Initial:</span>
+                    <div
+                      onClick={() => openSigModal('assessor_signature', 'comp')}
+                      className="border-b border-slate-400 min-w-0 sm:min-w-[120px] h-10 flex items-center justify-center cursor-pointer relative bg-slate-50/50 hover:bg-slate-100 transition-colors group flex-1 overflow-hidden p-1"
+                    >
+                      {compRecord.assessor_signature ? (
+                        <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
+                      ) : (
+                        <span className="text-[10px] text-gray-400 italic">Click to sign</span>
+                      )}
+                      <div className="absolute -right-6 bottom-1 text-[8px] text-blue-600 font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                        EDIT
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-slate-600">Date:</span>
+                    <input
+                      type="date"
+                      className="w-32 border-b border-slate-400 outline-none focus:border-[#1e3a8a] transition-colors bg-transparent px-1 no-print"
+                      value={compRecord.assessment_date}
+                      onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    />
+                    <span className="hidden print:inline border-b border-slate-400 min-w-[100px] px-2">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-0 border border-slate-200">
+                  {(currentAssessmentQuestions.adminInfo.markingGuide
+                    ? currentAssessmentQuestions.adminInfo.markingGuide.map((item: any) => [item.label, item.content])
+                    : [
+                      ["Unit Code/Name", currentAssessmentQuestions.adminInfo.unitCodeName],
+                      ["Pre-requisites", currentAssessmentQuestions.adminInfo.preRequisites],
+                      ["Co-requisites", currentAssessmentQuestions.adminInfo.coRequisites],
+                      ["Unit Summary", currentAssessmentQuestions.adminInfo.unitSummary],
+                      ["Target Group", currentAssessmentQuestions.adminInfo.targetGroup],
+                      ["Conditions and Context of the Assessments", currentAssessmentQuestions.adminInfo.conditionsAndContext],
+                      ["Specific Resources Required", currentAssessmentQuestions.adminInfo.specificResources],
+                      ["Re-Assessment", currentAssessmentQuestions.adminInfo.reAssessment],
+                      ["Plagiarism", currentAssessmentQuestions.adminInfo.plagiarism],
+                      ["Complaints and appeal", currentAssessmentQuestions.adminInfo.complaintsAndAppeals],
+                      ["Assessors Intervention", currentAssessmentQuestions.adminInfo.assessorsIntervention],
+                      ["Attaching Documents", currentAssessmentQuestions.adminInfo.attachingDocuments],
+                      ["Assessment Instruction", currentAssessmentQuestions.adminInfo.assessmentInstruction],
+                      ...(currentAssessmentQuestions.adminInfo.taskOverviews
+                        ? currentAssessmentQuestions.adminInfo.taskOverviews.map((task: any) => [task.id.replace(':', ''), task.text])
+                        : [
+                          ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
+                          ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
+                          ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
+                          ...(currentAssessmentQuestions.adminInfo.task4Description
+                            ? [["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description]]
+                            : []),
+                          ...(currentAssessmentQuestions.adminInfo.task5Description
+                            ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
+                            : []),
+                          ...(currentAssessmentQuestions.adminInfo.task6Description
+                            ? [["Assessment Task 6", currentAssessmentQuestions.adminInfo.task6Description]]
+                            : [])
+                        ]),
+                      ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
+                    ]).map(([label, value]: any, idx: number) => (
+                      <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
+                        <div className="bg-slate-50 p-3 font-bold text-slate-700 md:border-r border-slate-200 text-xs uppercase tracking-wider">{label}</div>
+                        <div className="p-3 text-slate-700 leading-relaxed text-xs sm:text-sm whitespace-pre-wrap">{value}</div>
+                      </div>
+                    ))}
+                </div>
+
+                {/* New Overview Sections for Question 13 / ICTCBL301 */}
+                {currentAssessmentQuestions.adminInfo.tasksOverview && (
+                  <div className="mt-8 space-y-8 no-print-section">
+                    {/* Tasks Overview */}
+                    <div className="border-2 border-slate-400 break-inside-avoid">
+                      <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                        {currentAssessmentQuestions.adminInfo.tasksOverview.title}
+                      </div>
+                      <div className="p-4 bg-white space-y-4 text-sm text-slate-700">
+                        <p className="whitespace-pre-wrap">{currentAssessmentQuestions.adminInfo.tasksOverview.intro}</p>
+                        <ul className="list-decimal ml-6 space-y-1">
+                          {currentAssessmentQuestions.adminInfo.tasksOverview.elements.map((el: string, i: number) => (
+                            <li key={i}>{el}</li>
+                          ))}
+                        </ul>
+                        <p className="font-bold mt-4">{currentAssessmentQuestions.adminInfo.tasksOverview.evidenceIntro}</p>
+                        <ul className="list-disc ml-6 space-y-1">
+                          {currentAssessmentQuestions.adminInfo.tasksOverview.evidenceItems.map((item: string, i: number) => (
+                            <li key={i}>{item}</li>
+                          ))}
+                        </ul>
+                        <p className="mt-6 font-medium italic text-blue-800">{currentAssessmentQuestions.adminInfo.tasksOverview.summary}</p>
+                        <div className="overflow-x-auto mt-2">
+                          <table className="w-full border-collapse border border-slate-300">
+                            <tbody>
+                              {currentAssessmentQuestions.adminInfo.tasksOverview.tasks.map((task: any, i: number) => (
+                                <tr key={i}>
+                                  <td className="border border-slate-300 p-3 bg-slate-50 font-bold w-[180px]">{task.id}</td>
+                                  <td className="border border-slate-300 p-3 bg-slate-50 w-[120px]">{task.type}</td>
+                                  <td className="border border-slate-300 p-3 leading-relaxed">{task.text}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Recording Assessment */}
+                    <div className="border-2 border-slate-400 break-inside-avoid">
+                      <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                        {currentAssessmentQuestions.adminInfo.recordingAssessment.title}
+                      </div>
+                      <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                        {currentAssessmentQuestions.adminInfo.recordingAssessment.content}
+                      </div>
+                    </div>
+
+                    {/* Assessment of Competency */}
+                    <div className="border-2 border-slate-400 break-inside-avoid">
+                      <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                        {currentAssessmentQuestions.adminInfo.competencyAssessment.title}
+                      </div>
+                      <div className="p-4 bg-white space-y-4 text-sm text-slate-700">
+                        <p className="whitespace-pre-wrap leading-relaxed">{currentAssessmentQuestions.adminInfo.competencyAssessment.content}</p>
+                        <div className="flex flex-wrap gap-8 ml-4">
+                          {currentAssessmentQuestions.adminInfo.competencyAssessment.criteria.map((c: string, i: number) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-blue-600"></div>
+                              <span className="font-bold">{c}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-1 mt-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                          {currentAssessmentQuestions.adminInfo.competencyAssessment.codes.map((item: any, i: number) => (
+                            <div key={i} className="flex gap-4 text-xs">
+                              <span className="font-bold w-12 text-blue-700">{item.code}</span>
+                              <span className="text-slate-400">-</span>
+                              <span className="font-medium">{item.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <p className="mt-4 pt-4 border-t border-slate-200 italic text-slate-500 text-xs">{currentAssessmentQuestions.adminInfo.competencyAssessment.footer}</p>
+                      </div>
+                    </div>
+
+                    {/* Assessor Feedback Overview */}
+                    <div className="border-2 border-slate-400 break-inside-avoid">
+                      <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                        {currentAssessmentQuestions.adminInfo.assessorFeedback.title}
+                      </div>
+                      <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed italic whitespace-pre-wrap">
+                        {currentAssessmentQuestions.adminInfo.assessorFeedback.content}
+                      </div>
+                    </div>
+
+                    {/* Cover Sheet Overview */}
+                    <div className="border-2 border-slate-400 break-inside-avoid">
+                      <div className="bg-[#1e3a8a] p-3 font-bold text-white uppercase tracking-wider text-sm">
+                        {currentAssessmentQuestions.adminInfo.coverSheet.title}
+                      </div>
+                      <div className="p-4 bg-white text-sm text-slate-700 leading-relaxed font-bold whitespace-pre-wrap">
+                        {currentAssessmentQuestions.adminInfo.coverSheet.content}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Reasonable Adjustment Section */}
+                {currentAssessmentQuestions.adminInfo.reasonableAdjustment && (
+                  <div className="mt-8 border-2 border-slate-400 break-inside-avoid">
+                    <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
+                      Reasonable Adjustment
+                    </div>
+                    <div className="p-4 bg-white space-y-4 text-[11px]">
+                      <p className="text-slate-600 leading-relaxed">{currentAssessmentQuestions.adminInfo.reasonableAdjustment}</p>
+                      <div className="hidden md:block">
+                        <table className="w-full border-collapse border border-slate-300">
+                          <thead className="bg-slate-50 text-slate-700">
+                            <tr>
+                              <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reasonable Adjustment Provided</th>
+                              <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reason for Reasonable Adjustment</th>
+                              <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Outcome</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="border border-slate-300 p-2 align-top">
+                                <div className="space-y-2">
+                                  {[
+                                    "Educational and bilingual support",
+                                    "Presenting questions orally",
+                                    "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
+                                    "Extra time to complete a course or assessment",
+                                    "Others:"
+                                  ].map((adj, i) => (
+                                    <div key={i} className="flex items-start gap-2">
+                                      <span className="text-slate-600 leading-tight">{adj}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </td>
+                              <td className="border border-slate-300 p-2 align-top">
+                                <textarea
+                                  className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
+                                  placeholder="Enter reason here..."
+                                  value={compRecord.reasonable_adjustment?.reason || ''}
+                                  onChange={(e) => setCompRecord({
+                                    ...compRecord,
+                                    reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
+                                  })}
+                                />
+                              </td>
+                              <td className="border border-slate-300 p-2 align-top">
+                                <textarea
+                                  className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
+                                  placeholder="Enter outcome here..."
+                                  value={compRecord.reasonable_adjustment?.outcome || ''}
+                                  onChange={(e) => setCompRecord({
+                                    ...compRecord,
+                                    reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
+                                  })}
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Mobile View */}
+                      <div className="md:hidden space-y-6">
+                        <div className="space-y-3">
+                          <div className="font-bold text-slate-700">Adjustments Provided:</div>
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
+                            {[
+                              "Educational and bilingual support",
+                              "Presenting questions orally",
+                              "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
+                              "Extra time to complete a course or assessment",
+                              "Others:"
+                            ].map((adj, i) => (
+                              <div key={i} className="flex items-start gap-2">
+                                <span className="text-slate-600 text-xs leading-tight">• {adj}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="font-bold text-slate-700">Reason:</div>
+                          <textarea
+                            className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
+                            placeholder="Enter reason..."
+                            value={compRecord.reasonable_adjustment?.reason || ''}
+                            onChange={(e) => setCompRecord({
+                              ...compRecord,
+                              reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
+                            })}
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <div className="font-bold text-slate-700">Outcome:</div>
+                          <textarea
+                            className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
+                            placeholder="Enter outcome..."
+                            value={compRecord.reasonable_adjustment?.outcome || ''}
+                            onChange={(e) => setCompRecord({
+                              ...compRecord,
+                              reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
+                            })}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Cover Sheet Info */}
+                <div className="mt-8 p-6 bg-slate-50 border-4 border-double border-slate-300 text-center space-y-4">
+                  <h2 className="text-xl font-black text-slate-800 uppercase tracking-tighter">COVER SHEET FOR SUBMISSION OF WORK FOR ASSESSMENT</h2>
+                  <p className="text-sm text-slate-600 font-medium">{currentAssessmentQuestions.adminInfo.coverSheetInstruction}</p>
+                  <div className="text-xs text-slate-400 italic">Work submitted without a signed cover sheet will be returned unmarked.</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-16">
+            {Object.keys(currentAssessmentQuestions)
+              .filter(key => key.startsWith('task')) // Only process task1, task2, etc.
+              .sort((a, b) => {
+                const aNum = parseInt(a.replace('task', ''));
+                const bNum = parseInt(b.replace('task', ''));
+                return aNum - bNum;
+              })
+              .map((taskKey) => {
+                const tNum = parseInt(taskKey.replace('task', ''));
+                const taskData = currentAssessmentQuestions[taskKey];
+
+                // Case 1: plain array of question objects
+                const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
+                // Case 2: object with a nested .questions array
+                const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
+
+                const oralQuestions = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
+                const perfQuestions = (taskData as any).performance || [];
+                const observationItems = (taskData as any).observationItems || [];
+                const observationList = (taskData as any).observationList || [];
+                const hasChecklist = oralQuestions.length > 0 || perfQuestions.length > 0 || observationItems.length > 0 || observationList.length > 0;
+
+                const questionsArray: any[] = isPlainArray
+                  ? taskData
+                  : (taskData as any).questions || [];
+                const hasQuestions = questionsArray.length > 0;
+
+                let taskTitle: string;
+                if ((taskData as any).title) {
+                  taskTitle = (taskData as any).title;
+                } else if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
+                  taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
+                } else {
+                  const typeLabel = tNum === 4 ? 'WRITTEN QUESTIONS AND ANSWERS' : tNum === 5 ? 'WRITTEN ASSESSMENT' : tNum === 6 ? 'MULTIPLE CHOICE QUESTIONS' : `TASK ${tNum}`;
+                  taskTitle = `ASSESSMENT TASK ${tNum} – ${typeLabel}`;
+                }
+
+                return (
+                  <section key={taskKey} className="space-y-12 page-break-before">
+                    {/* Observation Section - Only show if observation data exists */}
+                    {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections || taskData.assessorSections) && (
+                      <div className="space-y-6">
+                        <div className="text-center">
+                          <div className="task-banner-ribbon">
+                            {taskData.observationTitle || (hasQuestions ? taskTitle : `ASSESSMENT TASK ${tNum} OBSERVATION`)}
+                          </div>
+                          {taskData.observationSubtitle && (
+                            <div className="text-lg font-bold text-slate-600 border-y border-slate-200 py-2 mt-4">
+                              {taskData.observationSubtitle}
+                            </div>
+                          )}
+                        </div>
+
+                        {(taskData.sections || taskData.assessorSections) && (
+                          <div className="space-y-4">
+                            {[
+                              ...(taskData.sections || []),
+                              ...(taskData.assessorSections || []).map((s: any) => ({ ...s, isAssessorOnly: true }))
+                            ].map((section: any, sIdx: number) => (
+                              <div key={sIdx} className="space-y-3">
+                                {section.type === 'text' && (
+                                  <div className={`space-y-2 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
+                                    {section.title && (
+                                      <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-base border-b border-slate-200' : 'text-sm text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
+                                        {section.title}
+                                      </h3>
+                                    )}
+                                    <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                      {section.content}
+                                    </div>
+                                  </div>
+                                )}
+                                {section.type === 'image' && (
+                                  <div className="flex flex-col items-center gap-2 py-4">
+                                    <div className="bg-white p-2 border border-slate-200 shadow-sm rounded-lg max-w-[550px]">
+                                      <img src={section.src} alt={section.caption || 'Observation'} className="w-full h-auto rounded" />
+                                    </div>
+                                    {section.caption && (
+                                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                        {section.caption}
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                                {section.type === 'table' && (
+                                  <div className="space-y-4 px-2">
+                                    {section.title && (
+                                      <h3 className="font-bold text-slate-800 pb-2 text-base border-b border-slate-200">
+                                        {section.title}
+                                      </h3>
+                                    )}
+                                    <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
+                                      <table className="w-full text-left border-collapse">
+                                        <thead>
+                                          <tr className="bg-slate-50 border-b border-slate-200">
+                                            {section.headers.map((header: string, hIdx: number) => (
+                                              <th key={hIdx} className="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                                {header}
+                                              </th>
+                                            ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {section.rows.map((row: any, rIdx: number) => {
+                                            if (row.isSubHeader) {
+                                              return (
+                                                <tr key={rIdx} className="bg-slate-100/80 border-b border-slate-200">
+                                                  <td colSpan={section.headers.length} className="p-3 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                                    {row.label}
+                                                  </td>
+                                                </tr>
+                                              )
+                                            }
+                                            return (
+                                              <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                                <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
+                                                  {row.label}
+                                                </td>
+                                                {row.cells ? (
+                                                  row.cells.map((cell: any, cIdx: number) => {
+                                                    const isAssessorInput = taskData.assessorOnly || section.isAssessorOnly;
+                                                    const ans = isAssessorInput ? grades[cell.name] : submission?.answers?.[cell.name]
+                                                    return (
+                                                      <td key={cIdx} colSpan={row.colSpan || 1} className="p-4 border-l border-slate-100 align-top">
+                                                        <div className="flex flex-col gap-1.5">
+                                                          {cell.options ? cell.options.map((opt: any, oIdx: number) => {
+                                                            const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
+
+                                                            if (isAssessorInput) {
+                                                              if (isQuestion15) {
+                                                                // Q15: each cell has exactly ONE option (Yes OR No per cell).
+                                                                // Detect the intent by the option value itself.
+                                                                const isYes = ['Yes', 'yes', 'Satisfactory', 'S', 'C', 'Completed'].includes(opt.value);
+                                                                const q15Checked = grades[cell.name] === opt.value;
+                                                                return (
+                                                                  <div
+                                                                    key={oIdx}
+                                                                    className="flex items-center justify-center cursor-pointer select-none"
+                                                                    title={q15Checked ? `Uncheck ${opt.value}` : `Check ${opt.value}`}
+                                                                    onClick={() => {
+                                                                      // Toggle: clicking the same value unchecks it
+                                                                      const newVal = grades[cell.name] === opt.value ? null : opt.value;
+                                                                      setGrades({ ...grades, [cell.name]: newVal });
+                                                                    }}
+                                                                  >
+                                                                    <div className={`no-print w-[22px] h-[22px] border-2 rounded flex items-center justify-center flex-shrink-0 transition-all duration-150 ${q15Checked ? (isYes ? 'bg-green-500 border-green-600 shadow-sm' : 'bg-red-500 border-red-600 shadow-sm') : 'bg-white border-slate-300 hover:border-[#1e3a8a] hover:bg-blue-50'}`}>
+                                                                      {q15Checked && (
+                                                                        <span className="text-white font-black text-[13px] leading-none select-none">{isYes ? '✔' : '✘'}</span>
+                                                                      )}
+                                                                    </div>
+                                                                    {/* Hidden checkbox for print/form purposes */}
+                                                                    <input type="checkbox" checked={q15Checked} onChange={() => { }} className="sr-only" />
+                                                                    {/* Print symbols */}
+                                                                    {q15Checked && isYes && <span className="print-symbol correct">✔</span>}
+                                                                    {q15Checked && !isYes && <span className="print-symbol incorrect">✘</span>}
+                                                                    {opt.text && <span className="text-[10px] sm:text-[11px] text-slate-600 leading-tight ml-1.5">{opt.text}</span>}
+                                                                  </div>
+                                                                )
+                                                              }
+                                                              return (
+                                                                <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                                  <input
+                                                                    type={cell.type || 'radio'}
+                                                                    name={cell.name}
+                                                                    value={opt.value}
+                                                                    checked={isSelected}
+                                                                    onChange={(e) => {
+                                                                      if (cell.type === 'checkbox') {
+                                                                        const current = Array.isArray(grades[cell.name]) ? grades[cell.name] : [];
+                                                                        const updated = e.target.checked
+                                                                          ? [...current, opt.value]
+                                                                          : current.filter((v: string) => v !== opt.value);
+                                                                        setGrades({ ...grades, [cell.name]: updated });
+                                                                      } else {
+                                                                        setGrades({ ...grades, [cell.name]: e.target.value });
+                                                                      }
+                                                                    }}
+                                                                    className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                                  />
+                                                                  <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                                </label>
+                                                              )
+                                                            }
+
+                                                            return (
+                                                              <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
+                                                                <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
+                                                                  {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
+                                                                </div>
+                                                                <span className="text-[10px] leading-tight">{opt.text}</span>
+                                                              </div>
+                                                            )
+                                                          }) : (
+                                                            isAssessorInput ? (
+                                                              cell.type === 'signature' ? (
+                                                                <div
+                                                                  onClick={() => openSigModal(cell.name, 'grades')}
+                                                                  className="relative cursor-pointer border border-slate-200 bg-slate-50/50 h-16 flex items-center justify-center overflow-hidden group w-full p-1 rounded"
+                                                                >
+                                                                  {grades[cell.name] ? (
+                                                                    <img src={grades[cell.name]} alt="Signature" className="max-h-full max-w-full object-contain" />
+                                                                  ) : (
+                                                                    <span className="text-slate-400 italic text-xs">Click to sign</span>
+                                                                  )}
+                                                                </div>
+                                                              ) : cell.type === 'date' ? (
+                                                                <input
+                                                                  type="date"
+                                                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                                  value={grades[cell.name] || ''}
+                                                                  onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
+                                                                />
+                                                              ) : (
+                                                                <input
+                                                                  type="text"
+                                                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                                  placeholder={cell.placeholder || "Comments..."}
+                                                                  value={grades[cell.name] || ''}
+                                                                  onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
+                                                                />
+                                                              )
+                                                            ) : (
+                                                              <div className="text-[10px] text-slate-700 italic bg-slate-50 p-2 rounded">
+                                                                {ans || '(No comments provided)'}
+                                                              </div>
+                                                            )
+                                                          )}
+                                                        </div>
+                                                      </td>
+                                                    )
+                                                  })
+                                                ) : (
+                                                  <td className="p-4" colSpan={section.headers.length - 1}>
+                                                    {row.editable === false ? (
+                                                      <div className="text-sm text-slate-700 font-medium">
+                                                        {row.value}
+                                                      </div>
+                                                    ) : (
+                                                      (taskData.assessorOnly || section.isAssessorOnly) ? (
+                                                        <input
+                                                          type="text"
+                                                          className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
+                                                          placeholder="Enter result..."
+                                                          value={grades[row.id] || ''}
+                                                          onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
+                                                        />
+                                                      ) : (
+                                                        <input
+                                                          type="text"
+                                                          className="w-full p-3 bg-blue-50/30 border border-slate-200 rounded-xl text-[#1e3a8a] font-black text-sm outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all print:border-none print:p-0 print:bg-transparent"
+                                                          placeholder="Enter or edit result..."
+                                                          value={grades[row.id] !== undefined ? grades[row.id] : (submission?.answers?.[row.id] || '')}
+                                                          onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
+                                                        />
+                                                      )
+                                                    )}
+                                                  </td>
+                                                )}
+                                              </tr>
+                                            )
+                                          })}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Written Questions Section */}
+                    {hasQuestions && (
+                      <div className="space-y-10 px-4">
+                        {questionsArray.map((q: any, i: number) => renderQuestionReview(q, i, tNum))}
+                      </div>
+                    )}
+
+                    {/* Assessor Checklist Section */}
+                    {hasChecklist && !currentAssessmentQuestions.adminInfo?.hideAssessorChecklist && (
+                      <div className="pt-12 space-y-8 border-t-4 border-double border-slate-200">
+                        <div className="text-center">
+                          <div className="task-banner-ribbon">
+                            {taskData.checklistTitle || `ASSESSMENT TASK ${tNum} – ASSESSOR CHECKLIST`}
+                          </div>
+                        </div>
+
+                        {taskData.assessorInstructions && (
+                          <div className="space-y-4">
+                            {taskData.checklistIntro && (
+                              <div className="text-sm text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 whitespace-pre-wrap">
+                                {taskData.checklistIntro}
+                              </div>
+                            )}
+                            <div className="text-sm text-slate-500 italic bg-blue-50/50 p-6 rounded-2xl border border-blue-100/50 whitespace-pre-wrap">
+                              {taskData.assessorInstructions}
+                            </div>
+                          </div>
+                        )}
+
+
+                        {/* Observation List Section (Plain) - Matching PDF */}
+                        {observationList.length > 0 && (
+                          <div className="space-y-4 w-full max-w-2xl mx-auto py-6 px-4 md:px-0">
+                            <h4 className="font-bold text-black text-sm">The following was observed during the observations:</h4>
+                            <div className="space-y-2 ml-4">
+                              {observationList.map((item: string, idx: number) => (
+                                <div key={idx} className="flex gap-2 py-1 border-b border-slate-50 last:border-0">
+                                  <span className="text-xs font-bold text-slate-400 w-4">{idx + 1}.</span>
+                                  <span className="text-sm text-slate-700">{item}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Observations List Section (With Checkboxes) - Matching PDF */}
+                        {observationItems.length > 0 && (
+                          <div className="space-y-4 w-full max-w-2xl mx-auto py-6 px-4 md:px-0">
+                            <h4 className="font-bold text-black text-sm">The following was observed during the observations:</h4>
+                            <div className="space-y-2 ml-4">
+                              {observationItems.map((item: string, idx: number) => {
+                                const obsKey = `t${tNum}obs${idx}`;
+                                const isObserved = grades[obsKey] === true;
+                                return (
+                                  <div key={idx} className="flex items-center justify-between py-1 border-b border-slate-50 last:border-0">
+                                    <div className="flex gap-2 items-center">
+                                      <span className="text-xs font-bold text-slate-400 w-4">{idx + 1}.</span>
+                                      <span className="text-sm text-slate-700">{item}</span>
+                                    </div>
+                                    <div
+                                      className="flex items-center gap-2 cursor-pointer group"
+                                      onClick={() => setGrades({ ...grades, [obsKey]: !isObserved })}
+                                    >
+                                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${isObserved ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-300 group-hover:border-blue-400'}`}>
+                                        {isObserved ? <span className="text-xs">✔</span> : <span className="text-transparent">❑</span>}
+                                      </div>
+                                      <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${isObserved ? 'text-blue-600' : 'text-slate-400'}`}>Observation 1</span>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+
+
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="hidden md:block">
+                          {taskData.oralHeader && (
+                            <h4 className="text-lg font-bold text-slate-800 mt-6 mb-4">{taskData.oralHeader}</h4>
+                          )}
+                          <table className="legacy-review-tbl w-full">
+                            <thead>
+                              <tr>
+                                <th className="left">{taskData.checklistLabel || 'Checklist'}</th>
+                                <th colSpan={2} className="text-center">Yes / No</th>
+                                <th>Comments</th>
+                              </tr>
+                              <tr className="bg-gray-100">
+                                <th className="left text-[10px] py-1">Date Observed:</th>
+                                <th colSpan={3} className="py-1 text-left px-4">
+                                  <input
+                                    type="date"
+                                    className="border-none outline-none bg-transparent text-[10px] font-bold no-print"
+                                    value={compRecord.assessment_date}
+                                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                                  />
+                                  <span className="hidden print:inline text-[10px] font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {oralQuestions.map((q: string, i: number) => {
+                                const qKey = `t${tNum}q${i + 1}`;
+                                const isCorrect = grades[qKey] === 'correct';
+                                const isIncorrect = grades[qKey] === 'incorrect';
+                                return (
+                                  <tr key={i}>
+                                    <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + 1}. {q}</td>
+                                    <td className="legacy-chk-col">
+                                      <div className="flex items-center gap-1">
+                                        <input
+                                          type="checkbox"
+                                          checked={isCorrect}
+                                          onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
+                                          className="correct-box"
+                                        />
+                                        <span className="text-[10px] font-bold">Yes</span>
+                                      </div>
+                                      {isCorrect && <span className="print-symbol correct">✔</span>}
+                                    </td>
+                                    <td className="legacy-chk-col">
+                                      <div className="flex items-center gap-1">
+                                        <input
+                                          type="checkbox"
+                                          checked={isIncorrect}
+                                          onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
+                                          className="incorrect-box"
+                                        />
+                                        <span className="text-[10px] font-bold">No</span>
+                                      </div>
+                                      {isIncorrect && <span className="print-symbol incorrect">✘</span>}
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="text"
+                                        className="legacy-cmt-input"
+                                        value={grades[`${qKey}_cmt`] || ''}
+                                        onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
+                                      />
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                              {perfQuestions.length > 0 && (
+                                <>
+                                  <tr className="bg-slate-100">
+                                    <td colSpan={4} className="p-3 font-bold text-slate-800">
+                                      {taskData.performanceHeader || 'Evidence of Performance'}
+                                    </td>
+                                  </tr>
+                                  {perfQuestions.map((q: string, i: number) => {
+                                    const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
+                                    const isCorrect = grades[qKey] === 'correct';
+                                    const isIncorrect = grades[qKey] === 'incorrect';
+                                    return (
+                                      <tr key={i}>
+                                        <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + oralQuestions.length + 1}. {q}</td>
+                                        <td className="legacy-chk-col">
+                                          <div className="flex items-center gap-1">
+                                            <input
+                                              type="checkbox"
+                                              checked={isCorrect}
+                                              onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
+                                              className="correct-box"
+                                            />
+                                            <span className="text-[10px] font-bold">Yes</span>
+                                          </div>
+                                          {isCorrect && <span className="print-symbol correct">✔</span>}
+                                        </td>
+                                        <td className="legacy-chk-col">
+                                          <div className="flex items-center gap-1">
+                                            <input
+                                              type="checkbox"
+                                              checked={isIncorrect}
+                                              onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
+                                              className="incorrect-box"
+                                            />
+                                            <span className="text-[10px] font-bold">No</span>
+                                          </div>
+                                          {isIncorrect && <span className="print-symbol incorrect">✘</span>}
+                                        </td>
+                                        <td>
+                                          <input
+                                            type="text"
+                                            className="legacy-cmt-input"
+                                            value={grades[`${qKey}_cmt`] || ''}
+                                            onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
+                                          />
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </>
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        {/* Mobile Checklist View */}
+                        <div className="md:hidden space-y-6">
+                          <div className="bg-slate-100 p-4 rounded-xl space-y-2">
+                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date Observed</div>
+                            <input
+                              type="date"
+                              className="w-full p-2 bg-white rounded-lg border border-slate-200 outline-none text-sm font-bold no-print"
+                              value={compRecord.assessment_date}
+                              onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                            />
+                          </div>
+
+                          <div className="divide-y divide-slate-100 border-y border-slate-100">
+                            {oralQuestions.map((q: string, i: number) => {
+                              const qKey = `t${tNum}q${i + 1}`;
+                              return (
+                                <div key={i} className="py-6 space-y-4">
+                                  <div className="text-sm text-slate-800 font-medium leading-relaxed whitespace-pre-wrap">{i + 1}. {q}</div>
+                                  <div className="flex flex-wrap items-center gap-4">
+                                    <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
+                                      <input
+                                        type="checkbox"
+                                        checked={grades[qKey] === 'correct'}
+                                        onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'correct' ? null : 'correct' })}
+                                        className="w-5 h-5 accent-green-600"
+                                      />
+                                      <span className="text-xs font-black uppercase text-slate-600">Yes</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
+                                      <input
+                                        type="checkbox"
+                                        checked={grades[qKey] === 'incorrect'}
+                                        onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'incorrect' ? null : 'incorrect' })}
+                                        className="w-5 h-5 accent-red-600"
+                                      />
+                                      <span className="text-xs font-black uppercase text-slate-600">No</span>
+                                    </div>
+                                  </div>
+                                  <div className="space-y-1">
+                                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Assessor Comments</span>
+                                    <input
+                                      type="text"
+                                      className="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl outline-none text-sm"
+                                      placeholder="Add comment..."
+                                      value={grades[`${qKey}_cmt`] || ''}
+                                      onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
+                                    />
+                                  </div>
+                                </div>
+                              );
+                            })}
+
+                            {perfQuestions.length > 0 && (
+                              <div className="pt-8">
+                                <div className="font-black text-xs text-slate-400 uppercase tracking-widest mb-4">Evidence of Performance</div>
+                                {perfQuestions.map((q: string, i: number) => {
+                                  const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
+                                  return (
+                                    <div key={i} className="py-6 space-y-4 border-t border-slate-100">
+                                      <div className="text-sm text-slate-800 font-medium leading-relaxed">{i + oralQuestions.length + 1}. {q}</div>
+                                      <div className="flex flex-wrap items-center gap-4">
+                                        <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
+                                          <input
+                                            type="checkbox"
+                                            checked={grades[qKey] === 'correct'}
+                                            onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'correct' ? null : 'correct' })}
+                                            className="w-5 h-5 accent-green-600"
+                                          />
+                                          <span className="text-xs font-black uppercase text-slate-600">Yes</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100">
+                                          <input
+                                            type="checkbox"
+                                            checked={grades[qKey] === 'incorrect'}
+                                            onChange={() => setGrades({ ...grades, [qKey]: grades[qKey] === 'incorrect' ? null : 'incorrect' })}
+                                            className="w-5 h-5 accent-red-600"
+                                          />
+                                          <span className="text-xs font-black uppercase text-slate-600">No</span>
+                                        </div>
+                                      </div>
+                                      <div className="space-y-1">
+                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Assessor Comments</span>
+                                        <input
+                                          type="text"
+                                          className="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl outline-none text-sm"
+                                          placeholder="Add comment..."
+                                          value={grades[`${qKey}_cmt`] || ''}
+                                          onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
+                                        />
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {!currentAssessmentQuestions.adminInfo?.hideCommentsFeedback && renderFinalResultBlock(tNum)}
+                  </section>
+                );
+              })
+            }
+          </div>
+
+          {/* Final Result Section */}
+
+          {/* Final Submit Button */}
+          <div className="flex justify-center pt-12 no-print">
+            <button
+              onClick={() => {
+                if (!isQuestion15 && (!compRecord.assessor_name || !compRecord.assessor_signature || !compRecord.assessment_date)) {
+                  alert('CRITICAL: Assessor Name, Signature, and Date must be completed before downloading the final report.');
+                  return;
+                }
+                saveMutation.mutate()
+                setTimeout(() => handlePrint(), 500)
+              }}
+              disabled={saveMutation.isPending}
+              className="flex items-center gap-3 bg-[#1e3a8a] hover:bg-[#1e40af] text-white px-10 py-4 rounded-xl font-bold text-xl transition-all shadow-xl shadow-blue-900/20 active:scale-95 disabled:opacity-50"
+            >
+              {saveMutation.isPending ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
+              SUBMIT & DOWNLOAD PDF
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     // </div>
   )
 }

@@ -45,6 +45,7 @@ export const assessmentQuestions = {
       }
     ],
     "checklistTitle": "ASSESSMENT TASK 1 – ASSESSOR CHECKLIST",
+    "assessorInstructions": "This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.\n\nThe observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.\n\nAssessor Instructions:\n\nThe assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.",
     "observationItems": [
       "Interpret technical documents",
       "Liaison with experts",
@@ -99,6 +100,7 @@ export const assessmentQuestions = {
       }
     ],
     "checklistTitle": "ASSESSMENT TASK 2 – ASSESSOR CHECKLIST",
+    "assessorInstructions": "This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.\n\nThe observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.\n\nAssessor Instructions:\n\nThe assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.",
     "observationItems": [
       "Prepare splitter for testing.",
       "Place the splitter in an enclosure.",
@@ -145,6 +147,7 @@ export const assessmentQuestions = {
       }
     ],
     "checklistTitle": "ASSESSMENT TASK 3 – ASSESSOR CHECKLIST",
+    "assessorInstructions": "This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.\n\nThe observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.\n\nAssessor Instructions:\n\nThe assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.",
     "observationItems": [
       "Prepare test equipment",
       "Operation of test equipment",
@@ -180,10 +183,12 @@ export const assessmentQuestions = {
     "title": "ASSESSMENT TASK 4: WRITTEN QUESTIONS AND ANSWERS",
     "sections": [
       {
+        "type": "text",
         "title": "Student Instructions:",
         "content": "This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45-60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 4 in front of you and answer the questions as the information becomes clear to you. At the beginning of each review session you will be given a few minutes to familiarise yourself with the questions. You will be given extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor."
       },
       {
+        "type": "text",
         "title": "Make sure you:",
         "content": "• Answer all questions\n• Print clearly\n• Use a blue or black pen. Assessments written in pencil will not be accepted.\n• Ask your assessor if you do not understand a question. Whist your assessor cannot tell you the answer, he/she may be able to re-word the question for you\n• Do not talk to your classmates. If you are caught discussion the answers you will be asked to leave and your assessment will not be marked.\n• Do not cheat. Anyone caught cheating will automatically be marked Not Competent for this unit. There are NO EXCEPTIONS to this rule."
       }

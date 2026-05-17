@@ -32,12 +32,14 @@ export const assessmentQuestions = {
     "title": "ASSESSMENT TASK 1 – MULTI-CHOICE AND WRITTEN QUESTIONS AND ANSWERS",
     "sections": [
       {
+        "type": "text",
         "title": "Student Instructions:",
-        "content": "This is a multi-choice and a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45 - 60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 1 in front of you and answer the questions as the information becomes clear to you."
+        "content": "This is a multi-choice and a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45 - 60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 1 in front of you and answer the questions as the information becomes clear to you. At the beginning of each review session you will be given a few minutes to familiarise yourself with the questions. You will be given extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor."
       },
       {
+        "type": "text",
         "title": "Make sure you:",
-        "content": "• Answer all questions\n• Print clearly or select and circle the appropriate answer or type it as a word document.\n• Use a blue or black pen.\n• Ask your assessor if you do not understand a question.\n• Do not talk to your classmates.\n• Do not cheat."
+        "content": "• Answer all questions\n• Print clearly or select and circle the appropriate answer or type it as a word document.\n• Use a blue or black pen. Assessments written in pencil will not be accepted.\n• Ask your assessor if you do not understand a question. Whist your assessor cannot tell you the answer, he/she may be able to re-word the question for you\n• Do not talk to your classmates. If you are caught discussion the answers you will be asked to leave and your assessment will not be marked.\n• Do not cheat. Anyone caught cheating will automatically be marked Not Competent for this unit. There are NO EXCEPTIONS to this rule."
       }
     ],
     "questions": [
@@ -370,17 +372,22 @@ export const assessmentQuestions = {
       {
         "type": "text",
         "title": "Task Description",
-        "content": "In this assessment the student must demonstrate their skills in measuring and calculating resistance, current and voltage in a series circuit. The candidate should use their knowledge attained from this unit to take measurements and calculate the necessary parametres."
+        "content": "In this assessment the student must demonstrate their skills in measuring and calculating resistance, current and voltage in a series circuit. The candidate should use their knowledge attained from this unit to take measurements and calculate the necessary parametres. The students need to analyse the circuit and use appropriate tools and equipment required to carry out the task. Student would be allocated sufficient time for each circuit to conduct the practical task.\n\nThe assessor will observe the candidate throughout the task. The candidate will be reviewed for\n• Identify the voltage across an 'open circuit' in a series circuit.\n• Logically determine faults in a series circuit by identifying probable effects.\n• Calculate and measure resistance in a series circuit\n• Calculate and measure the total current in a series circuit"
       },
       {
         "type": "text",
         "title": "Components",
-        "content": "The candidate will be provided with:\n1 × multimetre\n1 × 9 V battery\n1 × 1 k Ω 1W resistor\n1 × 1.5 k Ω 1W resistor\n1 × 2.2 k Ω 1W resistor"
+        "content": "The candidate will be provided with\n1 × multimetre\n1 × 9 V battery\n1 × 1 k Ω 1W resistor\n1 × 1.5 k Ω 1W resistor\n1 × 2.2 k Ω 1W resistor\n\nThe students need to draw the circuit diagram based on the specifications given above."
       },
       {
         "type": "text",
         "title": "Details: Preparations Required",
-        "content": "Before beginning the analysis, students must make adequate preparations for the task, including:\n• Follow instructor's instructions to ensure exact requirements of the service are clearly understood.\n• Students must follow OH&S requirements at all times, including proper use of PPE\n• Select and prepare all components, tooling and equipment necessary"
+        "content": "Before beginning the analysis, students must make adequate preparations for the task, including:\n• Follow instructor's instructions to ensure exact requirements of the service are clearly understood. Instructions will include verbal & written instructions, as well as fault reporting and any specific instructions. Students should also consult relevant service instruction manuals to determine measurements requirements, methods and required equipment\n• Students must follow OH&S requirements at all times, including proper use of PPE\n• Select and prepare all components, tooling and equipment necessary"
+      },
+      {
+        "type": "text",
+        "title": "Once preparations have been made, students are to undertake the analysis following circuit specific instructions and including, but not limited to the following steps:",
+        "content": "• Use appropriate test equipment to measure AC voltage (multimetre) or AC current (clamp metre) in a safe manner that does not require an LV circuit to be disconnected.\n• Apply precautions and required action to minimise, control or eliminate hazards that may exist during work activities\n• Select and use required personal protective equipment, conforming to industry and WHS standards\n• Work systematically with required attention to detail without injury to self or others, or damage to goods or equipment"
       },
       {
         "type": "table",

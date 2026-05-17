@@ -33,12 +33,14 @@ export const assessmentQuestions = {
     "title": "ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS",
     "sections": [
       {
+        "type": "text",
         "title": "Student Instructions:",
-        "content": "This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45 - 60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 1 in front of you and answer the questions as the information becomes clear to you."
+        "content": "This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45 - 60 minutes, where applicable. As you learn, practice and review knowledge and skills, you will keep Assessment 1 in front of you and answer the questions as the information becomes clear to you. At the beginning of each review session you will be given a few minutes to familiarise yourself with the questions. You will be given extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor."
       },
       {
+        "type": "text",
         "title": "Make sure you:",
-        "content": "• Answer all questions\n• Print clearly or select and circle the appropriate answer.\n• Use a blue or black pen.\n• Ask your assessor if you do not understand a question.\n• Do not talk to your classmates.\n• Do not cheat."
+        "content": "• Answer all questions\n• Print clearly\n• Use a blue or black pen. Assessments written in pencil will not be accepted.\n• Ask your assessor if you do not understand a question. Whist your assessor cannot tell you the answer, he/she may be able to re-word the question for you\n• Do not talk to your classmates. If you are caught discussion the answers you will be asked to leave and your assessment will not be marked.\n• Do not cheat. Anyone caught cheating will automatically be marked Not Competent for this unit. There are NO EXCEPTIONS to this rule."
       }
     ],
     "questions": [

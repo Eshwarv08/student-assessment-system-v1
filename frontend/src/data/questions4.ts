@@ -72,13 +72,27 @@ export const assessmentQuestions = {
       },
       {
         "type": "text",
+        "title": "*Note: for candidates only seeking restricted cabler registration, training tasks AT2.4 to AT2.7 should be replaced by tasks below:",
+        "content": "• Network termination device\n• Australian modular socket\n• Mode 3 alarm socket\n• RJ45, RJ12 or RJ11 modular socket.\n\nNote: jumperable distributors are not included in this requirement"
+      },
+      {
+        "type": "text",
         "title": "Required Documents and Equipment",
         "content": "• Cable plan for assessment location\n• Cable – 50 pair, 4 pair, structured (cat 5 or similar)\n• Krone tool\n• Krone block\n• Modular socket\n• Outlet termination\n• Cable record template\n• Hand tools – screw driver, other basic tools\n• Appropriate PPE"
       }
     ],
     "checklistTitle": "ASSESSMENT TASK 2 – ASSESSOR CHECKLIST",
     "assessorInstructions": "The observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.\n\nAssessor Instructions:\nThe assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.",
-    "checklistItems": [
+    "oralHeader": "Outcomes:",
+    "checklistLabel": "Oral Assessment Questions",
+    "oral": [
+      "Name three hazards for this type of termination work?",
+      "What separations should be maintained between cable terminations and LV cables?",
+      "What requirements apply the installation of an MDF?",
+      "Describe the regulations that apply to cable installation"
+    ],
+    "performanceHeader": "Evidence of Performance: Did The Candidate Satisfactorily:",
+    "performance": [
       "Perform a simple cable termination at termination module according to manufacturer's specifications and without damage to conductors",
       "Terminate systems at both distributor and outlet locations and test earthing",
       "Apply recommended earthing in accordance with standard S009:2013 including TCR/CES earth wire",
@@ -111,7 +125,16 @@ export const assessmentQuestions = {
     ],
     "checklistTitle": "ASSESSMENT TASK 3 – ASSESSOR CHECKLIST",
     "assessorInstructions": "The observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.\n\nAssessor Instructions:\nThe assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.",
-    "checklistItems": [
+    "oralHeader": "Outcomes:",
+    "checklistLabel": "Oral Assessment Questions",
+    "oral": [
+      "Name three potential faults on a cable system",
+      "Your assessor will hand you a testing device. What is the fault that the tester you are holding detects?",
+      "What steps can you take to rectify this fault?",
+      "What steps can a cabler take to avoid this fault when installing cable?"
+    ],
+    "performanceHeader": "Evidence of Performance: Did The Candidate Satisfactorily:",
+    "performance": [
       "Read and interpret drawings related to cable layouts, outlet location, cable coding system, and identifiers and distributor locations for the purpose of locating system earthing",
       "Update plans with installation details and system plans",
       "Complete a TCA for the cabling system",

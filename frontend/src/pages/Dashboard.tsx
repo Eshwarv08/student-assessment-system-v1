@@ -121,6 +121,193 @@ const Dashboard: React.FC = () => {
           </div>
         )}
 
+        {/* Generated Links Table/Cards */}
+        <div className="space-y-4">
+          {selectedQuestions.length > 0 && (
+            <div className="flex justify-center sm:justify-end">
+              <button
+                onClick={handleGenerateCommonLink}
+                disabled={isGenerating}
+                className="bg-[#1e3a8a] text-white px-6 py-2.5 rounded-xl font-black uppercase tracking-wider text-sm shadow-lg hover:bg-blue-800 transition-all flex items-center gap-2 animate-in fade-in slide-in-from-top-4"
+              >
+                <Link size={18} />
+                {isGenerating ? 'Generating...' : `Generate Link for ${selectedQuestions.length} Questions`}
+              </button>
+            </div>
+          )}
+          <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
+            <div className="px-6 py-4 border-b bg-gray-50 flex items-center justify-between">
+              <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                <Link size={18} className="text-gray-400" />
+                Generated Assessment Links
+              </h3>
+            </div>
+
+            <div className="overflow-x-auto">
+              {/* Desktop Table */}
+              <table className="w-full text-left hidden sm:table">
+                <thead>
+                  <tr className="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider">
+                    <th className="px-6 py-4 font-black w-10">Select</th>
+                    <th className="px-6 py-4 font-black">Template Name</th>
+                    <th className="px-6 py-4 font-black hidden lg:table-cell">Assessment Link</th>
+                    <th className="px-6 py-4 font-black">Created</th>
+                    <th className="px-6 py-4 font-black text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {assessmentsLoading ? (
+                    <tr><td colSpan={5} className="px-6 py-8 animate-pulse bg-gray-50"></td></tr>
+                  ) : !assessments?.filter((a: any) => availableQuestions.some(q => q.id === a.token)).length ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
+                        No links generated yet.
+                      </td>
+                    </tr>
+                  ) : (
+                    assessments
+                      .filter((a: any) => availableQuestions.some(q => q.id === a.token))
+                      .sort((a: any, b: any) => {
+                        const indexA = availableQuestions.findIndex(q => q.id === a.token);
+                        const indexB = availableQuestions.findIndex(q => q.id === b.token);
+                        return indexA - indexB;
+                      })
+                      .map((a: any) => {
+                        const assessLink = `${window.location.origin}/assessment?token=${a.token}`
+                        const isSelected = selectedQuestions.includes(a.token)
+                        const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
+                        const isExpanded = expandedAssessment === a.token
+
+                        return (
+                          <tr
+                            key={a._id}
+                            className={`${isSelected ? 'bg-blue-50/50' : ''} hover:bg-gray-50 transition-colors`}
+                          >
+                            <td className="px-6 py-4">
+                              <input
+                                type="checkbox"
+                                checked={isSelected}
+                                onChange={() => handleSelectQuestion(a.token)}
+                                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                              />
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-2">
+                                <div className="font-black text-slate-800 text-xs uppercase tracking-wider">{a.name || 'Assessment Task 4-6'}</div>
+                                {assessmentSubmissions.length > 0 && (
+                                  <span className="bg-blue-50 text-blue-700 text-[9px] font-black px-1.5 py-0.5 rounded-full">
+                                    {assessmentSubmissions.length} Submissions
+                                  </span>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 hidden lg:table-cell">
+                              <a
+                                href={assessLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 font-mono text-[11px] underline truncate block max-w-[320px]"
+                              >
+                                {assessLink}
+                              </a>
+                            </td>
+                            <td className="px-6 py-4 text-slate-400 text-[11px] whitespace-nowrap">
+                              <div className="font-bold">{new Date(a.created_at).toLocaleDateString()}</div>
+                              <div className="text-[9px] opacity-60">{new Date(a.created_at).toLocaleTimeString()}</div>
+                            </td>
+                            <td className="px-6 py-4 text-right">
+                              <button
+                                onClick={() => {
+                                  navigator.clipboard.writeText(assessLink)
+                                  alert('✅ Link copied!')
+                                }}
+                                className="inline-flex items-center justify-center gap-1 text-white font-black text-[11px] bg-[#1e3a8a] px-3 py-1.5 rounded-lg hover:bg-[#1e40af] transition-all uppercase tracking-tight shadow-sm"
+                              >
+                                <Copy size={14} /> Copy
+                              </button>
+                            </td>
+                          </tr>
+                        )
+                      })
+                  )}
+                </tbody>
+              </table>
+
+              {/* Mobile View for Links */}
+              <div className="sm:hidden divide-y">
+                {assessmentsLoading ? (
+                  Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="p-4 animate-pulse">
+                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-100 rounded w-1/2"></div>
+                    </div>
+                  ))
+                ) : !assessments?.filter((a: any) => availableQuestions.some(q => q.id === a.token)).length ? (
+                  <div className="p-12 text-center text-gray-400">
+                    <Link size={48} className="mx-auto mb-4 opacity-20" />
+                    No links generated yet.
+                  </div>
+                ) : (
+                  assessments
+                    .filter((a: any) => availableQuestions.some(q => q.id === a.token))
+                    .sort((a: any, b: any) => {
+                      const indexA = availableQuestions.findIndex(q => q.id === a.token);
+                      const indexB = availableQuestions.findIndex(q => q.id === b.token);
+                      return indexA - indexB;
+                    })
+                    .map((a: any) => {
+                      const assessLink = `${window.location.origin}/assessment?token=${a.token}`
+                      const isSelected = selectedQuestions.includes(a.token)
+                      const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
+                      const isExpanded = expandedAssessment === a.token
+
+                      return (
+                        <div key={a._id} className={`p-4 flex flex-col gap-3 ${isSelected ? 'bg-blue-50' : ''}`}>
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-3">
+                              <input
+                                type="checkbox"
+                                checked={isSelected}
+                                onChange={() => handleSelectQuestion(a.token)}
+                                className="mt-1 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                              />
+                              <div>
+                                <div className="font-black text-slate-800 text-xs uppercase tracking-wider leading-tight">{a.name}</div>
+                                <div className="flex flex-wrap gap-2 mt-1">
+                                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">{new Date(a.created_at).toLocaleDateString()}</span>
+                                  {assessmentSubmissions.length > 0 && (
+                                    <span className="bg-blue-50 text-blue-700 text-[9px] font-black px-1.5 py-0.5 rounded-full">
+                                      {assessmentSubmissions.length} {assessmentSubmissions.length === 1 ? 'Submission' : 'Submissions'}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(assessLink)
+                                alert('✅ Link copied!')
+                              }}
+                              className="p-2 bg-[#1e3a8a] text-white rounded-lg shadow-sm active:scale-95 transition-transform"
+                            >
+                              <Copy size={14} />
+                            </button>
+                          </div>
+
+                          <div className="flex flex-col gap-2">
+                            <div className="text-[10px] bg-white p-2 rounded border border-gray-100 font-mono text-blue-600 truncate">
+                              {assessLink}
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Submissions Table/Cards */}
         <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
           <div className="px-6 py-4 border-b bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-2">
@@ -340,297 +527,6 @@ const Dashboard: React.FC = () => {
                   </div>
                 ))
               )}
-            </div>
-          </div>
-        </div>
-
-        {/* Generated Links Table/Cards */}
-        <div className="space-y-4">
-          {selectedQuestions.length > 0 && (
-            <div className="flex justify-center sm:justify-end">
-              <button
-                onClick={handleGenerateCommonLink}
-                disabled={isGenerating}
-                className="bg-[#1e3a8a] text-white px-6 py-2.5 rounded-xl font-black uppercase tracking-wider text-sm shadow-lg hover:bg-blue-800 transition-all flex items-center gap-2 animate-in fade-in slide-in-from-top-4"
-              >
-                <Link size={18} />
-                {isGenerating ? 'Generating...' : `Generate Link for ${selectedQuestions.length} Questions`}
-              </button>
-            </div>
-          )}
-          <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
-            <div className="px-6 py-4 border-b bg-gray-50 flex items-center justify-between">
-              <h3 className="font-bold text-gray-800 flex items-center gap-2">
-                <Link size={18} className="text-gray-400" />
-                Generated Assessment Links
-              </h3>
-            </div>
-
-            <div className="overflow-x-auto">
-              {/* Desktop Table */}
-              <table className="w-full text-left hidden sm:table">
-                <thead>
-                  <tr className="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider">
-                    <th className="px-6 py-4 font-black w-10">Select</th>
-                    <th className="px-6 py-4 font-black">Template Name</th>
-                    <th className="px-6 py-4 font-black hidden lg:table-cell">Assessment Link</th>
-                    <th className="px-6 py-4 font-black">Created</th>
-                    <th className="px-6 py-4 font-black text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {assessmentsLoading ? (
-                    <tr><td colSpan={5} className="px-6 py-8 animate-pulse bg-gray-50"></td></tr>
-                  ) : !assessments?.filter((a: any) => availableQuestions.some(q => q.id === a.token)).length ? (
-                    <tr>
-                      <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
-                        No links generated yet.
-                      </td>
-                    </tr>
-                  ) : (
-                    assessments
-                      .filter((a: any) => availableQuestions.some(q => q.id === a.token))
-                      .sort((a: any, b: any) => {
-                        const indexA = availableQuestions.findIndex(q => q.id === a.token);
-                        const indexB = availableQuestions.findIndex(q => q.id === b.token);
-                        return indexA - indexB;
-                      })
-                      .map((a: any) => {
-                        const assessLink = `${window.location.origin}/assessment?token=${a.token}`
-                        const isSelected = selectedQuestions.includes(a.token)
-                        const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
-                        const isExpanded = expandedAssessment === a.token
-
-                        return (
-                          <React.Fragment key={a._id}>
-                            <tr
-                              className={`${isSelected ? 'bg-blue-50/50' : ''} hover:bg-gray-50 transition-colors cursor-pointer`}
-                              onClick={() => setExpandedAssessment(isExpanded ? null : a.token)}
-                            >
-                              <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
-                                <input
-                                  type="checkbox"
-                                  checked={isSelected}
-                                  onChange={() => handleSelectQuestion(a.token)}
-                                  className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                                />
-                              </td>
-                              <td className="px-6 py-4">
-                                <div className="flex items-center gap-2">
-                                  <div className="font-black text-slate-800 text-xs uppercase tracking-wider">{a.name || 'Assessment Task 4-6'}</div>
-                                  {assessmentSubmissions.length > 0 && (
-                                    <span className="bg-blue-50 text-blue-700 text-[9px] font-black px-1.5 py-0.5 rounded-full">
-                                      {assessmentSubmissions.length} Submissions
-                                    </span>
-                                  )}
-                                </div>
-                              </td>
-                              <td className="px-6 py-4 hidden lg:table-cell">
-                                <a
-                                  href={assessLink}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-blue-600 font-mono text-[11px] underline truncate block max-w-[320px]"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  {assessLink}
-                                </a>
-                              </td>
-                              <td className="px-6 py-4 text-slate-400 text-[11px] whitespace-nowrap">
-                                <div className="font-bold">{new Date(a.created_at).toLocaleDateString()}</div>
-                                <div className="text-[9px] opacity-60">{new Date(a.created_at).toLocaleTimeString()}</div>
-                              </td>
-                              <td className="px-6 py-4 text-right">
-                                <div className="flex gap-2 justify-end" onClick={(e) => e.stopPropagation()}>
-                                  <button
-                                    onClick={() => setExpandedAssessment(isExpanded ? null : a.token)}
-                                    className="inline-flex items-center gap-1 text-[#1e3a8a] font-black text-[13px] bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 hover:bg-blue-100 transition-all uppercase tracking-tight"
-                                  >
-                                    {isExpanded ? 'Close' : 'Review Assessments'}
-                                    {isExpanded ? <ChevronUp size={14} strokeWidth={3} /> : <ChevronDown size={14} strokeWidth={3} />}
-                                  </button>
-                                  <button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(assessLink)
-                                      alert('✅ Link copied!')
-                                    }}
-                                    className="inline-flex items-center justify-center gap-1 text-white font-black text-[11px] bg-[#1e3a8a] px-3 py-1.5 rounded-lg hover:bg-[#1e40af] transition-all uppercase tracking-tight shadow-sm"
-                                  >
-                                    <Copy size={14} /> Copy
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                            {isExpanded && (
-                              <tr className="bg-gray-50/30">
-                                <td colSpan={5} className="px-12 py-4">
-                                  <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-                                    {assessmentSubmissions.length === 0 ? (
-                                      <div className="p-8 text-center text-gray-400 text-xs font-bold uppercase tracking-widest italic">
-                                        No submissions yet.
-                                      </div>
-                                    ) : (
-                                      <table className="w-full text-left text-xs">
-                                        <thead className="bg-gray-50">
-                                          <tr className="text-[9px] uppercase font-black text-gray-500 tracking-wider">
-                                            <th className="px-4 py-2">Student</th>
-                                            <th className="px-4 py-2">ID</th>
-                                            <th className="px-4 py-2">Date</th>
-                                            <th className="px-4 py-2">Status</th>
-                                            <th className="px-4 py-2 text-right">Action</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-gray-50">
-                                          {assessmentSubmissions.map((sub: any) => (
-                                            <tr key={sub._id} className="hover:bg-blue-50/20">
-                                              <td className="px-4 py-3 font-black text-gray-800">{sub.student_name}</td>
-                                              <td className="px-4 py-3 text-gray-500">{sub.student_id || '—'}</td>
-                                              <td className="px-4 py-3 text-gray-400">{new Date(sub.submitted_at).toLocaleDateString()}</td>
-                                              <td className="px-4 py-3">
-                                                <span className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase ${sub.status === 'graded' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                                                  {sub.status}
-                                                </span>
-                                              </td>
-                                              <td className="px-4 py-3 text-right">
-                                                <button onClick={() => window.location.href = `/grade/${sub._id}`} className="bg-[#1e3a8a] text-white px-2 py-1 rounded text-[9px] font-black uppercase">Grade</button>
-                                              </td>
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      </table>
-                                    )}
-                                  </div>
-                                </td>
-                              </tr>
-                            )}
-                          </React.Fragment>
-                        )
-                      })
-                  )}
-                </tbody>
-              </table>
-
-              {/* Mobile View for Links */}
-              <div className="sm:hidden divide-y">
-                {assessmentsLoading ? (
-                  Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="p-4 animate-pulse">
-                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                      <div className="h-3 bg-gray-100 rounded w-1/2"></div>
-                    </div>
-                  ))
-                ) : !assessments?.filter((a: any) => availableQuestions.some(q => q.id === a.token)).length ? (
-                  <div className="p-12 text-center text-gray-400">
-                    <Link size={48} className="mx-auto mb-4 opacity-20" />
-                    No links generated yet.
-                  </div>
-                ) : (
-                  assessments
-                    .filter((a: any) => availableQuestions.some(q => q.id === a.token))
-                    .sort((a: any, b: any) => {
-                      const indexA = availableQuestions.findIndex(q => q.id === a.token);
-                      const indexB = availableQuestions.findIndex(q => q.id === b.token);
-                      return indexA - indexB;
-                    })
-                    .map((a: any) => {
-                      const assessLink = `${window.location.origin}/assessment?token=${a.token}`
-                      const isSelected = selectedQuestions.includes(a.token)
-                      const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
-                      const isExpanded = expandedAssessment === a.token
-
-                      return (
-                        <div key={a._id} className={`p-4 flex flex-col gap-3 ${isSelected ? 'bg-blue-50' : ''}`}>
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex items-start gap-3">
-                              <input
-                                type="checkbox"
-                                checked={isSelected}
-                                onChange={() => handleSelectQuestion(a.token)}
-                                className="mt-1 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                              />
-                              <div>
-                                <div className="font-black text-slate-800 text-xs uppercase tracking-wider leading-tight">{a.name}</div>
-                                <div className="flex flex-wrap gap-2 mt-1">
-                                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">{new Date(a.created_at).toLocaleDateString()}</span>
-                                  {assessmentSubmissions.length > 0 && (
-                                    <span className="bg-blue-50 text-blue-700 text-[9px] font-black px-1.5 py-0.5 rounded-full">
-                                      {assessmentSubmissions.length} {assessmentSubmissions.length === 1 ? 'Submission' : 'Submissions'}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => {
-                                navigator.clipboard.writeText(assessLink)
-                                alert('✅ Link copied!')
-                              }}
-                              className="p-2 bg-[#1e3a8a] text-white rounded-lg shadow-sm active:scale-95 transition-transform"
-                            >
-                              <Copy size={14} />
-                            </button>
-                          </div>
-
-                          <div className="flex flex-col gap-2">
-                            <div className="text-[10px] bg-white p-2 rounded border border-gray-100 font-mono text-blue-600 truncate">
-                              {assessLink}
-                            </div>
-                            <button
-                              onClick={() => setExpandedAssessment(isExpanded ? null : a.token)}
-                              className="flex items-center justify-center gap-2 w-full py-2 bg-blue-50 text-[#1e3a8a] rounded-lg font-black text-xs uppercase tracking-tight border border-blue-100"
-                            >
-                              {isExpanded ? 'Hide Submissions' : 'Review Assessments'}
-                              {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                            </button>
-                          </div>
-
-                          {isExpanded && (
-                            <div className="mt-2 space-y-2 animate-in slide-in-from-top-2">
-                              {assessmentSubmissions.length === 0 ? (
-                                <div className="p-6 text-center text-gray-400 text-[10px] font-bold uppercase tracking-widest italic bg-gray-50 rounded-lg border border-dashed border-gray-200">
-                                  No submissions yet.
-                                </div>
-                              ) : (
-                                assessmentSubmissions.map((sub: any) => (
-                                  <div key={sub._id} className="bg-gray-50 p-3 rounded-lg border border-gray-100 space-y-2">
-                                    <div className="flex justify-between items-start">
-                                      <div>
-                                        <div className="font-bold text-gray-800 text-xs">{sub.student_name}</div>
-                                        <div className="text-[10px] text-gray-400 font-mono">ID: {sub.student_id || '—'}</div>
-                                      </div>
-                                      <span className={`text-[9px] font-black px-1.5 py-0.5 rounded uppercase ${sub.status === 'graded' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                                        {sub.status}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-[10px] text-gray-400">{new Date(sub.submitted_at).toLocaleDateString()}</span>
-                                      <div className="flex gap-2">
-                                        {sub.status === 'graded' && (
-                                          <button
-                                            onClick={() => window.location.href = `/grade/${sub._id}?print=true`}
-                                            className="flex items-center justify-center gap-1 px-3 py-1 bg-green-600 text-white rounded text-[9px] font-black uppercase"
-                                          >
-                                            <Printer size={12} /> PDF
-                                          </button>
-                                        )}
-                                        <button
-                                          onClick={() => window.location.href = `/grade/${sub._id}`}
-                                          className="px-3 py-1 bg-[#1e3a8a] text-white rounded text-[9px] font-black uppercase"
-                                        >
-                                          Grade
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      )
-                    })
-                )}
-              </div>
             </div>
           </div>
         </div>

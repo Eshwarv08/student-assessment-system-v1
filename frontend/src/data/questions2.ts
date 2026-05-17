@@ -28,7 +28,7 @@ export const assessmentQuestions = {
     "coverSheetInstruction": "A cover sheet must be included with each submission of work. Work submitted without a signed cover sheet will be returned unmarked."
   },
   "task1": {
-    "observationTitle": "ASSESSMENT TASK 1 – ASSESSOR CHECKLIST",
+    "observationTitle": "ASSESSMENT TASK 1- OBSERVATION",
     "observationSubtitle": "Practical Demonstration\nCable Sheath Removal, Loose Tube Preparation and Fibre Cleaning",
     "sections": [
       {
@@ -96,7 +96,7 @@ export const assessmentQuestions = {
     ]
   },
   "task2": {
-    "observationTitle": "ASSESSMENT TASK 2 – ASSESSOR CHECKLIST",
+    "observationTitle": "ASSESSMENT TASK 2 – OBSERVATION",
     "observationSubtitle": "Practical Demonstration\nFusion splice",
     "sections": [
       {
@@ -178,7 +178,7 @@ export const assessmentQuestions = {
     ]
   },
   "task3": {
-    "observationTitle": "ASSESSMENT TASK 3 – ASSESSOR CHECKLIST",
+    "observationTitle": "ASSESSMENT TASK 3- OBSERVATION",
     "observationSubtitle": "Practical Demonstration\nMechanical splice",
     "sections": [
       {
@@ -234,138 +234,154 @@ export const assessmentQuestions = {
       "Did the student meet all the criteria for the task?"
     ]
   },
-  "task4": [
-    {
-      "id": 1,
-      "text": "What are the safety equipment required while working with optical fibre cables? (PC 1.1)",
-      "type": "text",
-      "limit": null,
-      "options": [],
-      "textInputs": []
-    },
-    {
-      "id": 2,
-      "text": "List the three fibre optic installations. (PC 1.2)",
-      "type": "text",
-      "limit": null,
-      "options": [],
-      "textInputs": []
-    },
-    {
-      "id": 3,
-      "text": "What are the precautions to be observed when handling optical fibre cable? (PC 1.3)",
-      "type": "text",
-      "limit": null,
-      "options": [],
-      "textInputs": []
-    },
-    {
-      "id": 4,
-      "text": "Which Australian standard should be followed for optical fibre safety?",
-      "type": "radio",
-      "limit": null,
-      "options": [
-        { "type": "radio", "name": "t4q4", "value": "a", "text": "AS/NZS 2967:2014" },
-        { "type": "radio", "name": "t4q4", "value": "b", "text": "AS/NZS 2387" },
-        { "type": "radio", "name": "t4q4", "value": "c", "text": "AS/NZS 3080:2003" },
-        { "type": "radio", "name": "t4q4", "value": "d", "text": "AS/NZS 1268" }
-      ],
-      "textInputs": []
-    },
-    {
-      "id": 5,
-      "text": "What is the significance of conducting a pre-installation test? (PC 1.5)",
-      "type": "text",
-      "limit": null,
-      "options": [],
-      "textInputs": []
-    },
-    {
-      "id": 6,
-      "text": "Match the fibre dimension standards. (PC 2.1)",
-      "type": "multipart_radio",
-      "limit": null,
-      "options": [],
-      "textInputs": [],
-      "parts": [
-        {
-          "text": "S/M 9/125 Core diameter in microns:",
-          "name": "t4q6_a",
-          "options": [
-            { "value": "62.5", "text": "62.5" },
-            { "value": "50", "text": "50" },
-            { "value": "10", "text": "10" },
-            { "value": "9", "text": "9" }
-          ]
-        },
-        {
-          "text": "S/M 10/125 Core diameter in microns:",
-          "name": "t4q6_b",
-          "options": [
-            { "value": "62.5", "text": "62.5" },
-            { "value": "50", "text": "50" },
-            { "value": "10", "text": "10" },
-            { "value": "9", "text": "9" }
-          ]
-        },
-        {
-          "text": "M/M 50/125 Core diameter in microns:",
-          "name": "t4q6_c",
-          "options": [
-            { "value": "62.5", "text": "62.5" },
-            { "value": "50", "text": "50" },
-            { "value": "10", "text": "10" },
-            { "value": "9", "text": "9" }
-          ]
-        },
-        {
-          "text": "M/M 62.5/125 Core diameter in microns:",
-          "name": "t4q6_a",
-          "options": [
-            { "value": "62.5", "text": "62.5" },
-            { "value": "50", "text": "50" },
-            { "value": "10", "text": "10" },
-            { "value": "9", "text": "9" }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 7,
-      "text": "Mention the steps involved in aerial installation (PC 3.2)",
-      "type": "text",
-      "limit": null,
-      "options": [],
-      "textInputs": []
-    },
-    {
-      "id": 8,
-      "text": "Name the types of connectors used in connecting ends of optical fibres. (pc 3.2)",
-      "type": "text",
-      "limit": null,
-      "options": [],
-      "textInputs": []
-    },
-    {
-      "id": 9,
-      "text": "Which splicing method melts the ends of two fibres so they fuse, like welding metal? (PC 4.3)",
-      "type": "radio",
-      "limit": null,
-      "options": [
-        { "type": "radio", "name": "t4q9", "value": "a", "text": "Fusion splicing" },
-        { "type": "radio", "name": "t4q9", "value": "b", "text": "Mechanical splicing" },
-        { "type": "radio", "name": "t4q9", "value": "c", "text": "Temporary splicing" },
-        { "type": "radio", "name": "t4q9", "value": "d", "text": "Permanent splicing" }
-      ],
-      "textInputs": []
-    },
-    {
-      "id": 10,
-      "text": "Distinguish between connectors and splices? (pc 4.1,4.2)",
-      "type": "text",
-      "limit": null,
-      "options": [],
-      "textInputs": []
-    }
-  ]
+  "task4": {
+    "title": "ASSESSMENT TASK 4: WRITTEN QUESTIONS AND ANSWERS",
+    "observationTitle": "ASSESSMENT TASK 4: WRITTEN QUESTIONS AND ANSWERS",
+    "sections": [
+      {
+        "type": "text",
+        "title": "Student Instructions:",
+        "content": "This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45-60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 5 in front of you and answer the questions as the information becomes clear to you. At the beginning of each review session you will be given a few minutes to familiarise yourself with the questions. You will be given extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor."
+      },
+      {
+        "type": "text",
+        "title": "Make sure you:",
+        "content": "• Answer all questions\n• Print clearly or select and circle the appropriate answer or type it as a word document.\n• Use a blue or black pen. Assessments written in pencil will not be accepted.\n• Ask your assessor if you do not understand a question. Whist your assessor cannot tell you the answer, he/she may be able to re-word the question for you\n• Do not talk to your classmates. If you are caught discussion the answers you will be asked to leave and your assessment will not be marked.\n• Do not cheat. Anyone caught cheating will automatically be marked Not Competent for this unit. There are NO EXCEPTIONS to this rule."
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "text": "What are the safety equipment required while working with optical fibre cables? (PC 1.1)",
+        "type": "text",
+        "limit": null,
+        "options": [],
+        "textInputs": []
+      },
+      {
+        "id": 2,
+        "text": "List the three fibre optic installations. (PC 1.2)",
+        "type": "text",
+        "limit": null,
+        "options": [],
+        "textInputs": []
+      },
+      {
+        "id": 3,
+        "text": "What are the precautions to be observed when handling optical fibre cable? (PC 1.3)",
+        "type": "text",
+        "limit": null,
+        "options": [],
+        "textInputs": []
+      },
+      {
+        "id": 4,
+        "text": "Which Australian standard should be followed for optical fibre safety?",
+        "type": "radio",
+        "limit": null,
+        "options": [
+          { "type": "radio", "name": "t4q4", "value": "a", "text": "AS/NZS 2967:2014" },
+          { "type": "radio", "name": "t4q4", "value": "b", "text": "AS/NZS 2387" },
+          { "type": "radio", "name": "t4q4", "value": "c", "text": "AS/NZS 3080:2003" },
+          { "type": "radio", "name": "t4q4", "value": "d", "text": "AS/NZS 1268" }
+        ],
+        "textInputs": []
+      },
+      {
+        "id": 5,
+        "text": "What is the significance of conducting a pre-installation test? (PC 1.5)",
+        "type": "text",
+        "limit": null,
+        "options": [],
+        "textInputs": []
+      },
+      {
+        "id": 6,
+        "text": "Match the fibre dimension standards. (PC 2.1)",
+        "type": "multipart_radio",
+        "limit": null,
+        "options": [],
+        "textInputs": [],
+        "parts": [
+          {
+            "text": "S/M 9/125 Core diameter in microns:",
+            "name": "t4q6_a",
+            "options": [
+              { "value": "62.5", "text": "62.5" },
+              { "value": "50", "text": "50" },
+              { "value": "10", "text": "10" },
+              { "value": "9", "text": "9" }
+            ]
+          },
+          {
+            "text": "S/M 10/125 Core diameter in microns:",
+            "name": "t4q6_b",
+            "options": [
+              { "value": "62.5", "text": "62.5" },
+              { "value": "50", "text": "50" },
+              { "value": "10", "text": "10" },
+              { "value": "9", "text": "9" }
+            ]
+          },
+          {
+            "text": "M/M 50/125 Core diameter in microns:",
+            "name": "t4q6_c",
+            "options": [
+              { "value": "62.5", "text": "62.5" },
+              { "value": "50", "text": "50" },
+              { "value": "10", "text": "10" },
+              { "value": "9", "text": "9" }
+            ]
+          },
+          {
+            "text": "M/M 62.5/125 Core diameter in microns:",
+            "name": "t4q6_a",
+            "options": [
+              { "value": "62.5", "text": "62.5" },
+              { "value": "50", "text": "50" },
+              { "value": "10", "text": "10" },
+              { "value": "9", "text": "9" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "text": "Mention the steps involved in aerial installation (PC 3.2)",
+        "type": "text",
+        "limit": null,
+        "options": [],
+        "textInputs": []
+      },
+      {
+        "id": 8,
+        "text": "Name the types of connectors used in connecting ends of optical fibres. (pc 3.2)",
+        "type": "text",
+        "limit": null,
+        "options": [],
+        "textInputs": []
+      },
+      {
+        "id": 9,
+        "text": "Which splicing method melts the ends of two fibres so they fuse, like welding metal? (PC 4.3)",
+        "type": "radio",
+        "limit": null,
+        "options": [
+          { "type": "radio", "name": "t4q9", "value": "a", "text": "Fusion splicing" },
+          { "type": "radio", "name": "t4q9", "value": "b", "text": "Mechanical splicing" },
+          { "type": "radio", "name": "t4q9", "value": "c", "text": "Temporary splicing" },
+          { "type": "radio", "name": "t4q9", "value": "d", "text": "Permanent splicing" }
+        ],
+        "textInputs": []
+      },
+      {
+        "id": 10,
+        "text": "Distinguish between connectors and splices? (pc 4.1,4.2)",
+        "type": "text",
+        "limit": null,
+        "options": [],
+        "textInputs": []
+      }
+    ]
+  }
 };
