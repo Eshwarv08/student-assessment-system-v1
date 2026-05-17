@@ -186,6 +186,102 @@ const GradingPortal: React.FC = () => {
     sigPadRef.current?.clear()
   }
 
+  const markAllCorrect = () => {
+    const newGrades: any = { ...grades };
+    const newTaskResults: any = { ...taskResults };
+    const newCompRecord: any = {
+      ...compRecord,
+      evidence: { valid: true, sufficient: true, current: true, authentic: true },
+      tasks: { ...compRecord.tasks }
+    };
+
+    Object.keys(currentAssessmentQuestions)
+      .filter(key => key.startsWith('task'))
+      .forEach(taskKey => {
+        const tNum = parseInt(taskKey.replace('task', ''));
+        const taskData = currentAssessmentQuestions[taskKey];
+        const tKey = `t${tNum}`;
+
+        // Mark task outcome as Satisfactory (S)
+        newTaskResults[tKey] = 'S';
+        // Mark task as completed in competency record
+        newCompRecord.tasks[tKey] = true;
+
+        // 1. Written questions (renderQuestionReview)
+        const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
+        const questionsArray: any[] = isPlainArray ? taskData : (taskData as any).questions || [];
+        questionsArray.forEach((q: any) => {
+          const qKey = `t${tNum}q${q.id}`;
+          newGrades[qKey] = 'correct';
+        });
+
+        // 2. Oral / checklist items
+        const oralQuestions: string[] = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
+        oralQuestions.forEach((_: string, i: number) => {
+          const qKey = `t${tNum}q${i + 1}`;
+          newGrades[qKey] = 'correct';
+        });
+
+        // 3. Performance items
+        const perfQuestions: string[] = (taskData as any).performance || [];
+        perfQuestions.forEach((_: string, i: number) => {
+          const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
+          newGrades[qKey] = 'correct';
+        });
+
+        // 4. Observation items (checkbox-based)
+        const observationItems: string[] = (taskData as any).observationItems || [];
+        observationItems.forEach((_: string, idx: number) => {
+          const obsKey = `t${tNum}obs${idx}`;
+          newGrades[obsKey] = true;
+        });
+
+        // 5. Assessor table sections (observation tables)
+        const allSections = [
+          ...((taskData as any).sections || []),
+          ...((taskData as any).assessorSections || []).map((s: any) => ({ ...s, isAssessorOnly: true }))
+        ];
+        allSections.forEach((section: any) => {
+          if (section.type !== 'table') return;
+          const isAssessorInput = (taskData as any).assessorOnly || section.isAssessorOnly;
+          if (!isAssessorInput) return;
+          (section.rows || []).forEach((row: any) => {
+            if (row.isSubHeader) return;
+            if (row.cells) {
+              row.cells.forEach((cell: any) => {
+                if (cell.options && cell.options.length > 0) {
+                  if (isQuestion15) {
+                    // Q15: find the "Yes" option for this cell
+                    const yesOpt = cell.options.find((o: any) =>
+                      ['Yes', 'yes', 'Satisfactory', 'S', 'C', 'Completed'].includes(o.value)
+                    );
+                    if (yesOpt) newGrades[cell.name] = yesOpt.value;
+                  } else {
+                    if (cell.type === 'checkbox') {
+                      // Check all options
+                      newGrades[cell.name] = cell.options.map((o: any) => o.value);
+                    } else {
+                      // Radio: pick first option (typically 'Yes' / 'S' / 'C')
+                      const yesOpt = cell.options.find((o: any) =>
+                        ['Yes', 'yes', 'Satisfactory', 'S', 'C', 'Completed'].includes(o.value)
+                      ) || cell.options[0];
+                      if (yesOpt) newGrades[cell.name] = yesOpt.value;
+                    }
+                  }
+                }
+                // text/date/signature cells are left unchanged
+              });
+            }
+          });
+        });
+      });
+
+    setGrades(newGrades);
+    setTaskResults(newTaskResults);
+    setCompRecord(newCompRecord);
+    setFinalResult('C'); // Competent
+  };
+
   const renderQuestionReview = (q: any, i: number, tNum: number) => {
     const qKey = `t${tNum}q${q.id}`
     const studentAnswer = submission?.answers?.[qKey]
@@ -654,7 +750,15 @@ const GradingPortal: React.FC = () => {
             <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest truncate">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2 w-full md:flex md:w-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full md:flex md:w-auto">
+          <button
+            onClick={markAllCorrect}
+            title="Mark all answers as correct"
+            className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-amber-900/20 col-span-2 sm:col-span-1"
+          >
+            <CheckCircle2 size={14} />
+            <span className="whitespace-nowrap">Mark All Correct</span>
+          </button>
           <button
             onClick={() => saveMutation.mutate()}
             disabled={saveMutation.isPending}
