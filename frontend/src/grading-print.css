@@ -836,4 +836,189 @@
     width: auto !important;
     object-fit: contain !important;
   }
+
+  /* ── Question 2 (ICTCBL330) booklet — avoid global rules breaking multi-page PDF ── */
+  html.q2-grading,
+  html.q2-grading body {
+    width: auto !important;
+    max-width: none !important;
+    overflow: visible !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+  }
+
+  html.q2-grading p,
+  html.q2-grading span,
+  html.q2-grading li,
+  html.q2-grading td,
+  html.q2-grading th,
+  html.q2-grading label,
+  html.q2-grading div {
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  html.q2-grading h1,
+  html.q2-grading h2,
+  html.q2-grading h3,
+  html.q2-grading h4,
+  html.q2-grading h5,
+  html.q2-grading h6 {
+    color: #000 !important;
+    margin-top: inherit !important;
+    margin-bottom: inherit !important;
+  }
+
+  html.q2-grading section {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  html.q2-grading .q2-booklet-view {
+    display: block !important;
+    visibility: visible !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  html.q2-grading .q2-booklet-view .page {
+    display: flex !important;
+    flex-direction: column !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    margin: 0 !important;
+    padding: 8mm 10mm 6mm 10mm !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  html.q2-grading .q2-booklet-view .page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  html.q2-grading .q2-booklet-view .page * {
+    font-size: 8.2pt !important;
+    line-height: 1.2 !important;
+  }
+
+  html.q2-grading .q2-booklet-view h1.section-title {
+    font-size: 11pt !important;
+    margin: 3mm 0 2mm !important;
+  }
+
+  html.q2-grading .q2-booklet-view h2.sub-title {
+    font-size: 10pt !important;
+    margin: 1mm 0 !important;
+  }
+
+  html.q2-grading .q2-booklet-view h3.task-label {
+    font-size: 9.5pt !important;
+    margin: 1mm 0 2mm !important;
+  }
+
+  html.q2-grading .q2-booklet-view p {
+    margin-top: 0 !important;
+    margin-bottom: 3px !important;
+  }
+
+  html.q2-grading .q2-booklet-view table {
+    margin-bottom: 4px !important;
+    font-size: 8pt !important;
+  }
+
+  html.q2-grading .q2-booklet-view table td,
+  html.q2-grading .q2-booklet-view table th {
+    padding: 2.5px 5px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .obs-grid {
+    margin: 8px auto !important;
+    gap: 5px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .obs-row { padding: 3px 0 !important; }
+
+  html.q2-grading .q2-booklet-view .chk-table td {
+    padding: 4px 6px !important;
+    font-size: 7.8pt !important;
+    line-height: 1.15 !important;
+  }
+
+  html.q2-grading .q2-booklet-view .chk-table thead td {
+    padding: 4px 6px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .chk-table tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  html.q2-grading .q2-booklet-view .spacer-sm { height: 1mm !important; }
+
+  html.q2-grading .q2-booklet-view .page-footer {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    padding-bottom: 1mm !important;
+  }
+
+  html.q2-grading .q2-booklet-view .no-print { display: none !important; }
+
+  html.q2-grading .q2-booklet-view input[type="text"],
+  html.q2-grading .q2-booklet-view textarea {
+    border: none !important;
+    border-bottom: 1px dotted #999 !important;
+    font-size: 7.8pt !important;
+    padding: 1px 3px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .sig-visual {
+    min-width: 60px !important;
+    height: 18px !important;
+    line-height: 1 !important;
+  }
+
+  html.q2-grading .q2-booklet-view .sig-visual img {
+    max-height: 16px !important;
+    display: inline-block !important;
+  }
+
+  html.q2-grading .q2-booklet-view .result-line {
+    margin: 2px 0 3px !important;
+    font-size: 8.5pt !important;
+    text-align: center !important;
+  }
+
+  html.q2-grading .q2-booklet-view .result-circle {
+    width: 15px !important;
+    height: 15px !important;
+    font-size: 7.5pt !important;
+  }
+
+  html.q2-grading .q2-booklet-view .result-circle-red {
+    width: 15px !important;
+    height: 15px !important;
+    font-size: 7.5pt !important;
+  }
+
+  html.q2-grading .hidden.print\:inline,
+  html.q2-grading .hidden.print\:flex {
+    display: inline !important;
+  }
+
+  html.q2-grading .hidden.print\:flex {
+    display: flex !important;
+  }
 }
