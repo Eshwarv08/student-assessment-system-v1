@@ -15,11 +15,32 @@ const AssessmentForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [assessment, setAssessment] = useState<any>(null)
-  const [answers, setAnswers] = useState<any>({})
+  const [answers, setAnswers] = useState<any>(() => {
+    const tokenParams = new URLSearchParams(window.location.search).get('token');
+    if (tokenParams) {
+      const saved = localStorage.getItem(`assessment_answers_${tokenParams}`);
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          return {};
+        }
+      }
+    }
+    return {};
+  })
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem(`assessment_answers_${token}`, JSON.stringify(answers));
+    }
+  }, [answers, token]);
+
   const [showErrors, setShowErrors] = useState(false)
   const [signatureEmpty, setSignatureEmpty] = useState(true)
   const [toast, setToast] = useState<{ message: string; type: 'error' | 'success' } | null>(null)
   const assessmentQuestions = getQuestionsForAssessment(token)
+  const isQ2 = (token || '').toLowerCase() === 'question-2' || assessmentQuestions?.metadata?.code === 'ICTCBL330';
 
   const showToast = (message: string, type: 'error' | 'success' = 'error') => {
     setToast({ message, type });
@@ -259,7 +280,7 @@ const AssessmentForm: React.FC = () => {
     e.preventDefault()
 
     const currentMissingFields = getMissingFields(answers);
-    const isSigEmpty = !signaturePad.current || signaturePad.current.isEmpty();
+    const isSigEmpty = isQ2 ? !answers['student_signature_url'] : (!signaturePad.current || signaturePad.current.isEmpty());
 
     if (currentMissingFields.size > 0 || isSigEmpty) {
       setShowErrors(true);
@@ -281,7 +302,7 @@ const AssessmentForm: React.FC = () => {
         let element = null;
         if (firstMissing) {
           element = document.getElementsByName(firstMissing)[0] || document.getElementById(firstMissing);
-        } else if (isSigEmpty && sigCanvas.current) {
+        } else if (isSigEmpty && !isQ2 && sigCanvas.current) {
           element = sigCanvas.current;
         }
         if (element) {
@@ -294,13 +315,12 @@ const AssessmentForm: React.FC = () => {
 
     setSubmitting(true)
     const formData = new FormData(e.currentTarget as HTMLFormElement)
-    const answersToSubmit: any = {}
-
+    const answersToSubmit: any = { ...answers }
     formData.forEach((value, key) => {
       if (typeof value === 'string' && value.trim() === '') {
         return;
       }
-      if (answersToSubmit[key]) {
+      if (answersToSubmit[key] && answersToSubmit[key] !== value) {
         if (!Array.isArray(answersToSubmit[key])) answersToSubmit[key] = [answersToSubmit[key]]
         answersToSubmit[key].push(value)
       } else {
@@ -309,12 +329,12 @@ const AssessmentForm: React.FC = () => {
     })
 
     try {
-      const signatureData = signaturePad.current ? signaturePad.current.toDataURL() : ''
+      const signatureData = isQ2 ? (answers['student_signature_url'] || '') : (signaturePad.current ? signaturePad.current.toDataURL() : '')
 
       const data = await api.submitAssessment({
         assessment_id: assessment._id || assessment.id,
-        student_name: answersToSubmit['st-name'],
-        student_id: answersToSubmit['st-id'],
+        student_name: answersToSubmit['st-name'] || searchParams.get('st-name') || '',
+        student_id: answersToSubmit['st-id'] || searchParams.get('st-id') || '',
         answers: answersToSubmit,
         signature_url: signatureData
       })
@@ -322,6 +342,9 @@ const AssessmentForm: React.FC = () => {
       if (data.error) throw new Error(data.error)
 
       setSubmitted(true)
+      if (token) {
+        localStorage.removeItem(`assessment_answers_${token}`);
+      }
     } catch (err: any) {
       alert('Error submitting assessment: ' + err.message)
     } finally {
@@ -756,80 +779,104 @@ const AssessmentForm: React.FC = () => {
         </div>
       )}
 
-      <div className={`bg-[#eff6ff] print:bg-white min-h-screen py-6 sm:py-10 px-2 sm:px-4 print:py-0 print:px-0 font-sans text-[#111] ${submitted ? 'hidden print:block' : 'block'}`}>
-        <div className="max-w-[1000px] mx-auto bg-white shadow-2xl p-4 sm:p-6 md:p-12 border border-gray-200 rounded-2xl sm:rounded-3xl overflow-hidden print:max-w-none print:mx-0 print:shadow-none print:border-none print:rounded-none">
+      <div className={`print:bg-white min-h-screen ${isQ2 ? 'bg-[#d0d0d0] p-0' : 'bg-[#eff6ff] py-6 sm:py-10 px-2 sm:px-4'} print:py-0 print:px-0 font-sans text-[#111] ${submitted ? 'hidden print:block' : 'block'}`}>
+        <div className={`max-w-[1000px] mx-auto overflow-hidden print:max-w-none print:mx-0 print:shadow-none print:border-none print:rounded-none ${isQ2 ? 'bg-transparent p-0 shadow-none border-none' : 'bg-white shadow-2xl p-4 sm:p-6 md:p-12 border border-gray-200 rounded-2xl sm:rounded-3xl'}`}>
 
-          <div className="text-center pb-6 mb-8 sm:mb-12 relative flex flex-col items-center">
-            <div className="hidden sm:block absolute top-0 left-0 w-24 h-24 bg-blue-50 rounded-full -ml-12 -mt-12 -z-10"></div>
-            <img
-              src="/assets/Skilscope.png"
-              alt="Skilscope Logo"
-              className="w-20 h-20 sm:w-32 sm:h-32 object-contain mb-4 drop-shadow-xl"
-            />
+          {!isQ2 && (
+            <div className="text-center pb-6 mb-8 sm:mb-12 relative flex flex-col items-center">
+              <div className="hidden sm:block absolute top-0 left-0 w-24 h-24 bg-blue-50 rounded-full -ml-12 -mt-12 -z-10"></div>
+              <img
+                src="/assets/Skilscope.png"
+                alt="Skilscope Logo"
+                className="w-20 h-20 sm:w-32 sm:h-32 object-contain mb-4 drop-shadow-xl"
+              />
 
-            {assessmentQuestions.metadata?.rtoName && (
-              <div className="mb-2">
-                <p className="text-[#1e3a8a] font-black text-sm sm:text-xl tracking-[0.2em] uppercase">{assessmentQuestions.metadata.rtoName}</p>
-                {assessmentQuestions.metadata.rtoCode && (
-                  <p className="text-gray-400 font-bold text-[10px] sm:text-xs tracking-widest uppercase">{assessmentQuestions.metadata.rtoCode}</p>
-                )}
+              {assessmentQuestions.metadata?.rtoName && (
+                <div className="mb-2">
+                  <p className="text-[#1e3a8a] font-black text-sm sm:text-xl tracking-[0.2em] uppercase">{assessmentQuestions.metadata.rtoName}</p>
+                  {assessmentQuestions.metadata.rtoCode && (
+                    <p className="text-gray-400 font-bold text-[10px] sm:text-xs tracking-widest uppercase">{assessmentQuestions.metadata.rtoCode}</p>
+                  )}
+                </div>
+              )}
+
+              <div className="text-[#1e3a8a] mb-6 sm:mb-8 flex flex-col items-center w-full px-2">
+                <h1 className="text-xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter mb-2 sm:mb-4 text-center leading-tight">
+                  {assessmentQuestions.metadata?.title || 'Assessment Booklet'}
+                  {assessmentQuestions.metadata?.code && (
+                    <span className="block text-lg sm:text-2xl mt-1 opacity-80">{assessmentQuestions.metadata.code}</span>
+                  )}
+                </h1>
+                <div className="w-24 sm:w-48 h-1 sm:h-1.5 bg-[#d4af37] rounded-full"></div>
               </div>
-            )}
-
-            <div className="text-[#1e3a8a] mb-6 sm:mb-8 flex flex-col items-center w-full px-2">
-              <h1 className="text-xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter mb-2 sm:mb-4 text-center leading-tight">
-                {assessmentQuestions.metadata?.title || 'Assessment Booklet'}
-                {assessmentQuestions.metadata?.code && (
-                  <span className="block text-lg sm:text-2xl mt-1 opacity-80">{assessmentQuestions.metadata.code}</span>
-                )}
-              </h1>
-              <div className="w-24 sm:w-48 h-1 sm:h-1.5 bg-[#d4af37] rounded-full"></div>
+              <p className="text-gray-500 font-bold tracking-widest uppercase text-[10px] sm:text-sm px-4">{assessmentQuestions.metadata?.subtitle || 'Open Registration - Customer Cabling (Tasks 4, 5 & 6)'}</p>
             </div>
-            <p className="text-gray-500 font-bold tracking-widest uppercase text-[10px] sm:text-sm px-4">{assessmentQuestions.metadata?.subtitle || 'Open Registration - Customer Cabling (Tasks 4, 5 & 6)'}</p>
-          </div>
+          )}
 
           <form onSubmit={handleSubmit} className="student-mode">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 bg-gray-50 p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-100 shadow-inner">
-              <label className="block">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student Name</span>
-                <input name="st-name" defaultValue={searchParams.get('st-name') || ''} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="Full Name" />
-              </label>
-              <label className="block">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student ID</span>
-                <input name="st-id" defaultValue={searchParams.get('st-id') || ''} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="ID Number" />
-              </label>
-              <label className="block">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Assessment Date</span>
-                <input type="date" name="st-date" defaultValue={new Date().toISOString().split('T')[0]} className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" />
-              </label>
-            </div>
+            {!isQ2 ? (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 bg-gray-50 p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-100 shadow-inner">
+                  <label className="block">
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student Name</span>
+                    <input name="st-name" value={answers['st-name'] !== undefined ? answers['st-name'] : (searchParams.get('st-name') || '')} onChange={(e) => setAnswers({ ...answers, 'st-name': e.target.value })} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="Full Name" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Student ID</span>
+                    <input name="st-id" value={answers['st-id'] !== undefined ? answers['st-id'] : (searchParams.get('st-id') || '')} onChange={(e) => setAnswers({ ...answers, 'st-id': e.target.value })} required className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" placeholder="ID Number" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">Assessment Date</span>
+                    <input type="date" name="st-date" value={answers['st-date'] !== undefined ? answers['st-date'] : new Date().toISOString().split('T')[0]} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} className="w-full p-2.5 sm:p-3 border-2 border-white bg-white rounded-lg sm:rounded-xl shadow-sm focus:border-[#1e3a8a] outline-none transition-all font-bold text-sm sm:text-base" />
+                  </label>
+                </div>
 
-            {assessmentQuestions.adminInfo && (
-              <div className="mb-12 border-2 border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm px-0">
-                <table className="w-full text-left border-collapse">
-                  <tbody>
-                    <tr className="border-b border-slate-200">
-                      <td className="p-4 bg-slate-50 text-slate-700 font-bold w-1/4 align-top border-r border-slate-200 text-xs sm:text-sm">Assessment Instruction</td>
-                      <td className="p-4 text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
-                        {assessmentQuestions.adminInfo.assessmentInstruction}
-                      </td>
-                    </tr>
-                    {assessmentQuestions.adminInfo.taskOverviews?.map((task: any, idx: number) => (
-                      <tr key={idx} className="border-b border-slate-100 last:border-0">
-                        <td className="p-4 bg-slate-50 text-slate-700 font-bold w-1/4 align-top border-r border-slate-200 text-xs sm:text-sm">{task.id}</td>
-                        <td className="p-4 text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">{task.text}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                {assessmentQuestions.adminInfo && (
+                  <div className="mb-12 border-2 border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm px-0">
+                    <table className="w-full text-left border-collapse">
+                      <tbody>
+                        <tr className="border-b border-slate-200">
+                          <td className="p-4 bg-slate-50 text-slate-700 font-bold w-1/4 align-top border-r border-slate-200 text-xs sm:text-sm">Assessment Instruction</td>
+                          <td className="p-4 text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                            {assessmentQuestions.adminInfo.assessmentInstruction}
+                          </td>
+                        </tr>
+                        {assessmentQuestions.adminInfo.taskOverviews?.map((task: any, idx: number) => (
+                          <tr key={idx} className="border-b border-slate-100 last:border-0">
+                            <td className="p-4 bg-slate-50 text-slate-700 font-bold w-1/4 align-top border-r border-slate-200 text-xs sm:text-sm">{task.id}</td>
+                            <td className="p-4 text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">{task.text}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <input type="hidden" name="st-name" value={answers['st-name'] !== undefined ? answers['st-name'] : (searchParams.get('st-name') || '')} />
+                <input type="hidden" name="st-id" value={answers['st-id'] !== undefined ? answers['st-id'] : (searchParams.get('st-id') || '')} />
+                <input type="hidden" name="st-date" value={answers['st-date'] !== undefined ? answers['st-date'] : new Date().toISOString().split('T')[0]} />
+              </>
             )}
 
-
-            {Object.keys(assessmentQuestions)
-              .filter(key => key.startsWith('task'))
-              .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
-              .map((taskKey) => {
+            {isQ2 ? (
+              <div className="mb-0">
+                <Q2Booklet 
+                  answers={answers} 
+                  setAnswers={setAnswers} 
+                  onSubmit={() => {}} 
+                  submitting={submitting} 
+                  studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                  submitDate={answers['st-date'] || new Date().toISOString().split('T')[0]}
+                  isStudent={true} 
+                />
+              </div>
+            ) : (
+              Object.keys(assessmentQuestions)
+                .filter(key => key.startsWith('task'))
+                .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
+                .map((taskKey) => {
                 const tNum = parseInt(taskKey.replace('task', ''));
                 const taskData = assessmentQuestions[taskKey];
 
@@ -1190,43 +1237,46 @@ const AssessmentForm: React.FC = () => {
                     </div>
                   </section>
                 );
-              })}
+              })
+            )}
 
 
-            <div className="mt-12 sm:mt-16 p-4 sm:p-8 border-2 sm:border-4 border-dashed border-gray-300 rounded-xl sm:rounded-2xl bg-gray-50">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <Save size={20} className="text-[#1e3a8a] sm:w-[24px] sm:h-[24px]" />
-                Student Declaration & Signature
-              </h3>
-              <p className="text-gray-600 mb-6 text-[11px] sm:text-sm italic leading-relaxed">
-                "I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source."
-              </p>
-              <div className="flex flex-col items-center w-full">
-                <div
-                  ref={sigContainerRef}
-                  className={`bg-white border-2 rounded-lg shadow-inner overflow-hidden w-full max-w-[600px] h-[200px] transition-all ${
-                    showErrors && signatureEmpty
-                      ? 'border-red-500 bg-red-50/10 ring-4 ring-red-500/10'
-                      : 'border-gray-300'
-                  }`}
-                >
-                  <canvas ref={sigCanvas} className="w-full h-full cursor-crosshair" style={{ touchAction: 'none' }} />
-                </div>
-                <div className="flex gap-4 mt-4">
-                  {!submitted && (
-                    <button
-                      type="button"
-                      onClick={clearSignature}
-                      className="px-4 py-2 text-[11px] sm:text-sm font-bold text-gray-500 hover:text-gray-700 uppercase tracking-widest active:scale-95 transition-all"
-                    >
-                      Clear Signature
-                    </button>
-                  )}
+            {!isQ2 && (
+              <div className="mt-12 sm:mt-16 p-4 sm:p-8 border-2 sm:border-4 border-dashed border-gray-300 rounded-xl sm:rounded-2xl bg-gray-50">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  <Save size={20} className="text-[#1e3a8a] sm:w-[24px] sm:h-[24px]" />
+                  Student Declaration & Signature
+                </h3>
+                <p className="text-gray-600 mb-6 text-[11px] sm:text-sm italic leading-relaxed">
+                  "I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source."
+                </p>
+                <div className="flex flex-col items-center w-full">
+                  <div
+                    ref={sigContainerRef}
+                    className={`bg-white border-2 rounded-lg shadow-inner overflow-hidden w-full max-w-[600px] h-[200px] transition-all ${
+                      showErrors && signatureEmpty
+                        ? 'border-red-500 bg-red-50/10 ring-4 ring-red-500/10'
+                        : 'border-gray-300'
+                    }`}
+                  >
+                    <canvas ref={sigCanvas} className="w-full h-full cursor-crosshair" style={{ touchAction: 'none' }} />
+                  </div>
+                  <div className="flex gap-4 mt-4">
+                    {!submitted && (
+                      <button
+                        type="button"
+                        onClick={clearSignature}
+                        className="px-4 py-2 text-[11px] sm:text-sm font-bold text-gray-500 hover:text-gray-700 uppercase tracking-widest active:scale-95 transition-all"
+                      >
+                        Clear Signature
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            <div className="pt-8 sm:pt-12 flex justify-center print:hidden">
+            <div className={`pt-8 sm:pt-12 flex justify-center print:hidden ${isQ2 ? 'pb-12' : ''}`}>
               <button
                 type="submit"
                 disabled={submitting || submitted}
@@ -1256,7 +1306,8 @@ const AssessmentForm: React.FC = () => {
           </form>
         </div>
 
-        <footer className="bg-white border-t border-gray-200 mt-16 sm:mt-24 no-print shadow-inner">
+        {!isQ2 && (
+          <footer className="bg-white border-t border-gray-200 mt-16 sm:mt-24 no-print shadow-inner">
           <div className="max-w-[1000px] mx-auto py-8 sm:py-12 px-4">
             <div className="flex flex-col items-center text-center gap-6">
               <div className="flex flex-col items-center gap-3">
@@ -1278,6 +1329,7 @@ const AssessmentForm: React.FC = () => {
             </div>
           </div>
         </footer>
+        )}
       </div>
 
       {toast && (

@@ -22,6 +22,7 @@ const GradingPortal: React.FC = () => {
   const queryClient = useQueryClient()
   const [grades, setGrades] = useState<any>({})
   const [taskResults, setTaskResults] = useState<any>({})
+  const [studentAnswers, setStudentAnswers] = useState<any>({})
   const [finalResult, setFinalResult] = useState<string>('')
   const [sigModal, setSigModal] = useState<{ open: boolean, field: string, type: 'task' | 'comp' | 'grades' } | null>(null)
   const sigCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -63,6 +64,7 @@ const GradingPortal: React.FC = () => {
     if (submission) {
       setGrades(submission.grades || {})
       setTaskResults(submission.task_results || {})
+      setStudentAnswers(submission.answers || {})
       setFinalResult(submission.final_result || '')
 
       // comp_record from DB can be {} (empty object) which is truthy but has no fields.
@@ -94,7 +96,8 @@ const GradingPortal: React.FC = () => {
         task_results: taskResults,
         final_result: finalResult,
         comp_record: compRecord,
-        status: 'graded'
+        status: 'graded',
+        answers: studentAnswers
       })
       if (data.error) throw new Error(data.error)
     },
@@ -135,7 +138,8 @@ const GradingPortal: React.FC = () => {
         task_results: taskResults,
         final_result: finalResult,
         comp_record: compRecord,
-        status: 'graded'
+        status: 'graded',
+        answers: studentAnswers
       })
       if (data.error) throw new Error(data.error)
       queryClient.invalidateQueries({ queryKey: ['submission', id] })
@@ -316,15 +320,15 @@ const GradingPortal: React.FC = () => {
 
   const renderQuestionReview = (q: any, i: number, tNum: number) => {
     const qKey = `t${tNum}q${q.id}`
-    const studentAnswer = submission?.answers?.[qKey]
+    const studentAnswer = studentAnswers[qKey]
     const grade = grades[qKey]
 
     // Check if the question has any answers
     let isAttempted = false;
     if (q.type === 'text_inputs') {
-      isAttempted = q.textInputs.some((ti: any) => submission?.answers?.[ti.name] && submission.answers[ti.name].trim() !== '');
+      isAttempted = q.textInputs.some((ti: any) => studentAnswers[ti.name] && studentAnswers[ti.name].trim() !== '');
     } else if (q.type === 'multipart_radio') {
-      isAttempted = q.parts.some((part: any) => submission?.answers?.[part.name]);
+      isAttempted = q.parts.some((part: any) => studentAnswers[part.name]);
     } else {
       isAttempted = !!studentAnswer && (Array.isArray(studentAnswer) ? studentAnswer.length > 0 : String(studentAnswer).trim() !== '');
     }
@@ -356,11 +360,16 @@ const GradingPortal: React.FC = () => {
                 Student Response:
               </p>
               {q.type === 'text' ? (
-                <p className="text-slate-800 whitespace-pre-wrap font-medium leading-relaxed italic text-sm sm:text-base">"{studentAnswer || '(No response provided)'}"</p>
+                <textarea 
+                  className="w-full text-slate-800 whitespace-pre-wrap font-medium leading-relaxed italic text-sm sm:text-base bg-transparent border border-transparent hover:border-slate-300 focus:border-blue-400 focus:bg-white p-2 rounded transition-all outline-none resize-y min-h-[80px]"
+                  value={studentAnswer || ''}
+                  onChange={(e) => setStudentAnswers({ ...studentAnswers, [qKey]: e.target.value })}
+                  placeholder="(No response provided)"
+                />
               ) : q.type === 'text_inputs' ? (
                 <div className="grid grid-cols-1 gap-4">
                   {q.textInputs.map((ti: any, idx: number) => {
-                    const ans = submission?.answers?.[ti.name] || '(No response provided)'
+                    const ans = studentAnswers[ti.name] || ''
                     return (
                       <div key={idx} className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
                         {ti.image && (
@@ -370,7 +379,12 @@ const GradingPortal: React.FC = () => {
                         )}
                         <div className="flex-1 w-full text-center sm:text-left">
                           <p className="text-[9px] uppercase text-slate-400 font-black mb-1 tracking-wider">{ti.placeholder}</p>
-                          <p className="text-[#1e3a8a] font-black text-base sm:text-lg">{ans}</p>
+                          <input 
+                            className="w-full text-[#1e3a8a] font-black text-base sm:text-lg bg-transparent border border-transparent hover:border-slate-300 focus:border-blue-400 focus:bg-slate-50 p-1 rounded transition-all outline-none"
+                            value={ans}
+                            onChange={(e) => setStudentAnswers({ ...studentAnswers, [ti.name]: e.target.value })}
+                            placeholder="(No response provided)"
+                          />
                         </div>
                       </div>
                     )
@@ -379,7 +393,7 @@ const GradingPortal: React.FC = () => {
               ) : q.type === 'multipart_radio' ? (
                 <div className="grid grid-cols-1 gap-4">
                   {q.parts.map((part: any, pIdx: number) => {
-                    const ans = submission?.answers?.[part.name]
+                    const ans = studentAnswers[part.name]
                     return (
                       <div key={pIdx} className="bg-white p-3 sm:p-4 rounded-xl border border-slate-100 shadow-sm">
                         <div className="text-xs sm:text-[13px] text-gray-600 italic mb-3 leading-relaxed">{part.text}</div>
@@ -389,7 +403,7 @@ const GradingPortal: React.FC = () => {
                               ? ans.includes(opt.value)
                               : ans === opt.value
                             return (
-                              <div key={idx} className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold scale-[1.02] shadow-lg shadow-blue-200' : 'bg-white border-slate-100 text-slate-400 opacity-60'}`}>
+                              <div key={idx} onClick={() => setStudentAnswers({ ...studentAnswers, [part.name]: opt.value })} className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border cursor-pointer transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold scale-[1.02] shadow-lg shadow-blue-200' : 'bg-white border-slate-100 text-slate-400 opacity-60 hover:opacity-100'}`}>
                                 <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
                                   {isSelected && <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>}
                                 </div>
@@ -424,14 +438,14 @@ const GradingPortal: React.FC = () => {
                           </td>
                           {row.cells ? (
                             row.cells.map((cell: any, cIdx: number) => {
-                              const ans = submission?.answers?.[cell.name]
+                              const ans = studentAnswers[cell.name]
                               return (
                                 <td key={cIdx} className="p-3 border-l border-slate-100 align-top">
                                   <div className="flex flex-col gap-1.5">
                                     {cell.options ? cell.options.map((opt: any, oIdx: number) => {
                                       const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
                                       return (
-                                        <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
+                                        <div key={oIdx} onClick={() => setStudentAnswers({ ...studentAnswers, [cell.name]: opt.value })} className={`flex items-center gap-2 p-1.5 rounded-lg border cursor-pointer transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60 hover:opacity-100'}`}>
                                           <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
                                             {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
                                           </div>
@@ -453,7 +467,7 @@ const GradingPortal: React.FC = () => {
                                 type="text"
                                 className="w-full p-2.5 bg-blue-50/30 border border-slate-200 rounded text-[#1e3a8a] font-bold text-sm outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all print:border-none print:p-0 print:bg-transparent"
                                 placeholder="Enter or edit answer..."
-                                value={grades[row.id] !== undefined ? grades[row.id] : (submission?.answers?.[row.id] || '')}
+                                value={grades[row.id] !== undefined ? grades[row.id] : (studentAnswers[row.id] || '')}
                                 onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
                               />
                             </td>
@@ -470,7 +484,7 @@ const GradingPortal: React.FC = () => {
                     {q.fields.slice(0, 4).map((f: any, idx: number) => (
                       <div key={idx} className={`p-3 border-r border-slate-100 last:border-r-0 ${idx === 3 ? 'bg-slate-50' : ''}`}>
                         <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
-                        <div className="text-sm font-bold text-[#1e3a8a]">{submission?.answers?.[f.name] || '(Not provided)'}</div>
+                        <input className="text-sm font-bold text-[#1e3a8a] w-full bg-transparent outline-none hover:bg-slate-100 focus:bg-white p-1 -m-1 rounded" value={studentAnswers[f.name] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, [f.name]: e.target.value })} placeholder="(Not provided)" />
                       </div>
                     ))}
                   </div>
@@ -480,7 +494,7 @@ const GradingPortal: React.FC = () => {
                     {q.fields.slice(4, 10).map((f: any, idx: number) => (
                       <div key={idx} className="p-3 border-r border-b border-slate-100 last:border-r-0">
                         <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
-                        <div className="text-sm font-bold text-[#1e3a8a]">{submission?.answers?.[f.name] || '(Not provided)'}</div>
+                        <input className="text-sm font-bold text-[#1e3a8a] w-full bg-transparent outline-none hover:bg-slate-100 focus:bg-white p-1 -m-1 rounded" value={studentAnswers[f.name] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, [f.name]: e.target.value })} placeholder="(Not provided)" />
                       </div>
                     ))}
                   </div>
@@ -490,7 +504,7 @@ const GradingPortal: React.FC = () => {
                     {q.fields.slice(10).map((f: any, idx: number) => (
                       <div key={idx} className="p-3 border-r border-slate-100 last:border-r-0">
                         <label className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter mb-1">{f.label}</label>
-                        <div className="text-sm font-bold text-[#1e3a8a]">{submission?.answers?.[f.name] || '(Not provided)'}</div>
+                        <input className="text-sm font-bold text-[#1e3a8a] w-full bg-transparent outline-none hover:bg-slate-100 focus:bg-white p-1 -m-1 rounded" value={studentAnswers[f.name] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, [f.name]: e.target.value })} placeholder="(Not provided)" />
                       </div>
                     ))}
                   </div>
@@ -510,12 +524,15 @@ const GradingPortal: React.FC = () => {
                           <tr key={rIdx} className="border-t border-slate-200">
                             {[0, 1, 2].map((cIdx) => {
                               const stepKey = `t${tNum}q${q.id}_r${rIdx}c${cIdx}`;
-                              const ans = submission?.answers?.[stepKey];
+                              const ans = studentAnswers[stepKey];
                               return (
                                 <td key={cIdx} className="p-3 border-r border-slate-200 last:border-0 align-top">
-                                  <div className="p-2 bg-blue-50/50 border border-blue-100 rounded text-slate-800 text-[13px] min-h-[40px] italic">
-                                    {ans || '(Empty)'}
-                                  </div>
+                                  <textarea 
+                                    className="p-2 w-full bg-blue-50/50 hover:bg-blue-100/50 focus:bg-white border border-blue-100 focus:border-blue-300 rounded text-slate-800 text-[13px] min-h-[60px] italic outline-none resize-y transition-colors"
+                                    value={ans || ''}
+                                    onChange={(e) => setStudentAnswers({ ...studentAnswers, [stepKey]: e.target.value })}
+                                    placeholder="(Empty)"
+                                  />
                                 </td>
                               );
                             })}
@@ -532,7 +549,7 @@ const GradingPortal: React.FC = () => {
                       ? studentAnswer.includes(opt.value)
                       : studentAnswer === opt.value
                     return (
-                      <div key={idx} className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold scale-[1.02] shadow-lg shadow-blue-200' : 'bg-white border-slate-100 text-slate-400 opacity-60'}`}>
+                      <div key={idx} onClick={() => setStudentAnswers({ ...studentAnswers, [qKey]: opt.value })} className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border cursor-pointer transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold scale-[1.02] shadow-lg shadow-blue-200' : 'bg-white border-slate-100 text-slate-400 opacity-60 hover:opacity-100'}`}>
                         <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
                           {isSelected && <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white"></div>}
                         </div>
@@ -605,11 +622,14 @@ const GradingPortal: React.FC = () => {
                     <div className="space-y-4 sm:space-y-6">
                       <div className="flex flex-col gap-2">
                         <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Signature</span>
-                        <div className="border-b-2 border-slate-200 h-12 sm:h-14 flex items-center justify-center overflow-hidden p-1">
-                          {submission.signature_url ? (
-                            <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
+                        <div
+                          onClick={() => openSigModal('student_signature', 'comp')}
+                          className="border-b-2 border-slate-200 h-12 sm:h-14 flex items-center justify-center overflow-hidden p-1 cursor-pointer hover:bg-blue-50/50 transition-colors"
+                        >
+                          {compRecord.student_signature || submission.signature_url ? (
+                            <img src={compRecord.student_signature || submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
                           ) : (
-                            <span className="text-[10px] text-slate-300 italic">No signature</span>
+                            <span className="text-[10px] text-slate-300 italic group-hover:text-blue-500 transition-colors">Click to sign</span>
                           )}
                         </div>
                       </div>
@@ -843,7 +863,7 @@ const GradingPortal: React.FC = () => {
       }
       .q2-booklet-view .obs-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
       .q2-booklet-view .checked-box { display: inline-block; width: 14px; height: 14px; border: 1.5px solid #444; background: #fff; position: relative; vertical-align: middle; }
-      .q2-booklet-view .checked-box::after { content: '✓'; position: absolute; top: -4.5px; left: 0px; font-size: 14px; color: #cc0000; font-weight: bold; }
+      .q2-booklet-view .checked-box.is-checked::after { content: '✓'; position: absolute; top: -4.5px; left: 0px; font-size: 14px; color: #cc0000; font-weight: bold; }
       .q2-booklet-view .yn-cell { white-space: nowrap; }
       .q2-booklet-view .cb { display: inline-block; width: 13px; height: 13px; border: 1.5px solid #555; background: #fff; vertical-align: middle; position: relative; margin-right: 4px; }
       .q2-booklet-view .cb.checked::after { content: '✓'; position: absolute; top: -5px; left: 0px; font-size: 14px; color: #cc0000; font-weight: bold; }
@@ -1153,27 +1173,12 @@ const GradingPortal: React.FC = () => {
           <div style={{ border: '3.5px solid #1a5fa8', padding: '4px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
             <div style={{ border: '1.2px solid #1a5fa8', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
 
-              {/* Shield SVG Logo */}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 130" width="170" height="185" style={{ marginBottom: '5mm', marginTop: '5mm' }}>
-                {/* outer shield */}
-                <path d="M60,4 L110,20 L110,75 Q110,110 60,126 Q10,110 10,75 L10,20 Z" fill="#1a3fa8" stroke="#c8a800" strokeWidth="3.5"/>
-                {/* gold inner border */}
-                <path d="M60,12 L102,26 L102,74 Q102,104 60,118 Q18,104 18,74 L18,26 Z" fill="none" stroke="#c8a800" strokeWidth="2.5"/>
-                {/* red band */}
-                <path d="M18,55 L102,55 L102,74 Q102,104 60,118 Q18,104 18,74 Z" fill="#cc1111"/>
-                {/* gold lower banner */}
-                <path d="M24,95 L96,95 L90,108 L30,108 Z" fill="#c8a800"/>
-                {/* Stars */}
-                <polygon points="60,18 62,24 68,24 63,28 65,34 60,30 55,34 57,28 52,24 58,24" fill="#fff"/>
-                <polygon points="38,36 39.5,41 44.5,41 40.5,44 42,49 38,46 34,49 35.5,44 31.5,41 36.5,41" fill="#fff"/>
-                <polygon points="82,36 83.5,41 88.5,41 84.5,44 86,49 82,46 78,49 79.5,44 75.5,41 80.5,41" fill="#fff"/>
-                {/* Southern cross small stars */}
-                <polygon points="50,62 51,65 54,65 52,67 53,70 50,68 47,70 48,67 46,65 49,65" fill="#fff"/>
-                <polygon points="72,58 73,61 76,61 74,63 75,66 72,64 69,66 70,63 68,61 71,61" fill="#fff"/>
-                <polygon points="60,72 61,75 64,75 62,77 63,80 60,78 57,80 58,77 56,75 59,75" fill="#fff"/>
-                {/* ACTA text on banner */}
-                <text x="60" y="104" textAnchor="middle" fontSize="6.2" fontFamily="Arial" fontWeight="bold" fill="#1a1a1a">ACTA COLLEGE PTY LTD</text>
-              </svg>
+              {/* Skilscope Logo */}
+              <img 
+                src="/assets/Skilscope.png" 
+                alt="Skilscope Logo" 
+                style={{ width: '170px', height: '185px', objectFit: 'contain', marginBottom: '5mm', marginTop: '5mm' }} 
+              />
 
               <div style={{ fontSize: '13pt', fontWeight: 'bold', color: '#991b1b', marginBottom: '10mm', fontFamily: 'Arial, sans-serif', letterSpacing: '0.3px' }}>RTO NO: 40954</div>
               <div style={{ fontSize: '44pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
@@ -1916,15 +1921,15 @@ const GradingPortal: React.FC = () => {
           <p style={{ fontWeight: 'bold', marginBottom: '3px', fontSize: '9.5pt' }}>The following was observed during the observations:</p>
 
           <div className="obs-grid">
-            <div className="obs-row"><span>Interpret technical documents</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Liaison with experts</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Communication skills</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Read equipment manuals</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Appropriate cable installation</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Taking measurements</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Identify signal strength loss</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Identify the faults</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Suggest remedies</span><span><span className="checked-box"></span> Observation 1</span></div>
+            <div className="obs-row"><span>Interpret technical documents</span><span><span className={grades['t1obs0'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Liaison with experts</span><span><span className={grades['t1obs1'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Communication skills</span><span><span className={grades['t1obs2'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Read equipment manuals</span><span><span className={grades['t1obs3'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Appropriate cable installation</span><span><span className={grades['t1obs4'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Taking measurements</span><span><span className={grades['t1obs5'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Identify signal strength loss</span><span><span className={grades['t1obs6'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Identify the faults</span><span><span className={grades['t1obs7'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Suggest remedies</span><span><span className={grades['t1obs8'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
           </div>
 
           <table className="chk-table">
@@ -2250,15 +2255,15 @@ const GradingPortal: React.FC = () => {
           <p style={{ fontWeight: 'bold', marginBottom: '3px', fontSize: '9.5pt' }}>The following was observed during the observations:</p>
 
           <div className="obs-grid">
-            <div className="obs-row"><span>Install customer access network cable</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Operation of test equipment</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Perform fault clearance</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Use of diagnostic equipment</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Joining techniques adopted</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Use of tools and equipment</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Use of hand and power tools</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Follow safety standards and procedures</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Termination process</span><span><span className="checked-box"></span> Observation 1</span></div>
+            <div className="obs-row"><span>Install customer access network cable</span><span><span className={grades['t2obs0'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Operation of test equipment</span><span><span className={grades['t2obs1'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Perform fault clearance</span><span><span className={grades['t2obs2'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Use of diagnostic equipment</span><span><span className={grades['t2obs3'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Joining techniques adopted</span><span><span className={grades['t2obs4'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Use of tools and equipment</span><span><span className={grades['t2obs5'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Use of hand and power tools</span><span><span className={grades['t2obs6'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Follow safety standards and procedures</span><span><span className={grades['t2obs7'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Termination process</span><span><span className={grades['t2obs8'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
           </div>
 
           <table className="chk-table">
@@ -2533,15 +2538,15 @@ const GradingPortal: React.FC = () => {
           <p style={{ fontWeight: 'bold', marginBottom: '3px', fontSize: '9.5pt' }}>The following was observed during the observations:</p>
 
           <div className="obs-grid">
-            <div className="obs-row"><span>Install customer access network cable</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Operation of test equipment</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Perform fault clearance</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Use of diagnostic equipment</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Joining techniques adopted</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Use of tools and equipment</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Use of hand and power tools</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Follow safety standards and procedures</span><span><span className="checked-box"></span> Observation 1</span></div>
-            <div className="obs-row"><span>Termination process</span><span><span className="checked-box"></span> Observation 1</span></div>
+            <div className="obs-row"><span>Install customer access network cable</span><span><span className={grades['t3obs0'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Operation of test equipment</span><span><span className={grades['t3obs1'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Perform fault clearance</span><span><span className={grades['t3obs2'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Use of diagnostic equipment</span><span><span className={grades['t3obs3'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Joining techniques adopted</span><span><span className={grades['t3obs4'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Use of tools and equipment</span><span><span className={grades['t3obs5'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Use of hand and power tools</span><span><span className={grades['t3obs6'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Follow safety standards and procedures</span><span><span className={grades['t3obs7'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
+            <div className="obs-row"><span>Termination process</span><span><span className={grades['t3obs8'] ? "checked-box is-checked" : "checked-box"}></span> Observation 1</span></div>
           </div>
 
           <table className="chk-table">
@@ -2792,7 +2797,7 @@ const GradingPortal: React.FC = () => {
               <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>1. &nbsp; What are the safety equipment required while working with optical fibre cables? (PC 1.1)</td></tr>
               <tr>
                 <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                  {submission.answers?.['t4q1'] || <span className="text-gray-400 font-normal">No answer provided</span>}
+                  <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={studentAnswers['t4q1'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q1': e.target.value })} placeholder="No answer provided" />
                 </td>
               </tr>
               <tr>
@@ -2829,7 +2834,7 @@ const GradingPortal: React.FC = () => {
               <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>2. &nbsp; List the three fibre optic installations. (PC 1.2)</td></tr>
               <tr>
                 <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                  {submission.answers?.['t4q2'] || <span className="text-gray-400 font-normal">No answer provided</span>}
+                  <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={studentAnswers['t4q2'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q2': e.target.value })} placeholder="No answer provided" />
                 </td>
               </tr>
               <tr>
@@ -2866,7 +2871,7 @@ const GradingPortal: React.FC = () => {
               <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>3. &nbsp; What are the precautions to be observed when handling optical fibre cable? (PC 1.3)</td></tr>
               <tr>
                 <td style={{ border: '1px solid #777', minHeight: '120px', height: '140px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                  {submission.answers?.['t4q3'] || <span className="text-gray-400 font-normal">No answer provided</span>}
+                  <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={studentAnswers['t4q3'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q3': e.target.value })} placeholder="No answer provided" />
                 </td>
               </tr>
               <tr>
@@ -2928,9 +2933,9 @@ const GradingPortal: React.FC = () => {
                     { val: 'c', text: 'AS/NZS 3080:2003' },
                     { val: 'd', text: 'AS/NZS 1268' }
                   ].map((opt) => {
-                    const isSelected = (submission.answers?.['t4q4'] || '').toLowerCase() === opt.val;
+                    const isSelected = (studentAnswers['t4q4'] || '').toLowerCase() === opt.val;
                     return (
-                      <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''}`} style={{ marginTop: '3px' }}>
+                      <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setStudentAnswers({ ...studentAnswers, 't4q4': opt.val })}>
                         <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                         {opt.val.toUpperCase()}. &nbsp; {opt.text}
                       </div>
@@ -2972,7 +2977,7 @@ const GradingPortal: React.FC = () => {
               <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>5. &nbsp; What is the significance of conducting a pre-installation test? (PC 1.5)</td></tr>
               <tr>
                 <td style={{ border: '1px solid #777', minHeight: '60px', height: '70px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                  {submission.answers?.['t4q5'] || <span className="text-gray-400 font-normal">No answer provided</span>}
+                  <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={studentAnswers['t4q5'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q5': e.target.value })} placeholder="No answer provided" />
                 </td>
               </tr>
               <tr>
@@ -3027,10 +3032,10 @@ const GradingPortal: React.FC = () => {
                 <td style={{ border: '1px solid #777', padding: '8px 12px', width: '50%', verticalAlign: 'top' }}>
                   <div className="text-xs font-bold text-slate-500 mb-1">Student Matches:</div>
                   <div className="space-y-1 text-red-600 font-bold text-xs italic">
-                    <div>S/M 9/125: <span className="underline">{submission.answers?.['t4q6_a'] || '—'} microns</span></div>
-                    <div>S/M 10/125: <span className="underline">{submission.answers?.['t4q6_b'] || '—'} microns</span></div>
-                    <div>M/M 50/125: <span className="underline">{submission.answers?.['t4q6_c'] || '—'} microns</span></div>
-                    <div>M/M 62.5/125: <span className="underline">{submission.answers?.['t4q6_d'] || submission.answers?.['t4q6_a'] || '—'} microns</span></div>
+                    <div className="flex items-center gap-1">S/M 9/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={studentAnswers['t4q6_a'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q6_a': e.target.value })} /> microns</div>
+                    <div className="flex items-center gap-1">S/M 10/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={studentAnswers['t4q6_b'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q6_b': e.target.value })} /> microns</div>
+                    <div className="flex items-center gap-1">M/M 50/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={studentAnswers['t4q6_c'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q6_c': e.target.value })} /> microns</div>
+                    <div className="flex items-center gap-1">M/M 62.5/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={studentAnswers['t4q6_d'] || studentAnswers['t4q6_a'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q6_d': e.target.value })} /> microns</div>
                   </div>
                 </td>
               </tr>
@@ -3068,7 +3073,7 @@ const GradingPortal: React.FC = () => {
               <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>7. &nbsp; Mention the steps involved in aerial installation (PC 3.2)</td></tr>
               <tr>
                 <td style={{ border: '1px solid #777', minHeight: '100px', height: '110px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                  {submission.answers?.['t4q7'] || <span className="text-gray-400 font-normal">No answer provided</span>}
+                  <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={studentAnswers['t4q7'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q7': e.target.value })} placeholder="No answer provided" />
                 </td>
               </tr>
               <tr>
@@ -3105,7 +3110,7 @@ const GradingPortal: React.FC = () => {
               <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>8. &nbsp; Name the types of connectors used in connecting ends of optical fibres. (pc 3.2)</td></tr>
               <tr>
                 <td style={{ border: '1px solid #777', minHeight: '60px', height: '70px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                  {submission.answers?.['t4q8'] || <span className="text-gray-400 font-normal">No answer provided</span>}
+                  <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={studentAnswers['t4q8'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q8': e.target.value })} placeholder="No answer provided" />
                 </td>
               </tr>
               <tr>
@@ -3167,9 +3172,9 @@ const GradingPortal: React.FC = () => {
                     { val: 'c', text: 'Temporary splicing' },
                     { val: 'd', text: 'Permanent splicing' }
                   ].map((opt) => {
-                    const isSelected = (submission.answers?.['t4q9'] || '').toLowerCase() === opt.val;
+                    const isSelected = (studentAnswers['t4q9'] || '').toLowerCase() === opt.val;
                     return (
-                      <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''}`} style={{ marginTop: '3px' }}>
+                      <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setStudentAnswers({ ...studentAnswers, 't4q9': opt.val })}>
                         <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                         {opt.text}
                       </div>
@@ -3217,7 +3222,7 @@ const GradingPortal: React.FC = () => {
               </tr>
               <tr>
                 <td colSpan={2} style={{ border: '1px solid #777', minHeight: '60px', height: '70px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                  {submission.answers?.['t4q10'] || <span className="text-gray-400 font-normal">No answer provided</span>}
+                  <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={studentAnswers['t4q10'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 't4q10': e.target.value })} placeholder="No answer provided" />
                 </td>
               </tr>
               <tr>
@@ -3883,11 +3888,14 @@ const GradingPortal: React.FC = () => {
                     <div className="space-y-4 md:space-y-5">
                       <div className="flex flex-col gap-2">
                         <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
-                        <div className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center bg-slate-50/30 rounded-t-lg overflow-hidden p-1">
-                          {submission.signature_url ? (
-                            <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
+                        <div
+                          onClick={() => openSigModal('student_signature', 'comp')}
+                          className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center bg-slate-50/30 rounded-t-lg overflow-hidden p-1 cursor-pointer hover:bg-blue-50/50 transition-colors group"
+                        >
+                          {compRecord.student_signature || submission.signature_url ? (
+                            <img src={compRecord.student_signature || submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
                           ) : (
-                            <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest">Digital Sign</span>
+                            <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest group-hover:text-blue-500 transition-colors">Digital Sign</span>
                           )}
                         </div>
                       </div>
@@ -3921,14 +3929,17 @@ const GradingPortal: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
                 <span className="font-bold text-sm">Date:</span>
-                <span className="font-bold text-base">{formatDisplayDate(submission.answers?.['st-date'])}</span>
+                <input type="date" className="font-bold text-base bg-transparent border-none outline-none hover:bg-slate-100 p-1 -m-1 rounded" value={studentAnswers['st-date'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 'st-date': e.target.value })} />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
                 <span className="font-bold text-sm">Signature:</span>
-                <div className="border border-black h-20 flex items-center justify-center bg-white w-full overflow-hidden p-1">
-                  {submission.signature_url ? (
-                    <img src={submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain" />
-                  ) : <span className="text-gray-400 italic text-sm">No signature</span>}
+                <div
+                  onClick={() => openSigModal('student_signature', 'comp')}
+                  className="border border-black h-20 flex items-center justify-center bg-white w-full overflow-hidden p-1 cursor-pointer hover:bg-gray-100 transition-colors group"
+                >
+                  {compRecord.student_signature || submission.signature_url ? (
+                    <img src={compRecord.student_signature || submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain" />
+                  ) : <span className="text-gray-400 italic text-sm group-hover:text-blue-500 transition-colors">Click to sign</span>}
                 </div>
               </div>
             </div>

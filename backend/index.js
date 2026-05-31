@@ -302,10 +302,17 @@ app.get('/api/submissions/:id', checkDbConnection, authenticate, async (req, res
 // Update grades
 app.put('/api/submissions/:id', checkDbConnection, authenticate, async (req, res) => {
   try {
-    const { grades, task_results, final_result, comp_record, status } = req.body;
+    const { grades, task_results, final_result, comp_record, status, answers } = req.body;
+    
+    // Build update object dynamically to only update provided fields
+    const updateData = { grades, task_results, final_result, comp_record, status: status || 'graded' };
+    if (answers !== undefined) {
+      updateData.answers = answers;
+    }
+    
     const submission = await Submission.findByIdAndUpdate(
       req.params.id,
-      { grades, task_results, final_result, comp_record, status: status || 'graded' },
+      updateData,
       { new: true }
     );
     res.json(submission);

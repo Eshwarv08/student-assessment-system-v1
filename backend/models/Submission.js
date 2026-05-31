@@ -9,6 +9,7 @@ const SubmissionSchema = new mongoose.Schema({
   status: { type: String, default: 'pending' },
   grades: { type: mongoose.Schema.Types.Mixed, default: {} },
   task_results: { type: mongoose.Schema.Types.Mixed, default: {} },
+  comp_record: { type: mongoose.Schema.Types.Mixed, default: {} },
   final_result: { type: String },
   submitted_at: { type: Date, default: Date.now }
 });

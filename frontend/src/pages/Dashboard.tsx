@@ -223,7 +223,7 @@ const Dashboard: React.FC = () => {
                         return indexA - indexB;
                       })
                       .map((a: any) => {
-                        const assessLink = `${window.location.origin}/assessment?token=${a.token}`
+                        const assessLink = `${window.location.origin}/common-assessment?token=${a.token}`
                         const isSelected = selectedQuestions.includes(a.token)
                         const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
                         const isExpanded = expandedAssessment === a.token
@@ -306,7 +306,7 @@ const Dashboard: React.FC = () => {
                       return indexA - indexB;
                     })
                     .map((a: any) => {
-                      const assessLink = `${window.location.origin}/assessment?token=${a.token}`
+                      const assessLink = `${window.location.origin}/common-assessment?token=${a.token}`
                       const isSelected = selectedQuestions.includes(a.token)
                       const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
                       const isExpanded = expandedAssessment === a.token

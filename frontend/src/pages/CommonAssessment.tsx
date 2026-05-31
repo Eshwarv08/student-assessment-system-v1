@@ -21,6 +21,12 @@ const CommonAssessment: React.FC = () => {
     queryKey: ['commonAssessment', token],
     queryFn: async () => {
       if (!token) throw new Error('No token provided')
+      
+      // If the token is a direct single question token, return it as a single-item array
+      if (token.startsWith('question-')) {
+        return { question_ids: [token] }
+      }
+
       const data = await api.validateCommonToken(token)
       if (data.error) throw new Error(data.error)
       return data
@@ -161,12 +167,11 @@ const CommonAssessment: React.FC = () => {
         </div>
 
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-24 h-24 bg-blue-50 rounded-[2.5rem] mb-6 shadow-sm border border-blue-100 relative">
-            <FileText size={48} className="text-[#1e3a8a]" />
-            <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-blue-50">
-              <UserCheck size={20} className="text-blue-600" />
-            </div>
-          </div>
+          <img
+            src="/assets/Skilscope.png"
+            alt="Skilscope Logo"
+            className="w-24 h-24 object-contain mb-6 drop-shadow-sm mx-auto"
+          />
           <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tighter mb-4 uppercase">
             Assessment <span className="text-blue-600">Portal</span>
           </h1>
