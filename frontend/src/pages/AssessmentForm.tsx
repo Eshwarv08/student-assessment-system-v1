@@ -4,6 +4,7 @@ import { api } from '../lib/api'
 import SignaturePad from 'signature_pad'
 import { AlertCircle, CheckCircle2, Save, Send, Loader2, Printer, X } from 'lucide-react'
 import { getQuestionsForAssessment } from '../data'
+import { Q2Booklet } from '../components/Q2Booklet'
 import '../assessment-styles.css'
 
 const AssessmentForm: React.FC = () => {
