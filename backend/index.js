@@ -36,11 +36,15 @@ if (!MONGODB_URI) {
 }
 
 // Connect to MongoDB
-let cachedDb = null;
+let connectionPromise = null;
 
 const connectToDatabase = async () => {
   if (mongoose.connection.readyState === 1) {
     return mongoose.connection;
+  }
+
+  if (connectionPromise) {
+    return connectionPromise;
   }
 
   if (!MONGODB_URI) {
@@ -48,17 +52,20 @@ const connectToDatabase = async () => {
   }
 
   console.log('⏳ Connecting to MongoDB Atlas...');
-  try {
-    const conn = await mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000, // Reduced for faster failure
-      socketTimeoutMS: 45000,
-    });
+  connectionPromise = mongoose.connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 15000, // 15 seconds for more reliable initial connection
+    socketTimeoutMS: 45000,
+  }).then((conn) => {
     console.log('✅ Connected to MongoDB Atlas');
+    connectionPromise = null; // Clear cache on successful connection
     return conn;
-  } catch (err) {
+  }).catch((err) => {
     console.error('❌ MongoDB Connection Error:', err.message);
+    connectionPromise = null; // Clear cache on error to allow retries
     throw err;
-  }
+  });
+
+  return connectionPromise;
 };
 
 // Initial connection for local development

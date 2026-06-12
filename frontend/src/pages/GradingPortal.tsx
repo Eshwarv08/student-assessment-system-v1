@@ -3469,22 +3469,106 @@ const GradingPortal: React.FC = () => {
       </div>
 
       {/* Cover page: hidden on screen, shown only when printing */}
-      <div className="cover-page" id="pg-cover">
-        <div className="cover-border-outer"></div>
-        <div className="cover-border-middle"></div>
-        <div className="cover-border-inner"></div>
-        <div className="cover">
-          <img
-            src="/assets/Skilscope.png"
-            alt="Skilscope Logo"
-            className="w-32 h-32 object-contain mb-6"
-          />
-          <div className="cover-title">{currentAssessmentQuestions.metadata?.title || 'Assessment Booklet'}</div>
-          <div className="cover-unit">{currentAssessmentQuestions.metadata?.code || 'ICTCBL246 & ICTCBL247'}</div>
-          <div className="cover-course" dangerouslySetInnerHTML={{ __html: (currentAssessmentQuestions.metadata?.course || 'Install, Maintain and Modify Customer Premises<br />Communications Cabling:<br />ACMA Restricted Rule & Open Rule').replace(/\n/g, '<br />') }}></div>
-          <div className="cover-student">Student Name: <span className="font-bold border-b border-black inline-block min-w-0 sm:min-w-[200px] text-center px-4">{submission.student_name}</span></div>
-        </div>
-      </div>
+      {(() => {
+        const logoSrc = '/assets/acta-logo.png';
+        const rtoText = 'RTO NO: 40954';
+        const courseText = currentAssessmentQuestions.metadata?.course || currentAssessmentQuestions.metadata?.subtitle || '';
+        const collegeNameText = 'ACTA College Pty. Ltd';
+        const themeColor = '#4b90e2';
+
+        return (
+          <div className="cover-page q3-cover-page" id="pg-cover">
+            <div className="cover-border-outer"></div>
+            <div className="cover-border-middle"></div>
+            <div className="cover-border-inner"></div>
+            <div className="cover" style={{
+              padding: '12mm 14mm',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
+              boxSizing: 'border-box'
+            }}>
+              {/* Logo */}
+              <img
+                src={logoSrc}
+                alt="Logo"
+                style={{ width: '200px', height: '200px', objectFit: 'contain', marginBottom: '4px', marginTop: '10px' }}
+              />
+
+              {/* RTO Code */}
+              <div style={{ 
+                fontSize: '12pt', 
+                fontWeight: 'bold', 
+                color: '#991b1b', 
+                marginBottom: '20px', 
+                fontFamily: 'Arial, sans-serif', 
+                letterSpacing: '0.5px'
+              }}>
+                {rtoText}
+              </div>
+
+              {/* Assessment Booklet Title */}
+              <div style={{ fontSize: '40pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5px' }}>
+                {currentAssessmentQuestions.metadata?.title || 'Assessment Booklet'}
+              </div>
+
+              {/* Thick Divider Line */}
+              <div style={{ background: themeColor, height: '9px', width: '100%', margin: '15px 0' }}></div>
+
+              {/* Unit Code */}
+              <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', color: '#000', marginBottom: '10px', marginTop: '10px', letterSpacing: '0.6px' }}>
+                {currentAssessmentQuestions.metadata?.code || ''}
+              </div>
+
+              {/* Unit Title */}
+              <div 
+                style={{ fontSize: '18pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '30px', maxWidth: '560px' }}
+                dangerouslySetInnerHTML={{ __html: courseText.replace(/\n/g, '<br />') }}
+              />
+
+              {/* Student Name and College Name */}
+              <div style={{ 
+                width: '100%', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center',
+                marginTop: '32mm' 
+              }}>
+                <div style={{ 
+                  fontSize: '13pt', 
+                  fontFamily: '"Times New Roman", Times, serif', 
+                  color: '#000', 
+                  display: 'flex', 
+                  alignItems: 'baseline', 
+                  justifyContent: 'center', 
+                  width: '100%' 
+                }}>
+                  Student Name: <span style={{ 
+                    display: 'inline-block', 
+                    borderBottom: '1.2px solid #000', 
+                    width: '100mm', 
+                    fontWeight: 'bold', 
+                    paddingLeft: '8px', 
+                    fontFamily: 'Arial, sans-serif', 
+                    textAlign: 'left',
+                    marginLeft: '8px'
+                  }}>{submission.student_name}</span>
+                </div>
+                <div style={{ 
+                  textAlign: 'center', 
+                  fontSize: '10pt', 
+                  fontFamily: '"Times New Roman", Times, serif', 
+                  color: '#000', 
+                  marginTop: '22mm'
+                }}>
+                  {collegeNameText}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       <div className="max-w-[850px] mx-auto bg-white mt-0 sm:mt-8 shadow-sm border rounded-sm p-4 sm:p-8 md:p-12 paper review-mode overflow-visible">
         {/* ASSESSMENT COMPETENCY RECORD SECTION - MOVED TO PAGE 2 (TOP OF PAPER) */}

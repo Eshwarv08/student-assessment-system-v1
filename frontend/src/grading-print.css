@@ -158,6 +158,16 @@
     border: 2px solid #1e3a8a;
   }
 
+  .q3-cover-page .cover-border-outer {
+    border-color: #4b90e2 !important;
+  }
+  .q3-cover-page .cover-border-middle {
+    border-color: #4b90e2 !important;
+  }
+  .q3-cover-page .cover-border-inner {
+    border-color: #4b90e2 !important;
+  }
+
   #pg-cover .cover {
     position: absolute;
     top: 11mm;

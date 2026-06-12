@@ -279,18 +279,21 @@ const AssessmentForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const currentMissingFields = getMissingFields(answers);
+    const hasAnyAnswer = Object.keys(answers).some(key => {
+      if (['st-name', 'st-id', 'st-date', 'student_signature_url'].includes(key)) return false;
+      const val = answers[key];
+      return val && (Array.isArray(val) ? val.length > 0 : String(val).trim() !== '');
+    });
     const isSigEmpty = isQ2 ? !answers['student_signature_url'] : (!signaturePad.current || signaturePad.current.isEmpty());
 
-    if (currentMissingFields.size > 0 || isSigEmpty) {
+    if (!hasAnyAnswer || isSigEmpty) {
       setShowErrors(true);
 
-      const hasMissingAnswers = currentMissingFields.size > 0;
       let message = '';
-      if (hasMissingAnswers && isSigEmpty) {
-        message = 'Please fill in all answers and provide your signature before submitting.';
-      } else if (hasMissingAnswers) {
-        message = 'Please fill in all answers before submitting.';
+      if (!hasAnyAnswer && isSigEmpty) {
+        message = 'Please fill in at least one answer and provide your signature before submitting.';
+      } else if (!hasAnyAnswer) {
+        message = 'Please fill in at least one answer before submitting.';
       } else {
         message = 'Please provide your signature before submitting.';
       }
@@ -298,16 +301,14 @@ const AssessmentForm: React.FC = () => {
       showToast(message, 'error');
 
       setTimeout(() => {
-        const firstMissing = Array.from(currentMissingFields)[0];
-        let element = null;
-        if (firstMissing) {
-          element = document.getElementsByName(firstMissing)[0] || document.getElementById(firstMissing);
+        if (!hasAnyAnswer) {
+          const firstQuestionInput = document.querySelector('input[type="text"], textarea');
+          if (firstQuestionInput) {
+            (firstQuestionInput as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            (firstQuestionInput as HTMLElement).focus?.();
+          }
         } else if (isSigEmpty && !isQ2 && sigCanvas.current) {
-          element = sigCanvas.current;
-        }
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          element.focus?.();
+          sigCanvas.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 100);
       return;
@@ -786,19 +787,15 @@ const AssessmentForm: React.FC = () => {
             <div className="text-center pb-6 mb-8 sm:mb-12 relative flex flex-col items-center">
               <div className="hidden sm:block absolute top-0 left-0 w-24 h-24 bg-blue-50 rounded-full -ml-12 -mt-12 -z-10"></div>
               <img
-                src="/assets/Skilscope.png"
-                alt="Skilscope Logo"
+                src="/assets/acta-logo.png"
+                alt="Logo"
                 className="w-20 h-20 sm:w-32 sm:h-32 object-contain mb-4 drop-shadow-xl"
               />
 
-              {assessmentQuestions.metadata?.rtoName && (
-                <div className="mb-2">
-                  <p className="text-[#1e3a8a] font-black text-sm sm:text-xl tracking-[0.2em] uppercase">{assessmentQuestions.metadata.rtoName}</p>
-                  {assessmentQuestions.metadata.rtoCode && (
-                    <p className="text-gray-400 font-bold text-[10px] sm:text-xs tracking-widest uppercase">{assessmentQuestions.metadata.rtoCode}</p>
-                  )}
-                </div>
-              )}
+              <div className="mb-2">
+                <p className="text-[#4b90e2] font-black text-sm sm:text-xl tracking-[0.2em] uppercase">ACTA College Pty. Ltd</p>
+                <p className="text-gray-400 font-bold text-[10px] sm:text-xs tracking-widest uppercase">RTO NO: 40954</p>
+              </div>
 
               <div className="text-[#1e3a8a] mb-6 sm:mb-8 flex flex-col items-center w-full px-2">
                 <h1 className="text-xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter mb-2 sm:mb-4 text-center leading-tight">
@@ -807,7 +804,7 @@ const AssessmentForm: React.FC = () => {
                     <span className="block text-lg sm:text-2xl mt-1 opacity-80">{assessmentQuestions.metadata.code}</span>
                   )}
                 </h1>
-                <div className="w-24 sm:w-48 h-1 sm:h-1.5 bg-[#d4af37] rounded-full"></div>
+                <div className="w-24 sm:w-48 h-1 sm:h-1.5 bg-[#4b90e2] rounded-full"></div>
               </div>
               <p className="text-gray-500 font-bold tracking-widest uppercase text-[10px] sm:text-sm px-4">{assessmentQuestions.metadata?.subtitle || 'Open Registration - Customer Cabling (Tasks 4, 5 & 6)'}</p>
             </div>
