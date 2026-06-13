@@ -1,0 +1,1082 @@
+Assessment Booklet
+ICTCBL322
+Install, test and terminate optical
+fiber cable on customer premises
+
+Student Name:
+
+ACTA College Pty. Ltd
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT COMPETENCY RECORD
+This form is to be completed by the assessor and used as the final record of the student competence in these discipline. All student
+submissions including any associated documents and checklists are to be attached to this cover sheet before placing on the students file.
+Student results are not to be entered onto the Student Database unless all relevant paperwork is completed and attached to this form.
+
+Student’s Name
+Assessor’s Name
+Assessment Site
+Assessment Date
+
+Assessor Declaration
+In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated
+application of skills with competent performance.
+Evidence is Confirmed as:
+
+❑ Valid
+
+❑ Sufficient
+
+Please attach the following documentation to this form
+❑ Questions and Answers
+
+S / NS
+
+Assessment Task 2
+
+❑ Observation
+
+S / NS
+
+Assessment Task 3
+
+❑ Observation
+
+S / NS
+
+Assessment Task 4
+
+❑ Observation
+
+S / NS
+
+Assessment Task 5
+
+❑ Observation
+
+S / NS
+
+Date
+
+❑ Authentic
+
+Result
+
+Assessment Task 1
+
+Attempt
+
+❑ Current
+
+FINAL ASSESSMENT
+RESULT:
+❑ Competent (C)
+❑ Not Competent (NC)
+
+Assessor’s Feedback (as Required):
+
+1
+2
+3
+Final Feedback:
+
+Declaration
+Assessor: I declare that I have conducted a fair, valid, reliable and flexible
+assessment with this student, and I have provided appropriate feedback.
+Student: I declare that I accept the assessment competency outcome and consider
+the feedback of my assessor positively. I also declare that the work submitted is my
+own, and has not been copied or plagiarised from any person or source.
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Signature: ___________________________
+Date: ____/_____/__________
+Signature: ___________________________
+Date: ____/_____/__________
+
+Page 2 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+Administrative Use Only:
+Entered into Student Management Database
+Unit Code/Name
+
+ICTCBL322 – Install, test and terminate optical fibre cable on customer premises
+
+Pre-requisites
+
+N/A
+
+Co-requisites
+
+N/A
+
+Unit Summary
+
+Target Group
+
+Conditions and
+Context of the
+Assessments
+
+❑ Signature/Initial ________________ Date: ________________
+
+This unit describes the skills and knowledge required to install and test optical fibre cable on a
+customer's premises for communications applications using a range of terminations that may
+include direct termination, fusion splicing and mechanical splicing.
+It applies to technical staff who place, secure and terminate optical fibre cable in new installations
+and upgrades or maintain existing networks in domestic, commercial and industrial installations.
+Communications applications include digital and analogy, telephony, data, video, digital
+broadcasting, computer networks, local area networks (LAN), wide area networks (WAN) and
+multimedia.
+Gather evidence to demonstrate consistent performance in conditions that are safe and replicate the
+workplace. Noise levels, production flow, interruptions and time variances should be typical of those
+experienced in the telecommunications – cabling field of work and include access to special purpose
+tools, equipment and materials.
+These include access to:
+▪
+▪
+▪
+
+site/s where installation and termination of optical fibre cable can be conducted
+special purpose tools, equipment and materials currently used in industry such as optical
+fibre testing equipment
+relevant regulatory and equipment documentation that impacts on optical fibre cable
+installation activities.
+
+Assessors of this unit must satisfy the requirements for assessors in applicable vocational education
+and training legislation, frameworks and/or standards.
+Specific Resources
+Required
+
+Re-assessment
+
+•
+
+Learner Guide
+
+•
+
+Assessment Booklet
+
+•
+
+Practical Workshop
+
+•
+
+Manufacturers Manuals and specifications
+
+•
+
+Workplace policy and procedures
+
+Students who are unsuccessful at achieving competency at the first attempt will be offered
+coaching, information and additional time (other needs if required) before a second and possibly a
+third attempt is made. If the student is not able to satisfactorily complete the assessment after the
+third attempt the student will be deemed Not Competent and resulted as such. The student may
+re-enrol in the qualification at a later to date to gain successful completion of the unit/s.
+For further details refer to ACTA College Assessment Policy and Procedure.
+
+Plagiarism
+
+ACTA College considers plagiarism and cheating as serious student misconduct and this may
+result either in a student’s exclusion from a unit or course or may have to complete a reassessment depending on individual case.
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 3 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+Complaints and
+Appeal
+
+Assessors
+Intervention
+
+Where a student wishes to appeal an assessment decision they are required to notify their assessor
+in the first instance. Where appropriate the assessor may decide to re-assess the student to ensure a
+fair and equitable decision is gained. The assessor shall complete a written report regarding the reassessment outlining the reasons why assessment was or was not granted.
+Assessors are to check that the student is ready for assessment, and defer the assessment if they
+are not. It is important that assessors do not teach at the assessment but allow students to
+competence for themselves.
+Feedback is to be given at the completion of the assessment using the feedback to student. If a
+student does not meet a standard, the assessor is to sit down with them and assist them in their
+understanding. Should you disagree with the assessment outcome, you can appeal the decision as
+stated in the Student Handbook.
+Your student record must indicate that you have all required skills and knowledge in completing
+the task. For each assessment, the assessor is to act as a supervisor and not interfere with the
+assessment. In the event that the assessment activities will impact on your safety or that of others,
+the assessment must be stopped immediately.
+
+Attaching
+Documents
+Assessment
+Instruction
+
+Attached documents are accepted but must be labelled with the following information:
+Unit Name and Title, Students name, Student ID, Date of Submissions, Student signature.
+Assessment is mapped to the unit and must be completed by the end of each unit. This is a
+summative assessment, which requires each student to have adequate practice prior to undertaking
+this assessment
+The assessment consists of five tasks. Assessment Task 1, Assessment Task 2, Assessment Task 3,
+Assessment Task 4 and Assessment Task 5.
+Assessment Task 1 is Written questions and answers
+Assessment Task 2 is Observation
+Assessment Task 3 is Observation
+Assessment Task 4 is Observation
+Assessment Task 5 is Observation
+For answers to written questions, reports and projects, you must:
+• Print clearly in black or blue pen or type it as a word document
+• Answer each of the key points and /or follow instructions
+• Assessments written in pencil or are illegible will not be accepted.
+Ask your assessor if you do not understand any part of the assessment. Whist your assessor cannot
+tell you the answer, he/she may be able to re-word a question or instruction to assist in a better
+understanding for you.
+
+Assessment Task 1:
+
+Assessment Task 2:
+
+This is a questions and answers assessment over time. The assessor must provide students with
+sufficient information to complete this assessment over the duration of the full day training session.
+At the beginning of each review session the students should be given a few minutes to familiarize
+yourself with the questions. Students should be given extra time at the end of the day to complete
+this assessment or to clarify facts with the Trainer/Assessor. The assessor must follow the session
+plan aligning on which day to conduct the practical observation
+Assume your own home is a property into which you will be installing optical fiber. Prepare a check
+list for gaining entry to your home as if it were not your own
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 4 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+Assessment Task 3:
+Assessment Task 4:
+Assessment Task 5:
+
+Competency
+Decision
+
+This assessment task requires candidates to demonstrate a fusion splice
+This assessment task requires candidates to Demonstrate an ‘in-line’ mechanical splice
+This assessment task require candidates to Undertake testing to make an insertion loss
+measurement.
+Student must satisfactorily complete each assessment tasks to be Competent (C) in the unit.
+Student with unsatisfactory completion of any of the assignment tasks will be deemed Not Yet
+Competent (NYC).
+
+Reasonable Adjustment
+To meet the needs of all learners’ adjustments can be made to the way assessments are conducted but not to the
+requirements of the assessment. The purpose of these adjustments is to enhance fairness and flexibility so that the specific
+needs of students can be met.
+ACTA college will take meaningful, transparent and reasonable steps to consult, consider and implement reasonable
+adjustments for students with disability and learning difficulties.
+Reasonable Adjustment Provided
+
+Reason for Reasonable Adjustment
+
+Outcome
+
+❑ Educational and bilingual support
+❑ Presenting questions orally
+❑ Presenting work instructions in
+
+diagrammatic or pictorial form
+instead of words and sentences
+❑ Extra time to complete a course or
+assessment
+❑ Others:
+
+COVER SHEET FOR SUBMISSION OF WORK FOR ASSESSMENT
+A cover sheet must be included with each submission of work.
+Work submitted without a signed cover sheet will be returned unmarked.
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 5 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS
+Student Instructions:
+This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the
+training day or in one sitting of about 45 - 60 minutes. As you learn, practice and review knowledge and skills, you will
+keep Assessment 1 in front of you and answer the questions as the information becomes clear to you. At the beginning
+of each review session you will be given a few minutes to familiarise yourself with the questions. You will be given
+extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor.
+
+Make sure you:
+•
+•
+•
+•
+•
+•
+
+Answer all questions
+Print clearly or select and circle the appropriate answer or type it as a word document.
+Use a blue or black pen. Assessments written in pencil will not be accepted.
+Ask your assessor if you do not understand a question. Whist your assessor cannot tell you the answer, he/she
+may be able to re-word the question for you
+Do not talk to your classmates. If you are caught discussion the answers you will be asked to leave and your
+assessment will not be marked.
+Do not cheat. Anyone caught cheating will automatically be marked Not Competent for this unit. There are
+NO EXCEPTIONS to this rule.
+
+Questions
+1. Optical fibre is normally made from: (PC 1.5)
+A. Window glass
+B. Water
+C. Lead crystal
+D. Silica glass or plastic
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+2. As a ray enters glass from air, its velocity will change because of the refractive index of glass. As a
+consequence, the ………change. (PC 1.6)
+A. Frequency
+B. Wave length
+C. Frequency and wave length
+D. None of the above
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+3. The two fields that makeup an electromagnetic wave are called: (PC 1.2)
+A. Electric and magnetostrictive
+B. Electric and magnetic
+C. Electronic and magnetic
+D. Electronic and magnetostrictive
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+❑ Not Satisfactory (NS)
+
+Page 6 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+4. Attenuation is which of the following? (PC 1.7)
+A. The inherent curvature along a specific length of optical fibre
+B. The wave leng6th above which a single-mode fibre of optical length
+C. The reduction of signal strength over the length of the light- carrying medium
+D. Smearing an optical signal that results from the many discrete wavelength components travelling at
+different rates.
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+5. Dispersion is which of the following? (PC 1.3)
+A. Inherent curvature along a specific length of the optical length
+B. The wavelength above which a single-mode fibre only one mode or ray of light
+C. The reduction of signal strength over the length of the light-carrying medium
+D. Pulse spreading or smearing an optical signal that results from the many discrete wavelength
+components travelling at different rates.
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+6. Regarding optical fibre waste. Fill in the following missing words.(PC 3.2, 1.3)
+Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing you’re….
+A. Safety, hands, eyes
+B. Transition, eyes, hands
+C. Prescription, hands, eyes
+
+Assessor to tick ()
+7.
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+Optical fibre cleaving is the process of : (PC 1.4, 3.1)
+A. Removing the cladding before connecting the fibre together
+B. Cutting the end of the fibre in preparation for connecting the fibre together
+C. Cleaning the surface of optics fibres
+D. Inspecting optical fibres for flaws
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+8. Optical fibre are manufactured to consist of a core, cladding and an inner buffer. The diameters of these
+components for a typical single-mode fibre are: ( PC 4.1)
+A. 10/125/250pm
+B. 10/125/250nm
+C. 10/125/250µm
+D. 10/125/250mm
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+❑ Not Satisfactory (NS)
+
+Page 7 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+9. Visible light is composed of seven colours. They are: (PC 2.1)
+A. ROYBGVI
+B. RYOBGIV
+C. RYOBGVI
+D. ROYGBIV
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+10. In single mode fibres, which kind of dispersion is eliminated? (PC 2.3)
+A. Polarization
+B. Material
+C. modal
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+11. list at least five advantages that optical fibre cables have over conventional copper cables: (PC 3.3)
+Please refer to learner resource page: 10
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+12. Name the patch cord colours? (PC 1.1)
+Please refer to learner resource page: 27
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+13 With regards to fibre, explain elongation? (PC 4.2)
+Please refer to learner resource page: 33
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+❑ Not Satisfactory (NS)
+
+Page 8 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+14 List the equipment required for continuity test. (PC 2.4)
+Please refer to learner resource page: 34
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+15 Explain mechanical splicing? ( PC 2.2)
+Please refer to learner resource page: 39
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+16 . What are the safety equipment required while working with optical fibre cables?
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+17 List the three losses in fibre installation
+
+Assessor to tick ()
+
+18 What are the precautions to be observed when handling optical fibre cable?
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+❑ Not Satisfactory (NS)
+
+Page 9 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+19 . Which Australian standard should be followed for optical fibre safety? (Choose one)
+A.
+B.
+C.
+D.
+
+AS/NZS 2967:2014
+AS/NZS 2387
+AS/NZS 3080:2003
+AS/NZS 1268
+
+Assessor to tick ()
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+❑ Satisfactory (S)
+
+❑ Not Satisfactory (NS)
+
+20 . What is the use of a PON Power meter
+
+Assessor to tick ()
+
+Comments/Feedback to Participant
+Student Declaration: I declare that the work submitted is my
+Signature: ___________________________
+own, and has not been copied or plagiarized from any person or
+Date: ____/_____/__________
+source.
+
+Assessor’s Feedback:
+
+Result: Satisfactory (S)/Not Satisfactory (NS)
+Assessor: I declare that I have conducted a fair, valid, reliable
+and flexible assessment with this student, and I have provided
+appropriate feedback.
+
+Signature: _________________________
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Date: ____/_____/__________
+
+Page 10 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 2 – OBSERVATION
+Prepare for Optical Cable Installation
+Step1:
+Assume your own home is a property into which you will be installing optical fibre. Prepare a check list for gaining
+entry to your home as if it were not your own. In that list:
+AT2.1 Identify and locate regulations relevant to optical fibre cabling and obtain as sample (one page) of ACMA or
+Australian standards regulations
+AT2.2 List the administrative steps you would take to gain access to the property
+AT2.3 Identify a common hazard found in most cabling worksites
+AT2.4 Select the correct authority to report tis WHS hazard
+AT2.5 Select the tools suitable for installing cable-including installing a lead in from a Telco pit and splicing fibres.
+AT2.6 Select suitable cable and hardware for a standard domestic cable installation
+AT2.7 Select a route for the cable installation with suitable bend ratios and discuss and adapt it by consulting with the
+customer-role played by your assessor
+AT2.8 Conduct and record the results of a cable drum test. Prepare cables for a fibre termination
+AT2.9 Clean and inspect a connector end face using wet and dry cleaning and inspection methods
+AT2.10 All work to be conducted in line with regulatory and WHS requirements including avoiding hazards of laser
+based systems and risk injury due to optical fibres.
+AT2.11 List the PPE used to control hazards when working with laser and optical fibre.
+
+Step2:
+Candidates are required to prepare a single-end cable for termination
+AT2.12 Cable preparation process
+• Remove the outer cable sheath of a standard cable
+• Expose the loose tubes and separate one tube
+• Clean the fibres for splicing
+AT2.13 Connector inspection and cleaning process
+•
+•
+•
+•
+•
+
+Connector dismantled and reassembled
+Connector inspection to asses cleaning need
+Dry clean connectors
+Wet clean connectors
+Inspect the connector after each cleaning
+
+Required Documents and Equipment
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+Cleaning agents and devices
+Cable stripping tool
+Cable cleaving tool
+Samples of single end cable
+Multi-fibre connectors and single fibre connectors
+A range of adaptors
+Cleaning products
+Manual inspection ,microscopes and/or video inspection probes
+PPE for working with cable
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 11 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 2 – ASSESSOR CHECKLIST
+This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please
+refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.
+The observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this
+assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to
+give you the best possibility of success.
+
+Assessor Instructions:
+
+The assessor will use verbal and observation methods during this assessment regularly asking the student to explain
+his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The
+assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide
+comment where improvement is required.
+
+Record of Performance:
+Did the Candidate:
+
+Satisfactory
+
+*See assessment task 2 AT2.13 cable preparation and AT1.14 connector inspection and cleaning
+
+Yes
+
+No
+
+Obtain or describe the regulations for optical fibre cabling?
+Observe correct procedures for gaining access to a cabling worksite?
+Follow correct identification and reporting procedures for a safety risks?
+Plan a cable route in consultation with the customer (the assessor)?
+Select tools suitable for installation along cable route?
+Select suitable hardware-cable and connectors-for the cable route and customer needs?
+Expose, clean and prepare the loose tubes ready for splicing?*
+Demonstrate wet and dry cleaning methods for connector end faces and adaptors?
+Perform and record a cable drum test?
+
+Comments/Feedback to Participant
+Student Declaration: I declare that the work submitted is my
+Signature: ___________________________
+own, and has not been copied or plagiarized from any person or
+Date: ____/_____/__________
+source.
+
+Assessor’s Feedback:
+
+Result: Satisfactory (S)/Not Satisfactory (NS)
+Assessor: I declare that I have conducted a fair, valid, reliable
+and flexible assessment with this student, and I have provided
+appropriate feedback.
+
+Signature: _________________________
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Date: ____/_____/__________
+
+Page 12 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 3 – OBSERVATION
+Fusion Splice
+This assessment task requires candidate to demonstrate a fusion splice.
+The assessor will demonstrate the appropriate process, then ask candidates to:
+AT3.1 position and install cable according to agreed route
+AT3.2 Comply with manufacturer’s specifications for installation and industry safety standards
+AT3.3 prepare and splice optical fibre following the correct procedure:
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+Position heat shrink splice protector over one end of the fibre
+Strip fibre for 20mm using appropriate fibre stripping tools
+Clean fibre with lint free wipe tissues and isopropyl alcohol(IPA fluid)
+Ensure fibre is dry before inserting into the splicer
+Cleave fibre to give a perpendicular mirror smooth end face cut
+10 to 12 mm for 40 mm splice protectors or 15 to 17 mm 60 mm splice protectors
+Splice the fibres in auto mode to align fibre cores automatically
+Check the quality of the cleaved fibre end face (the splicer estimates cleaved angle for both fibre end faces)
+Check LCD display for shadow, bubble, ballooning, necking across the joint
+
+AT3.4 Check loss acceptance level is less than0.05db (re-splice if over)
+AT3.5 Place the heat shrink on one end of the fibre and perform splice
+AT3.6 Seal the heat shrink protector using splicer heater
+AT3.7 Select a suitable testing device and record test results following manufacturer instructions
+
+Required Documents and Equipment
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+Cable stripping tool
+Various samples of cable connectors
+Tight buffered pigtail connectors
+Heat shrink splice protectors
+Lint free wipe tissues and isopropyl alcohol (IPA fluid)
+PPE for working with cable
+Fusion splicing equipment
+Field termination connector
+High precision fibre cleaver
+Manufacturer’s guidelines/specifications for all tools and machinery.
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 13 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 3 – ASSESSOR CHECKLIST
+Record of Performance:
+Did the Candidate:
+
+Satisfactory
+Yes
+
+No
+
+Install selected cable following manufacturers specification
+Prepare to splice cable using the correct procedure:
+• Position heat shrink splice protector over one end of the fibre
+• Strip fibre for 20mm using appropriate fibre stripping tools
+• Clean fibre with lint free wipe tissues and isopropyl alcohol(IPA fluid)
+• Ensure fibre is dry before inserting into the splicer
+• Cleave fibre to give a perpendicular mirror smooth end face cut:
+• 10 to 12 mm for 40 mm splice protectors or 15 to 17 mm 60 mm splice
+protectors
+• Splice the fibres in auto mode to align fibre cores automatically
+• Check the quality of the cleaved fibre end face (the splicer estimates cleaved angle
+for both fibre end faces)
+• Check LCD display for shadow, bubble, ballooning, necking across the joint
+Check loss acceptance level is less than 0.05db
+Repeat the splice procedure if the loss level is above 0.05db
+Place the heat shrink on one end of the fibre and perform splice
+Seal the heat shrink protector using splicer heater
+Perform the fusion splice in line with regulatory requirements?
+Perform the fusion splice in line with safety/OHS considerations?
+Select the appropriate tools and safety equipment for the task?
+Appropriately prepare the work area to minimise risk (disposable cable waste containers,
+tape, PPE, etc.)
+
+Comments/Feedback to Participant
+Student Declaration: I declare that the work submitted is my
+Signature: ___________________________
+own, and has not been copied or plagiarized from any person or
+Date: ____/_____/__________
+source.
+
+Assessor’s Feedback:
+
+Result: Satisfactory (S)/Not Satisfactory (NS)
+Assessor: I declare that I have conducted a fair, valid, reliable
+and flexible assessment with this student, and I have provided
+appropriate feedback.
+
+Signature: _________________________
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Date: ____/_____/__________
+
+Page 14 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 4
+Mechanical Splice
+This assessment task requires candidates to:
+•
+
+Demonstrate an ‘in-line’ mechanical splice.
+
+Candidates will need to make sure that they understand the equipment, procedure and safety measures involved so that
+they undertake this task safely and correctly.
+Assessors will demonstrate this process then, ask the students to:
+AT4.1Strip fibre for 20mm using appropriate fibre stripping tools
+AT4.2clean fibre with lint free wipe tissues and isopropyl alcohol (IPA fluid
+AT4.3Ensure fibre is dry before inserting into the slicer
+AT4.4Cleave fibre to give a perpendicular mirror smooth end face cut:
+
+•
+
+10 to 12 mm for 40 mm splice protectors or 15 to 17 mm 60 mm splice protectors
+
+•
+
+Cleaved fibre length must be adhered to as per the manufacture’s specifications
+
+AT4.5Check the quality of the cleaved fibre end face
+AT4.6Insert fibres into the mechanical splice
+AT4.7Lock or crimp the fibres into positions
+AT4.8apply specific fibre waste procedures to control fibre hazards
+AT4.8Update records for site and notify client of completion of work.
+
+Required Documents and Equipment
+•
+
+Cable stripping tool
+
+•
+
+Cable connectors pigtail connectors
+
+•
+
+Heat shrink splice protectors
+
+•
+
+Lint free wipe tissues and isopropyl alcohol(IPA fluid)
+
+•
+
+PPE for working with cable
+
+•
+
+In-line mechanical splicing product set
+
+•
+
+Field termination connectors
+
+•
+
+High precision fibre cleaver
+
+•
+
+Manufacturer’s guidelines/specifications for all tools and machinery.
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 15 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 4 – ASSESSOR CHECKLIST
+Record of Performance:
+Did the Candidate:
+
+Satisfactory
+Yes
+
+No
+
+Perform the fusion splice in line with regulatory requirements?
+Perform the fusion splice in line with safety/OHS considerations?
+Select the appropriate tools and safety equipment for the task?
+Appropriately prepare the work area to minimise risk (disposable cable waste
+containers, tape, PPE, etc.)
+Cleave fibre to the correct length?
+Use the correct settings on the mechanical splicer?
+Correctly position the cleaved fibre in the splicer?
+Use the correct action for crimping the joint?
+Clean up the work area and remove all waste in a safe manner?
+
+Comments/Feedback to Participant
+Student Declaration: I declare that the work submitted is my
+Signature: ___________________________
+own, and has not been copied or plagiarized from any person or
+Date: ____/_____/__________
+source.
+
+Assessor’s Feedback:
+
+Result: Satisfactory (S)/Not Satisfactory (NS)
+Assessor: I declare that I have conducted a fair, valid, reliable
+and flexible assessment with this student, and I have provided
+appropriate feedback.
+
+Signature: _________________________
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Date: ____/_____/__________
+
+Page 16 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 5
+Insertion Loss Measurements
+This assessment task requires candidates to:
+Undertake testing to make an insertion loss measurement.
+Candidates work in Paris to optimise use of resources.
+Candidates will need to make sure that they understand the equipment, procedure and safety measures involved so that
+they undertake this task safely and correctly.
+The assessor will demonstrate the following tasks then, ask participants to:
+AT5.1construct a fibre link using 500m fibre length (spools).
+AT5.2 Ensure the link has:
+
+•
+•
+•
+
+An APC connector
+PC connector
+A fusion splice(which can be easily identified and measured with an OTDR)
+
+AT5.3 Calculate the pass/fail maximum loss cleaved fibre length must be adhered to as per the manufacture’s
+specifications for the fibre link
+AT5.4 Test, measure and record the insertion loss of the link at 1310nm and 1550nm using either the one-way or twoway insertion loss measurement techniques
+AT5.5Compare the pass/fail insertion loss and measured results.
+Optional task: use an OTDR to measure the insertion loss all events that interconnect all the spools of fibre and verify
+the results of candidates.
+
+Required Documents and Equipment
+•
+•
+
+•
+•
+•
+•
+•
+
+Spools of fibre optic cable
+Connectors:
+o An APC connector
+o Pc connector
+o A fusion spile
+LED light sources
+Power meters
+Optical time –domain reflect meter (ODTR)
+PPE for working with cable
+Cable system with identifiable fault.
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 17 of 18
+
+Assessment Booklet
+ICTCBL322 Install, test and terminate optical fiber cable on customer premises
+
+ASSESSMENT TASK 5 – ASSESSOR CHECKLIST
+Record of Performance:
+Did the Candidate:
+
+Satisfactory
+Yes
+
+No
+
+Perform the testing in line with safety/OHS considerations?
+Select the appropriate tools and safety equipment for the task?
+Appropriately prepare the work area to minimise risk (disposable cable waste
+containers, tape, PPE, etc.)
+Construct a fibre link using four fibre lengths (spools), each link greater than 500m?
+Attach similar connector types to end A and end B of the fibre link?
+Correctly calculate the pass/fail maximum loss at 1310nm and 1550nm for the fibre
+link?
+Test and measure the insertion loss of the link at 1310nm and 1550nm using either the
+one-way or two-way insertion loss measurement techniques?
+Analyse the results of the testing by comparing the measurements against the pass/fail
+insertion loss?
+Report results to customer and restore site
+
+Comments/Feedback to Participant
+Student Declaration: I declare that the work submitted is my
+Signature: ___________________________
+own, and has not been copied or plagiarized from any person or
+Date: ____/_____/__________
+source.
+
+Assessor’s Feedback:
+
+Result: Satisfactory (S)/Not Satisfactory (NS)
+Assessor: I declare that I have conducted a fair, valid, reliable
+and flexible assessment with this student, and I have provided
+appropriate feedback.
+
+Signature: _________________________
+Date: ____/_____/__________
+
+END OF ASSESSMENT
+Before you hand in your assessment, make sure that you:
+1.
+2.
+3.
+
+Re-check your answers and make sure you are happy with your responses.
+Have written your Name, Student ID, on the first page and signed the student declaration
+If you are submitting this assessment as a separate attachment, please attached an Assessment Submission Sheet available from the
+Student Administration or the ACTA intranet.
+
+ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25
+
+Page 18 of 18
+
+

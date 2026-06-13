@@ -318,6 +318,108 @@ const GradingPortal: React.FC = () => {
     setFinalResult('C'); // Competent
   };
 
+
+  const renderA4QuestionRow = (q: any, i: number, tNum: number) => {
+    const qKey = `t${tNum}q${q.id}`;
+    const studentAnswer = studentAnswers[qKey];
+    const grade = grades[qKey];
+
+    return (
+      <React.Fragment key={q.id}>
+        <tr>
+          <td colSpan={3} style={{ padding: '8px 12px', border: '1px solid black', borderBottom: 'none' }}>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <span style={{ minWidth: '20px', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt' }}>{q.id}.</span>
+              <div style={{ width: '100%', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt' }}>
+                <div style={{ marginBottom: '8px' }}>{q.text}</div>
+                
+                {q.type === 'radio' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginLeft: '12px', marginTop: '4px' }}>
+                    {q.options && q.options.map((opt: any, oIdx: number) => {
+                       const isSelected = Array.isArray(studentAnswer) ? studentAnswer.includes(opt.value) : studentAnswer === opt.value;
+                       return (
+                         <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => setStudentAnswers({ ...studentAnswers, [qKey]: opt.value })}>
+                           <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>{String.fromCharCode(65 + oIdx)}.</span>
+                           <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
+                           {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
+                         </div>
+                       );
+                    })}
+                  </div>
+                )}
+                
+                {q.type === 'multipart_radio' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginLeft: '12px', marginTop: '4px' }}>
+                    {q.parts && q.parts.map((part: any, pIdx: number) => (
+                      <div key={pIdx}>
+                        {part.text && <div style={{ marginBottom: '4px' }}>{part.text}</div>}
+                        {part.options && part.options.map((opt: any, oIdx: number) => {
+                           const isSelected = Array.isArray(studentAnswers[part.name]) ? studentAnswers[part.name].includes(opt.value) : studentAnswers[part.name] === opt.value;
+                           return (
+                             <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => setStudentAnswers({ ...studentAnswers, [part.name]: opt.value })}>
+                               <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>{String.fromCharCode(65 + oIdx)}.</span>
+                               <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
+                               {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
+                             </div>
+                           );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {q.type === 'text' && (
+                  <div style={{ marginTop: '8px', width: '100%' }}>
+                    <textarea
+                      className="no-print"
+                      style={{ width: '100%', minHeight: '80px', border: '1px solid #ccc', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: '4px' }}
+                      value={studentAnswer || ''}
+                      onChange={(e) => setStudentAnswers({ ...studentAnswers, [qKey]: e.target.value })}
+                      placeholder="Student response..."
+                    />
+                    <div className="hidden print:block p-2" style={{ whiteSpace: 'pre-wrap', minHeight: '80px' }}>{studentAnswer}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colSpan={3} style={{ height: '16px', borderLeft: '1px solid black', borderRight: '1px solid black', borderBottom: '1px solid black' }}></td>
+        </tr>
+        <tr style={{ backgroundColor: '#fce4d6', color: 'blue', fontWeight: 'bold', fontFamily: "'Times New Roman', serif", fontSize: '10pt' }}>
+          <td style={{ width: '33%', border: '1px solid black', padding: '4px 8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ color: 'blue', fontWeight: 'bold' }}>Assessor to tick (☑)</span>
+            </div>
+          </td>
+          <td 
+            style={{ width: '33%', border: '1px solid black', textAlign: 'center', cursor: 'pointer' }} 
+            onClick={() => setGrades({ ...grades, [qKey]: 'Satisfactory' })}
+          >
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}>
+              <span className="cb-sq" style={{ borderColor: 'blue', color: 'blue', position: 'relative' }}>
+                {(grade === 'Satisfactory' || grade === 'S' || grade === 'yes' || grade === 'correct') ? <span style={{ color: 'red', fontSize: '14px', position: 'absolute', top: '-4px', left: '2px' }}>✔</span> : null}
+              </span>
+              <span style={{ color: 'blue', fontWeight: 'bold' }}>Satisfactory (S)</span>
+            </div>
+          </td>
+          <td 
+            style={{ width: '33%', border: '1px solid black', textAlign: 'center', cursor: 'pointer' }} 
+            onClick={() => setGrades({ ...grades, [qKey]: 'Not Satisfactory' })}
+          >
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}>
+              <span className="cb-sq" style={{ borderColor: 'blue', color: 'blue', position: 'relative' }}>
+                {(grade === 'Not Satisfactory' || grade === 'NS' || grade === 'no') ? <span style={{ color: 'red', fontSize: '14px', position: 'absolute', top: '-4px', left: '2px' }}>✔</span> : null}
+              </span>
+              <span style={{ color: 'blue', fontWeight: 'bold' }}>Not Satisfactory (NS)</span>
+            </div>
+          </td>
+        </tr>
+      </React.Fragment>
+    );
+  };
+
   const renderQuestionReview = (q: any, i: number, tNum: number) => {
     const qKey = `t${tNum}q${q.id}`
     const studentAnswer = studentAnswers[qKey]
@@ -605,126 +707,142 @@ const GradingPortal: React.FC = () => {
     );
   };
 
-  const renderFinalResultBlock = (tNum: number) => (
-    <div className="mt-8 sm:mt-12 space-y-6 sm:space-y-10 final-result-block-container bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm">
-      <div className="space-y-4 sm:space-y-6">
-        <h3 className="font-black text-lg sm:text-xl text-slate-800 uppercase tracking-tight border-b-2 border-slate-100 pb-2">Comments/Feedback to Participant</h3>
-        <div className="overflow-x-auto">
-          <div className="border border-slate-200 rounded-xl overflow-hidden">
-            <table className="w-full border-collapse">
-              <tbody>
-                <tr className="flex flex-col sm:table-row">
-                  <td className="p-4 sm:p-6 sm:w-2/3 bg-slate-50/50 border-b sm:border-b-0 sm:border-r border-slate-200">
-                    <p className="text-[10px] font-black uppercase tracking-tighter text-slate-700 mb-2">Student Declaration:</p>
-                    <p className="text-[13px] sm:text-sm text-slate-500 italic leading-relaxed">I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
-                  </td>
-                  <td className="p-4 sm:p-6 sm:w-1/3 text-slate-700 bg-white">
-                    <div className="space-y-4 sm:space-y-6">
-                      <div className="flex flex-col gap-2">
-                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Signature</span>
-                        <div
-                          onClick={() => openSigModal('student_signature', 'comp')}
-                          className="border-b-2 border-slate-200 h-12 sm:h-14 flex items-center justify-center overflow-hidden p-1 cursor-pointer hover:bg-blue-50/50 transition-colors"
-                        >
-                          {compRecord.student_signature || submission.signature_url ? (
-                            <img src={compRecord.student_signature || submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
-                          ) : (
-                            <span className="text-[10px] text-slate-300 italic group-hover:text-blue-500 transition-colors">Click to sign</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Date</span>
-                        <div className="border-b-2 border-slate-200 flex-1 text-xs sm:text-sm font-bold text-slate-700 h-8 flex items-center">
-                          {submission.submitted_at ? formatDisplayDate(new Date(submission.submitted_at).toISOString().split('T')[0]) : ''}
-                        </div>
-                      </div>
+  const renderFinalResultBlock = (tNum: number) => {
+    const isSatisfactory = taskResults[`t${tNum}`] === 'S';
+    const isNotSatisfactory = taskResults[`t${tNum}`] === 'NS';
+
+    return (
+      <div className="generic-comp-view mt-10 break-inside-avoid" style={{ fontFamily: "'Times New Roman', serif", fontSize: '10pt', color: 'black' }}>
+        <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+        
+        <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black', marginBottom: '20px' }}>
+          <tbody>
+            <tr>
+              <td style={{ width: '60%', borderRight: '1px solid black', padding: '8px' }}>
+                <p style={{ margin: 0, lineHeight: '1.4' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+              </td>
+              <td style={{ width: '40%', padding: '8px 12px', position: 'relative' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span>Signature:</span>
+                    <div 
+                      className="no-print"
+                      onClick={() => openSigModal('student_signature', 'comp')}
+                      style={{ borderBottom: '1px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                    >
+                      {(compRecord.student_signature || submission.signature_url) ? (
+                        <img src={compRecord.student_signature || submission.signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                      ) : (
+                        <span style={{ fontSize: '9px', color: '#888' }}>Click to sign</span>
+                      )}
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <div className="group transition-all">
-          <h4 className="font-black text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest mb-3 group-focus-within:text-[#1e3a8a]">Assessor's Feedback:</h4>
-          <div className="border-2 border-slate-100 rounded-xl sm:rounded-2xl bg-slate-50/30 p-4 sm:p-6 focus-within:border-blue-100 focus-within:bg-white transition-all shadow-inner min-h-[120px] sm:min-h-[160px]">
-            <textarea
-              className="w-full h-24 sm:h-32 outline-none resize-none text-sm sm:text-base p-1 border-none bg-transparent text-slate-700 font-medium placeholder:text-slate-300"
-              placeholder="Provide detailed feedback for this task..."
-              value={taskResults[`t${tNum}_feedback`] || ''}
-              onChange={(e) => setTaskResults({ ...taskResults, [`t${tNum}_feedback`]: e.target.value })}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-10 py-6 sm:py-8 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
-        <span className="text-sm sm:text-base font-black text-slate-400 uppercase tracking-widest">Outcome:</span>
-        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 w-full sm:w-auto px-4 sm:px-0">
-          <button
-            onClick={() => setTaskResults({ ...taskResults, [`t${tNum}`]: 'S' })}
-            className={`w-full sm:w-auto px-6 sm:px-10 py-3 rounded-xl sm:rounded-2xl font-black text-sm sm:text-base transition-all border-2 ${taskResults[`t${tNum}`] === 'S' ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] shadow-xl shadow-blue-200 sm:scale-110' : 'bg-white text-slate-400 border-slate-200 hover:border-blue-400 hover:text-blue-600'}`}
-          >
-            Satisfactory (S)
-          </button>
-          <button
-            onClick={() => setTaskResults({ ...taskResults, [`t${tNum}`]: 'NS' })}
-            className={`w-full sm:w-auto px-6 sm:px-10 py-3 rounded-xl sm:rounded-2xl font-black text-sm sm:text-base transition-all border-2 ${taskResults[`t${tNum}`] === 'NS' ? 'bg-red-600 text-white border-red-600 shadow-xl shadow-red-200 sm:scale-110' : 'bg-white text-slate-400 border-slate-200 hover:border-red-400 hover:text-red-600'}`}
-          >
-            Not Satisfactory (NS)
-          </button>
-        </div>
-      </div>
-
-      <div className="">
-        <div className="border border-slate-200 rounded-xl overflow-hidden">
-          <table className="w-full border-collapse">
-            <tbody>
-              <tr className="flex flex-col sm:table-row">
-                <td className="p-4 sm:p-6 sm:w-2/3 bg-slate-50/50 border-b sm:border-b-0 sm:border-r border-slate-200">
-                  <p className="text-[10px] font-black uppercase tracking-tighter text-slate-700 mb-2">Assessor Declaration:</p>
-                  <p className="text-[13px] sm:text-sm text-slate-500 italic leading-relaxed">I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
-                </td>
-                <td className="p-4 sm:p-6 sm:w-1/3 text-slate-700 bg-white">
-                  <div className="space-y-4 sm:space-y-6">
-                    <div className="flex flex-col gap-2">
-                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Signature</span>
-                      <div
-                        onClick={() => openSigModal('assessor_signature', 'comp')}
-                        className="border-b-2 border-slate-200 h-14 sm:h-16 flex items-center justify-center cursor-pointer relative group bg-slate-50/30 rounded-t-lg transition-all hover:bg-blue-50/50 overflow-hidden p-1"
-                      >
-                        {compRecord.assessor_signature ? (
-                          <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
-                        ) : (
-                          <span className="text-[10px] text-slate-300 font-bold group-hover:text-blue-500 transition-colors">Sign Here</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Date</span>
-                      <div className="border-b-2 border-slate-200 flex-1">
-                        <input
-                          type="date"
-                          className="w-full outline-none text-xs sm:text-sm font-black text-slate-800 bg-transparent no-print cursor-pointer py-1"
-                          value={compRecord.assessment_date}
-                          onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                        />
-                        <span className="hidden print:inline text-xs sm:text-sm font-black text-slate-800">{formatDisplayDate(compRecord.assessment_date)}</span>
-                      </div>
+                    <div className="hidden print:block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                      {(compRecord.student_signature || submission.signature_url) && (
+                        <img src={compRecord.student_signature || submission.signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                      )}
                     </div>
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span>Date:</span>
+                    <span style={{ borderBottom: '1px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px' }}>
+                      {submission.submitted_at ? formatDisplayDate(new Date(submission.submitted_at).toISOString().split('T')[0]) : ''}
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style={{ border: '1px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+          <p style={{ fontWeight: 'bold', margin: '0 0 8px 0' }}>Assessor's Feedback:</p>
+          <textarea
+            className="no-print"
+            style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none' }}
+            placeholder="Assessor feedback..."
+            value={taskResults[`t${tNum}_feedback`] || ''}
+            onChange={(e) => setTaskResults({ ...taskResults, [`t${tNum}_feedback`]: e.target.value })}
+          />
+          <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+            {taskResults[`t${tNum}_feedback`]}
+          </div>
         </div>
+
+        <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+          Result:{' '}
+          <span 
+            className="cursor-pointer relative inline-block mx-2"
+            onClick={() => setTaskResults({ ...taskResults, [`t${tNum}`]: 'S' })}
+            style={{ padding: '4px' }}
+          >
+            Satisfactory (S)
+            {isSatisfactory && (
+              <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+            )}
+          </span>
+          <span style={{ margin: '0 8px' }}>/</span>
+          <span 
+            className="cursor-pointer relative inline-block mx-2"
+            onClick={() => setTaskResults({ ...taskResults, [`t${tNum}`]: 'NS' })}
+            style={{ padding: '4px' }}
+          >
+            Not Satisfactory (NS)
+            {isNotSatisfactory && (
+              <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+            )}
+          </span>
+        </div>
+
+        <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black' }}>
+          <tbody>
+            <tr>
+              <td style={{ width: '60%', borderRight: '1px solid black', padding: '8px' }}>
+                <p style={{ margin: 0, lineHeight: '1.4' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+              </td>
+              <td style={{ width: '40%', padding: '8px 12px', position: 'relative' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span>Signature:</span>
+                    <div 
+                      className="no-print"
+                      onClick={() => openSigModal('assessor_signature', 'comp')}
+                      style={{ borderBottom: '1px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                    >
+                      {compRecord.assessor_signature ? (
+                        <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                      ) : (
+                        <span style={{ fontSize: '9px', color: '#888' }}>Click to sign</span>
+                      )}
+                    </div>
+                    <div className="hidden print:block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                      {compRecord.assessor_signature && (
+                        <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                      )}
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span>Date:</span>
+                    <span className="no-print" style={{ borderBottom: '1px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                        <input
+                          type="date"
+                          style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                          value={compRecord.assessment_date || ''}
+                          onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                        />
+                    </span>
+                    <span className="hidden print:inline-block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                      {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  )
+    );
+  };
+  
   const renderQuestion2Booklet = () => {
     const q2Styles = `
       .q2-booklet-view {
@@ -3834,10 +3952,10 @@ const GradingPortal: React.FC = () => {
                             style={{ display: 'inline-flex', verticalAlign: 'middle', minWidth: '150px', flexShrink: 0 }}
                           >
                             {compRecord.assessor_signature ? (
-                              <img src={compRecord.assessor_signature} alt="Sig" />
+                              <img src={compRecord.assessor_signature} alt="Sig" style={{ mixBlendMode: 'multiply' }} />
                             ) : null}
                           </div>
-                          <span style={{ whiteSpace: 'nowrap', marginLeft: '16px' }}>_ Date:</span>
+                          <span style={{ whiteSpace: 'nowrap', marginLeft: '16px' }}>Date:</span>
                           <div style={{ display: 'inline-block', flexShrink: 0 }}>
                             <input
                               type="date"
@@ -3846,7 +3964,7 @@ const GradingPortal: React.FC = () => {
                               value={compRecord.assessment_date || ''}
                               onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
                             />
-                            <span className="hidden print:inline" style={{ borderBottom: '1px dotted #555', minWidth: '80px', display: 'inline-block' }}>{formatDisplayDate(compRecord.assessment_date)}</span>
+                            <span className="hidden print:inline-block" style={{ borderBottom: '1px dotted #555', minWidth: '80px' }}>{formatDisplayDate(compRecord.assessment_date)}</span>
                           </div>
                         </div>
                       </td>
@@ -4119,229 +4237,45 @@ const GradingPortal: React.FC = () => {
                   <section key={taskKey} className="space-y-12 page-break-before">
                     {/* Observation Section - Only show if observation data exists */}
                     {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections || taskData.assessorSections) && (
-                      <div className="space-y-6">
-                        <div className="text-center">
-                          <div className="task-banner-ribbon">
-                            {taskData.observationTitle || (hasQuestions ? taskTitle : `ASSESSMENT TASK ${tNum} OBSERVATION`)}
-                          </div>
+                      <div className="space-y-4">
+                        <div className="text-center" style={{ marginBottom: '16px' }}>
+                          <h2 style={{ fontFamily: "'Times New Roman', serif", fontSize: '13pt', fontWeight: 'bold', textAlign: 'center', marginBottom: '8px', color: 'black' }}>
+                            {taskData.observationTitle || taskTitle}
+                          </h2>
                           {taskData.observationSubtitle && (
-                            <div className="text-lg font-bold text-slate-600 border-y border-slate-200 py-2 mt-4">
+                            <h3 style={{ fontFamily: "'Times New Roman', serif", fontSize: '12pt', fontWeight: 'bold', textAlign: 'center', marginBottom: '16px', color: 'black' }}>
                               {taskData.observationSubtitle}
-                            </div>
+                            </h3>
                           )}
                         </div>
 
                         {(taskData.sections || taskData.assessorSections) && (
-                          <div className="space-y-4">
+                          <div style={{ marginBottom: '24px' }}>
                             {[
                               ...(taskData.sections || []),
                               ...(taskData.assessorSections || []).map((s: any) => ({ ...s, isAssessorOnly: true }))
                             ].map((section: any, sIdx: number) => (
-                              <div key={sIdx} className="space-y-3">
+                              <div key={sIdx} style={{ marginBottom: '12px' }}>
                                 {section.type === 'text' && (
-                                  <div className={`space-y-2 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
+                                  <div style={{ fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', color: 'black' }}>
                                     {section.title && (
-                                      <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-base border-b border-slate-200' : 'text-sm text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
+                                      <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
                                         {section.title}
-                                      </h3>
+                                      </div>
                                     )}
-                                    <div className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                    <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.3' }}>
                                       {section.content}
                                     </div>
                                   </div>
                                 )}
                                 {section.type === 'image' && (
-                                  <div className="flex flex-col items-center gap-2 py-4">
-                                    <div className="bg-white p-2 border border-slate-200 shadow-sm rounded-lg max-w-[550px]">
-                                      <img src={section.src} alt={section.caption || 'Observation'} className="w-full h-auto rounded" />
-                                    </div>
+                                  <div className="my-4">
+                                    <img src={section.src} alt={section.alt || "Section Image"} className="max-w-full rounded border border-slate-200" style={{ maxHeight: '400px' }} />
                                     {section.caption && (
-                                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                      <p style={{ fontFamily: "'Times New Roman', serif", fontSize: '9pt', fontStyle: 'italic', color: '#555', marginTop: '4px' }}>
                                         {section.caption}
-                                      </span>
+                                      </p>
                                     )}
-                                  </div>
-                                )}
-                                {section.type === 'table' && (
-                                  <div className="space-y-4 px-2">
-                                    {section.title && (
-                                      <h3 className="font-bold text-slate-800 pb-2 text-base border-b border-slate-200">
-                                        {section.title}
-                                      </h3>
-                                    )}
-                                    <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
-                                      <table className="w-full text-left border-collapse">
-                                        <thead>
-                                          <tr className="bg-slate-50 border-b border-slate-200">
-                                            {section.headers.map((header: string, hIdx: number) => (
-                                              <th key={hIdx} className="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                                {header}
-                                              </th>
-                                            ))}
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {section.rows.map((row: any, rIdx: number) => {
-                                            if (row.isSubHeader) {
-                                              return (
-                                                <tr key={rIdx} className="bg-slate-100/80 border-b border-slate-200">
-                                                  <td colSpan={section.headers.length} className="p-3 text-xs font-bold text-slate-700 uppercase tracking-wider">
-                                                    {row.label}
-                                                  </td>
-                                                </tr>
-                                              )
-                                            }
-                                            return (
-                                              <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
-                                                <td className="p-4 text-sm text-slate-700 font-bold bg-slate-50/30 w-1/3">
-                                                  {row.label}
-                                                </td>
-                                                {row.cells ? (
-                                                  row.cells.map((cell: any, cIdx: number) => {
-                                                    const isAssessorInput = taskData.assessorOnly || section.isAssessorOnly;
-                                                    const ans = isAssessorInput ? grades[cell.name] : submission?.answers?.[cell.name]
-                                                    return (
-                                                      <td key={cIdx} colSpan={row.colSpan || 1} className="p-4 border-l border-slate-100 align-top">
-                                                        <div className="flex flex-col gap-1.5">
-                                                          {cell.options ? cell.options.map((opt: any, oIdx: number) => {
-                                                            const isSelected = Array.isArray(ans) ? ans.includes(opt.value) : ans === opt.value
-
-                                                            if (isAssessorInput) {
-                                                              if (isQuestion15) {
-                                                                // Q15: each cell has exactly ONE option (Yes OR No per cell).
-                                                                // Detect the intent by the option value itself.
-                                                                const isYes = ['Yes', 'yes', 'Satisfactory', 'S', 'C', 'Completed'].includes(opt.value);
-                                                                const q15Checked = grades[cell.name] === opt.value;
-                                                                return (
-                                                                  <div
-                                                                    key={oIdx}
-                                                                    className="flex items-center justify-center cursor-pointer select-none"
-                                                                    title={q15Checked ? `Uncheck ${opt.value}` : `Check ${opt.value}`}
-                                                                    onClick={() => {
-                                                                      // Toggle: clicking the same value unchecks it
-                                                                      const newVal = grades[cell.name] === opt.value ? null : opt.value;
-                                                                      setGrades({ ...grades, [cell.name]: newVal });
-                                                                    }}
-                                                                  >
-                                                                    <div className={`no-print w-[22px] h-[22px] border-2 rounded flex items-center justify-center flex-shrink-0 transition-all duration-150 ${q15Checked ? (isYes ? 'bg-green-500 border-green-600 shadow-sm' : 'bg-red-500 border-red-600 shadow-sm') : 'bg-white border-slate-300 hover:border-[#1e3a8a] hover:bg-blue-50'}`}>
-                                                                      {q15Checked && (
-                                                                        <span className="text-white font-black text-[13px] leading-none select-none">{isYes ? '✔' : '✘'}</span>
-                                                                      )}
-                                                                    </div>
-                                                                    {/* Hidden checkbox for print/form purposes */}
-                                                                    <input type="checkbox" checked={q15Checked} onChange={() => { }} className="sr-only" />
-                                                                    {/* Print symbols */}
-                                                                    {q15Checked && isYes && <span className="print-symbol correct">✔</span>}
-                                                                    {q15Checked && !isYes && <span className="print-symbol incorrect">✘</span>}
-                                                                    {opt.text && <span className="text-[10px] sm:text-[11px] text-slate-600 leading-tight ml-1.5">{opt.text}</span>}
-                                                                  </div>
-                                                                )
-                                                              }
-                                                              return (
-                                                                <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
-                                                                  <input
-                                                                    type={cell.type || 'radio'}
-                                                                    name={cell.name}
-                                                                    value={opt.value}
-                                                                    checked={isSelected}
-                                                                    onChange={(e) => {
-                                                                      if (cell.type === 'checkbox') {
-                                                                        const current = Array.isArray(grades[cell.name]) ? grades[cell.name] : [];
-                                                                        const updated = e.target.checked
-                                                                          ? [...current, opt.value]
-                                                                          : current.filter((v: string) => v !== opt.value);
-                                                                        setGrades({ ...grades, [cell.name]: updated });
-                                                                      } else {
-                                                                        setGrades({ ...grades, [cell.name]: e.target.value });
-                                                                      }
-                                                                    }}
-                                                                    className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
-                                                                  />
-                                                                  <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                                                </label>
-                                                              )
-                                                            }
-
-                                                            return (
-                                                              <div key={oIdx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all ${isSelected ? 'bg-[#1e3a8a] text-white border-[#1e3a8a] font-bold shadow-sm' : 'bg-white border-slate-50 text-slate-400 opacity-60'}`}>
-                                                                <div className={`w-3 h-3 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-white bg-white/20' : 'border-slate-200'}`}>
-                                                                  {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-                                                                </div>
-                                                                <span className="text-[10px] leading-tight">{opt.text}</span>
-                                                              </div>
-                                                            )
-                                                          }) : (
-                                                            isAssessorInput ? (
-                                                              cell.type === 'signature' ? (
-                                                                <div
-                                                                  onClick={() => openSigModal(cell.name, 'grades')}
-                                                                  className="relative cursor-pointer border border-slate-200 bg-slate-50/50 h-16 flex items-center justify-center overflow-hidden group w-full p-1 rounded"
-                                                                >
-                                                                  {grades[cell.name] ? (
-                                                                    <img src={grades[cell.name]} alt="Signature" className="max-h-full max-w-full object-contain" />
-                                                                  ) : (
-                                                                    <span className="text-slate-400 italic text-xs">Click to sign</span>
-                                                                  )}
-                                                                </div>
-                                                              ) : cell.type === 'date' ? (
-                                                                <input
-                                                                  type="date"
-                                                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                                  value={grades[cell.name] || ''}
-                                                                  onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
-                                                                />
-                                                              ) : (
-                                                                <input
-                                                                  type="text"
-                                                                  className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                                  placeholder={cell.placeholder || "Comments..."}
-                                                                  value={grades[cell.name] || ''}
-                                                                  onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })}
-                                                                />
-                                                              )
-                                                            ) : (
-                                                              <div className="text-[10px] text-slate-700 italic bg-slate-50 p-2 rounded">
-                                                                {ans || '(No comments provided)'}
-                                                              </div>
-                                                            )
-                                                          )}
-                                                        </div>
-                                                      </td>
-                                                    )
-                                                  })
-                                                ) : (
-                                                  <td className="p-4" colSpan={section.headers.length - 1}>
-                                                    {row.editable === false ? (
-                                                      <div className="text-sm text-slate-700 font-medium">
-                                                        {row.value}
-                                                      </div>
-                                                    ) : (
-                                                      (taskData.assessorOnly || section.isAssessorOnly) ? (
-                                                        <input
-                                                          type="text"
-                                                          className="w-full p-2 text-sm bg-white border border-slate-200 rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all"
-                                                          placeholder="Enter result..."
-                                                          value={grades[row.id] || ''}
-                                                          onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
-                                                        />
-                                                      ) : (
-                                                        <input
-                                                          type="text"
-                                                          className="w-full p-3 bg-blue-50/30 border border-slate-200 rounded-xl text-[#1e3a8a] font-black text-sm outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all print:border-none print:p-0 print:bg-transparent"
-                                                          placeholder="Enter or edit result..."
-                                                          value={grades[row.id] !== undefined ? grades[row.id] : (submission?.answers?.[row.id] || '')}
-                                                          onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })}
-                                                        />
-                                                      )
-                                                    )}
-                                                  </td>
-                                                )}
-                                              </tr>
-                                            )
-                                          })}
-                                        </tbody>
-                                      </table>
-                                    </div>
                                   </div>
                                 )}
                               </div>
@@ -4353,28 +4287,32 @@ const GradingPortal: React.FC = () => {
 
                     {/* Written Questions Section */}
                     {hasQuestions && (
-                      <div className="space-y-10 px-4">
-                        {questionsArray.map((q: any, i: number) => renderQuestionReview(q, i, tNum))}
+                      <div className="mb-8" style={{ fontFamily: "'Times New Roman', serif" }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                          <tbody>
+                            {questionsArray.map((q: any, i: number) => renderA4QuestionRow(q, i, tNum))}
+                          </tbody>
+                        </table>
                       </div>
                     )}
 
                     {/* Assessor Checklist Section */}
                     {hasChecklist && !currentAssessmentQuestions.adminInfo?.hideAssessorChecklist && (
-                      <div className="pt-12 space-y-8 border-t-4 border-double border-slate-200">
-                        <div className="text-center">
-                          <div className="task-banner-ribbon">
+                      <div className="pt-8" style={{ pageBreakInside: 'avoid' }}>
+                        <div className="text-center" style={{ marginBottom: '16px' }}>
+                          <h2 style={{ fontFamily: "'Times New Roman', serif", fontSize: '13pt', fontWeight: 'bold', textAlign: 'center', color: 'black' }}>
                             {taskData.checklistTitle || `ASSESSMENT TASK ${tNum} – ASSESSOR CHECKLIST`}
-                          </div>
+                          </h2>
                         </div>
 
                         {taskData.assessorInstructions && (
-                          <div className="space-y-4">
+                          <div style={{ marginBottom: '24px' }}>
                             {taskData.checklistIntro && (
-                              <div className="text-sm text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 whitespace-pre-wrap">
+                              <div style={{ fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', color: 'black', marginBottom: '12px', whiteSpace: 'pre-wrap', lineHeight: '1.3' }}>
                                 {taskData.checklistIntro}
                               </div>
                             )}
-                            <div className="text-sm text-slate-500 italic bg-blue-50/50 p-6 rounded-2xl border border-blue-100/50 whitespace-pre-wrap">
+                            <div style={{ fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', color: 'black', whiteSpace: 'pre-wrap', lineHeight: '1.3' }}>
                               {taskData.assessorInstructions}
                             </div>
                           </div>
@@ -4428,28 +4366,20 @@ const GradingPortal: React.FC = () => {
                           </div>
                         )}
 
-                        <div className="hidden md:block">
-                          {taskData.oralHeader && (
-                            <h4 className="text-lg font-bold text-slate-800 mt-6 mb-4">{taskData.oralHeader}</h4>
-                          )}
-                          <table className="legacy-review-tbl w-full">
+                        <div className="hidden md:block overflow-x-auto" style={{ fontFamily: "'Times New Roman', serif", fontSize: '10pt', color: 'black' }}>
+                          <h3 style={{ fontWeight: 'bold', fontSize: '12pt', marginBottom: '8px' }}>Record of Performance:</h3>
+                          <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black' }}>
                             <thead>
-                              <tr>
-                                <th className="left">{taskData.checklistLabel || 'Checklist'}</th>
-                                <th colSpan={2} className="text-center">Yes / No</th>
-                                <th>Comments</th>
+                              <tr style={{ backgroundColor: '#a6a6a6' }}>
+                                <th style={{ padding: '6px', textAlign: 'left', border: '1px solid black', width: '70%', fontWeight: 'bold' }}>Did the Candidate:</th>
+                                <th colSpan={2} style={{ padding: '6px', textAlign: 'left', border: '1px solid black', width: '30%', fontWeight: 'bold' }}>Satisfactory</th>
                               </tr>
-                              <tr className="bg-gray-100">
-                                <th className="left text-[10px] py-1">Date Observed:</th>
-                                <th colSpan={3} className="py-1 text-left px-4">
-                                  <input
-                                    type="date"
-                                    className="border-none outline-none bg-transparent text-[10px] font-bold no-print"
-                                    value={compRecord.assessment_date}
-                                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                                  />
-                                  <span className="hidden print:inline text-[10px] font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                              <tr style={{ backgroundColor: '#a6a6a6' }}>
+                                <th style={{ padding: '6px', textAlign: 'left', border: '1px solid black', fontStyle: 'italic', fontWeight: 'normal', fontSize: '9pt' }}>
+                                  {tNum === 2 ? '*See assessment task 2 AT2.13 cable preparation and AT1.14 connector inspection and cleaning' : ''}
                                 </th>
+                                <th style={{ padding: '6px', textAlign: 'left', border: '1px solid black', width: '15%', fontWeight: 'bold' }}>Yes</th>
+                                <th style={{ padding: '6px', textAlign: 'left', border: '1px solid black', width: '15%', fontWeight: 'bold' }}>No</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -4459,46 +4389,20 @@ const GradingPortal: React.FC = () => {
                                 const isIncorrect = grades[qKey] === 'incorrect';
                                 return (
                                   <tr key={i}>
-                                    <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + 1}. {q}</td>
-                                    <td className="legacy-chk-col">
-                                      <div className="flex items-center gap-1">
-                                        <input
-                                          type="checkbox"
-                                          checked={isCorrect}
-                                          onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
-                                          className="correct-box"
-                                        />
-                                        <span className="text-[10px] font-bold">Yes</span>
-                                      </div>
-                                      {isCorrect && <span className="print-symbol correct">✔</span>}
+                                    <td style={{ padding: '6px', border: '1px solid black', verticalAlign: 'top' }}>{q}</td>
+                                    <td style={{ padding: '6px', border: '1px solid black', textAlign: 'center', cursor: 'pointer', position: 'relative' }} onClick={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}>
+                                      {isCorrect && <span style={{ color: 'red', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>✓</span>}
                                     </td>
-                                    <td className="legacy-chk-col">
-                                      <div className="flex items-center gap-1">
-                                        <input
-                                          type="checkbox"
-                                          checked={isIncorrect}
-                                          onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
-                                          className="incorrect-box"
-                                        />
-                                        <span className="text-[10px] font-bold">No</span>
-                                      </div>
-                                      {isIncorrect && <span className="print-symbol incorrect">✘</span>}
-                                    </td>
-                                    <td>
-                                      <input
-                                        type="text"
-                                        className="legacy-cmt-input"
-                                        value={grades[`${qKey}_cmt`] || ''}
-                                        onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                                      />
+                                    <td style={{ padding: '6px', border: '1px solid black', textAlign: 'center', cursor: 'pointer', position: 'relative' }} onClick={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}>
+                                      {isIncorrect && <span style={{ color: 'red', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>✓</span>}
                                     </td>
                                   </tr>
                                 );
                               })}
                               {perfQuestions.length > 0 && (
                                 <>
-                                  <tr className="bg-slate-100">
-                                    <td colSpan={4} className="p-3 font-bold text-slate-800">
+                                  <tr style={{ backgroundColor: '#f0f0f0' }}>
+                                    <td colSpan={3} style={{ padding: '6px', border: '1px solid black', fontWeight: 'bold' }}>
                                       {taskData.performanceHeader || 'Evidence of Performance'}
                                     </td>
                                   </tr>
@@ -4508,38 +4412,12 @@ const GradingPortal: React.FC = () => {
                                     const isIncorrect = grades[qKey] === 'incorrect';
                                     return (
                                       <tr key={i}>
-                                        <td className="text-sm py-4 whitespace-pre-wrap align-top">{i + oralQuestions.length + 1}. {q}</td>
-                                        <td className="legacy-chk-col">
-                                          <div className="flex items-center gap-1">
-                                            <input
-                                              type="checkbox"
-                                              checked={isCorrect}
-                                              onChange={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}
-                                              className="correct-box"
-                                            />
-                                            <span className="text-[10px] font-bold">Yes</span>
-                                          </div>
-                                          {isCorrect && <span className="print-symbol correct">✔</span>}
+                                        <td style={{ padding: '6px', border: '1px solid black', verticalAlign: 'top' }}>{q}</td>
+                                        <td style={{ padding: '6px', border: '1px solid black', textAlign: 'center', cursor: 'pointer', position: 'relative' }} onClick={() => setGrades({ ...grades, [qKey]: isCorrect ? null : 'correct' })}>
+                                          {isCorrect && <span style={{ color: 'red', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>✓</span>}
                                         </td>
-                                        <td className="legacy-chk-col">
-                                          <div className="flex items-center gap-1">
-                                            <input
-                                              type="checkbox"
-                                              checked={isIncorrect}
-                                              onChange={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}
-                                              className="incorrect-box"
-                                            />
-                                            <span className="text-[10px] font-bold">No</span>
-                                          </div>
-                                          {isIncorrect && <span className="print-symbol incorrect">✘</span>}
-                                        </td>
-                                        <td>
-                                          <input
-                                            type="text"
-                                            className="legacy-cmt-input"
-                                            value={grades[`${qKey}_cmt`] || ''}
-                                            onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                                          />
+                                        <td style={{ padding: '6px', border: '1px solid black', textAlign: 'center', cursor: 'pointer', position: 'relative' }} onClick={() => setGrades({ ...grades, [qKey]: isIncorrect ? null : 'incorrect' })}>
+                                          {isIncorrect && <span style={{ color: 'red', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>✓</span>}
                                         </td>
                                       </tr>
                                     );
