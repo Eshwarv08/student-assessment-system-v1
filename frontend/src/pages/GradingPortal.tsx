@@ -360,7 +360,7 @@ const GradingPortal: React.FC = () => {
                 Student Response:
               </p>
               {q.type === 'text' ? (
-                <textarea 
+                <textarea
                   className="w-full text-slate-800 whitespace-pre-wrap font-medium leading-relaxed italic text-sm sm:text-base bg-transparent border border-transparent hover:border-slate-300 focus:border-blue-400 focus:bg-white p-2 rounded transition-all outline-none resize-y min-h-[80px]"
                   value={studentAnswer || ''}
                   onChange={(e) => setStudentAnswers({ ...studentAnswers, [qKey]: e.target.value })}
@@ -379,7 +379,7 @@ const GradingPortal: React.FC = () => {
                         )}
                         <div className="flex-1 w-full text-center sm:text-left">
                           <p className="text-[9px] uppercase text-slate-400 font-black mb-1 tracking-wider">{ti.placeholder}</p>
-                          <input 
+                          <input
                             className="w-full text-[#1e3a8a] font-black text-base sm:text-lg bg-transparent border border-transparent hover:border-slate-300 focus:border-blue-400 focus:bg-slate-50 p-1 rounded transition-all outline-none"
                             value={ans}
                             onChange={(e) => setStudentAnswers({ ...studentAnswers, [ti.name]: e.target.value })}
@@ -527,7 +527,7 @@ const GradingPortal: React.FC = () => {
                               const ans = studentAnswers[stepKey];
                               return (
                                 <td key={cIdx} className="p-3 border-r border-slate-200 last:border-0 align-top">
-                                  <textarea 
+                                  <textarea
                                     className="p-2 w-full bg-blue-50/50 hover:bg-blue-100/50 focus:bg-white border border-blue-100 focus:border-blue-300 rounded text-slate-800 text-[13px] min-h-[60px] italic outline-none resize-y transition-colors"
                                     value={ans || ''}
                                     onChange={(e) => setStudentAnswers({ ...studentAnswers, [stepKey]: e.target.value })}
@@ -1174,10 +1174,10 @@ const GradingPortal: React.FC = () => {
             <div style={{ border: '1.2px solid #1a5fa8', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
 
               {/* Skilscope Logo */}
-              <img 
-                src="/assets/Skilscope.png" 
-                alt="Skilscope Logo" 
-                style={{ width: '170px', height: '185px', objectFit: 'contain', marginBottom: '5mm', marginTop: '5mm' }} 
+              <img
+                src="/assets/Skilscope.png"
+                alt="Skilscope Logo"
+                style={{ width: '170px', height: '185px', objectFit: 'contain', marginBottom: '5mm', marginTop: '5mm' }}
               />
 
               <div style={{ fontSize: '13pt', fontWeight: 'bold', color: '#991b1b', marginBottom: '10mm', fontFamily: 'Arial, sans-serif', letterSpacing: '0.3px' }}>RTO NO: 40954</div>
@@ -3497,12 +3497,12 @@ const GradingPortal: React.FC = () => {
               />
 
               {/* RTO Code */}
-              <div style={{ 
-                fontSize: '12pt', 
-                fontWeight: 'bold', 
-                color: '#991b1b', 
-                marginBottom: '20px', 
-                fontFamily: 'Arial, sans-serif', 
+              <div style={{
+                fontSize: '12pt',
+                fontWeight: 'bold',
+                color: '#991b1b',
+                marginBottom: '20px',
+                fontFamily: 'Arial, sans-serif',
                 letterSpacing: '0.5px'
               }}>
                 {rtoText}
@@ -3522,44 +3522,44 @@ const GradingPortal: React.FC = () => {
               </div>
 
               {/* Unit Title */}
-              <div 
+              <div
                 style={{ fontSize: '18pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '30px', maxWidth: '560px' }}
                 dangerouslySetInnerHTML={{ __html: courseText.replace(/\n/g, '<br />') }}
               />
 
               {/* Student Name and College Name */}
-              <div style={{ 
-                width: '100%', 
-                display: 'flex', 
-                flexDirection: 'column', 
+              <div style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
-                marginTop: '32mm' 
+                marginTop: '32mm'
               }}>
-                <div style={{ 
-                  fontSize: '13pt', 
-                  fontFamily: '"Times New Roman", Times, serif', 
-                  color: '#000', 
-                  display: 'flex', 
-                  alignItems: 'baseline', 
-                  justifyContent: 'center', 
-                  width: '100%' 
+                <div style={{
+                  fontSize: '13pt',
+                  fontFamily: '"Times New Roman", Times, serif',
+                  color: '#000',
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  justifyContent: 'center',
+                  width: '100%'
                 }}>
-                  Student Name: <span style={{ 
-                    display: 'inline-block', 
-                    borderBottom: '1.2px solid #000', 
-                    width: '100mm', 
-                    fontWeight: 'bold', 
-                    paddingLeft: '8px', 
-                    fontFamily: 'Arial, sans-serif', 
+                  Student Name: <span style={{
+                    display: 'inline-block',
+                    borderBottom: '1.2px solid #000',
+                    width: '100mm',
+                    fontWeight: 'bold',
+                    paddingLeft: '8px',
+                    fontFamily: 'Arial, sans-serif',
                     textAlign: 'left',
                     marginLeft: '8px'
                   }}>{submission.student_name}</span>
                 </div>
-                <div style={{ 
-                  textAlign: 'center', 
-                  fontSize: '10pt', 
-                  fontFamily: '"Times New Roman", Times, serif', 
-                  color: '#000', 
+                <div style={{
+                  textAlign: 'center',
+                  fontSize: '10pt',
+                  fontFamily: '"Times New Roman", Times, serif',
+                  color: '#000',
                   marginTop: '22mm'
                 }}>
                   {collegeNameText}
@@ -3573,513 +3573,243 @@ const GradingPortal: React.FC = () => {
       <div className="max-w-[850px] mx-auto bg-white mt-0 sm:mt-8 shadow-sm border rounded-sm p-4 sm:p-8 md:p-12 paper review-mode overflow-visible">
         {/* ASSESSMENT COMPETENCY RECORD SECTION - MOVED TO PAGE 2 (TOP OF PAPER) */}
         {!isQuestion15 && (
-          <div className="comp-record-section mb-12 md:mb-20 pb-10 md:pb-20 border-b-2 border-slate-200">
-            <div className="flex flex-col-reverse md:flex-row justify-between items-center md:items-start mb-6 md:mb-4 gap-4">
-              <div className="text-center md:text-left w-full">
-                <div className="text-[10px] md:text-sm font-bold border-b border-black inline-block mb-1">Assessment booklet</div>
-                <div className="text-xs md:text-sm font-bold underline leading-tight">
-                  {currentAssessmentQuestions.metadata?.code} - {currentAssessmentQuestions.metadata?.subtitle}
-                </div>
+          <div className="comp-record-section mb-12 md:mb-20 pb-10 md:pb-20 border-b-2 border-slate-200 generic-comp-view">
+            <style dangerouslySetInnerHTML={{
+              __html: `
+              .generic-comp-view { font-family: 'Times New Roman', Times, serif; color: #000; }
+              .generic-comp-view h1.section-title { font-size: 13pt; text-align: center; font-weight: bold; margin: 12px 0 8px; letter-spacing: 0.5px; background: transparent !important; color: #000 !important; border: none !important; padding: 0 !important; }
+              .generic-comp-view .intro-box { background: #c0c0c0; border: 1px solid #555; padding: 6px 8px; font-size: 9pt; margin-bottom: 12px; text-align: justify; font-family: 'Times New Roman', serif; }
+              .generic-comp-view .comp-table { width: 100%; border-collapse: collapse; font-size: 9pt; font-family: 'Times New Roman', serif; margin-bottom: 8px; }
+              .generic-comp-view .comp-table td, .generic-comp-view .comp-table th { border: 1px solid #555; padding: 4px 6px; vertical-align: top; }
+              .generic-comp-view .comp-table .label-col { font-weight: bold; background: #c0c0c0; width: 28%; }
+              .generic-comp-view .comp-table input[type="text"], .generic-comp-view .comp-table input[type="date"] { width: 100%; border: none; background: transparent; outline: none; font-family: 'Times New Roman', serif; font-size: 9pt; }
+              .generic-comp-view .decl-header { background: #c0c0c0; font-weight: bold; }
+              .generic-comp-view .decl-text { padding: 4px 6px; }
+              .generic-comp-view .evidence-label { font-weight: bold; background: #c0c0c0; width: 35%; }
+              .generic-comp-view .cb { display: inline-block; width: 13px; height: 13px; border: 1.5px solid #555; background: #fff; vertical-align: middle; position: relative; margin-right: 4px; cursor: pointer; }
+              .generic-comp-view .cb.checked::after { content: '✓'; position: absolute; top: -5px; left: 0px; font-size: 14px; color: #cc0000; font-weight: bold; }
+              .generic-comp-view .cb-sq { display: inline-block; width: 12px; height: 12px; border: 1px solid #555; background: #fff; vertical-align: middle; position: relative; margin-right: 4px; cursor: pointer; }
+              .generic-comp-view .cb-sq.checked::after { content: '✓'; position: absolute; top: -3.5px; left: 0px; font-size: 12px; color: #cc0000; font-weight: bold; }
+              .generic-comp-view .result-circle-red { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border: 1.5px solid #cc0000; border-radius: 50%; color: #cc0000; font-weight: bold; font-size: 8.5pt; cursor: pointer; }
+              .generic-comp-view .result-inactive { color: #777; font-size: 8.5pt; cursor: pointer; padding: 0 4px; }
+              .generic-comp-view .final-result-cell { background: #c0c0c0; text-align: left; vertical-align: middle; padding: 12px !important; }
+              .generic-comp-view .attempt-table { width: 100%; border-collapse: collapse; font-size: 9pt; font-family: 'Times New Roman', serif; margin-bottom: 8px; }
+              .generic-comp-view .attempt-table th { background: #c0c0c0; font-weight: bold; border: 1px solid #555; padding: 4px 6px; text-align: center; }
+              .generic-comp-view .attempt-table td { border: 1px solid #555; padding: 4px 6px; }
+              .generic-comp-view .attempt-table input[type="date"], .generic-comp-view .attempt-table input[type="text"], .generic-comp-view .attempt-table textarea { width: 100%; border: none; background: transparent; outline: none; font-family: 'Times New Roman', serif; resize: none; font-size: 9pt; }
+              .generic-comp-view .sig-visual { display: inline-flex; align-items: center; font-family: 'Times New Roman', serif; font-style: italic; font-size: 13pt; color: #222; border-bottom: 1px dotted #555; padding: 0 10px 0 0; min-width: 80px; height: 22px; cursor: pointer; }
+              .generic-comp-view .sig-visual img { max-height: 20px; }
+              .generic-comp-view .inner-header { border-top: 2px solid #1a5fa8; margin-bottom: 8px; padding-top: 4px; width: 100%; display: flex; justify-content: space-between; font-size: 8.5pt; font-family: 'Times New Roman', serif; }
+              .generic-comp-view .underline-bold { text-decoration: underline; font-weight: bold; }
+            `}} />
+
+            <div className="inner-header">
+              <div className="title-block text-left leading-tight">
+                <div><span className="underline-bold">Assessment Booklet</span></div>
+                <div><span className="underline-bold">{currentAssessmentQuestions.metadata?.unitCodeName || `${currentAssessmentQuestions.metadata?.code || ''} ${currentAssessmentQuestions.metadata?.subtitle || ''}`}</span></div>
               </div>
-              <img src="/assets/Skilscope.png" alt="Logo" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
+              <div className="logo-block shrink-0">
+                <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+              </div>
             </div>
 
-            <h2 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-10 uppercase tracking-tight text-slate-800">ASSESSMENT COMPETENCY RECORD</h2>
+            <h1 className="section-title">ASSESSMENT COMPETENCY RECORD</h1>
 
-            <div className="bg-blue-50/50 p-4 md:p-8 border border-blue-100 rounded-2xl mb-8 md:mb-12 text-xs md:text-sm font-medium leading-relaxed text-slate-600 italic shadow-sm">
+            <div className="intro-box">
               This form is to be completed by the assessor and used as the final record of the student competence in these discipline. All student submissions including any associated documents and checklists are to be attached to this cover sheet before placing on the students file. Student results are not to be entered onto the Student Database unless all relevant paperwork is completed and attached to this form.
             </div>
 
-            {/* Basic Info Table */}
-            <div className="overflow-hidden border border-slate-200 rounded-2xl mb-12 shadow-sm bg-white break-inside-avoid">
-              <div className="flex flex-col">
-                <div className="flex flex-col md:flex-row border-b border-slate-200">
-                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Student's Name</div>
-                  <div className="p-4 md:p-6 font-bold text-sm md:text-base text-slate-900 bg-white flex-1">{submission.student_name}</div>
-                </div>
-                <div className="flex flex-col md:flex-row border-b border-slate-200">
-                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessor's Name</div>
-                  <div className="p-4 md:p-6 bg-white flex-1">
-                    <input type="text" className="w-full border-none outline-none font-medium text-sm md:text-base text-slate-800 placeholder:text-slate-200" placeholder="Enter assessor name..." value={compRecord.assessor_name} onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })} />
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row border-b border-slate-200">
-                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessment Site</div>
-                  <div className="p-4 md:p-6 bg-white flex-1">
-                    <input type="text" className="w-full border-none outline-none text-sm md:text-base text-slate-600 placeholder:text-slate-200" placeholder="Enter site..." value={compRecord.assessment_site} onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })} />
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row">
-                  <div className="bg-slate-50 p-4 md:p-6 font-bold text-xs md:text-sm w-full md:w-[250px] text-slate-700 border-b md:border-b-0 md:border-r border-slate-200 uppercase tracking-wider flex items-center">Assessment Date/s</div>
-                  <div className="p-4 md:p-6 bg-white flex-1">
-                    <input
-                      type="date"
-                      className="w-full border-none outline-none text-sm md:text-base text-slate-600 no-print cursor-pointer"
-                      value={compRecord.assessment_date}
-                      onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                    />
-                    <span className="hidden print:inline font-bold text-sm md:text-base text-slate-800">{formatDisplayDate(compRecord.assessment_date)}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <table className="comp-table">
+              <tbody>
+                <tr><td className="label-col" style={{ backgroundColor: '#c0c0c0' }}>Student's Name</td><td>{submission.student_name}</td></tr>
+                <tr>
+                  <td className="label-col" style={{ backgroundColor: '#c0c0c0' }}>Assessor's Name</td>
+                  <td>
+                    <input type="text" value={compRecord.assessor_name || ''} onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })} />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="label-col" style={{ backgroundColor: '#c0c0c0' }}>Assessment Site</td>
+                  <td>
+                    <input type="text" value={compRecord.assessment_site || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })} />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="label-col" style={{ backgroundColor: '#c0c0c0' }}>Assessment Date</td>
+                  <td>
+                    <input type="date" className="no-print" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                    <span className="hidden print:inline">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-            {/* Assessor Declaration Block */}
-            <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
-              <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-sm text-white uppercase tracking-widest border-l-4 border-[#fbbf24]">Assessor Declaration</div>
-              <div className="p-4 border-b border-slate-200 text-xs leading-relaxed italic text-slate-500 bg-slate-50/50">
-                In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.
-              </div>
-              <div className="flex flex-col md:grid md:grid-cols-[200px_1fr] border-b border-slate-200">
-                <div className="p-4 font-bold text-xs border-b md:border-b-0 md:border-r border-slate-200 flex items-center text-slate-700 uppercase tracking-wider bg-slate-50/30">Evidence is Confirmed as:</div>
-                <div className="flex flex-wrap items-center">
-                  {['valid', 'sufficient', 'current', 'authentic'].map((key) => (
-                    <div key={key} className="flex items-center gap-3 border-b sm:border-b-0 sm:border-r border-slate-100 h-full px-4 py-3 last:border-0 flex-1 min-w-0" >
-                      <div className="relative w-5 h-5 flex items-center justify-center">
-                        <input
-                          type="checkbox"
-                          className="w-5 h-5 border-2 border-slate-300 rounded appearance-none cursor-pointer checked:border-blue-600 transition-colors"
-                          checked={compRecord.evidence[key]}
-                          onChange={(e) => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, [key]: e.target.checked } })}
-                        />
-                        {compRecord.evidence[key] && (
-                          <span className="absolute -top-1 text-blue-600 font-black text-xl pointer-events-none">✔</span>
-                        )}
-                      </div>
-                      <span className="text-[11px] font-black uppercase tracking-tight text-slate-700">{key}</span>
+            <table className="comp-table">
+              <tbody>
+                <tr>
+                  <td colSpan={5} className="decl-header" style={{ backgroundColor: '#c0c0c0' }}>Assessor Declaration</td>
+                </tr>
+                <tr>
+                  <td colSpan={5} className="decl-text">In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.</td>
+                </tr>
+                <tr>
+                  <td className="evidence-label" style={{ backgroundColor: '#c0c0c0', width: '40%' }}>Evidence is Confirmed as:</td>
+                  <td style={{ width: '15%' }}><span className={`cb ${compRecord.evidence?.valid ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, valid: !compRecord.evidence?.valid } })}></span> Valid</td>
+                  <td style={{ width: '15%' }}><span className={`cb ${compRecord.evidence?.sufficient ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, sufficient: !compRecord.evidence?.sufficient } })}></span> Sufficient</td>
+                  <td style={{ width: '15%' }}><span className={`cb ${compRecord.evidence?.current ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, current: !compRecord.evidence?.current } })}></span> Current</td>
+                  <td style={{ width: '15%' }}><span className={`cb ${compRecord.evidence?.authentic ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, authentic: !compRecord.evidence?.authentic } })}></span> Authentic</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className="comp-table" style={{ marginBottom: '8px', tableLayout: 'fixed' }}>
+              <tbody>
+                <tr>
+                  <td colSpan={2} style={{ backgroundColor: '#c0c0c0', fontWeight: 'bold', width: '50%' }}>Please attach the following documentation to this form</td>
+                  <td style={{ backgroundColor: '#c0c0c0', fontWeight: 'bold', width: '15%', textAlign: 'center' }}>Result</td>
+                  <td rowSpan={Object.keys(currentAssessmentQuestions).filter(k => k.startsWith('task')).length + 1} className="final-result-cell" style={{ width: '35%', backgroundColor: '#c0c0c0' }}>
+                    <div style={{ textAlign: 'center', fontWeight: 'bold', marginBottom: '16px', fontSize: '10pt' }}>FINAL ASSESSMENT<br />RESULT:</div>
+                    <div style={{ marginBottom: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', paddingLeft: '10%' }} onClick={() => setFinalResult('C')}>
+                      <span className={`cb-sq ${finalResult === 'C' ? 'checked' : ''}`}></span> <span style={{ fontWeight: 'bold' }}>Competent (C)</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="hidden md:block">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="bg-slate-100 border-b border-slate-300">
-                      <th className="border-r border-slate-300 p-3 font-black text-[9px] uppercase text-slate-600 w-1/3 text-left tracking-tighter">Documentation to be attached</th>
-                      <th className="border-r border-slate-300 p-3 font-black text-[9px] uppercase text-slate-600 w-24 text-center tracking-tighter">Result</th>
-                      <th className="bg-slate-200 p-3 font-black text-xs uppercase text-slate-800 text-center tracking-tight" rowSpan={Object.keys(currentAssessmentQuestions).filter(k => k.startsWith('task')).length + 1}>
-                        FINAL ASSESSMENT RESULT
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.keys(currentAssessmentQuestions)
-                      .filter(key => key.startsWith('task'))
-                      .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
-                      .map((taskKey, idx) => {
-                        const tNum = parseInt(taskKey.replace('task', ''));
-                        const id = `t${tNum}`;
-                        const result = taskResults[id];
-                        let taskLabel = '';
-                        if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322') {
-                          if (tNum === 1) taskLabel = 'Written question and answers';
-                          else taskLabel = `Observation ${tNum - 1}`;
-                        } else if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
-                          if (tNum <= 2) taskLabel = `Observation ${tNum}`;
-                          else taskLabel = 'Written question and answers';
-                        } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
-                          if (tNum === 1) taskLabel = 'Observation';
-                          else taskLabel = 'Questions and Answers';
-                        } else {
-                          if (tNum <= 3) taskLabel = `Observation ${tNum}`;
-                          else if (tNum === 4) taskLabel = 'Written question and answers';
-                          else taskLabel = 'Written assessment';
-                        }
-
-
-                        return (
-                          <tr key={idx} className="border-b border-slate-200 last:border-0 group hover:bg-slate-50/50 transition-colors break-inside-avoid">
-                            <td className="border-r border-slate-200 p-3 h-[52px]">
-                              <div className="flex items-center gap-4">
-                                <span className="font-black text-[10px] text-slate-800 w-28 shrink-0 uppercase tracking-tighter">Task {tNum}</span>
-                                <div className="flex items-center gap-2">
-                                  <input
-                                    type="checkbox"
-                                    className="w-4 h-4 border border-slate-300 rounded accent-blue-600"
-                                    checked={compRecord.tasks[id]}
-                                    onChange={(e) => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [id]: e.target.checked } })}
-                                  />
-                                  <span className="text-[11px] text-slate-600 font-medium whitespace-nowrap">{taskLabel}</span>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="border-r border-slate-200 p-3 h-[52px] text-center">
-                              <div className="flex items-center justify-center gap-2">
-                                <div className={`w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center font-black text-xs transition-all ${result === 'S' ? 'bg-green-600 border-green-600 text-white shadow-md shadow-green-100 scale-110' : 'text-slate-400 opacity-40'}`}>S</div>
-                                <span className="text-[10px] font-black text-slate-300">/</span>
-                                <div className={`w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center font-black text-xs transition-all ${result === 'NS' ? 'bg-red-600 border-red-600 text-white shadow-md shadow-red-100 scale-110' : 'text-slate-400 opacity-40'}`}>NS</div>
-                              </div>
-                            </td>
-                            {idx === 0 && (
-                              <td className="bg-slate-200 p-6 align-middle" rowSpan={Object.keys(currentAssessmentQuestions).filter(k => k.startsWith('task')).length}>
-                                <div className="flex flex-col items-center space-y-6">
-                                  <div className="space-y-5 text-left w-full max-w-[200px]">
-                                    <div className="flex items-center gap-4 group cursor-pointer" onClick={() => setFinalResult('C')}>
-                                      <div className="relative w-7 h-7 flex items-center justify-center">
-                                        <div className={`w-7 h-7 border-2 rounded-lg transition-all ${finalResult === 'C' ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-200' : 'bg-white border-slate-300 group-hover:border-blue-400'}`}></div>
-                                        {finalResult === 'C' && (
-                                          <span className="absolute text-white font-black text-xl pointer-events-none">✔</span>
-                                        )}
-                                      </div>
-                                      <span className={`font-black text-sm uppercase tracking-tighter transition-colors ${finalResult === 'C' ? 'text-blue-700' : 'text-slate-500 group-hover:text-slate-800'}`}>Competent</span>
-                                    </div>
-                                    <div className="flex items-center gap-4 group cursor-pointer" onClick={() => setFinalResult('NC')}>
-                                      <div className="relative w-7 h-7 flex items-center justify-center">
-                                        <div className={`w-7 h-7 border-2 rounded-lg transition-all ${finalResult === 'NC' ? 'bg-red-600 border-red-600 shadow-lg shadow-red-200' : 'bg-white border-slate-300 group-hover:border-red-400'}`}></div>
-                                        {finalResult === 'NC' && (
-                                          <span className="absolute text-white font-black text-xl pointer-events-none">✘</span>
-                                        )}
-                                      </div>
-                                      <span className={`font-black text-sm uppercase tracking-tighter transition-colors ${finalResult === 'NC' ? 'text-red-700' : 'text-slate-500 group-hover:text-slate-800'}`}>Not Yet Competent</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                            )}
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Mobile Documentation View */}
-              <div className="md:hidden">
-                <div className="bg-slate-100 p-3 font-black text-[10px] uppercase text-slate-600 border-b border-slate-200 tracking-tighter">Documentation & Results</div>
-                <div className="divide-y divide-slate-100">
-                  {Object.keys(currentAssessmentQuestions)
-                    .filter(key => key.startsWith('task'))
-                    .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
-                    .map((taskKey, idx) => {
-                      const tNum = parseInt(taskKey.replace('task', ''));
-                      const id = `t${tNum}`;
-                      const result = taskResults[id];
-                      let taskLabel = '';
-                      if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
-                        if (tNum <= 2) taskLabel = `Observation ${tNum}`;
-                        else taskLabel = 'Written question and answers';
-                      } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
-                        if (tNum === 1) taskLabel = 'Observation';
-                        else taskLabel = 'Questions and Answers';
-                      } else if (tNum <= 3) taskLabel = `Observation ${tNum}`;
+                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', paddingLeft: '10%' }} onClick={() => setFinalResult('NC')}>
+                      <span className={`cb-sq ${finalResult === 'NC' ? 'checked' : ''}`}></span> <span style={{ fontWeight: 'bold' }}>Not Competent (NC)</span>
+                    </div>
+                  </td>
+                </tr>
+                {Object.keys(currentAssessmentQuestions)
+                  .filter(key => key.startsWith('task'))
+                  .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
+                  .map((taskKey, idx) => {
+                    const tNum = parseInt(taskKey.replace('task', ''));
+                    const id = `t${tNum}`;
+                    const result = taskResults[id];
+                    let taskLabel = '';
+                    if (currentAssessmentQuestions.metadata?.code === 'ICTCBL322') {
+                      if (tNum === 1) taskLabel = 'Questions and Answers';
+                      else taskLabel = 'Observation';
+                    } else if (currentAssessmentQuestions.metadata?.code === 'ICTBWN307') {
+                      if (tNum <= 2) taskLabel = `Observation ${tNum}`;
+                      else taskLabel = 'Written question and answers';
+                    } else if (currentAssessmentQuestions.metadata?.code === 'ICTTEN318') {
+                      if (tNum === 1) taskLabel = 'Observation';
+                      else taskLabel = 'Questions and Answers';
+                    } else {
+                      if (tNum <= 3) taskLabel = `Observation ${tNum}`;
                       else if (tNum === 4) taskLabel = 'Written question and answers';
                       else taskLabel = 'Written assessment';
+                    }
 
-
-                      return (
-                        <div key={idx} className="p-4 space-y-4 bg-white break-inside-avoid">
-                          <div className="flex items-center justify-between">
-                            <span className="font-black text-[11px] text-slate-800 uppercase tracking-tighter">Task {tNum}</span>
-                            <div className="flex items-center gap-2">
-                              <div className={`w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center font-black text-[10px] ${result === 'S' ? 'bg-green-600 border-green-600 text-white' : 'text-slate-300'}`}>S</div>
-                              <div className={`w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center font-black text-[10px] ${result === 'NS' ? 'bg-red-600 border-red-600 text-white' : 'text-slate-300'}`}>NS</div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="checkbox"
-                              className="w-5 h-5 border border-slate-300 rounded accent-blue-600"
-                              checked={compRecord.tasks[id]}
-                              onChange={(e) => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [id]: e.target.checked } })}
-                            />
-                            <span className="text-xs text-slate-600 font-bold">{taskLabel}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-                <div className="bg-slate-200 p-6 border-t border-slate-300">
-                  <div className="text-center font-black text-xs uppercase text-slate-800 tracking-tight mb-6">FINAL ASSESSMENT RESULT</div>
-                  <div className="flex flex-col gap-4 items-center">
-                    <div className="flex items-center gap-4 w-full max-w-[240px] p-4 bg-white rounded-xl border-2 border-transparent shadow-sm" onClick={() => setFinalResult('C')}>
-                      <div className="relative w-7 h-7 flex items-center justify-center">
-                        <div className={`w-7 h-7 border-2 rounded-lg ${finalResult === 'C' ? 'bg-blue-600 border-blue-600' : 'bg-white border-slate-300'}`}></div>
-                        {finalResult === 'C' && <span className="absolute text-white font-black text-xl">✔</span>}
-                      </div>
-                      <span className={`font-black text-sm uppercase tracking-tighter ${finalResult === 'C' ? 'text-blue-700' : 'text-slate-500'}`}>Competent</span>
-                    </div>
-                    <div className="flex items-center gap-4 w-full max-w-[240px] p-4 bg-white rounded-xl border-2 border-transparent shadow-sm" onClick={() => setFinalResult('NC')}>
-                      <div className="relative w-7 h-7 flex items-center justify-center">
-                        <div className={`w-7 h-7 border-2 rounded-lg ${finalResult === 'NC' ? 'bg-red-600 border-red-600' : 'bg-white border-slate-300'}`}></div>
-                        {finalResult === 'NC' && <span className="absolute text-white font-black text-xl">✘</span>}
-                      </div>
-                      <span className={`font-black text-sm uppercase tracking-tighter ${finalResult === 'NC' ? 'text-red-700' : 'text-slate-500'}`}>Not Yet Competent</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Attempts Table */}
-            <div className="border border-slate-300 rounded-xl mb-10 overflow-hidden shadow-sm bg-white break-inside-avoid">
-              <div className="hidden md:block">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="bg-slate-100 border-b border-slate-300">
-                      <th className="p-3 font-black text-[10px] uppercase text-slate-600 w-20 text-center border-r border-slate-200 tracking-tighter">Attempt</th>
-                      <th className="p-3 font-black text-[10px] uppercase text-slate-600 w-48 text-center border-r border-slate-200 tracking-tighter">Date</th>
-                      <th className="p-3 font-black text-[10px] uppercase text-slate-600 text-left tracking-tighter">Assessor's Feedback (as Required)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[0, 1, 2].map((idx) => (
-                      <tr key={idx} className="border-b border-slate-100 last:border-0 group hover:bg-slate-50/30 transition-colors">
-                        <td className="p-3 text-center font-black text-slate-700 border-r border-slate-100">{idx + 1}</td>
-                        <td className="p-3 border-r border-slate-100">
-                          <input
-                            type="date"
-                            className="w-full border-none outline-none text-slate-600 text-center no-print cursor-pointer"
-                            value={compRecord.attempts[idx].date}
-                            onChange={(e) => {
-                              const newAttempts = [...compRecord.attempts];
-                              newAttempts[idx].date = e.target.value;
-                              setCompRecord({ ...compRecord, attempts: newAttempts });
-                            }}
-                          />
-                          <span className="hidden print:inline text-slate-800 font-bold">{formatDisplayDate(compRecord.attempts[idx].date)}</span>
+                    return (
+                      <tr key={idx}>
+                        <td style={{ fontWeight: 'bold', width: '25%' }}>Assessment Task {tNum}</td>
+                        <td style={{ width: '25%' }}>
+                          <span className={`cb-sq ${compRecord.tasks?.[id] ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [id]: !compRecord.tasks?.[id] } })}></span> {taskLabel}
                         </td>
-                        <td className="p-3">
-                          <textarea
-                            className="w-full h-full min-h-[44px] border-none outline-none resize-none text-slate-600 text-sm placeholder:text-slate-300"
-                            placeholder="Provide feedback for this attempt..."
-                            value={compRecord.attempts[idx].feedback}
-                            onChange={(e) => {
-                              const newAttempts = [...compRecord.attempts];
-                              newAttempts[idx].feedback = e.target.value;
-                              setCompRecord({ ...compRecord, attempts: newAttempts });
-                            }}
-                          />
+                        <td style={{ textAlign: 'center' }}>
+                          {result === 'S' ? (
+                            <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, [id]: 'NS' })}>S</span>
+                          ) : (
+                            <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, [id]: 'S' })}>S</span>
+                          )}
+                          {' '}/{' '}
+                          {result === 'NS' ? (
+                            <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, [id]: 'S' })}>NS</span>
+                          ) : (
+                            <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, [id]: 'NS' })}>NS</span>
+                          )}
                         </td>
                       </tr>
-                    ))}
-                    <tr className="bg-slate-50">
-                      <td colSpan={2} className="p-4 font-black text-[10px] text-center text-slate-700 uppercase tracking-widest border-r border-slate-200 border-t border-slate-200">Final Feedback</td>
-                      <td className="p-4 border-t border-slate-200">
-                        <textarea
-                          className="w-full h-full min-h-[80px] border-none outline-none resize-none text-slate-800 text-sm font-medium bg-transparent placeholder:text-slate-300"
-                          placeholder="Summarize final assessment findings..."
-                          value={compRecord.final_feedback}
-                          onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                    );
+                  })}
+              </tbody>
+            </table>
 
-              {/* Mobile Attempts View */}
-              <div className="md:hidden divide-y divide-slate-100">
+            <table className="attempt-table">
+              <tbody>
+                <tr>
+                  <th style={{ width: '10%', backgroundColor: '#c0c0c0' }}>Attempt</th>
+                  <th style={{ width: '15%', backgroundColor: '#c0c0c0' }}>Date</th>
+                  <th style={{ width: '75%', textAlign: 'center', backgroundColor: '#c0c0c0' }}>Assessor's Feedback (as Required):</th>
+                </tr>
                 {[0, 1, 2].map((idx) => (
-                  <div key={idx} className="p-4 space-y-3 bg-white">
-                    <div className="flex justify-between items-center">
-                      <span className="font-black text-xs text-slate-400 uppercase tracking-widest">Attempt {idx + 1}</span>
-                      <input
-                        type="date"
-                        className="border-none outline-none text-slate-600 text-xs no-print cursor-pointer bg-slate-50 px-2 py-1 rounded"
-                        value={compRecord.attempts[idx].date}
-                        onChange={(e) => {
-                          const newAttempts = [...compRecord.attempts];
-                          newAttempts[idx].date = e.target.value;
-                          setCompRecord({ ...compRecord, attempts: newAttempts });
-                        }}
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-black text-slate-300 uppercase tracking-tight">Assessor's Feedback:</span>
-                      <textarea
-                        className="w-full min-h-[60px] p-3 bg-slate-50 rounded-lg border-none outline-none resize-none text-slate-600 text-xs"
-                        placeholder="Provide feedback..."
-                        value={compRecord.attempts[idx].feedback}
-                        onChange={(e) => {
-                          const newAttempts = [...compRecord.attempts];
-                          newAttempts[idx].feedback = e.target.value;
-                          setCompRecord({ ...compRecord, attempts: newAttempts });
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <tr key={idx}>
+                    <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{idx + 1}</td>
+                    <td>
+                      <input type="date" className="no-print" value={compRecord.attempts?.[idx]?.date || ''} onChange={(e) => {
+                        const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                        if (!att[idx]) att[idx] = { date: '', feedback: '' };
+                        att[idx].date = e.target.value;
+                        setCompRecord({ ...compRecord, attempts: att });
+                      }} />
+                      <span className="hidden print:inline">{formatDisplayDate(compRecord.attempts?.[idx]?.date)}</span>
+                    </td>
+                    <td>
+                      <input type="text" value={compRecord.attempts?.[idx]?.feedback || ''} onChange={(e) => {
+                        const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                        if (!att[idx]) att[idx] = { date: '', feedback: '' };
+                        att[idx].feedback = e.target.value;
+                        setCompRecord({ ...compRecord, attempts: att });
+                      }} />
+                    </td>
+                  </tr>
                 ))}
-                <div className="p-4 bg-slate-50 space-y-2">
-                  <span className="font-black text-[10px] text-slate-400 uppercase tracking-widest">Final Feedback</span>
-                  <textarea
-                    className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-slate-800 text-sm font-medium"
-                    placeholder="Summarize final findings..."
-                    value={compRecord.final_feedback}
-                    onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
+                <tr>
+                  <td colSpan={2} style={{ backgroundColor: '#c0c0c0', fontWeight: 'bold', textAlign: 'center' }}>Final Feedback:</td>
+                  <td>
+                    <textarea style={{ height: '30px', width: '100%', padding: '2px 0' }} value={compRecord.final_feedback || ''} onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-            {/* Declaration Section */}
-            <div className="mt-12 bg-white rounded-xl border border-slate-300 overflow-hidden shadow-md break-inside-avoid">
-              <div className="bg-[#1e3a8a] p-4 text-white font-black text-sm uppercase tracking-widest">Declaration</div>
-              <div className="divide-y divide-slate-200">
-                {/* Assessor Declaration Row */}
-                <div className="flex flex-col md:flex-row">
-                  <div className="p-4 md:p-6 md:w-2/3 align-top bg-slate-50/50 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p className="text-[10px] md:text-xs font-black leading-relaxed text-slate-800 uppercase tracking-tighter mb-2">Assessor Declaration</p>
-                    <p className="text-xs text-slate-600 italic leading-relaxed">
-                      I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
-                    </p>
-                  </div>
-                  <div className="p-4 md:p-6 md:w-1/3 bg-white">
-                    <div className="space-y-4 md:space-y-5">
-                      <div className="flex flex-col gap-2">
-                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
-                        <div
-                          className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center cursor-pointer relative group transition-all hover:border-blue-400 bg-slate-50/30 rounded-t-lg overflow-hidden p-1"
-                          onClick={() => openSigModal('assessor_signature', 'comp')}
-                        >
-                          {compRecord.assessor_signature ? (
-                            <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
-                          ) : (
-                            <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest group-hover:text-blue-500">Click to Sign</span>
-                          )}
-                          {compRecord.assessor_signature && (
-                            <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-[0.08]">
-                              <span className="text-blue-600 text-3xl md:text-5xl rotate-[-15deg] font-black uppercase border-4 border-blue-600 px-4 whitespace-nowrap">VERIFIED</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date</span>
-                        <div className="flex-1 border-b-2 border-slate-200">
-                          <input
-                            type="date"
-                            className="w-full outline-none text-sm text-slate-800 font-bold no-print bg-transparent py-1"
-                            value={compRecord.assessor_sig_date}
-                            onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })}
-                          />
-                          <span className="hidden print:inline text-sm font-black text-slate-800">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
-                        </div>
+            <div style={{ fontSize: '12pt', fontWeight: 'bold', marginTop: '12px', marginBottom: '4px', fontFamily: '"Times New Roman", Times, serif' }}>Declaration</div>
+            <table className="comp-table" style={{ marginBottom: '0' }}>
+              <tbody>
+                <tr>
+                  <td style={{ width: '50%', verticalAlign: 'top', padding: '6px 8px' }}>
+                    <span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
+                  </td>
+                  <td style={{ width: '50%', verticalAlign: 'top', padding: '6px 8px' }}>
+                    <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center' }}>
+                      Signature: &nbsp;
+                      <div className="sig-visual" onClick={() => openSigModal('assessor_signature', 'comp')}>
+                        {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} /> : null}
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* Student Declaration Row */}
-                <div className="flex flex-col md:flex-row">
-                  <div className="p-4 md:p-6 md:w-2/3 align-top bg-slate-50/50 border-b md:border-b-0 md:border-r border-slate-200">
-                    <p className="text-[10px] md:text-xs font-black leading-relaxed text-slate-800 uppercase tracking-tighter mb-2">Student Declaration</p>
-                    <p className="text-xs text-slate-600 italic leading-relaxed">
-                      I declare that I accept the assessment competency outcome and consider the feedback of my assessor positively. I also declare that the work submitted is my own, and has not been copied or plagiarised from any person or source.
-                    </p>
-                  </div>
-                  <div className="p-4 md:p-6 md:w-1/3 bg-white">
-                    <div className="space-y-4 md:space-y-5">
-                      <div className="flex flex-col gap-2">
-                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Signature</div>
-                        <div
-                          onClick={() => openSigModal('student_signature', 'comp')}
-                          className="border-b-2 border-slate-200 h-16 md:h-20 w-full flex items-center justify-center bg-slate-50/30 rounded-t-lg overflow-hidden p-1 cursor-pointer hover:bg-blue-50/50 transition-colors group"
-                        >
-                          {compRecord.student_signature || submission.signature_url ? (
-                            <img src={compRecord.student_signature || submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain opacity-60" />
-                          ) : (
-                            <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest group-hover:text-blue-500 transition-colors">Digital Sign</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Date</span>
-                        <div className="border-b-2 border-slate-200 flex-1 text-sm font-black text-slate-800 h-8 flex items-center">
-                          {submission.submitted_at ? formatDisplayDate(new Date(submission.submitted_at).toISOString().split('T')[0]) : ''}
-                        </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      Date: &nbsp;
+                      <input type="date" className="no-print" style={{ width: 'auto', borderBottom: '1px dotted #555' }} value={compRecord.assessor_sig_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })} />
+                      <span className="hidden print:inline" style={{ borderBottom: '1px dotted #555', minWidth: '80px', display: 'inline-block' }}>{formatDisplayDate(compRecord.assessor_sig_date)}</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: 'top', padding: '6px 8px' }}>
+                    <span style={{ fontWeight: 'bold' }}>Student:</span> I declare that I accept the assessment competency outcome and consider the feedback of my assessor positively. I also declare that the work submitted is my own, and has not been copied or plagiarised from any person or source.
+                  </td>
+                  <td style={{ verticalAlign: 'top', padding: '6px 8px' }}>
+                    <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center' }}>
+                      Signature: &nbsp;
+                      <div className="sig-visual" onClick={() => openSigModal('student_signature', 'comp')}>
+                        {compRecord.student_signature || submission.signature_url ? <img src={compRecord.student_signature || submission.signature_url} className="opacity-60" /> : null}
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      Date: &nbsp;
+                      <span style={{ borderBottom: '1px dotted #555', minWidth: '80px', display: 'inline-block' }}>
+                        {submission.submitted_at ? formatDisplayDate(new Date(submission.submitted_at).toISOString().split('T')[0]) : '____/____/________'}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         )}
 
         <div className="max-w-[850px] mx-auto bg-white mt-0 sm:mt-8 shadow-sm border rounded-sm p-4 sm:p-8 paper review-mode overflow-visible">
-          {/* Header Info */}
-          {/* New Header UI matching the image */}
-          <div className="space-y-6 mb-12 no-print">
-            {/* Student Info Box */}
-            <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Student Name:</span>
-                <span className="font-bold text-base">{submission.student_name}</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Student ID:</span>
-                <span className="font-bold text-base">{submission.student_id || '—'}</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Date:</span>
-                <input type="date" className="font-bold text-base bg-transparent border-none outline-none hover:bg-slate-100 p-1 -m-1 rounded" value={studentAnswers['st-date'] || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, 'st-date': e.target.value })} />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Signature:</span>
-                <div
-                  onClick={() => openSigModal('student_signature', 'comp')}
-                  className="border border-black h-20 flex items-center justify-center bg-white w-full overflow-hidden p-1 cursor-pointer hover:bg-gray-100 transition-colors group"
-                >
-                  {compRecord.student_signature || submission.signature_url ? (
-                    <img src={compRecord.student_signature || submission.signature_url} alt="Sig" className="max-h-full max-w-full object-contain" />
-                  ) : <span className="text-gray-400 italic text-sm group-hover:text-blue-500 transition-colors">Click to sign</span>}
-                </div>
-              </div>
-            </div>
 
-            {/* Assessor Info Box */}
-            <div className="border-2 border-black p-4 space-y-4 text-black bg-gray-50/30 break-inside-avoid">
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Assessor's Name:</span>
-                <input
-                  type="text"
-                  className="w-full border border-black p-2 outline-none focus:bg-blue-50 font-bold"
-                  placeholder="Enter assessor name..."
-                  value={compRecord.assessor_name}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })}
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Assessment Site:</span>
-                <input
-                  type="text"
-                  className="w-full border border-black p-2 outline-none focus:bg-blue-50"
-                  placeholder="Enter assessment site..."
-                  value={compRecord.assessment_site}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })}
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Assessment Date/s:</span>
-                <div className="flex-1 flex items-center">
-                  <input
-                    type="date"
-                    className="w-full border border-black p-2 outline-none focus:bg-blue-50 no-print"
-                    value={compRecord.assessment_date}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline font-bold text-base ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-[150px_1fr] items-start sm:items-center gap-1 sm:gap-2">
-                <span className="font-bold text-sm">Signature:</span>
-                <div
-                  onClick={() => openSigModal('assessor_signature', 'comp')}
-                  className="relative cursor-pointer border border-black bg-white h-20 flex items-center justify-center overflow-hidden group w-full p-1"
-                >
-                  {compRecord.assessor_signature ? (
-                    <img src={compRecord.assessor_signature} alt="Signature" className="max-h-full max-w-full object-contain" />
-                  ) : (
-                    <span className="text-gray-400 italic text-sm">Click here to sign</span>
-                  )}
-                  <div className="absolute right-2 bottom-1 text-[9px] text-blue-600 font-bold flex items-center gap-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 px-2 py-0.5 rounded shadow-sm border border-blue-100">
-                    <span>✎ EDIT</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Administrative Use Only Section - Match PDF exactly */}
           {currentAssessmentQuestions.adminInfo && !currentAssessmentQuestions.adminInfo.hideAdminUseOnly && (
