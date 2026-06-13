@@ -3813,86 +3813,87 @@ const GradingPortal: React.FC = () => {
 
           {/* Administrative Use Only Section - Match PDF exactly */}
           {currentAssessmentQuestions.adminInfo && !currentAssessmentQuestions.adminInfo.hideAdminUseOnly && (
-            <div className="border-2 border-slate-400 mb-12 no-print-section break-inside-avoid">
-              <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
-                {(currentAssessmentQuestions.adminInfo.markingGuide && currentAssessmentQuestions.metadata.code !== 'ICTCBL303') ? "Asseror’s Marking Guide Instructions" : "Administrative Use Only:"}
+            <div className="mb-12 no-print-section break-inside-avoid">
+              <div className="generic-comp-view mb-8">
+                <table className="comp-table">
+                  <tbody>
+                    <tr>
+                      <td colSpan={2} style={{ backgroundColor: '#c0c0c0', fontWeight: 'bold' }}>
+                        {(currentAssessmentQuestions.adminInfo.markingGuide && currentAssessmentQuestions.metadata.code !== 'ICTCBL303') ? "Asseror’s Marking Guide Instructions" : "Administrative Use Only:"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={{ width: '28%', backgroundColor: 'transparent' }}>Entered into Student Management Database</td>
+                      <td style={{ paddingLeft: '12px' }}>
+                        <div style={{ display: 'flex', flexWrap: 'nowrap', gap: '8px', alignItems: 'center', overflow: 'hidden' }}>
+                          <span className="cb-sq" style={{ marginTop: '2px', flexShrink: 0 }}></span>
+                          <span style={{ whiteSpace: 'nowrap' }}>Signature/Initial</span>
+                          <div
+                            onClick={() => openSigModal('assessor_signature', 'comp')}
+                            className="sig-visual"
+                            style={{ display: 'inline-flex', verticalAlign: 'middle', minWidth: '150px', flexShrink: 0 }}
+                          >
+                            {compRecord.assessor_signature ? (
+                              <img src={compRecord.assessor_signature} alt="Sig" />
+                            ) : null}
+                          </div>
+                          <span style={{ whiteSpace: 'nowrap', marginLeft: '16px' }}>_ Date:</span>
+                          <div style={{ display: 'inline-block', flexShrink: 0 }}>
+                            <input
+                              type="date"
+                              className="no-print"
+                              style={{ width: '120px', border: 'none', background: 'transparent', outline: 'none', fontFamily: "'Times New Roman', serif", fontSize: '9pt', borderBottom: '1px dotted #555' }}
+                              value={compRecord.assessment_date || ''}
+                              onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                            />
+                            <span className="hidden print:inline" style={{ borderBottom: '1px dotted #555', minWidth: '80px', display: 'inline-block' }}>{formatDisplayDate(compRecord.assessment_date)}</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    {(currentAssessmentQuestions.adminInfo.markingGuide
+                      ? currentAssessmentQuestions.adminInfo.markingGuide.map((item: any) => [item.label, item.content])
+                      : [
+                        ["Unit Code/Name", currentAssessmentQuestions.adminInfo.unitCodeName],
+                        ["Pre-requisites", currentAssessmentQuestions.adminInfo.preRequisites],
+                        ["Co-requisites", currentAssessmentQuestions.adminInfo.coRequisites],
+                        ["Unit Summary", currentAssessmentQuestions.adminInfo.unitSummary],
+                        ["Target Group", currentAssessmentQuestions.adminInfo.targetGroup],
+                        ["Conditions and Context of the Assessments", currentAssessmentQuestions.adminInfo.conditionsAndContext],
+                        ["Specific Resources Required", currentAssessmentQuestions.adminInfo.specificResources],
+                        ["Re-Assessment", currentAssessmentQuestions.adminInfo.reAssessment],
+                        ["Plagiarism", currentAssessmentQuestions.adminInfo.plagiarism],
+                        ["Complaints and appeal", currentAssessmentQuestions.adminInfo.complaintsAndAppeals],
+                        ["Assessors Intervention", currentAssessmentQuestions.adminInfo.assessorsIntervention],
+                        ["Attaching Documents", currentAssessmentQuestions.adminInfo.attachingDocuments],
+                        ["Assessment Instruction", currentAssessmentQuestions.adminInfo.assessmentInstruction],
+                        ...(currentAssessmentQuestions.adminInfo.taskOverviews
+                          ? currentAssessmentQuestions.adminInfo.taskOverviews.map((task: any) => [task.id.replace(':', ''), task.text])
+                          : [
+                            ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
+                            ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
+                            ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
+                            ...(currentAssessmentQuestions.adminInfo.task4Description
+                              ? [["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description]]
+                              : []),
+                            ...(currentAssessmentQuestions.adminInfo.task5Description
+                              ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
+                              : []),
+                            ...(currentAssessmentQuestions.adminInfo.task6Description
+                              ? [["Assessment Task 6", currentAssessmentQuestions.adminInfo.task6Description]]
+                              : [])
+                          ]),
+                        ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
+                      ]).map(([label, value]: any, idx: number) => (
+                        <tr key={idx}>
+                          <td className="label-col" style={{ backgroundColor: 'transparent', width: '28%', fontWeight: 'bold' }}>{label}</td>
+                          <td style={{ whiteSpace: 'pre-wrap' }}>{value}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
               </div>
-              <div className="p-4 bg-white space-y-4 text-sm">
-                <div className="flex flex-wrap gap-8 items-center border-b border-slate-100 pb-4">
-                  <div className="flex items-center gap-4">
-                    <span className="text-xl text-slate-400">❑</span>
-                    <span className="font-medium text-slate-600">Entered into Student Management Database</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-
-                    <span className="font-medium text-slate-600">Signature/Initial:</span>
-                    <div
-                      onClick={() => openSigModal('assessor_signature', 'comp')}
-                      className="border-b border-slate-400 min-w-0 sm:min-w-[120px] h-10 flex items-center justify-center cursor-pointer relative bg-slate-50/50 hover:bg-slate-100 transition-colors group flex-1 overflow-hidden p-1"
-                    >
-                      {compRecord.assessor_signature ? (
-                        <img src={compRecord.assessor_signature} alt="Sig" className="max-h-full max-w-full object-contain" />
-                      ) : (
-                        <span className="text-[10px] text-gray-400 italic">Click to sign</span>
-                      )}
-                      <div className="absolute -right-6 bottom-1 text-[8px] text-blue-600 font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                        EDIT
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-slate-600">Date:</span>
-                    <input
-                      type="date"
-                      className="w-32 border-b border-slate-400 outline-none focus:border-[#1e3a8a] transition-colors bg-transparent px-1 no-print"
-                      value={compRecord.assessment_date}
-                      onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                    />
-                    <span className="hidden print:inline border-b border-slate-400 min-w-[100px] px-2">{formatDisplayDate(compRecord.assessment_date)}</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-0 border border-slate-200">
-                  {(currentAssessmentQuestions.adminInfo.markingGuide
-                    ? currentAssessmentQuestions.adminInfo.markingGuide.map((item: any) => [item.label, item.content])
-                    : [
-                      ["Unit Code/Name", currentAssessmentQuestions.adminInfo.unitCodeName],
-                      ["Pre-requisites", currentAssessmentQuestions.adminInfo.preRequisites],
-                      ["Co-requisites", currentAssessmentQuestions.adminInfo.coRequisites],
-                      ["Unit Summary", currentAssessmentQuestions.adminInfo.unitSummary],
-                      ["Target Group", currentAssessmentQuestions.adminInfo.targetGroup],
-                      ["Conditions and Context of the Assessments", currentAssessmentQuestions.adminInfo.conditionsAndContext],
-                      ["Specific Resources Required", currentAssessmentQuestions.adminInfo.specificResources],
-                      ["Re-Assessment", currentAssessmentQuestions.adminInfo.reAssessment],
-                      ["Plagiarism", currentAssessmentQuestions.adminInfo.plagiarism],
-                      ["Complaints and appeal", currentAssessmentQuestions.adminInfo.complaintsAndAppeals],
-                      ["Assessors Intervention", currentAssessmentQuestions.adminInfo.assessorsIntervention],
-                      ["Attaching Documents", currentAssessmentQuestions.adminInfo.attachingDocuments],
-                      ["Assessment Instruction", currentAssessmentQuestions.adminInfo.assessmentInstruction],
-                      ...(currentAssessmentQuestions.adminInfo.taskOverviews
-                        ? currentAssessmentQuestions.adminInfo.taskOverviews.map((task: any) => [task.id.replace(':', ''), task.text])
-                        : [
-                          ["Assessment Task 1", currentAssessmentQuestions.adminInfo.task1Description],
-                          ["Assessment Task 2", currentAssessmentQuestions.adminInfo.task2Description],
-                          ["Assessment Task 3", currentAssessmentQuestions.adminInfo.task3Description],
-                          ...(currentAssessmentQuestions.adminInfo.task4Description
-                            ? [["Assessment Task 4", currentAssessmentQuestions.adminInfo.task4Description]]
-                            : []),
-                          ...(currentAssessmentQuestions.adminInfo.task5Description
-                            ? [["Assessment Task 5", currentAssessmentQuestions.adminInfo.task5Description]]
-                            : []),
-                          ...(currentAssessmentQuestions.adminInfo.task6Description
-                            ? [["Assessment Task 6", currentAssessmentQuestions.adminInfo.task6Description]]
-                            : [])
-                        ]),
-                      ["Competency Decision", currentAssessmentQuestions.adminInfo.competencyDecision]
-                    ]).map(([label, value]: any, idx: number) => (
-                      <div key={idx} className="flex flex-col md:grid md:grid-cols-[250px_1fr] border-b border-slate-200 last:border-0">
-                        <div className="bg-slate-50 p-3 font-bold text-slate-700 md:border-r border-slate-200 text-xs uppercase tracking-wider">{label}</div>
-                        <div className="p-3 text-slate-700 leading-relaxed text-xs sm:text-sm whitespace-pre-wrap">{value}</div>
-                      </div>
-                    ))}
-                </div>
+              <div className="space-y-4">
 
                 {/* New Overview Sections for Question 13 / ICTCBL301 */}
                 {currentAssessmentQuestions.adminInfo.tasksOverview && (
@@ -3994,117 +3995,83 @@ const GradingPortal: React.FC = () => {
 
                 {/* Reasonable Adjustment Section */}
                 {currentAssessmentQuestions.adminInfo.reasonableAdjustment && (
-                  <div className="mt-8 border-2 border-slate-400 break-inside-avoid">
-                    <div className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] p-3 font-bold text-white uppercase tracking-wider text-sm border-l-4 border-[#fbbf24]">
-                      Reasonable Adjustment
-                    </div>
-                    <div className="p-4 bg-white space-y-4 text-[11px]">
-                      <p className="text-slate-600 leading-relaxed">{currentAssessmentQuestions.adminInfo.reasonableAdjustment}</p>
-                      <div className="hidden md:block">
-                        <table className="w-full border-collapse border border-slate-300">
-                          <thead className="bg-slate-50 text-slate-700">
-                            <tr>
-                              <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reasonable Adjustment Provided</th>
-                              <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Reason for Reasonable Adjustment</th>
-                              <th className="border border-slate-300 p-2 text-left w-1/3 font-bold">Outcome</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td className="border border-slate-300 p-2 align-top">
-                                <div className="space-y-2">
-                                  {[
-                                    "Educational and bilingual support",
-                                    "Presenting questions orally",
-                                    "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
-                                    "Extra time to complete a course or assessment",
-                                    "Others:"
-                                  ].map((adj, i) => (
-                                    <div key={i} className="flex items-start gap-2">
-                                      <span className="text-slate-600 leading-tight">{adj}</span>
-                                    </div>
-                                  ))}
+                  <div className="mt-8 no-print-section break-inside-avoid generic-comp-view">
+                    <table className="comp-table">
+                      <tbody>
+                        <tr>
+                          <td colSpan={3} style={{ backgroundColor: '#c0c0c0', fontWeight: 'bold' }}>
+                            Reasonable adjustment
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colSpan={3} style={{ padding: '8px', lineHeight: '1.4' }}>
+                            <p style={{ marginBottom: '8px' }}>{currentAssessmentQuestions.adminInfo.reasonableAdjustment}</p>
+                            <p>ACTA college will take meaningful, transparent and reasonable steps to consult, consider and implement reasonable adjustments for students with disability and learning difficulties.</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{ fontWeight: 'bold', width: '33%', textAlign: 'center' }}>Reasonable Adjustment Provided</td>
+                          <td style={{ fontWeight: 'bold', width: '33%', textAlign: 'center' }}>Reason for Reasonable Adjustment</td>
+                          <td style={{ fontWeight: 'bold', width: '33%', textAlign: 'center' }}>Outcome</td>
+                        </tr>
+                        <tr>
+                          <td style={{ verticalAlign: 'top', padding: '8px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {[
+                                "Educational and bilingual support",
+                                "Presenting questions orally",
+                                "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
+                                "Extra time to complete a course or assessment",
+                                "Others:"
+                              ].map((adj, i) => (
+                                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                                  <span className="cb-sq" style={{ marginTop: '2px', flexShrink: 0 }}></span>
+                                  <span style={{ fontSize: '9pt', lineHeight: '1.2' }}>{adj}</span>
                                 </div>
-                              </td>
-                              <td className="border border-slate-300 p-2 align-top">
-                                <textarea
-                                  className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
-                                  placeholder="Enter reason here..."
-                                  value={compRecord.reasonable_adjustment?.reason || ''}
-                                  onChange={(e) => setCompRecord({
-                                    ...compRecord,
-                                    reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
-                                  })}
-                                />
-                              </td>
-                              <td className="border border-slate-300 p-2 align-top">
-                                <textarea
-                                  className="w-full h-full min-h-[120px] p-2 outline-none resize-none bg-transparent text-sm"
-                                  placeholder="Enter outcome here..."
-                                  value={compRecord.reasonable_adjustment?.outcome || ''}
-                                  onChange={(e) => setCompRecord({
-                                    ...compRecord,
-                                    reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
-                                  })}
-                                />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      {/* Mobile View */}
-                      <div className="md:hidden space-y-6">
-                        <div className="space-y-3">
-                          <div className="font-bold text-slate-700">Adjustments Provided:</div>
-                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
-                            {[
-                              "Educational and bilingual support",
-                              "Presenting questions orally",
-                              "Presenting work instructions in diagrammatic or pictorial form instead of words and sentences",
-                              "Extra time to complete a course or assessment",
-                              "Others:"
-                            ].map((adj, i) => (
-                              <div key={i} className="flex items-start gap-2">
-                                <span className="text-slate-600 text-xs leading-tight">• {adj}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="space-y-3">
-                          <div className="font-bold text-slate-700">Reason:</div>
-                          <textarea
-                            className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
-                            placeholder="Enter reason..."
-                            value={compRecord.reasonable_adjustment?.reason || ''}
-                            onChange={(e) => setCompRecord({
-                              ...compRecord,
-                              reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
-                            })}
-                          />
-                        </div>
-                        <div className="space-y-3">
-                          <div className="font-bold text-slate-700">Outcome:</div>
-                          <textarea
-                            className="w-full min-h-[100px] p-3 bg-white border border-slate-200 rounded-xl outline-none resize-none text-sm"
-                            placeholder="Enter outcome..."
-                            value={compRecord.reasonable_adjustment?.outcome || ''}
-                            onChange={(e) => setCompRecord({
-                              ...compRecord,
-                              reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
-                            })}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                              ))}
+                            </div>
+                          </td>
+                          <td style={{ verticalAlign: 'top', padding: '0' }}>
+                            <textarea
+                              className="no-print"
+                              style={{ width: '100%', height: '100%', minHeight: '120px', border: 'none', resize: 'none', background: 'transparent', outline: 'none', fontFamily: "'Times New Roman', serif", fontSize: '10pt', padding: '8px' }}
+                              value={compRecord.reasonable_adjustment?.reason || ''}
+                              onChange={(e) => setCompRecord({
+                                ...compRecord,
+                                reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
+                              })}
+                            />
+                            <div className="hidden print:block p-2" style={{ whiteSpace: 'pre-wrap' }}>{compRecord.reasonable_adjustment?.reason}</div>
+                          </td>
+                          <td style={{ verticalAlign: 'top', padding: '0' }}>
+                            <textarea
+                              className="no-print"
+                              style={{ width: '100%', height: '100%', minHeight: '120px', border: 'none', resize: 'none', background: 'transparent', outline: 'none', fontFamily: "'Times New Roman', serif", fontSize: '10pt', padding: '8px' }}
+                              value={compRecord.reasonable_adjustment?.outcome || ''}
+                              onChange={(e) => setCompRecord({
+                                ...compRecord,
+                                reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
+                              })}
+                            />
+                            <div className="hidden print:block p-2" style={{ whiteSpace: 'pre-wrap' }}>{compRecord.reasonable_adjustment?.outcome}</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 )}
 
                 {/* Cover Sheet Info */}
-                <div className="mt-8 p-6 bg-slate-50 border-4 border-double border-slate-300 text-center space-y-4">
-                  <h2 className="text-xl font-black text-slate-800 uppercase tracking-tighter">COVER SHEET FOR SUBMISSION OF WORK FOR ASSESSMENT</h2>
-                  <p className="text-sm text-slate-600 font-medium">{currentAssessmentQuestions.adminInfo.coverSheetInstruction}</p>
-                  <div className="text-xs text-slate-400 italic">Work submitted without a signed cover sheet will be returned unmarked.</div>
+                <div className="break-inside-avoid generic-comp-view w-fit mx-auto" style={{ marginTop: '40px', marginBottom: '40px' }}>
+                  <div style={{ backgroundColor: '#9ab4d6', padding: '4px 12px', marginBottom: '40px' }}>
+                    <h2 style={{ fontFamily: "'Times New Roman', serif", fontSize: '11pt', fontWeight: 'bold', margin: 0, color: '#000', letterSpacing: '0.5px' }}>
+                      COVER SHEET FOR SUBMISSION OF WORK FOR ASSESSMENT
+                    </h2>
+                  </div>
+                  <div style={{ fontFamily: "'Times New Roman', serif", fontSize: '10pt', fontWeight: 'bold', lineHeight: '1.8' }}>
+                    <p style={{ marginBottom: '16px' }}>A cover sheet must be included with each submission of work.</p>
+                    <p>Work submitted without a signed cover sheet will be returned unmarked.</p>
+                  </div>
                 </div>
               </div>
             </div>
