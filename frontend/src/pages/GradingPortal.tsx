@@ -333,6 +333,17 @@ const GradingPortal: React.FC = () => {
               <div style={{ width: '100%', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt' }}>
                 <div style={{ marginBottom: '8px' }}>{q.text}</div>
                 
+                {q.image && (
+                  <div className="flex flex-col items-center gap-2 mt-3 mb-2 px-2">
+                    <div className={`bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full ${q.smallImage ? 'max-w-[300px]' : 'max-w-[600px]'}`}>
+                      <img src={q.image} alt={q.imageCaption || `Question ${q.id} diagram`} className="w-full h-auto rounded" />
+                    </div>
+                    {q.imageCaption && (
+                      <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">{q.imageCaption}</span>
+                    )}
+                  </div>
+                )}
+                
                 {q.type === 'radio' && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginLeft: '12px', marginTop: '4px' }}>
                     {q.options && q.options.map((opt: any, oIdx: number) => {
@@ -365,6 +376,29 @@ const GradingPortal: React.FC = () => {
                         })}
                       </div>
                     ))}
+                  </div>
+                )}
+                
+                {(q.type === 'options' || q.type === 'checkbox') && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginLeft: '12px', marginTop: '4px' }}>
+                    {q.options && q.options.map((opt: any, oIdx: number) => {
+                       const ansArray = studentAnswer || [];
+                       const isSelected = Array.isArray(ansArray) ? ansArray.includes(opt.value) : ansArray === opt.value;
+                       return (
+                         <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => {
+                           let newArr = [...(Array.isArray(studentAnswer) ? studentAnswer : [])];
+                           if (!isSelected) newArr.push(opt.value);
+                           else newArr = newArr.filter((v: any) => v !== opt.value);
+                           setStudentAnswers({ ...studentAnswers, [qKey]: newArr });
+                         }}>
+                           <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>
+                             {q.type === 'checkbox' ? '☐' : `${String.fromCharCode(65 + oIdx)}.`}
+                           </span>
+                           <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
+                           {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
+                         </div>
+                       );
+                    })}
                   </div>
                 )}
                 
@@ -422,7 +456,8 @@ const GradingPortal: React.FC = () => {
 
   const renderQuestionReview = (q: any, i: number, tNum: number) => {
     const qKey = `t${tNum}q${q.id}`
-    const studentAnswer = studentAnswers[qKey]
+    const legacyQKey = `task${tNum}_q${q.id}`
+    const studentAnswer = studentAnswers[qKey] || studentAnswers[legacyQKey]
     const grade = grades[qKey]
 
     // Check if the question has any answers

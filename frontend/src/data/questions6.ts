@@ -57,7 +57,7 @@ export const assessmentQuestions = {
       {
         "id": 2,
         "text": "Choose three examples for insulators.",
-        "type": "radio",
+        "type": "options",
         "options": [
           { "type": "checkbox", "value": "a", "text": "Glass" },
           { "type": "checkbox", "value": "b", "text": "Water" },
@@ -447,7 +447,7 @@ export const assessmentQuestions = {
     "questions": [
       { "id": 1, "text": "Describe principles of AC and DC electricity and how it impacts telecommunications work including.", "type": "text" },
       { "id": 2, "text": "What are electrical parameters and their units of measurement?", "type": "text" },
-      { "id": 3, "text": "Choose 3 work health and safety (WHS) issues when working with electricity", "type": "radio", "options": [
+      { "id": 3, "text": "Choose 3 work health and safety (WHS) issues when working with electricity", "type": "options", "options": [
         { "type": "checkbox", "value": "a", "text": "Use of Electrical dated gloves" },
         { "type": "checkbox", "value": "b", "text": "Wearing PPE" },
         { "type": "checkbox", "value": "c", "text": "Sign on and off sheets" },

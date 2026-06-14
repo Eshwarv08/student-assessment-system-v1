@@ -4,7 +4,20 @@ import { api } from '../lib/api'
 import SignaturePad from 'signature_pad'
 import { AlertCircle, CheckCircle2, Save, Send, Loader2, Printer, X } from 'lucide-react'
 import { getQuestionsForAssessment } from '../data'
+import { Q1Booklet } from '../components/Q1Booklet'
 import { Q2Booklet } from '../components/Q2Booklet'
+import { Q3Booklet } from '../components/Q3Booklet'
+import { Q4Booklet } from '../components/Q4Booklet'
+import { Q5Booklet } from '../components/Q5Booklet'
+import { Q6Booklet } from '../components/Q6Booklet'
+import { Q7Booklet } from '../components/Q7Booklet'
+import { Q8Booklet } from '../components/Q8Booklet'
+import { Q9Booklet } from '../components/Q9Booklet'
+import { Q10Booklet } from '../components/Q10Booklet'
+import { Q11Booklet } from '../components/Q11Booklet'
+import { Q12Booklet } from '../components/Q12Booklet'
+import { Q13Booklet } from '../components/Q13Booklet'
+import { Q14Booklet } from '../components/Q14Booklet'
 import '../assessment-styles.css'
 
 const AssessmentForm: React.FC = () => {
@@ -41,6 +54,20 @@ const AssessmentForm: React.FC = () => {
   const [toast, setToast] = useState<{ message: string; type: 'error' | 'success' } | null>(null)
   const assessmentQuestions = getQuestionsForAssessment(token)
   const isQ2 = (token || '').toLowerCase() === 'question-2' || assessmentQuestions?.metadata?.code === 'ICTCBL330';
+  const isQ3 = (token || '').toLowerCase() === 'question-3' || assessmentQuestions?.metadata?.code === 'ICTCBL322';
+  const isQ1 = (token || '').toLowerCase() === 'question-1' || assessmentQuestions?.metadata?.code === 'ICTCBL246 & ICTCBL247';
+  const isQ4 = (token || '').toLowerCase() === 'question-4' || assessmentQuestions?.metadata?.code === 'ICTCBL320';
+  const isQ5 = (token || '').toLowerCase() === 'question-5' || assessmentQuestions?.metadata?.code === 'ICTCBL254';
+  const isQ6 = (token || '').toLowerCase() === 'question-6' || assessmentQuestions?.metadata?.code === 'ICTTEN208';
+  const isQ7 = (token || '').toLowerCase() === 'question-7' || assessmentQuestions?.metadata?.code === 'ICTCBL334';
+  const isQ8 = (token || '').toLowerCase() === 'question-8' || assessmentQuestions?.metadata?.code === 'ICTBWN308';
+  const isQ9 = (token || '').toLowerCase() === 'question-9' || assessmentQuestions?.metadata?.code === 'ICTBWN307';
+  const isQ10 = (token || '').toLowerCase() === 'question-10' || assessmentQuestions?.metadata?.code === 'ICTWHS204';
+  const isQ11 = (token || '').toLowerCase() === 'question-11' || assessmentQuestions?.metadata?.code === 'ICTTEN318';
+  const isQ12 = (token || '').toLowerCase() === 'question-12' || assessmentQuestions?.metadata?.code === 'ICTTEN313';
+  const isQ13 = (token || '').toLowerCase() === 'question-13' || assessmentQuestions?.metadata?.code === 'ICTCBL301';
+  const isQ14 = (token || '').toLowerCase() === 'question-14' || assessmentQuestions?.metadata?.code === 'ICTCBL303';
+  const isPdfBooklet = isQ1 || isQ2 || isQ3 || isQ4 || isQ5 || isQ6 || isQ7 || isQ8 || isQ9 || isQ10 || isQ11 || isQ12 || isQ13 || isQ14;
 
   const showToast = (message: string, type: 'error' | 'success' = 'error') => {
     setToast({ message, type });
@@ -276,15 +303,17 @@ const AssessmentForm: React.FC = () => {
     return missing;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault()
+    }
 
     const hasAnyAnswer = Object.keys(answers).some(key => {
       if (['st-name', 'st-id', 'st-date', 'student_signature_url'].includes(key)) return false;
       const val = answers[key];
       return val && (Array.isArray(val) ? val.length > 0 : String(val).trim() !== '');
     });
-    const isSigEmpty = isQ2 ? !answers['student_signature_url'] : (!signaturePad.current || signaturePad.current.isEmpty());
+    const isSigEmpty = isPdfBooklet ? !answers['student_signature_url'] : (!signaturePad.current || signaturePad.current.isEmpty());
 
     if (!hasAnyAnswer || isSigEmpty) {
       setShowErrors(true);
@@ -307,7 +336,7 @@ const AssessmentForm: React.FC = () => {
             (firstQuestionInput as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
             (firstQuestionInput as HTMLElement).focus?.();
           }
-        } else if (isSigEmpty && !isQ2 && sigCanvas.current) {
+        } else if (isSigEmpty && !isPdfBooklet && sigCanvas.current) {
           sigCanvas.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 100);
@@ -315,22 +344,24 @@ const AssessmentForm: React.FC = () => {
     }
 
     setSubmitting(true)
-    const formData = new FormData(e.currentTarget as HTMLFormElement)
     const answersToSubmit: any = { ...answers }
-    formData.forEach((value, key) => {
-      if (typeof value === 'string' && value.trim() === '') {
-        return;
-      }
-      if (answersToSubmit[key] && answersToSubmit[key] !== value) {
-        if (!Array.isArray(answersToSubmit[key])) answersToSubmit[key] = [answersToSubmit[key]]
-        answersToSubmit[key].push(value)
-      } else {
-        answersToSubmit[key] = value
-      }
-    })
+    if (e?.currentTarget) {
+      const formData = new FormData(e.currentTarget as HTMLFormElement)
+      formData.forEach((value, key) => {
+        if (typeof value === 'string' && value.trim() === '') {
+          return;
+        }
+        if (answersToSubmit[key] && answersToSubmit[key] !== value) {
+          if (!Array.isArray(answersToSubmit[key])) answersToSubmit[key] = [answersToSubmit[key]]
+          answersToSubmit[key].push(value)
+        } else {
+          answersToSubmit[key] = value
+        }
+      })
+    }
 
     try {
-      const signatureData = isQ2 ? (answers['student_signature_url'] || '') : (signaturePad.current ? signaturePad.current.toDataURL() : '')
+      const signatureData = isPdfBooklet ? (answers['student_signature_url'] || '') : (signaturePad.current ? signaturePad.current.toDataURL() : '')
 
       const data = await api.submitAssessment({
         assessment_id: assessment._id || assessment.id,
@@ -403,9 +434,8 @@ const AssessmentForm: React.FC = () => {
                 <div className="relative">
                   <textarea
                     name={qKey}
-                    className={`w-full p-4 border-2 rounded-xl min-h-[120px] outline-none focus:border-[#1e3a8a] focus:ring-4 focus:ring-[#1e3a8a]/10 transition-all bg-gray-50/50 ${
-                      isMissing ? 'border-red-500 bg-red-50/10' : 'border-gray-100'
-                    }`}
+                    className={`w-full p-4 border-2 rounded-xl min-h-[120px] outline-none focus:border-[#1e3a8a] focus:ring-4 focus:ring-[#1e3a8a]/10 transition-all bg-gray-50/50 ${isMissing ? 'border-red-500 bg-red-50/10' : 'border-gray-100'
+                      }`}
                     placeholder="Enter your detailed answer here..."
                     onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })}
                   ></textarea>
@@ -428,9 +458,8 @@ const AssessmentForm: React.FC = () => {
                       <input
                         type="text"
                         name={ti.name}
-                        className={`w-full p-3 bg-white border-2 rounded-lg outline-none focus:border-[#1e3a8a] transition-all font-bold ${
-                          isTiMissing ? 'border-red-500 bg-red-50/10' : 'border-gray-200'
-                        }`}
+                        className={`w-full p-3 bg-white border-2 rounded-lg outline-none focus:border-[#1e3a8a] transition-all font-bold ${isTiMissing ? 'border-red-500 bg-red-50/10' : 'border-gray-200'
+                          }`}
                         placeholder="Identify this cable type..."
                         onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })}
                       />
@@ -463,9 +492,8 @@ const AssessmentForm: React.FC = () => {
                           const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
                           return (
                             <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
-                              <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${
-                                isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
-                              }`}>
+                              <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                                }`}>
                                 {cell.options ? cell.options.map((opt: any, oIdx: number) => (
                                   <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
                                     <input
@@ -494,9 +522,8 @@ const AssessmentForm: React.FC = () => {
                                   <input
                                     type="text"
                                     name={cell.name}
-                                    className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
-                                      isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
-                                    }`}
+                                    className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                      }`}
                                     placeholder="Comments..."
                                     value={answers[cell.name] || ''}
                                     onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
@@ -515,9 +542,8 @@ const AssessmentForm: React.FC = () => {
                                 <input
                                   type="text"
                                   name={row.id}
-                                  className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] transition-all ${
-                                    isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
-                                  }`}
+                                  className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] transition-all ${isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                    }`}
                                   placeholder="Enter answer..."
                                   value={answers[row.id] || ''}
                                   onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
@@ -541,9 +567,8 @@ const AssessmentForm: React.FC = () => {
                 return (
                   <div key={pIdx}>
                     <div className="text-[13px] text-gray-600 italic mb-2 leading-relaxed">{part.text}</div>
-                    <div className={`flex flex-col gap-1 p-1 rounded-xl transition-all ${
-                      isPartMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
-                    }`}>
+                    <div className={`flex flex-col gap-1 p-1 rounded-xl transition-all ${isPartMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                      }`}>
                       {part.options.map((opt: any, idx: number) => (
                         <label key={idx} className="legacy-opt-label hover:shadow-md transition-shadow">
                           <input
@@ -590,9 +615,8 @@ const AssessmentForm: React.FC = () => {
                         <input
                           type="text"
                           name={f.name}
-                          className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${
-                            isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
-                          }`}
+                          className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
+                            }`}
                           value={answers[f.name] || ''}
                           onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
                         />
@@ -612,9 +636,8 @@ const AssessmentForm: React.FC = () => {
                       <input
                         type="text"
                         name={f.name}
-                        className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${
-                          isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
-                        }`}
+                        className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
+                          }`}
                         value={answers[f.name] || ''}
                         onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
                       />
@@ -633,9 +656,8 @@ const AssessmentForm: React.FC = () => {
                       <input
                         type="text"
                         name={f.name}
-                        className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${
-                          isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
-                        }`}
+                        className={`w-full bg-transparent border-b outline-none text-sm font-bold text-[#1e3a8a] ${isFMissing ? 'border-b-red-500 bg-red-50/10' : 'border-b-slate-100'
+                          }`}
                         value={answers[f.name] || ''}
                         onChange={(e) => setAnswers({ ...answers, [f.name]: e.target.value })}
                       />
@@ -669,9 +691,8 @@ const AssessmentForm: React.FC = () => {
                             <td key={cIdx} className="p-1 border-r border-slate-200 last:border-0">
                               <textarea
                                 name={stepKey}
-                                className={`w-full p-2 text-sm outline-none bg-transparent min-h-[60px] resize-none focus:bg-blue-50/30 transition-colors ${
-                                  isStepMissing ? 'border border-red-500 bg-red-50/10 rounded' : ''
-                                }`}
+                                className={`w-full p-2 text-sm outline-none bg-transparent min-h-[60px] resize-none focus:bg-blue-50/30 transition-colors ${isStepMissing ? 'border border-red-500 bg-red-50/10 rounded' : ''
+                                  }`}
                                 value={answers[stepKey] || ''}
                                 onChange={(e) => setAnswers({ ...answers, [stepKey]: e.target.value })}
                               />
@@ -689,9 +710,8 @@ const AssessmentForm: React.FC = () => {
               const val = answers[qKey];
               const isDefaultQMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
               return (
-                <div className={`flex flex-col gap-1 mt-2 p-1 rounded-xl transition-all ${
-                  isDefaultQMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
-                }`}>
+                <div className={`flex flex-col gap-1 mt-2 p-1 rounded-xl transition-all ${isDefaultQMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                  }`}>
                   {q.options?.map((opt: any, idx: number) => (
                     <label key={idx} className="legacy-opt-label hover:shadow-md transition-shadow">
                       <input
@@ -780,10 +800,10 @@ const AssessmentForm: React.FC = () => {
         </div>
       )}
 
-      <div className={`print:bg-white min-h-screen ${isQ2 ? 'bg-[#d0d0d0] p-0' : 'bg-[#eff6ff] py-6 sm:py-10 px-2 sm:px-4'} print:py-0 print:px-0 font-sans text-[#111] ${submitted ? 'hidden print:block' : 'block'}`}>
-        <div className={`max-w-[1000px] mx-auto overflow-hidden print:max-w-none print:mx-0 print:shadow-none print:border-none print:rounded-none ${isQ2 ? 'bg-transparent p-0 shadow-none border-none' : 'bg-white shadow-2xl p-4 sm:p-6 md:p-12 border border-gray-200 rounded-2xl sm:rounded-3xl'}`}>
+      <div className={`print:bg-white min-h-screen ${isPdfBooklet ? 'bg-[#d0d0d0] p-0' : 'bg-[#eff6ff] py-6 sm:py-10 px-2 sm:px-4'} print:py-0 print:px-0 font-sans text-[#111] ${submitted ? 'hidden print:block' : 'block'}`}>
+        <div className={`max-w-[1000px] mx-auto overflow-hidden print:max-w-none print:mx-0 print:shadow-none print:border-none print:rounded-none ${isPdfBooklet ? 'bg-transparent p-0 shadow-none border-none' : 'bg-white shadow-2xl p-4 sm:p-6 md:p-12 border border-gray-200 rounded-2xl sm:rounded-3xl'}`}>
 
-          {!isQ2 && (
+          {!isPdfBooklet && (
             <div className="text-center pb-6 mb-8 sm:mb-12 relative flex flex-col items-center">
               <div className="hidden sm:block absolute top-0 left-0 w-24 h-24 bg-blue-50 rounded-full -ml-12 -mt-12 -z-10"></div>
               <img
@@ -811,7 +831,7 @@ const AssessmentForm: React.FC = () => {
           )}
 
           <form onSubmit={handleSubmit} className="student-mode">
-            {!isQ2 ? (
+            {!isPdfBooklet ? (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 bg-gray-50 p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-100 shadow-inner">
                   <label className="block">
@@ -859,386 +879,515 @@ const AssessmentForm: React.FC = () => {
 
             {isQ2 ? (
               <div className="mb-0">
-                <Q2Booklet 
-                  answers={answers} 
-                  setAnswers={setAnswers} 
-                  onSubmit={() => {}} 
-                  submitting={submitting} 
+                <Q2Booklet
+                  answers={answers}
+                  setAnswers={setAnswers}
+                  onSubmit={() => { }}
+                  submitting={submitting}
                   studentName={answers['st-name'] || searchParams.get('st-name') || ''}
                   submitDate={answers['st-date'] || new Date().toISOString().split('T')[0]}
-                  isStudent={true} 
+                  isStudent={true}
                 />
               </div>
+            ) : isQ3 ? (
+              <div className="mb-0">
+                <Q3Booklet
+                  answers={answers}
+                  setAnswers={setAnswers}
+                  onSubmit={() => { }}
+                  submitting={submitting}
+                  studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                  submitDate={answers['st-date'] || new Date().toISOString().split('T')[0]}
+                  isStudent={true}
+                />
+              </div>
+            ) : isQ4 ? (
+              <Q4Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ5 ? (
+              <Q5Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ6 ? (
+              <Q6Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ7 ? (
+              <Q7Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ8 ? (
+              <Q8Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ9 ? (
+              <Q9Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ10 ? (
+              <Q10Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ11 ? (
+              <Q11Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ12 ? (
+              <Q12Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ13 ? (
+              <Q13Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ14 ? (
+              <Q14Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ1 ? (
+              <div className="mb-0">
+                <Q1Booklet
+                  answers={answers}
+                  setAnswers={setAnswers}
+                  onSubmit={() => { }}
+                  submitting={submitting}
+                  studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                  submitDate={answers['st-date'] || new Date().toISOString().split('T')[0]}
+                  isStudent={true}
+                />
+              </div>
+
             ) : (
               Object.keys(assessmentQuestions)
                 .filter(key => key.startsWith('task'))
                 .sort((a, b) => parseInt(a.replace('task', '')) - parseInt(b.replace('task', '')))
                 .map((taskKey) => {
-                const tNum = parseInt(taskKey.replace('task', ''));
-                const taskData = assessmentQuestions[taskKey];
+                  const tNum = parseInt(taskKey.replace('task', ''));
+                  const taskData = assessmentQuestions[taskKey];
 
-                if (taskData.assessorOnly) return null;
+                  if (taskData.assessorOnly) return null;
 
-                // Case 1: plain array of question objects
-                const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
-                // Case 2: object with a nested .questions array (e.g. ICTCBL322 task1)
-                const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
-                // Case 3: observation/checklist object
-                const isChecklist = !isPlainArray && !hasNestedQuestions;
+                  // Case 1: plain array of question objects
+                  const isPlainArray = Array.isArray(taskData) && taskData.length > 0 && typeof taskData[0] === 'object';
+                  // Case 2: object with a nested .questions array (e.g. ICTCBL322 task1)
+                  const hasNestedQuestions = !Array.isArray(taskData) && Array.isArray((taskData as any)?.questions);
+                  // Case 3: observation/checklist object
+                  const isChecklist = !isPlainArray && !hasNestedQuestions;
 
-                if (isChecklist) {
-                  return (
-                    <section key={taskKey} className="mb-12 sm:mb-16 page-break-before">
-                      {/* Observation Section - Only show if it has observation data */}
-                      {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections) && (
-                        <div className="space-y-4 sm:space-y-6">
-                          <div className="text-center space-y-2 px-2">
-                            <div className="task-banner-ribbon text-xs sm:text-base py-2 sm:py-3 px-4 sm:px-6 mb-4">
-                              {taskData.observationTitle || `ASSESSMENT TASK ${tNum} OBSERVATION`}
-                            </div>
-                            {taskData.observationSubtitle && (
-                              <div className="text-sm sm:text-lg font-bold text-slate-600 border-y border-slate-200 py-3 mt-4">
-                                {taskData.observationSubtitle}
+                  if (isChecklist) {
+                    return (
+                      <section key={taskKey} className="mb-12 sm:mb-16 page-break-before">
+                        {/* Observation Section - Only show if it has observation data */}
+                        {(taskData.observationTitle || taskData.observationSubtitle || taskData.sections) && (
+                          <div className="space-y-4 sm:space-y-6">
+                            <div className="text-center space-y-2 px-2">
+                              <div className="task-banner-ribbon text-xs sm:text-base py-2 sm:py-3 px-4 sm:px-6 mb-4">
+                                {taskData.observationTitle || `ASSESSMENT TASK ${tNum} OBSERVATION`}
                               </div>
-                            )}
-                          </div>
+                              {taskData.observationSubtitle && (
+                                <div className="text-sm sm:text-lg font-bold text-slate-600 border-y border-slate-200 py-3 mt-4">
+                                  {taskData.observationSubtitle}
+                                </div>
+                              )}
+                            </div>
 
-                          {taskData.sections && (
-                            <div className="space-y-4 sm:space-y-6 mt-2">
-                              {taskData.sections.map((section: any, sIdx: number) => (
-                                <div key={sIdx} className="space-y-2 sm:space-y-3 px-2">
-                                  {(section.type === 'text' || !section.type) && (
-                                    <div className={`space-y-2 sm:space-y-3 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
-                                      {section.title && (
-                                        <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-[15px] sm:text-base border-b border-slate-200' : 'text-sm sm:text-base text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
-                                          {section.title}
-                                        </h3>
-                                      )}
-                                      <div className="text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
-                                        {section.content}
+                            {taskData.sections && (
+                              <div className="space-y-4 sm:space-y-6 mt-2">
+                                {taskData.sections.map((section: any, sIdx: number) => (
+                                  <div key={sIdx} className="space-y-2 sm:space-y-3 px-2">
+                                    {(section.type === 'text' || !section.type) && (
+                                      <div className={`space-y-2 sm:space-y-3 ${sIdx === 0 ? '' : 'bg-slate-50 border border-slate-200 rounded-xl p-4'}`}>
+                                        {section.title && (
+                                          <h3 className={`font-bold text-slate-800 pb-1 ${sIdx === 0 ? 'text-[15px] sm:text-base border-b border-slate-200' : 'text-sm sm:text-base text-[#1e3a8a] border-b-2 border-[#1e3a8a]/20'}`}>
+                                            {section.title}
+                                          </h3>
+                                        )}
+                                        <div className="text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                          {section.content}
+                                        </div>
                                       </div>
-                                    </div>
-                                  )}
-                                  {section.type === 'image' && (
-                                    <div className="flex flex-col items-center gap-2 py-2 sm:py-4">
-                                      <div className="bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full max-w-[550px]">
-                                        <img src={section.src} alt={section.caption || 'Observation'} className="w-full h-auto rounded" />
+                                    )}
+                                    {section.type === 'image' && (
+                                      <div className="flex flex-col items-center gap-2 py-2 sm:py-4">
+                                        <div className="bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full max-w-[550px]">
+                                          <img src={section.src} alt={section.caption || 'Observation'} className="w-full h-auto rounded" />
+                                        </div>
+                                        {section.caption && (
+                                          <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                            {section.caption}
+                                          </span>
+                                        )}
                                       </div>
-                                      {section.caption && (
-                                        <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">
-                                          {section.caption}
-                                        </span>
-                                      )}
-                                    </div>
-                                  )}
-                                  {section.type === 'table' && (
-                                    <div className="space-y-3 px-2">
-                                      {section.title && (
-                                        <h3 className="font-bold text-slate-800 pb-1 text-sm sm:text-base border-b border-slate-200">
-                                          {section.title}
-                                        </h3>
-                                      )}
-                                      <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
-                                        <table className="w-full text-left border-collapse">
-                                          <thead>
-                                            <tr className="bg-slate-50 border-b border-slate-200">
-                                              {section.headers.map((header: string, hIdx: number) => (
-                                                <th key={hIdx} className="p-3 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                                  {header}
-                                                </th>
-                                              ))}
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            {section.rows.map((row: any, rIdx: number) => {
-                                              if (row.isSubHeader) {
+                                    )}
+                                    {section.type === 'table' && (
+                                      <div className="space-y-3 px-2">
+                                        {section.title && (
+                                          <h3 className="font-bold text-slate-800 pb-1 text-sm sm:text-base border-b border-slate-200">
+                                            {section.title}
+                                          </h3>
+                                        )}
+                                        <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+                                          <table className="w-full text-left border-collapse">
+                                            <thead>
+                                              <tr className="bg-slate-50 border-b border-slate-200">
+                                                {section.headers.map((header: string, hIdx: number) => (
+                                                  <th key={hIdx} className="p-3 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                                    {header}
+                                                  </th>
+                                                ))}
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {section.rows.map((row: any, rIdx: number) => {
+                                                if (row.isSubHeader) {
+                                                  return (
+                                                    <tr key={rIdx} className="bg-slate-100 border-b border-slate-200">
+                                                      <td colSpan={section.headers.length} className="p-3 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                                        {row.label}
+                                                      </td>
+                                                    </tr>
+                                                  )
+                                                }
                                                 return (
-                                                  <tr key={rIdx} className="bg-slate-100 border-b border-slate-200">
-                                                    <td colSpan={section.headers.length} className="p-3 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                                  <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                                    <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
                                                       {row.label}
                                                     </td>
-                                                  </tr>
-                                                )
-                                              }
-                                                                              return (
-                                                <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
-                                                  <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
-                                                    {row.label}
-                                                  </td>
-                                                  {row.cells ? (
-                                                    row.cells.map((cell: any, cIdx: number) => {
-                                                      const val = answers[cell.name];
-                                                      const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
-                                                      return (
-                                                        <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
-                                                          <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${
-                                                            isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
-                                                          }`}>
-                                                            {cell.options ? cell.options.map((opt: any, oIdx: number) => (
-                                                              <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
-                                                                <div className="relative flex items-center justify-center">
-                                                                  <input
-                                                                    type={cell.type || 'radio'}
-                                                                    name={cell.name}
-                                                                    value={opt.value}
-                                                                    checked={cell.type === 'checkbox'
-                                                                      ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
-                                                                      : answers[cell.name] === opt.value}
-                                                                    onChange={(e) => {
-                                                                      if (cell.type === 'checkbox') {
-                                                                        const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
-                                                                        const updated = e.target.checked
-                                                                          ? [...current, opt.value]
-                                                                          : current.filter((v: string) => v !== opt.value);
-                                                                        setAnswers({ ...answers, [cell.name]: updated });
-                                                                      } else {
-                                                                        setAnswers({ ...answers, [cell.name]: e.target.value });
-                                                                      }
-                                                                    }}
-                                                                    className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
-                                                                  />
-                                                                </div>
-                                                                <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                                              </label>
-                                                            )) : (
+                                                    {row.cells ? (
+                                                      row.cells.map((cell: any, cIdx: number) => {
+                                                        const val = answers[cell.name];
+                                                        const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
+                                                        return (
+                                                          <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                                                            <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                                                              }`}>
+                                                              {cell.options ? cell.options.map((opt: any, oIdx: number) => (
+                                                                <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                                  <div className="relative flex items-center justify-center">
+                                                                    <input
+                                                                      type={cell.type || 'radio'}
+                                                                      name={cell.name}
+                                                                      value={opt.value}
+                                                                      checked={cell.type === 'checkbox'
+                                                                        ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                                                        : answers[cell.name] === opt.value}
+                                                                      onChange={(e) => {
+                                                                        if (cell.type === 'checkbox') {
+                                                                          const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                                                          const updated = e.target.checked
+                                                                            ? [...current, opt.value]
+                                                                            : current.filter((v: string) => v !== opt.value);
+                                                                          setAnswers({ ...answers, [cell.name]: updated });
+                                                                        } else {
+                                                                          setAnswers({ ...answers, [cell.name]: e.target.value });
+                                                                        }
+                                                                      }}
+                                                                      className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                                    />
+                                                                  </div>
+                                                                  <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                                </label>
+                                                              )) : (
+                                                                <input
+                                                                  type="text"
+                                                                  name={cell.name}
+                                                                  className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                                    }`}
+                                                                  placeholder="Comments..."
+                                                                  value={answers[cell.name] || ''}
+                                                                  onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
+                                                                />
+                                                              )}
+                                                            </div>
+                                                          </td>
+                                                        );
+                                                      })
+                                                    ) : (
+                                                      <td className="p-2" colSpan={section.headers.length - 1}>
+                                                        {row.editable ? (
+                                                          (() => {
+                                                            const isRowMissing = showErrors && (!answers[row.id] || answers[row.id].trim() === '');
+                                                            return (
                                                               <input
                                                                 type="text"
-                                                                name={cell.name}
-                                                                className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
-                                                                  isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
-                                                                }`}
-                                                                placeholder="Comments..."
-                                                                value={answers[cell.name] || ''}
-                                                                onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
+                                                                name={row.id}
+                                                                className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                                  }`}
+                                                                placeholder="Enter result..."
+                                                                value={answers[row.id] || ''}
+                                                                onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
                                                               />
-                                                            )}
-                                                          </div>
-                                                        </td>
-                                                      );
-                                                    })
-                                                  ) : (
-                                                    <td className="p-2" colSpan={section.headers.length - 1}>
-                                                      {row.editable ? (
-                                                        (() => {
-                                                          const isRowMissing = showErrors && (!answers[row.id] || answers[row.id].trim() === '');
-                                                          return (
-                                                            <input
-                                                              type="text"
-                                                              name={row.id}
-                                                              className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
-                                                                isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
-                                                              }`}
-                                                              placeholder="Enter result..."
-                                                              value={answers[row.id] || ''}
-                                                              onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
-                                                            />
-                                                          );
-                                                        })()
-                                                      ) : (
-                                                        <span className="p-2 text-sm text-slate-600">{row.value}</span>
-                                                      )}
-                                                    </td>
-                                                  )}
-                                                </tr>
-                                              )
-                                            })}
-                                          </tbody>
-                                        </table>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </section>
-                  );
-                }
-
-                // Written questions: resolve the actual array and title
-                const questionsArray: any[] = isPlainArray
-                  ? taskData
-                  : (taskData as any).questions;
-
-                let taskTitle = `Task ${tNum}`;
-                if ((taskData as any).title) {
-                  taskTitle = (taskData as any).title;
-                } else if (assessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
-                  taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
-                } else if (tNum === 4) {
-                  taskTitle += ' – Knowledge Questions';
-                } else if (tNum === 5) {
-                  taskTitle += ' – Questions and Answers';
-                } else if (tNum === 6) {
-                  taskTitle += ' – Multi Choice Questions';
-                }
-
-                return (
-                  <section key={taskKey} className="mb-10 sm:mb-12">
-                    <div className="task-banner-ribbon text-xs sm:text-base py-2 sm:py-3 px-4 sm:px-6">{taskTitle}</div>
-
-                    {(taskData as any).observationSubtitle && (
-                      <div className="text-center mt-4 mb-2">
-                        <div className="text-sm sm:text-lg font-bold text-slate-600 border-y border-slate-200 py-3">
-                          {(taskData as any).observationSubtitle}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Show instruction sections (if any) above the questions */}
-                    {hasNestedQuestions && (taskData as any).sections && (
-                      <div className="space-y-6 mt-4 mb-8 px-2">
-                        {(taskData as any).sections.map((section: any, sIdx: number) => (
-                          <div key={sIdx} className="space-y-3">
-                            {(section.type === 'text' || !section.type) && (
-                              <div className="space-y-2">
-                                {section.title && (
-                                  <h3 className="font-bold text-slate-800 text-sm sm:text-base border-b border-slate-200 pb-1">
-                                    {section.title}
-                                  </h3>
-                                )}
-                                <div className="text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-blue-50/40 border border-blue-100 rounded-xl p-4">
-                                  {section.content}
-                                </div>
-                              </div>
-                            )}
-
-                            {section.type === 'image' && (
-                              <div className="flex flex-col items-center gap-2 py-2">
-                                <div className={`bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full ${section.smallImage ? 'max-w-[300px]' : 'max-w-[600px]'}`}>
-                                  <img src={section.src} alt={section.caption || 'Instruction diagram'} className="w-full h-auto rounded" />
-                                </div>
-                                {section.caption && (
-                                  <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest text-center">{section.caption}</span>
-                                )}
-                              </div>
-                            )}
-
-                            {section.type === 'table' && (
-                              <div className="space-y-3">
-                                {section.title && (
-                                  <h3 className="font-bold text-slate-800 pb-1 text-sm sm:text-base border-b border-slate-200">
-                                    {section.title}
-                                  </h3>
-                                )}
-                                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
-                                  <table className="w-full text-left border-collapse">
-                                    <thead>
-                                      <tr className="bg-slate-50 border-b border-slate-200">
-                                        {section.headers.map((header: string, hIdx: number) => (
-                                          <th key={hIdx} className="p-3 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                            {header}
-                                          </th>
-                                        ))}
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {section.rows.map((row: any, rIdx: number) => (
-                                        <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
-                                          <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
-                                            {row.label}
-                                          </td>
-                                          {row.cells ? (
-                                            row.cells.map((cell: any, cIdx: number) => {
-                                              const val = answers[cell.name];
-                                              const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
-                                              return (
-                                                <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
-                                                  <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${
-                                                    isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
-                                                  }`}>
-                                                    {cell.options ? cell.options.map((opt: any, oIdx: number) => (
-                                                      <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
-                                                        <input
-                                                          type={cell.type || 'radio'}
-                                                          name={cell.name}
-                                                          value={opt.value}
-                                                          checked={cell.type === 'checkbox'
-                                                            ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
-                                                            : answers[cell.name] === opt.value}
-                                                          onChange={(e) => {
-                                                            if (cell.type === 'checkbox') {
-                                                              const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
-                                                              const updated = e.target.checked
-                                                                ? [...current, opt.value]
-                                                                : current.filter((v: string) => v !== opt.value);
-                                                              setAnswers({ ...answers, [cell.name]: updated });
-                                                            } else {
-                                                              setAnswers({ ...answers, [cell.name]: e.target.value });
-                                                            }
-                                                          }}
-                                                          className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
-                                                        />
-                                                        <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
-                                                      </label>
-                                                    )) : (
-                                                      <input
-                                                        type="text"
-                                                        name={cell.name}
-                                                        className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
-                                                          isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
-                                                        }`}
-                                                        placeholder="Comments..."
-                                                        value={answers[cell.name] || ''}
-                                                        onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
-                                                      />
+                                                            );
+                                                          })()
+                                                        ) : (
+                                                          <span className="p-2 text-sm text-slate-600">{row.value}</span>
+                                                        )}
+                                                      </td>
                                                     )}
-                                                  </div>
-                                                </td>
-                                              );
-                                            })
-                                          ) : (
-                                            <td className="p-2" colSpan={section.headers.length - 1}>
-                                              {row.editable ? (
-                                                (() => {
-                                                  const isRowMissing = showErrors && (!answers[row.id] || answers[row.id].trim() === '');
-                                                  return (
-                                                    <input
-                                                      type="text"
-                                                      name={row.id}
-                                                      className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${
-                                                        isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
-                                                      }`}
-                                                      placeholder="Enter result..."
-                                                      value={answers[row.id] || ''}
-                                                      onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
-                                                    />
-                                                  );
-                                                })()
-                                              ) : (
-                                                <span className="p-2 text-sm text-slate-600">{row.value}</span>
-                                              )}
-                                            </td>
-                                          )}
-                                        </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
-                                </div>
+                                                  </tr>
+                                                )
+                                              })}
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
                               </div>
                             )}
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        )}
+                      </section>
+                    );
+                  }
 
-                    <div className="space-y-0">
-                      {hasNestedQuestions && (taskData as any).sections && (
-                        <div className="bg-slate-200 py-2 sm:py-3 px-4 mb-6 mt-8 rounded-lg shadow-inner border border-slate-300">
-                          <h3 className="text-center font-bold text-slate-700 uppercase tracking-widest text-xs sm:text-sm">Questions</h3>
+                  // Written questions: resolve the actual array and title
+                  const questionsArray: any[] = isPlainArray
+                    ? taskData
+                    : (taskData as any).questions;
+
+                  let taskTitle = `Task ${tNum}`;
+                  if ((taskData as any).title) {
+                    taskTitle = (taskData as any).title;
+                  } else if (assessmentQuestions.metadata?.code === 'ICTCBL322' && tNum === 1) {
+                    taskTitle = 'ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS';
+                  } else if (tNum === 4) {
+                    taskTitle += ' – Knowledge Questions';
+                  } else if (tNum === 5) {
+                    taskTitle += ' – Questions and Answers';
+                  } else if (tNum === 6) {
+                    taskTitle += ' – Multi Choice Questions';
+                  }
+
+                  return (
+                    <section key={taskKey} className="mb-10 sm:mb-12">
+                      <div className="task-banner-ribbon text-xs sm:text-base py-2 sm:py-3 px-4 sm:px-6">{taskTitle}</div>
+
+                      {(taskData as any).observationSubtitle && (
+                        <div className="text-center mt-4 mb-2">
+                          <div className="text-sm sm:text-lg font-bold text-slate-600 border-y border-slate-200 py-3">
+                            {(taskData as any).observationSubtitle}
+                          </div>
                         </div>
                       )}
-                      {questionsArray.map((q: any, i: number) => renderQuestion(q, i, tNum))}
-                    </div>
-                  </section>
-                );
-              })
+
+                      {/* Show instruction sections (if any) above the questions */}
+                      {hasNestedQuestions && (taskData as any).sections && (
+                        <div className="space-y-6 mt-4 mb-8 px-2">
+                          {(taskData as any).sections.map((section: any, sIdx: number) => (
+                            <div key={sIdx} className="space-y-3">
+                              {(section.type === 'text' || !section.type) && (
+                                <div className="space-y-2">
+                                  {section.title && (
+                                    <h3 className="font-bold text-slate-800 text-sm sm:text-base border-b border-slate-200 pb-1">
+                                      {section.title}
+                                    </h3>
+                                  )}
+                                  <div className="text-[13px] sm:text-sm text-slate-600 leading-relaxed whitespace-pre-wrap bg-blue-50/40 border border-blue-100 rounded-xl p-4">
+                                    {section.content}
+                                  </div>
+                                </div>
+                              )}
+
+                              {section.type === 'image' && (
+                                <div className="flex flex-col items-center gap-2 py-2">
+                                  <div className={`bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full ${section.smallImage ? 'max-w-[300px]' : 'max-w-[600px]'}`}>
+                                    <img src={section.src} alt={section.caption || 'Instruction diagram'} className="w-full h-auto rounded" />
+                                  </div>
+                                  {section.caption && (
+                                    <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest text-center">{section.caption}</span>
+                                  )}
+                                </div>
+                              )}
+
+                              {section.type === 'table' && (
+                                <div className="space-y-3">
+                                  {section.title && (
+                                    <h3 className="font-bold text-slate-800 pb-1 text-sm sm:text-base border-b border-slate-200">
+                                      {section.title}
+                                    </h3>
+                                  )}
+                                  <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+                                    <table className="w-full text-left border-collapse">
+                                      <thead>
+                                        <tr className="bg-slate-50 border-b border-slate-200">
+                                          {section.headers.map((header: string, hIdx: number) => (
+                                            <th key={hIdx} className="p-3 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                              {header}
+                                            </th>
+                                          ))}
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {section.rows.map((row: any, rIdx: number) => (
+                                          <tr key={rIdx} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors">
+                                            <td className="p-3 text-sm text-slate-700 font-medium bg-slate-50/30 w-1/3">
+                                              {row.label}
+                                            </td>
+                                            {row.cells ? (
+                                              row.cells.map((cell: any, cIdx: number) => {
+                                                const val = answers[cell.name];
+                                                const isCellMissing = showErrors && (!val || (Array.isArray(val) ? val.length === 0 : String(val).trim() === ''));
+                                                return (
+                                                  <td key={cIdx} className="p-2 border-l border-slate-100 align-top">
+                                                    <div className={`flex flex-col gap-1.5 p-1 rounded transition-all ${isCellMissing ? 'border-2 border-red-500 bg-red-50/10' : ''
+                                                      }`}>
+                                                      {cell.options ? cell.options.map((opt: any, oIdx: number) => (
+                                                        <label key={oIdx} className="flex items-center gap-2 cursor-pointer group">
+                                                          <input
+                                                            type={cell.type || 'radio'}
+                                                            name={cell.name}
+                                                            value={opt.value}
+                                                            checked={cell.type === 'checkbox'
+                                                              ? (Array.isArray(answers[cell.name]) ? answers[cell.name].includes(opt.value) : false)
+                                                              : answers[cell.name] === opt.value}
+                                                            onChange={(e) => {
+                                                              if (cell.type === 'checkbox') {
+                                                                const current = Array.isArray(answers[cell.name]) ? answers[cell.name] : [];
+                                                                const updated = e.target.checked
+                                                                  ? [...current, opt.value]
+                                                                  : current.filter((v: string) => v !== opt.value);
+                                                                setAnswers({ ...answers, [cell.name]: updated });
+                                                              } else {
+                                                                setAnswers({ ...answers, [cell.name]: e.target.value });
+                                                              }
+                                                            }}
+                                                            className="w-3.5 h-3.5 accent-[#1e3a8a] cursor-pointer"
+                                                          />
+                                                          <span className="text-[10px] sm:text-[11px] text-slate-600 group-hover:text-[#1e3a8a] transition-colors leading-tight">{opt.text}</span>
+                                                        </label>
+                                                      )) : (
+                                                        <input
+                                                          type="text"
+                                                          name={cell.name}
+                                                          className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${isCellMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                            }`}
+                                                          placeholder="Comments..."
+                                                          value={answers[cell.name] || ''}
+                                                          onChange={(e) => setAnswers({ ...answers, [cell.name]: e.target.value })}
+                                                        />
+                                                      )}
+                                                    </div>
+                                                  </td>
+                                                );
+                                              })
+                                            ) : (
+                                              <td className="p-2" colSpan={section.headers.length - 1}>
+                                                {row.editable ? (
+                                                  (() => {
+                                                    const isRowMissing = showErrors && (!answers[row.id] || answers[row.id].trim() === '');
+                                                    return (
+                                                      <input
+                                                        type="text"
+                                                        name={row.id}
+                                                        className={`w-full p-2 text-sm bg-white border rounded-lg outline-none focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/10 transition-all ${isRowMissing ? 'border-red-500 bg-red-50/10' : 'border-slate-200'
+                                                          }`}
+                                                        placeholder="Enter result..."
+                                                        value={answers[row.id] || ''}
+                                                        onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })}
+                                                      />
+                                                    );
+                                                  })()
+                                                ) : (
+                                                  <span className="p-2 text-sm text-slate-600">{row.value}</span>
+                                                )}
+                                              </td>
+                                            )}
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="space-y-0">
+                        {hasNestedQuestions && (taskData as any).sections && (
+                          <div className="bg-slate-200 py-2 sm:py-3 px-4 mb-6 mt-8 rounded-lg shadow-inner border border-slate-300">
+                            <h3 className="text-center font-bold text-slate-700 uppercase tracking-widest text-xs sm:text-sm">Questions</h3>
+                          </div>
+                        )}
+                        {questionsArray.map((q: any, i: number) => renderQuestion(q, i, tNum))}
+                      </div>
+                    </section>
+                  );
+                })
             )}
 
 
-            {!isQ2 && (
+            {!isPdfBooklet && (
               <div className="mt-12 sm:mt-16 p-4 sm:p-8 border-2 sm:border-4 border-dashed border-gray-300 rounded-xl sm:rounded-2xl bg-gray-50">
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                   <Save size={20} className="text-[#1e3a8a] sm:w-[24px] sm:h-[24px]" />
@@ -1250,11 +1399,10 @@ const AssessmentForm: React.FC = () => {
                 <div className="flex flex-col items-center w-full">
                   <div
                     ref={sigContainerRef}
-                    className={`bg-white border-2 rounded-lg shadow-inner overflow-hidden w-full max-w-[600px] h-[200px] transition-all ${
-                      showErrors && signatureEmpty
+                    className={`bg-white border-2 rounded-lg shadow-inner overflow-hidden w-full max-w-[600px] h-[200px] transition-all ${showErrors && signatureEmpty
                         ? 'border-red-500 bg-red-50/10 ring-4 ring-red-500/10'
                         : 'border-gray-300'
-                    }`}
+                      }`}
                   >
                     <canvas ref={sigCanvas} className="w-full h-full cursor-crosshair" style={{ touchAction: 'none' }} />
                   </div>
@@ -1273,7 +1421,7 @@ const AssessmentForm: React.FC = () => {
               </div>
             )}
 
-            <div className={`pt-8 sm:pt-12 flex justify-center print:hidden ${isQ2 ? 'pb-12' : ''}`}>
+            <div className={`pt-8 sm:pt-12 flex justify-center print:hidden ${isPdfBooklet ? 'pb-12' : ''}`}>
               <button
                 type="submit"
                 disabled={submitting || submitted}
@@ -1303,29 +1451,29 @@ const AssessmentForm: React.FC = () => {
           </form>
         </div>
 
-        {!isQ2 && (
+        {!isPdfBooklet && (
           <footer className="bg-white border-t border-gray-200 mt-16 sm:mt-24 no-print shadow-inner">
-          <div className="max-w-[1000px] mx-auto py-8 sm:py-12 px-4">
-            <div className="flex flex-col items-center text-center gap-6">
-              <div className="flex flex-col items-center gap-3">
-                <img
-                  src="/assets/Yencode Logo.png"
-                  alt="Yencode Technologies Logo"
-                  className="h-10 sm:h-14 object-contain"
-                />
-                <div>
-                  <p className="text-[12px] sm:text-base font-black text-[#1e3a8a] uppercase tracking-widest">Yencode Technologies</p>
-                  <a href="https://yencodetechnologies.com" target="_blank" rel="noopener noreferrer" className="text-[10px] sm:text-sm text-gray-400 hover:text-[#1e3a8a] transition-colors font-bold">www.yencodetechnologies.com</a>
+            <div className="max-w-[1000px] mx-auto py-8 sm:py-12 px-4">
+              <div className="flex flex-col items-center text-center gap-6">
+                <div className="flex flex-col items-center gap-3">
+                  <img
+                    src="/assets/Yencode Logo.png"
+                    alt="Yencode Technologies Logo"
+                    className="h-10 sm:h-14 object-contain"
+                  />
+                  <div>
+                    <p className="text-[12px] sm:text-base font-black text-[#1e3a8a] uppercase tracking-widest">Yencode Technologies</p>
+                    <a href="https://yencodetechnologies.com" target="_blank" rel="noopener noreferrer" className="text-[10px] sm:text-sm text-gray-400 hover:text-[#1e3a8a] transition-colors font-bold">www.yencodetechnologies.com</a>
+                  </div>
+                </div>
+
+                <div className="space-y-1 sm:space-y-2">
+                  <p className="text-[10px] sm:text-xs font-black text-gray-400 uppercase tracking-[0.2em]">Contact Support</p>
+                  <p className="text-[11px] sm:text-base font-bold text-gray-600">For any issues contact us: <a href="mailto:info@yencodetechnologies.com" className="text-[#1e3a8a] hover:underline block sm:inline">info@yencodetechnologies.com</a></p>
                 </div>
               </div>
-
-              <div className="space-y-1 sm:space-y-2">
-                <p className="text-[10px] sm:text-xs font-black text-gray-400 uppercase tracking-[0.2em]">Contact Support</p>
-                <p className="text-[11px] sm:text-base font-bold text-gray-600">For any issues contact us: <a href="mailto:info@yencodetechnologies.com" className="text-[#1e3a8a] hover:underline block sm:inline">info@yencodetechnologies.com</a></p>
-              </div>
             </div>
-          </div>
-        </footer>
+          </footer>
         )}
       </div>
 
