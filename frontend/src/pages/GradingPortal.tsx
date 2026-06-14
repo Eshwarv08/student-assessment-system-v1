@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { ArrowLeft, Save, Printer, Loader2, CheckCircle2, XCircle, Info, RotateCcw } from 'lucide-react'
+import { Q15Booklet } from '../components/Q15Booklet'
 import SignaturePad from 'signature_pad'
 import { getQuestionsForAssessment, questionSets } from '../data'
 import '../grading-print.css'
@@ -251,19 +252,36 @@ const GradingPortal: React.FC = () => {
           newGrades[qKey] = 'correct';
         });
 
-        // 2. Oral / checklist items
-        const oralQuestions: string[] = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
-        oralQuestions.forEach((_: string, i: number) => {
-          const qKey = `t${tNum}q${i + 1}`;
-          newGrades[qKey] = 'correct';
-        });
+        if (isQuestion15) {
+          // Q15 specific checking
+          const oralQuestions: string[] = (taskData as any).oral || [];
+          oralQuestions.forEach((_: string, idx: number) => {
+            newCompRecord[`${taskKey}_oral_${idx}`] = 'yes';
+          });
+          const perfQuestions: string[] = (taskData as any).performance || [];
+          perfQuestions.forEach((_: string, idx: number) => {
+            newCompRecord[`${taskKey}_perf_${idx}`] = 'yes';
+          });
+          const checklistItems: string[] = (taskData as any).checklistItems || [];
+          checklistItems.forEach((_: string, idx: number) => {
+            newCompRecord[`${taskKey}_chk_${idx}`] = 'yes';
+          });
+          newCompRecord[`${taskKey}_result`] = 'S';
+        } else {
+          // 2. Oral / checklist items
+          const oralQuestions: string[] = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
+          oralQuestions.forEach((_: string, i: number) => {
+            const qKey = `t${tNum}q${i + 1}`;
+            newGrades[qKey] = 'correct';
+          });
 
-        // 3. Performance items
-        const perfQuestions: string[] = (taskData as any).performance || [];
-        perfQuestions.forEach((_: string, i: number) => {
-          const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
-          newGrades[qKey] = 'correct';
-        });
+          // 3. Performance items
+          const perfQuestions: string[] = (taskData as any).performance || [];
+          perfQuestions.forEach((_: string, i: number) => {
+            const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
+            newGrades[qKey] = 'correct';
+          });
+        }
 
         // 4. Observation items (checkbox-based)
         const observationItems: string[] = (taskData as any).observationItems || [];
@@ -271,6 +289,7 @@ const GradingPortal: React.FC = () => {
           const obsKey = `t${tNum}obs${idx}`;
           newGrades[obsKey] = true;
         });
+        
 
         // 5. Assessor table sections (observation tables)
         const allSections = [
@@ -291,7 +310,7 @@ const GradingPortal: React.FC = () => {
                     const yesOpt = cell.options.find((o: any) =>
                       ['Yes', 'yes', 'Satisfactory', 'S', 'C', 'Completed'].includes(o.value)
                     );
-                    if (yesOpt) newGrades[cell.name] = yesOpt.value;
+                    if (yesOpt) newCompRecord[cell.name] = yesOpt.value;
                   } else {
                     if (cell.type === 'checkbox') {
                       // Check all options
@@ -332,7 +351,7 @@ const GradingPortal: React.FC = () => {
               <span style={{ minWidth: '20px', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt' }}>{q.id}.</span>
               <div style={{ width: '100%', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt' }}>
                 <div style={{ marginBottom: '8px' }}>{q.text}</div>
-                
+
                 {q.image && (
                   <div className="flex flex-col items-center gap-2 mt-3 mb-2 px-2">
                     <div className={`bg-white p-1 sm:p-2 border border-slate-200 shadow-sm rounded-lg w-full ${q.smallImage ? 'max-w-[300px]' : 'max-w-[600px]'}`}>
@@ -343,65 +362,65 @@ const GradingPortal: React.FC = () => {
                     )}
                   </div>
                 )}
-                
+
                 {q.type === 'radio' && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginLeft: '12px', marginTop: '4px' }}>
                     {q.options && q.options.map((opt: any, oIdx: number) => {
-                       const isSelected = Array.isArray(studentAnswer) ? studentAnswer.includes(opt.value) : studentAnswer === opt.value;
-                       return (
-                         <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => setStudentAnswers({ ...studentAnswers, [qKey]: opt.value })}>
-                           <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>{String.fromCharCode(65 + oIdx)}.</span>
-                           <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
-                           {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
-                         </div>
-                       );
+                      const isSelected = Array.isArray(studentAnswer) ? studentAnswer.includes(opt.value) : studentAnswer === opt.value;
+                      return (
+                        <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => setStudentAnswers({ ...studentAnswers, [qKey]: opt.value })}>
+                          <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>{String.fromCharCode(65 + oIdx)}.</span>
+                          <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
+                          {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
+                        </div>
+                      );
                     })}
                   </div>
                 )}
-                
+
                 {q.type === 'multipart_radio' && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginLeft: '12px', marginTop: '4px' }}>
                     {q.parts && q.parts.map((part: any, pIdx: number) => (
                       <div key={pIdx}>
                         {part.text && <div style={{ marginBottom: '4px' }}>{part.text}</div>}
                         {part.options && part.options.map((opt: any, oIdx: number) => {
-                           const isSelected = Array.isArray(studentAnswers[part.name]) ? studentAnswers[part.name].includes(opt.value) : studentAnswers[part.name] === opt.value;
-                           return (
-                             <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => setStudentAnswers({ ...studentAnswers, [part.name]: opt.value })}>
-                               <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>{String.fromCharCode(65 + oIdx)}.</span>
-                               <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
-                               {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
-                             </div>
-                           );
+                          const isSelected = Array.isArray(studentAnswers[part.name]) ? studentAnswers[part.name].includes(opt.value) : studentAnswers[part.name] === opt.value;
+                          return (
+                            <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => setStudentAnswers({ ...studentAnswers, [part.name]: opt.value })}>
+                              <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>{String.fromCharCode(65 + oIdx)}.</span>
+                              <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
+                              {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
+                            </div>
+                          );
                         })}
                       </div>
                     ))}
                   </div>
                 )}
-                
+
                 {(q.type === 'options' || q.type === 'checkbox') && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginLeft: '12px', marginTop: '4px' }}>
                     {q.options && q.options.map((opt: any, oIdx: number) => {
-                       const ansArray = studentAnswer || [];
-                       const isSelected = Array.isArray(ansArray) ? ansArray.includes(opt.value) : ansArray === opt.value;
-                       return (
-                         <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => {
-                           let newArr = [...(Array.isArray(studentAnswer) ? studentAnswer : [])];
-                           if (!isSelected) newArr.push(opt.value);
-                           else newArr = newArr.filter((v: any) => v !== opt.value);
-                           setStudentAnswers({ ...studentAnswers, [qKey]: newArr });
-                         }}>
-                           <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>
-                             {q.type === 'checkbox' ? '☐' : `${String.fromCharCode(65 + oIdx)}.`}
-                           </span>
-                           <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
-                           {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
-                         </div>
-                       );
+                      const ansArray = studentAnswer || [];
+                      const isSelected = Array.isArray(ansArray) ? ansArray.includes(opt.value) : ansArray === opt.value;
+                      return (
+                        <div key={oIdx} style={{ display: 'flex', gap: '8px', cursor: 'pointer' }} onClick={() => {
+                          let newArr = [...(Array.isArray(studentAnswer) ? studentAnswer : [])];
+                          if (!isSelected) newArr.push(opt.value);
+                          else newArr = newArr.filter((v: any) => v !== opt.value);
+                          setStudentAnswers({ ...studentAnswers, [qKey]: newArr });
+                        }}>
+                          <span style={{ minWidth: '20px', fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit' }}>
+                            {q.type === 'checkbox' ? '☐' : `${String.fromCharCode(65 + oIdx)}.`}
+                          </span>
+                          <span style={{ fontWeight: isSelected ? 'bold' : 'normal', color: isSelected ? '#1e3a8a' : 'inherit', textDecoration: isSelected ? 'underline' : 'none' }}>{opt.text}</span>
+                          {isSelected && <span style={{ color: 'red', fontWeight: 'bold', marginLeft: '8px' }}>✔</span>}
+                        </div>
+                      );
                     })}
                   </div>
                 )}
-                
+
                 {q.type === 'text' && (
                   <div style={{ marginTop: '8px', width: '100%' }}>
                     <textarea
@@ -427,8 +446,8 @@ const GradingPortal: React.FC = () => {
               <span style={{ color: 'blue', fontWeight: 'bold' }}>Assessor to tick (☑)</span>
             </div>
           </td>
-          <td 
-            style={{ width: '33%', border: '1px solid black', textAlign: 'center', cursor: 'pointer' }} 
+          <td
+            style={{ width: '33%', border: '1px solid black', textAlign: 'center', cursor: 'pointer' }}
             onClick={() => setGrades({ ...grades, [qKey]: 'Satisfactory' })}
           >
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}>
@@ -438,8 +457,8 @@ const GradingPortal: React.FC = () => {
               <span style={{ color: 'blue', fontWeight: 'bold' }}>Satisfactory (S)</span>
             </div>
           </td>
-          <td 
-            style={{ width: '33%', border: '1px solid black', textAlign: 'center', cursor: 'pointer' }} 
+          <td
+            style={{ width: '33%', border: '1px solid black', textAlign: 'center', cursor: 'pointer' }}
             onClick={() => setGrades({ ...grades, [qKey]: 'Not Satisfactory' })}
           >
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}>
@@ -749,7 +768,7 @@ const GradingPortal: React.FC = () => {
     return (
       <div className="generic-comp-view mt-10 break-inside-avoid" style={{ fontFamily: "'Times New Roman', serif", fontSize: '10pt', color: 'black' }}>
         <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
-        
+
         <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black', marginBottom: '20px' }}>
           <tbody>
             <tr>
@@ -760,7 +779,7 @@ const GradingPortal: React.FC = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
-                    <div 
+                    <div
                       className="no-print"
                       onClick={() => openSigModal('student_signature', 'comp')}
                       style={{ borderBottom: '1px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
@@ -805,7 +824,7 @@ const GradingPortal: React.FC = () => {
 
         <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
           Result:{' '}
-          <span 
+          <span
             className="cursor-pointer relative inline-block mx-2"
             onClick={() => setTaskResults({ ...taskResults, [`t${tNum}`]: 'S' })}
             style={{ padding: '4px' }}
@@ -816,7 +835,7 @@ const GradingPortal: React.FC = () => {
             )}
           </span>
           <span style={{ margin: '0 8px' }}>/</span>
-          <span 
+          <span
             className="cursor-pointer relative inline-block mx-2"
             onClick={() => setTaskResults({ ...taskResults, [`t${tNum}`]: 'NS' })}
             style={{ padding: '4px' }}
@@ -838,7 +857,7 @@ const GradingPortal: React.FC = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
-                    <div 
+                    <div
                       className="no-print"
                       onClick={() => openSigModal('assessor_signature', 'comp')}
                       style={{ borderBottom: '1px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
@@ -858,12 +877,12 @@ const GradingPortal: React.FC = () => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
-                        <input
-                          type="date"
-                          style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                          value={compRecord.assessment_date || ''}
-                          onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                        />
+                      <input
+                        type="date"
+                        style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                        value={compRecord.assessment_date || ''}
+                        onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                      />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
                       {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
@@ -877,7 +896,7 @@ const GradingPortal: React.FC = () => {
       </div>
     );
   };
-  
+
   const renderQuestion2Booklet = () => {
     const q2Styles = `
       .q2-booklet-view {
@@ -3515,6 +3534,79 @@ const GradingPortal: React.FC = () => {
     return renderQuestion2Booklet();
   }
 
+  if (isQuestion15 && submission) {
+    if (isLoading) return (
+      <div className="min-h-screen flex items-center justify-center bg-[#eff6ff]">
+        <div className="text-center">
+          <Loader2 className="animate-spin text-[#1e3a8a] mx-auto mb-4" size={48} />
+          <p className="text-gray-600 font-semibold">Loading submission...</p>
+        </div>
+      </div>
+    );
+    return (
+      <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
+        <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
+            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="font-black text-sm sm:text-base leading-none uppercase tracking-tight m-0 p-0 border-none text-left truncate">Reviewing: {submission.student_name}</div>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest truncate">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full md:flex md:w-auto">
+            <button
+              onClick={markAllCorrect}
+              title="Mark all answers as correct"
+              className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-amber-900/20 col-span-2 sm:col-span-1"
+            >
+              <CheckCircle2 size={14} />
+              <span className="whitespace-nowrap">Mark All Correct</span>
+            </button>
+            <button
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-green-900/20 disabled:opacity-50"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />}
+              <span className="whitespace-nowrap">Save Changes</span>
+            </button>
+            <button
+              onClick={() => {
+                if (!compRecord.assessor_signature || !compRecord.assessment_date) {
+                  alert('CRITICAL: Assessor Signature and Date must be completed before downloading the final report.');
+                  return;
+                }
+                saveMutation.mutate();
+                setTimeout(() => handlePrint(), 500);
+              }}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
+              <span className="whitespace-nowrap">Download</span>
+            </button>
+          </div>
+        </div>
+
+        <Q15Booklet
+          answers={studentAnswers}
+          setAnswers={setStudentAnswers}
+          onSubmit={handleDownload}
+          submitting={saveMutation.isPending}
+          studentName={submission.student_name}
+          submitDate={submission.submitted_at}
+          isStudent={false}
+          compRecord={compRecord}
+          setCompRecord={setCompRecord}
+          grades={grades}
+          setGrades={setGrades}
+        />
+      </div>
+    );
+  }
+
   if (isLoading) return (
     <div className="min-h-screen flex items-center justify-center bg-[#eff6ff]">
       <div className="text-center">
@@ -4311,6 +4403,142 @@ const GradingPortal: React.FC = () => {
                                         {section.caption}
                                       </p>
                                     )}
+                                  </div>
+                                )}
+                                {section.type === 'table' && (
+                                  <div className="my-4" style={{ pageBreakInside: 'avoid' }}>
+                                    <table className="chk-table w-full border-collapse" style={{ fontFamily: "'Times New Roman', serif", fontSize: '9.5pt', border: '1px solid black' }}>
+                                      <thead>
+                                        {section.headers && section.headers.length === 4 && section.headers[0] === "Did the student:" ? (
+                                          <>
+                                            <tr>
+                                              <td colSpan={4} style={{ backgroundColor: '#fff', color: '#000', padding: '6px 14px', border: '1px solid black', textAlign: 'left' }}>
+                                                Student's name:
+                                                <span className="no-print" style={{ display: 'inline-block', width: '200px', marginLeft: '10px' }}>
+                                                  <input type="text" className="w-full bg-transparent outline-none border-b border-slate-300" value={studentAnswers.student_name || ''} onChange={(e) => setStudentAnswers({ ...studentAnswers, student_name: e.target.value })} />
+                                                </span>
+                                                <span className="hidden print:inline-block" style={{ width: '200px', marginLeft: '10px', borderBottom: '1px solid black' }}>{studentAnswers.student_name}</span>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td rowSpan={2} style={{ backgroundColor: '#fff', color: '#000', padding: '13px 14px', border: '1px solid black', textAlign: 'left', verticalAlign: 'top', width: '55%' }}>
+                                                {section.headers[0]}
+                                              </td>
+                                              <td colSpan={2} style={{ backgroundColor: '#fff', color: '#000', padding: '6px 14px', border: '1px solid black', textAlign: 'center', width: '20%' }}>
+                                                Completed successfully
+                                              </td>
+                                              <td rowSpan={2} style={{ backgroundColor: '#fff', color: '#000', padding: '13px 14px', border: '1px solid black', textAlign: 'center', width: '25%' }}>
+                                                {section.headers[3]}
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td style={{ backgroundColor: '#fff', color: '#000', padding: '6px', border: '1px solid black', textAlign: 'center', width: '10%' }}>Yes</td>
+                                              <td style={{ backgroundColor: '#fff', color: '#000', padding: '6px', border: '1px solid black', textAlign: 'center', width: '10%' }}>No</td>
+                                            </tr>
+                                          </>
+                                        ) : (
+                                          <tr>
+                                            {section.headers && section.headers.map((h: string, hIdx: number) => (
+                                              <td key={hIdx} style={{ backgroundColor: '#e8e8e8', color: '#000', fontWeight: 'bold', textAlign: 'center', border: '1px solid black', padding: '10px' }}>
+                                                {h}
+                                              </td>
+                                            ))}
+                                          </tr>
+                                        )}
+                                      </thead>
+                                      <tbody>
+                                        {section.rows && section.rows.map((row: any, rIdx: number) => {
+                                          if (row.isSubHeader) {
+                                            return (
+                                              <tr key={rIdx}>
+                                                <td colSpan={section.headers ? section.headers.length : 4} style={{ backgroundColor: '#e0e0e0', color: '#000', padding: '8px 14px', border: '1px solid black' }}>
+                                                  {row.label}
+                                                </td>
+                                              </tr>
+                                            );
+                                          }
+                                          return (
+                                            <tr key={rIdx}>
+                                              <td style={{ border: '1px solid black', padding: '10px 14px', verticalAlign: 'top' }}>
+                                                {row.label}
+                                              </td>
+                                              {row.cells ? row.cells.map((cell: any, cIdx: number) => {
+                                                if (cell.options) {
+                                                  // Radios/Checkboxes
+                                                  return cell.options.map((opt: any, oIdx: number) => {
+                                                    const isChecked = Array.isArray(grades[cell.name]) ? grades[cell.name].includes(opt.value) : grades[cell.name] === opt.value;
+                                                    return (
+                                                      <td key={`${cIdx}-${oIdx}`} colSpan={opt.colSpan || 1} style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}>
+                                                        <div className="cursor-pointer inline-flex items-center" onClick={() => setGrades({ ...grades, [cell.name]: opt.value })}>
+                                                          {opt.text ? (
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                              <span style={{ fontSize: '10.5pt', fontWeight: 'bold' }}>{opt.text}</span>
+                                                              <div className={`checked-box ${isChecked ? 'is-checked' : ''}`}></div>
+                                                            </div>
+                                                          ) : (
+                                                            <div className={`checked-box ${isChecked ? 'is-checked' : ''}`}></div>
+                                                          )}
+                                                        </div>
+                                                      </td>
+                                                    );
+                                                  });
+                                                } else if (cell.type === 'signature') {
+                                                  return (
+                                                    <td key={cIdx} colSpan={row.colSpan ? row.colSpan : 3} style={{ border: '1px solid black', padding: '4px 10px', verticalAlign: 'middle' }}>
+                                                      <div
+                                                        className="no-print"
+                                                        onClick={() => openSigModal(cell.name, 'grades')}
+                                                        style={{ minHeight: '30px', cursor: 'pointer', position: 'relative' }}
+                                                      >
+                                                        {grades[cell.name] ? (
+                                                          <img src={grades[cell.name]} alt="Sig" style={{ maxHeight: '40px' }} />
+                                                        ) : (
+                                                          <span style={{ fontSize: '9px', color: '#888' }}>Click to sign</span>
+                                                        )}
+                                                      </div>
+                                                      <div className="hidden print:block" style={{ minHeight: '30px' }}>
+                                                        {grades[cell.name] && <img src={grades[cell.name]} alt="Sig" style={{ maxHeight: '40px' }} />}
+                                                      </div>
+                                                    </td>
+                                                  );
+                                                } else if (cell.type === 'date') {
+                                                  return (
+                                                    <td key={cIdx} colSpan={row.colSpan ? row.colSpan : 3} style={{ border: '1px solid black', padding: '4px 10px', verticalAlign: 'middle' }}>
+                                                      <div className="no-print">
+                                                        <input type="date" className="w-full bg-transparent outline-none" value={grades[cell.name] || ''} onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })} />
+                                                      </div>
+                                                      <div className="hidden print:block">
+                                                        {grades[cell.name] ? formatDisplayDate(grades[cell.name]) : ''}
+                                                      </div>
+                                                    </td>
+                                                  );
+                                                } else {
+                                                  return (
+                                                    <td key={cIdx} colSpan={row.colSpan ? row.colSpan : 1} style={{ border: '1px solid black', padding: '4px 10px', verticalAlign: 'top' }}>
+                                                      <div className="no-print">
+                                                        <textarea className="w-full min-h-[40px] bg-transparent border-none outline-none resize-y" placeholder={cell.placeholder || ''} value={grades[cell.name] || ''} onChange={(e) => setGrades({ ...grades, [cell.name]: e.target.value })} />
+                                                      </div>
+                                                      <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap' }}>
+                                                        {grades[cell.name] || ''}
+                                                      </div>
+                                                    </td>
+                                                  );
+                                                }
+                                              }) : (
+                                                <td colSpan={section.headers ? section.headers.length - 1 : 3} style={{ border: '1px solid black', padding: '4px 10px' }}>
+                                                  <div className="no-print">
+                                                    <input type="text" className="w-full bg-transparent outline-none" value={grades[row.id] || ''} onChange={(e) => setGrades({ ...grades, [row.id]: e.target.value })} />
+                                                  </div>
+                                                  <div className="hidden print:block">
+                                                    {grades[row.id] || ''}
+                                                  </div>
+                                                </td>
+                                              )}
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </table>
                                   </div>
                                 )}
                               </div>

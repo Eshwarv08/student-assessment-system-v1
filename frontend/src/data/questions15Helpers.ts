@@ -404,16 +404,16 @@ export const makeChecklistTable = (title: string, prefix: string, items: string[
     ...items.map((item, idx) => ({
       label: item,
       cells: [
-        { name: `${prefix}_cl_${idx + 1}`, options: [{"text": "", "value": "Yes"}] },
-        { name: `${prefix}_cl_${idx + 1}`, options: [{"text": "", "value": "No"}] },
+        { name: `${prefix}_cl_${idx + 1}`, options: [{ "text": "", "value": "Yes" }] },
+        { name: `${prefix}_cl_${idx + 1}`, options: [{ "text": "", "value": "No" }] },
         { type: "text", name: `${prefix}_cl_${idx + 1}_comments` }
       ]
     })),
     {
       label: "Task Outcome:",
       cells: [
-        { name: `${prefix}_outcome`, options: [{"text": "Satisfactory", "value": "Satisfactory"}] },
-        { name: `${prefix}_outcome`, options: [{"text": "Not Satisfactory", "value": "Not Satisfactory"}] },
+        { name: `${prefix}_outcome`, options: [{ "text": "Satisfactory", "value": "Satisfactory" }] },
+        { name: `${prefix}_outcome`, options: [{ "text": "Not Satisfactory", "value": "Not Satisfactory" }] },
         { type: "text", name: `${prefix}_outcome_comments` }
       ]
     },
@@ -437,6 +437,7 @@ export const makeChecklistTable = (title: string, prefix: string, items: string[
 
 export const makePCMappingTable = (title: string, prefix: string, subHeadersWithItems: { subHeader: string, items: string[] }[]) => ({
   type: "table",
+  pageBreak: true,
   title: title,
   headers: ["Performance Criteria", "Tick Completed"],
   rows: subHeadersWithItems.flatMap((section) => [
@@ -449,7 +450,7 @@ export const makePCMappingTable = (title: string, prefix: string, subHeadersWith
       const key = match ? match[1].replace(/\./g, '_') : 'item';
       return {
         label: item,
-        cells: [{ "type": "checkbox", "name": `${prefix}_pc_${key}`, "options": [{"text": "", "value": "Completed"}] }]
+        cells: [{ "type": "checkbox", "name": `${prefix}_pc_${key}`, "options": [{ "text": "", "value": "Completed" }] }]
       };
     })
   ])
@@ -457,6 +458,7 @@ export const makePCMappingTable = (title: string, prefix: string, subHeadersWith
 
 export const makePEMappingTable = (title: string, prefix: string, subHeadersWithItems: { subHeader: string, items: string[] }[]) => ({
   type: "table",
+  pageBreak: true,
   title: title,
   headers: ["Performance Evidence", "Tick Completed"],
   rows: subHeadersWithItems.flatMap((section) => [
@@ -469,7 +471,7 @@ export const makePEMappingTable = (title: string, prefix: string, subHeadersWith
       const key = match ? match[1].toLowerCase() : 'pe';
       return {
         label: item,
-        cells: [{ "type": "checkbox", "name": `${prefix}_pe_${key}`, "options": [{"text": "", "value": "Completed"}] }]
+        cells: [{ "type": "checkbox", "name": `${prefix}_pe_${key}`, "options": [{ "text": "", "value": "Completed" }] }]
       };
     })
   ])
@@ -796,98 +798,139 @@ export const makeKA1ChecklistTable = () => ({
 
 export const makePA1PCMappingTable = () => ({
   type: "table",
-  title: "Practical Assessment Task 1 - Performance Criteria Mapping",
+  title: "Performance Criteria Mapping",
   headers: ["Performance Criteria", "Tick Completed"],
   rows: [
     {
       label: "Performance Criteria assessed in this task - ICTCBL334",
       isSubHeader: true
     },
+    { label: "1.1 Obtain construction design plan from appropriate personnel and determine and obtain type of underground enclosure specified", cells: [{ type: "checkbox", name: "pa1_pc_334_1_1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.2 Arrange access to site according to required enterprise procedure", cells: [{ type: "checkbox", name: "pa1_pc_334_1_2", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.3 Inform appropriate personnel of existing and potential worksite hazards", cells: [{ type: "checkbox", name: "pa1_pc_334_1_3", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.4 Verify location of proposed installation according to appropriate plans obtained from authorised personnel", cells: [{ type: "checkbox", name: "pa1_pc_334_1_4", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.5 Obtain information about location of other services from relevant authorities", cells: [{ type: "checkbox", name: "pa1_pc_334_1_5", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.6 Organise plant, tools and equipment for given work and safe work practice", cells: [{ type: "checkbox", name: "pa1_pc_334_1_6", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.7 Place recognised barriers during construction according to safety and enterprise requirements", cells: [{ type: "checkbox", name: "pa1_pc_334_1_7", options: [{ text: "", value: "Completed" }] }] },
+    { label: "3.5 Notify appropriate personnel of job completion and obtain sign-off", cells: [{ type: "checkbox", name: "pa1_pc_334_3_5", options: [{ text: "", value: "Completed" }] }] },
     {
-      label: "1.1 Obtain construction design plan from appropriate personnel and determine and obtain type of underground enclosure specified",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_1_1", options: [{ text: "", value: "Completed" }] }]
+      label: "Performance Criteria assessed in this task - ICTCBL249",
+      isSubHeader: true
     },
+    { label: "1.1 Arrange access to site according to required procedure", cells: [{ type: "checkbox", name: "pa1_pc_249_1_1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.2 Inform appropriate personnel of identified hazards on worksite", cells: [{ type: "checkbox", name: "pa1_pc_249_1_2", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorized personnel", cells: [{ type: "checkbox", name: "pa1_pc_249_1_3", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.4 Obtain information about proposed locations of other services from relevant authorities", cells: [{ type: "checkbox", name: "pa1_pc_249_1_4", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines", cells: [{ type: "checkbox", name: "pa1_pc_249_1_5", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS) and environmental requirements", cells: [{ type: "checkbox", name: "pa1_pc_249_1_6", options: [{ text: "", value: "Completed" }] }] },
+    { label: "5.3 Reinstate site to customer satisfaction and dispose of waste in an environmentally safe manner", cells: [{ type: "checkbox", name: "pa1_pc_249_5_3", options: [{ text: "", value: "Completed" }] }] },
+    { label: "5.4 Notify appropriate personnel about job completion and obtain sign-off", cells: [{ type: "checkbox", name: "pa1_pc_249_5_4", options: [{ text: "", value: "Completed" }] }] },
     {
-      label: "1.2 Arrange access to site according to required enterprise procedure",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_1_2", options: [{ text: "", value: "Completed" }] }]
+      label: "Performance Criteria assessed in this task - ICTCBL329",
+      isSubHeader: true
     },
+    { label: "1.1 Access site according to required enterprise procedures", cells: [{ type: "checkbox", name: "pa1_pc_329_1_1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.2 Verify cable installation requirements from plans and recognise constraints", cells: [{ type: "checkbox", name: "pa1_pc_329_1_2", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.3 Identify from plans, correct duct to be hauled", cells: [{ type: "checkbox", name: "pa1_pc_329_1_3", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.4 Inform appropriate personnel of existing and potential worksite hazards", cells: [{ type: "checkbox", name: "pa1_pc_329_1_4", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.6 Select suitable tools, equipment, and protective equipment to meet required industry standards", cells: [{ type: "checkbox", name: "pa1_pc_329_1_6", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.7 Check for dangerous gases and place guards around open manholes following work health and safety (WHS) nd environmental requirements", cells: [{ type: "checkbox", name: "pa1_pc_329_1_7", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.8 Confirm correct duct/conduit to be utilised for hauling at site and access to intermediate manholes/pits along a hauling route", cells: [{ type: "checkbox", name: "pa1_pc_329_1_8", options: [{ text: "", value: "Completed" }] }] },
+    { label: "Reinstate site to customer satisfaction and dispose of waste in environmentally safe manner as required", cells: [{ type: "checkbox", name: "pa1_pc_329_reinstate", options: [{ text: "", value: "Completed" }] }] },
+    { label: "Notify appropriate personnel and obtain sign-off", cells: [{ type: "checkbox", name: "pa1_pc_329_notify", options: [{ text: "", value: "Completed" }] }] }
+  ]
+});
+
+export const makePA1PCMappingTableContinued = () => ({
+  type: "table",
+  pageBreak: true,
+  title: "Performance Criteria Mapping Continued",
+  headers: ["Performance Criteria assessed in this task - ICTCBL253", "Tick Completed"],
+  rows: [
+    { label: "1.1 Obtain construction design plan from appropriate personnel to scope work and arrange for site access", cells: [{ type: "checkbox", name: "pa1_pc_253_1_1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.2 Notify appropriate personnel of identified safety hazards and other services that will need to be considered", cells: [{ type: "checkbox", name: "pa1_pc_253_1_2", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.3 Obtain plant, tools, and safety equipment to perform tasks safely and efficiently", cells: [{ type: "checkbox", name: "pa1_pc_253_1_3", options: [{ text: "", value: "Completed" }] }] },
+    { label: "1.4 Determine type of underground pit/manhole required for project as specified in construction design plan", cells: [{ type: "checkbox", name: "pa1_pc_253_1_4", options: [{ text: "", value: "Completed" }] }] },
+    { label: "2.1 Use tools according to enterprise guidelines and work health and safety (WHS) regulations", cells: [{ type: "checkbox", name: "pa1_pc_253_2_1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "4.1 Complete reports and record alterations to plans using appropriate symbols, according to enterprise policy", cells: [{ type: "checkbox", name: "pa1_pc_253_4_1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "4.2 Complete all labelling requirements according to industry standard", cells: [{ type: "checkbox", name: "pa1_pc_253_4_2", options: [{ text: "", value: "Completed" }] }] },
+    { label: "4.5 Notify appropriate personnel of job completion and obtain sign-off", cells: [{ type: "checkbox", name: "pa1_pc_253_4_5", options: [{ text: "", value: "Completed" }] }] }
+  ]
+});
+
+export const makePA1AttemptTable1 = () => ({
+  type: "table",
+  headers: ["Initial Attempt\nCircle S or NYS", "Initial Attempt\nDate", "1st Reattempt\nS or NYS\nDate", "2nd Reattempt\nS or NYS\n& Date", "Assessors\nInitials"],
+  rows: [
     {
-      label: "1.3 Review construction design plan and prepare task requirements for enclosure installation according to plan, safety, legislative and environmental guidelines",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_1_3", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "1.4 Identify environmental guidelines and safe work practices, including safety hazards, on site and determine hazard prevention measures",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_1_4", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "1.5 Select underground enclosure and accessories and check for transport damage or defects",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_1_5", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "2.1 Complete Job Safety Analysis (JSA) or safe work method statements (SWMS) for pit or enclosure installation, including hazards associated with utilities and environmental conditions",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_2_1", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "2.2 Wear protective safety equipment and work in accordance with regulatory requirements and enterprise procedures",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_2_2", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "2.3 Check pit/manhole for toxic gas and water prior to entry, and pump out water where necessary",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_2_3", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "2.4 Verify existing services and identify and plan for changes needed to plans to install enclosures in simulated environment",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_2_4", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "2.5 Place safety guards around workspace in accordance with regulations",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_2_5", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "2.6 Determine water and gas checks required for specific pits and manholes and complete checks in accordance with gas spot sampling procedure",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_2_6", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "2.7 Select hand and power tools and equipment and check for safe operation",
-      cells: [{ type: "checkbox", name: "pa1_pc_334_2_7", options: [{ text: "", value: "Completed" }] }]
+      id: "pa1_attempt1_row1",
+      cells: [
+        { type: "text", name: "pa1_att1_s_nys" },
+        { type: "date", name: "pa1_att1_date" },
+        { type: "text", name: "pa1_att1_re1" },
+        { type: "text", name: "pa1_att1_re2" },
+        { type: "signature", name: "pa1_att1_sig" }
+      ]
     }
   ]
 });
 
 export const makePA1PEMappingTable = () => ({
   type: "table",
-  title: "Practical Assessment Task 1 - Performance Evidence Mapping",
+  pageBreak: true,
+  title: "Performance Evidence Mapping",
   headers: ["Performance Evidence", "Tick Completed"],
   rows: [
     {
-      label: "Performance Evidence assessed in this task - ICTCBL334",
+      label: "Performance Evidence assessed in this task-ICTCBL334",
       isSubHeader: true
     },
+    { label: "PE1. interpret and apply design plans and prepare for construction", cells: [{ type: "checkbox", name: "pa1_pe_334_pe1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "PE2. use specialised hand or power tools and equipment normally used for excavation, pipe, pit and conduit installation and site restoration, safely", cells: [{ type: "checkbox", name: "pa1_pe_334_pe2", options: [{ text: "", value: "Completed" }] }] },
     {
-      label: "PE1. plan the works and prepare the site",
-      cells: [{ type: "checkbox", name: "pa1_pe_334_pe1", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "PE6. use specialised hand or power tools and equipment for hauling cable safely",
-      cells: [{ type: "checkbox", name: "pa1_pe_334_pe6", options: [{ text: "", value: "Completed" }] }]
-    },
-    {
-      label: "Performance Evidence assessed in this task - ICTCBL253",
+      label: "Performance Evidence assessed in this task-ICTCBL249",
       isSubHeader: true
     },
+    { label: "PE1. plan the works and prepare the site", cells: [{ type: "checkbox", name: "pa1_pe_249_pe1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "PE2. read and interpret drawings and designs to interpret installation requirements", cells: [{ type: "checkbox", name: "pa1_pe_249_pe2", options: [{ text: "", value: "Completed" }] }] },
+    { label: "PE8. prepare all reports and records to industry and enterprise standards.", cells: [{ type: "checkbox", name: "pa1_pe_249_pe8", options: [{ text: "", value: "Completed" }] }] },
     {
-      label: "PE1. plan the works and prepare the site",
-      cells: [{ type: "checkbox", name: "pa1_pe_253_pe1", options: [{ text: "", value: "Completed" }] }]
+      label: "Performance Evidence assessed in this task-ICTCBL329",
+      isSubHeader: true
     },
+    { label: "PE4. use specialised hand or power tools and equipment for hauling cabling safely", cells: [{ type: "checkbox", name: "pa1_pe_329_pe4", options: [{ text: "", value: "Completed" }] }] },
+    { label: "PE5. read and interpret plan drawings", cells: [{ type: "checkbox", name: "pa1_pe_329_pe5", options: [{ text: "", value: "Completed" }] }] },
+    { label: "PE6. restore site and complete documentation", cells: [{ type: "checkbox", name: "pa1_pe_329_pe6", options: [{ text: "", value: "Completed" }] }] },
+    { label: "PE7. comply with all related safety requirements and work practices.", cells: [{ type: "checkbox", name: "pa1_pe_329_pe7", options: [{ text: "", value: "Completed" }] }] },
     {
-      label: "PE6. use specialised hand or power tools and equipment for hauling cable safely",
-      cells: [{ type: "checkbox", name: "pa1_pe_253_pe6", options: [{ text: "", value: "Completed" }] }]
+      label: "Performance Evidence assessed in this task-ICTCBL253",
+      isSubHeader: true
+    },
+    { label: "PE1. interpret and apply design plans and prepare for construction", cells: [{ type: "checkbox", name: "pa1_pe_253_pe1", options: [{ text: "", value: "Completed" }] }] },
+    { label: "PE7. apply related work health and safety (WHS) requirements and work practices associated with excavation, enclosure installation and site restoration.", cells: [{ type: "checkbox", name: "pa1_pe_253_pe7", options: [{ text: "", value: "Completed" }] }] }
+  ]
+});
+
+export const makePA1AttemptTable2 = () => ({
+  type: "table",
+  headers: ["Initial Attempt\nCircle S or NYS", "Initial Attempt\nDate", "1st Reattempt\nS or NYS\nDate", "2nd Reattempt\nS or NYS\n& Date", "Assessors\nInitials"],
+  rows: [
+    {
+      id: "pa1_attempt2_row1",
+      cells: [
+        { type: "text", name: "pa1_att2_s_nys" },
+        { type: "date", name: "pa1_att2_date" },
+        { type: "text", name: "pa1_att2_re1" },
+        { type: "text", name: "pa1_att2_re2" },
+        { type: "signature", name: "pa1_att2_sig" }
+      ]
     }
   ]
 });
 
 export const makePA1ChecklistTable = () => ({
   type: "table",
+  pageBreak: true,
   title: "Practical Assessment Task 1 - Checklist",
   headers: ["DID THE STUDENT:", "YES", "NO", "COMMENTS"],
   rows: [

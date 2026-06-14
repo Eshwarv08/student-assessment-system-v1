@@ -18,6 +18,7 @@ import { Q11Booklet } from '../components/Q11Booklet'
 import { Q12Booklet } from '../components/Q12Booklet'
 import { Q13Booklet } from '../components/Q13Booklet'
 import { Q14Booklet } from '../components/Q14Booklet'
+import { Q15Booklet } from '../components/Q15Booklet'
 import '../assessment-styles.css'
 
 const AssessmentForm: React.FC = () => {
@@ -67,7 +68,8 @@ const AssessmentForm: React.FC = () => {
   const isQ12 = (token || '').toLowerCase() === 'question-12' || assessmentQuestions?.metadata?.code === 'ICTTEN313';
   const isQ13 = (token || '').toLowerCase() === 'question-13' || assessmentQuestions?.metadata?.code === 'ICTCBL301';
   const isQ14 = (token || '').toLowerCase() === 'question-14' || assessmentQuestions?.metadata?.code === 'ICTCBL303';
-  const isPdfBooklet = isQ1 || isQ2 || isQ3 || isQ4 || isQ5 || isQ6 || isQ7 || isQ8 || isQ9 || isQ10 || isQ11 || isQ12 || isQ13 || isQ14;
+  const isQ15 = (token || '').toLowerCase() === 'question-15' || assessmentQuestions?.metadata?.code === 'ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253';
+  const isPdfBooklet = isQ1 || isQ2 || isQ3 || isQ4 || isQ5 || isQ6 || isQ7 || isQ8 || isQ9 || isQ10 || isQ11 || isQ12 || isQ13 || isQ14 || isQ15;
 
   const showToast = (message: string, type: 'error' | 'success' = 'error') => {
     setToast({ message, type });
@@ -1003,6 +1005,16 @@ const AssessmentForm: React.FC = () => {
               />
             ) : isQ14 ? (
               <Q14Booklet 
+                answers={answers}
+                setAnswers={setAnswers}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
+                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                isStudent={true}
+              />
+            ) : isQ15 ? (
+              <Q15Booklet 
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}

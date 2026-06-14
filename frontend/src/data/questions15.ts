@@ -12,7 +12,10 @@ import {
   makeAssessmentOutcomeTable,
   makeKA1ChecklistTable,
   makePA1PCMappingTable,
+  makePA1PCMappingTableContinued,
+  makePA1AttemptTable1,
   makePA1PEMappingTable,
+  makePA1AttemptTable2,
   makePA1ChecklistTable
 } from './questions15Helpers';
 
@@ -48,11 +51,20 @@ export const assessmentQuestions = {
       { "id": "Task 3", "text": "Practical Assessment Task 2 - Rod, Rope, Clean and Prove Conduit" },
       { "id": "Task 4", "text": "Practical Assessment Task 3 - Haul Cable" },
       { "id": "Task 5", "text": "Practical Assessment Task 4 - Install 4 New Pits" },
-      { "id": "Task 6", "text": "Practical Assessment Task 6 - Install Prefabricated Manhole, Conduit and Pit" },
-      { "id": "Task 7", "text": "Practical Assessment Task 7 - Remove Pit and Conduit" }
+      { "id": "Task 6", "text": "Practical Assessment Task 5" },
+      { "id": "Task 7", "text": "Practical Assessment Task 6 - Install Prefabricated Manhole, Conduit and Pit" },
+      { "id": "Task 8", "text": "Practical Assessment Task 7 - Remove Pit and Conduit" }
     ],
     "competencyDecision": "Student must satisfactorily complete each assessment task to be Competent (C).",
     "coverSheetInstruction": "A cover sheet must be included with each submission."
+  },
+
+  "task0": {
+    "title": "KNOWLEDGE ASSESSMENT TASK 1 - CHECKLIST",
+    "assessorOnly": true,
+    "sections": [
+      makeKA1ChecklistTable()
+    ]
   },
 
   "task8": {
@@ -117,7 +129,10 @@ export const assessmentQuestions = {
     ],
     "assessorSections": [
       makePA1PCMappingTable(),
+      makePA1PCMappingTableContinued(),
+      makePA1AttemptTable1(),
       makePA1PEMappingTable(),
+      makePA1AttemptTable2(),
       makePA1ChecklistTable()
     ]
   },
@@ -985,7 +1000,22 @@ export const assessmentQuestions = {
     "assessorSections": [
       makePCMappingTable("Practical Assessment Task 3 - Performance Criteria Mapping", "pa3", pat3PC),
       makePEMappingTable("Practical Assessment Task 3 - Performance Evidence Mapping", "pa3", pat3PE),
-      makeChecklistTable("Practical Assessment Task 3 - Checklist", "pa3", pat3CL),
+      makeChecklistTable("Practical Assessment Task 3 - Checklist", "pa3", pat3CL)
+    ]
+  },
+
+  "taskPA5": {
+    "title": "PRACTICAL ASSESSMENT TASK 5",
+    "observationTitle": "PRACTICAL ASSESSMENT TASK 5",
+    "observationSubtitle": "Performance Criteria & Checklist",
+    "sections": [
+      {
+        "type": "text",
+        "title": "Assessment Instructions",
+        "content": "For Practical Assessment Task 5, you will be assessed on the following performance criteria, performance evidence and checklist items."
+      }
+    ],
+    "assessorSections": [
       makePCMappingTable("Practical Assessment Task 5 - Performance Criteria Mapping (ICTCBL249)", "pa5", pat5PC),
       makePEMappingTable("Practical Assessment Task 5 - Performance Evidence Mapping (ICTCBL249)", "pa5", pat5PE),
       makeChecklistTable("Practical Assessment Task 5 - Checklist (ICTCBL249)", "pa5", pat5CL)
