@@ -563,7 +563,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                         <div className="pl-0 sm:pl-6 mt-2">
                           {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
                             <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                              <input type="radio" checked={answers[opt.name || `t${taskKey.replace('task', '')}q${q.id}`] === opt.value} onChange={(e) => setAnswers({...answers, [opt.name || `t${taskKey.replace('task', '')}q${q.id}`]: opt.value})} className="mt-0.5" />
+                              <input type="radio" checked={answers[opt.name || `t${taskKey!.replace('task', '')}q${q.id}`] === opt.value} onChange={(e) => setAnswers({...answers, [opt.name || `t${taskKey!.replace('task', '')}q${q.id}`]: opt.value})} className="mt-0.5" />
                               <label>{opt.text}</label>
                             </div>
                           ))}
@@ -571,22 +571,22 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                           {q.type === 'text' && (
                             <textarea
                               className="w-full border border-gray-300 p-2 min-h-[100px] resize-y"
-                              value={answers[`t${taskKey.replace('task', '')}q${q.id}`] || ''}
-                              onChange={(e) => setAnswers({...answers, [`t${taskKey.replace('task', '')}q${q.id}`]: e.target.value})}
+                              value={answers[`t${taskKey!.replace('task', '')}q${q.id}`] || ''}
+                              onChange={(e) => setAnswers({...answers, [`t${taskKey!.replace('task', '')}q${q.id}`]: e.target.value})}
                               placeholder="(No response)"
                             />
                           )}
 
                           {q.type === 'options' && q.options?.map((opt: any, oIdx: number) => {
-                            const ansArray = answers[`t${taskKey.replace('task', '')}q${q.id}`] || [];
+                            const ansArray = answers[`t${taskKey!.replace('task', '')}q${q.id}`] || [];
                             const checked = Array.isArray(ansArray) ? ansArray.includes(opt.value) : ansArray === opt.value;
                             return (
                               <div key={oIdx} className="flex gap-2 mb-2 items-center">
                                 <input type="checkbox" checked={checked} onChange={(e) => {
-                                  let newArr = [...(Array.isArray(answers[`t${taskKey.replace('task', '')}q${q.id}`]) ? answers[`t${taskKey.replace('task', '')}q${q.id}`] : [])];
+                                  let newArr = [...(Array.isArray(answers[`t${taskKey!.replace('task', '')}q${q.id}`]) ? answers[`t${taskKey!.replace('task', '')}q${q.id}`] : [])];
                                   if (e.target.checked) newArr.push(opt.value);
                                   else newArr = newArr.filter(v => v !== opt.value);
-                                  setAnswers({...answers, [`t${taskKey.replace('task', '')}q${q.id}`]: newArr});
+                                  setAnswers({...answers, [`t${taskKey!.replace('task', '')}q${q.id}`]: newArr});
                                 }} className="mt-0.5" />
                                 <label>{opt.text}</label>
                               </div>
@@ -618,10 +618,22 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                         <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
                           Assessor to tick (☑)
                         </div>
-                        <div className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight">
+                        <div 
+                          className={`w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight ${isStudent ? '' : 'cursor-pointer hover:bg-[#f5d0b5]'}`}
+                          onClick={() => { if (!isStudent) setCompRecord({...compRecord, [`${taskKey}_q${q.id}_result`]: 'S'}) }}
+                        >
+                           <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                             {compRecord[`${taskKey}_q${q.id}_result`] === 'S' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                           </span>
                            Satisfactory (S)
                         </div>
-                        <div className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight">
+                        <div 
+                          className={`w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight ${isStudent ? '' : 'cursor-pointer hover:bg-[#f5d0b5]'}`}
+                          onClick={() => { if (!isStudent) setCompRecord({...compRecord, [`${taskKey}_q${q.id}_result`]: 'NS'}) }}
+                        >
+                           <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                             {compRecord[`${taskKey}_q${q.id}_result`] === 'NS' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                           </span>
                            Not Satisfactory (NS)
                         </div>
                       </div>

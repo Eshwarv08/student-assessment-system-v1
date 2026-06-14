@@ -562,7 +562,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                         
                         <div className="pl-0 sm:pl-6 mt-2">
                           {(() => {
-                            const qKey = `t${taskKey.replace('task', '')}q${q.id}`;
+                            const qKey = `t${taskKey!.replace('task', '')}q${q.id}`;
                             return (
                               <>
                                 {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
@@ -625,10 +625,22 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                         <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
                           Assessor to tick (☑)
                         </div>
-                        <div className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight">
+                        <div 
+                          className={`w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight ${isStudent ? '' : 'cursor-pointer hover:bg-[#f5d0b5]'}`}
+                          onClick={() => { if (!isStudent) setCompRecord({...compRecord, [`${taskKey}_q${q.id}_result`]: 'S'}) }}
+                        >
+                           <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                             {compRecord[`${taskKey}_q${q.id}_result`] === 'S' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                           </span>
                            Satisfactory (S)
                         </div>
-                        <div className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight">
+                        <div 
+                          className={`w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight ${isStudent ? '' : 'cursor-pointer hover:bg-[#f5d0b5]'}`}
+                          onClick={() => { if (!isStudent) setCompRecord({...compRecord, [`${taskKey}_q${q.id}_result`]: 'NS'}) }}
+                        >
+                           <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                             {compRecord[`${taskKey}_q${q.id}_result`] === 'NS' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                           </span>
                            Not Satisfactory (NS)
                         </div>
                       </div>

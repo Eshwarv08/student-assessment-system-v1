@@ -183,38 +183,70 @@ export const assessmentQuestions = {
     "questions": [
       {
         "id": 1,
-        "text": "Identify some of the safety procedures for installing cable support systems",
+        "text": "What does the Australian communications and Media authority's (ACMA) provide for cablers?\nPowerPoint telecommunication overview: slide45",
         "type": "text"
       },
       {
         "id": 2,
-        "text": "Determine some of the standard performance requirements for customer premises communications cabling",
+        "text": "Describe the use of simple cabling continuity test equipment?",
         "type": "text"
       },
       {
         "id": 3,
-        "text": "Identify and explain the typical symbols used in industry plans and how to apply them",
-        "type": "text"
+        "text": "What does the term regulatory environment mean in cabling?\n\nChoose the best definition:",
+        "type": "options",
+        "options": [
+          { "text": "Different type of cabling licencing requirements (ie lift, Restricted, open) and endorsements requirements", "value": "diff_licence", "type": "checkbox" },
+          { "text": "Role of acma, Australian communication alliance,", "value": "role_acma", "type": "checkbox" },
+          { "text": "ACMA s008 & ACMA s009", "value": "acma_s008_s009", "type": "checkbox" },
+          { "text": "Australian telecommunication act and WHS act 2011", "value": "telecom_whs_act", "type": "checkbox" }
+        ]
       },
       {
         "id": 4,
-        "text": "Explain the typical layout of cable support systems",
-        "type": "text"
+        "text": "Describe the typical environment in which registered customer cabling occurs\n\nChoose the best environment:",
+        "type": "options",
+        "options": [
+          { "text": "Network boundary point, customer side of the first socket or MDF", "value": "network_boundary", "type": "checkbox" },
+          { "text": "Customer cabling meet ASCA S009 identification of customer and carrier side of the network", "value": "asca_s009_id", "type": "checkbox" },
+          { "text": "Role of acma, Australian communication alliance", "value": "role_acma", "type": "checkbox" }
+        ]
       },
       {
         "id": 5,
-        "text": "Explain the process for installing cable",
-        "type": "text"
+        "text": "Give examples of the types of equipment used in cabling\n\nChoose 3 different types of equipment:",
+        "type": "options",
+        "options": [
+          { "text": "Winches", "value": "winches", "type": "checkbox" },
+          { "text": "Winding machines", "value": "winding_machines", "type": "checkbox" },
+          { "text": "Jacks, stands", "value": "jacks", "type": "checkbox" },
+          { "text": "Rollers", "value": "rollers", "type": "checkbox" },
+          { "text": "Crimp tools", "value": "crimp_tools", "type": "checkbox" },
+          { "text": "Cable cutters", "value": "cable_cutters", "type": "checkbox" },
+          { "text": "Cable socks", "value": "cable_socks", "type": "checkbox" }
+        ]
       },
       {
         "id": 6,
-        "text": "Identify the relevant cable codes and what they relate to",
-        "type": "text"
+        "text": "Identify legislation, codes of practice and other formal agreements that impact on the work activity\n\nTrue or False?\nWHS act, regulation and codes of practice include work place safety, Duty of care, SWMS and JSA also the ASCAS008 and ASCA S009",
+        "type": "radio",
+        "options": [
+          { "text": "True", "value": "true" },
+          { "text": "False", "value": "false" }
+        ]
       },
       {
         "id": 7,
-        "text": "Describe the types of cable and the typical uses of each",
-        "type": "text"
+        "text": "List the materials used for telecommunications cabling\n\nChoose 3 materials:",
+        "type": "options",
+        "options": [
+          { "text": "Cables", "value": "cables", "type": "checkbox" },
+          { "text": "Out Lets/Socket", "value": "outlets", "type": "checkbox" },
+          { "text": "MDF Blocks", "value": "mdf_blocks", "type": "checkbox" },
+          { "text": "Conduit", "value": "conduit", "type": "checkbox" },
+          { "text": "Fasteners", "value": "fasteners", "type": "checkbox" },
+          { "text": "Saddles", "value": "saddles", "type": "checkbox" }
+        ]
       },
       {
         "id": 8,
@@ -222,7 +254,7 @@ export const assessmentQuestions = {
         "type": "multipart_radio",
         "parts": [
           {
-            "text": "True or False?\nThe MDF connects equipment inside a telecommunications facility to cables and subscriber carrier equipment. Every cable that supplies services to user telephones lines ends up at an MDF and is distributed through MDF to equipment within local exchanges.",
+            "text": "True or False?\n- The MDF connects equipment inside a telecommunications facility to cables and subscriber carrier equipment. Every cable that supplies services to user telephones lines ends up at an MDF and is distributed through MDF to equipment within local exchanges.",
             "name": "t4q8a",
             "options": [
               { "text": "True", "value": "true" },
@@ -230,7 +262,7 @@ export const assessmentQuestions = {
             ]
           },
           {
-            "text": "The form is given to the customer and a copy must be retained for twelve months by the cabler or their employer. For audit purposes, the Australian Communications and Media Authority (the ACMA) can ask cablers to submit completed TCA1 forms for all jobs they conducted in the last twelve months.",
+            "text": "True or False?\n- The form is given to the customer and a copy must be retained for twelve months by the cabler or their employer. For audit purposes, the Australian Communications and Media Authority (the ACMA) can ask cablers to submit completed TCA1 forms for all jobs they conducted in the last twelve months.",
             "name": "t4q8b",
             "options": [
               { "text": "True", "value": "true" },
@@ -241,7 +273,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 9,
-        "text": "List some steps you can take to make using equipment safer",
+        "text": "List some steps you can take to make using equipment safer\n\nChoose the best answers:",
         "type": "options",
         "options": [
           { "text": "Hazard identification", "value": "hazard_id", "type": "checkbox" },
@@ -254,7 +286,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 10,
-        "text": "What does the earthing systems and protection strategies include?",
+        "text": "What does the earthing systems and protection strategies include?\n\nChoose the best answers:",
         "type": "options",
         "options": [
           { "text": "Customer Earthing System", "value": "customer_earthing", "type": "checkbox" },
@@ -282,7 +314,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 12,
-        "text": "Determine whether the purpose of test methods and performance requirements is true or false?\n\nPurpose of testing and testing methods include cable tracing, continuity testings and insulation and earthing testing to confirm the expected performance and function of the system you have installed still needs to be checked by a supervisor.",
+        "text": "Determine whether the purpose of test methods and performance requirements is true or false?\n\nTrue or False?\nPurpose of testing and testing methods include cable tracing, continuity testings and insulation and earthing testing to confirm the expected performance and function of the system you have installed still needs to be checked by a supervisor.",
         "type": "radio",
         "options": [
           { "text": "True", "value": "true" },
@@ -291,7 +323,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 13,
-        "text": "Choose the typical issues and challenges that occur on site and what to do about it",
+        "text": "Choose the typical issues and challenges that occur on site and what to do about it\n\nChoose the best 2 options:",
         "type": "options",
         "options": [
           { "text": "Poor or damaged cable (replace)", "value": "damaged_cable", "type": "checkbox" },
@@ -302,7 +334,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 14,
-        "text": "Define the mandatory workplace records required when installing communications cabling\n\nThe mandatory workplace records required when installing communications cabling include TCA1, TCA2 and MDF Record book",
+        "text": "Define the mandatory workplace records required when installing communications cabling\n\nTrue or False?\nThe mandatory workplace records required when installing communications cabling include TCA1, TCA2 and MDF Record book",
         "type": "radio",
         "options": [
           { "text": "True", "value": "true" },
@@ -311,7 +343,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 15,
-        "text": "Choose some of the applications that cabling contribute",
+        "text": "Choose some of the applications that cabling contribute\n\nChoose the best 2 options:",
         "type": "options",
         "options": [
           { "text": "Cable hauling", "value": "hauling", "type": "checkbox" },
@@ -325,7 +357,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 16,
-        "text": "Define where integral bearer wires are required\n\nIntegral Bearer (IB) cables are used in locations where the Customer Access Network (CAN) is installed aerially rather than underground; typically in metropolitan locations where underground conduits are non-existent and in rural areas.",
+        "text": "Define where integral bearer wires are required\n\nTrue or False?\nIntegral Bearer (IB) cables are used in locations where the Customer Access Network (CAN) is installed aerially rather than underground; typically in metropolitan locations where underground conduits are non-existent and in rural areas.",
         "type": "radio",
         "options": [
           { "text": "True", "value": "true" },
@@ -334,7 +366,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 17,
-        "text": "Define the responsibilities and process for supervising communications installation works\n\nThe responsibilities and process for supervising communications installation works include work carry out by Unregistered Cabler, duration supervision required, and penalty as per ACMA Rule",
+        "text": "Define the responsibilities and process for supervising communications installation works\n\nTrue or False?\nThe responsibilities and process for supervising communications installation works include work carry out by Unregistered Cabler, duration supervision required, and penalty as per ACMA Rule",
         "type": "radio",
         "options": [
           { "text": "True", "value": "true" },
@@ -343,6 +375,7 @@ export const assessmentQuestions = {
       }
     ]
   },
+  
   "task5": {
     "title": "ASSESSMENT TASK 5: QUESTIONS AND ANSWERS",
     "sections": [

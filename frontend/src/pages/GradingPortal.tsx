@@ -451,8 +451,8 @@ const GradingPortal: React.FC = () => {
             onClick={() => setGrades({ ...grades, [qKey]: 'Satisfactory' })}
           >
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}>
-              <span className="cb-sq" style={{ borderColor: 'blue', color: 'blue', position: 'relative' }}>
-                {(grade === 'Satisfactory' || grade === 'S' || grade === 'yes' || grade === 'correct') ? <span style={{ color: 'red', fontSize: '14px', position: 'absolute', top: '-4px', left: '2px' }}>✔</span> : null}
+              <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                {(grade === 'Satisfactory' || grade === 'S' || grade === 'yes' || grade === 'correct') ? <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span> : null}
               </span>
               <span style={{ color: 'blue', fontWeight: 'bold' }}>Satisfactory (S)</span>
             </div>
@@ -462,8 +462,8 @@ const GradingPortal: React.FC = () => {
             onClick={() => setGrades({ ...grades, [qKey]: 'Not Satisfactory' })}
           >
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}>
-              <span className="cb-sq" style={{ borderColor: 'blue', color: 'blue', position: 'relative' }}>
-                {(grade === 'Not Satisfactory' || grade === 'NS' || grade === 'no') ? <span style={{ color: 'red', fontSize: '14px', position: 'absolute', top: '-4px', left: '2px' }}>✔</span> : null}
+              <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                {(grade === 'Not Satisfactory' || grade === 'NS' || grade === 'no') ? <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span> : null}
               </span>
               <span style={{ color: 'blue', fontWeight: 'bold' }}>Not Satisfactory (NS)</span>
             </div>

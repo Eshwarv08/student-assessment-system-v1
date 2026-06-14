@@ -473,7 +473,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                             <div className="pl-0 sm:pl-6 mt-2">
                               {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
                                 <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                                  <input type="radio" checked={answers[opt.name || `t${taskKey.replace('task', '')}q${q.id}`] === opt.value} onChange={(e) => setAnswers({ ...answers, [opt.name || `t${taskKey.replace('task', '')}q${q.id}`]: opt.value })} className="mt-0.5" />
+                                  <input type="radio" checked={answers[opt.name || `t${taskKey!.replace('task', '')}q${q.id}`] === opt.value} onChange={(e) => setAnswers({ ...answers, [opt.name || `t${taskKey!.replace('task', '')}q${q.id}`]: opt.value })} className="mt-0.5" />
                                   <label>{opt.text}</label>
                                 </div>
                               ))}
@@ -481,22 +481,22 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                               {q.type === 'text' && (
                                 <textarea
                                   className="w-full border border-gray-300 p-2 min-h-[100px] resize-y"
-                                  value={answers[`t${taskKey.replace('task', '')}q${q.id}`] || ''}
-                                  onChange={(e) => setAnswers({ ...answers, [`t${taskKey.replace('task', '')}q${q.id}`]: e.target.value })}
+                                  value={answers[`t${taskKey!.replace('task', '')}q${q.id}`] || ''}
+                                  onChange={(e) => setAnswers({ ...answers, [`t${taskKey!.replace('task', '')}q${q.id}`]: e.target.value })}
                                   placeholder="(No response)"
                                 />
                               )}
 
                               {q.type === 'options' && q.options?.map((opt: any, oIdx: number) => {
-                                const ansArray = answers[`t${taskKey.replace('task', '')}q${q.id}`] || [];
+                                const ansArray = answers[`t${taskKey!.replace('task', '')}q${q.id}`] || [];
                                 const checked = Array.isArray(ansArray) ? ansArray.includes(opt.value) : ansArray === opt.value;
                                 return (
                                   <div key={oIdx} className="flex gap-2 mb-2 items-center">
                                     <input type="checkbox" checked={checked} onChange={(e) => {
-                                      let newArr = [...(Array.isArray(answers[`t${taskKey.replace('task', '')}q${q.id}`]) ? answers[`t${taskKey.replace('task', '')}q${q.id}`] : [])];
+                                      let newArr = [...(Array.isArray(answers[`t${taskKey!.replace('task', '')}q${q.id}`]) ? answers[`t${taskKey!.replace('task', '')}q${q.id}`] : [])];
                                       if (e.target.checked) newArr.push(opt.value);
                                       else newArr = newArr.filter(v => v !== opt.value);
-                                      setAnswers({ ...answers, [`t${taskKey.replace('task', '')}q${q.id}`]: newArr });
+                                      setAnswers({ ...answers, [`t${taskKey!.replace('task', '')}q${q.id}`]: newArr });
                                     }} className="mt-0.5" />
                                     <label>{opt.text}</label>
                                   </div>
@@ -529,20 +529,20 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                               Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
                             </div>
                             <div
-                              onClick={() => !isStudent && setGrades({ ...grades, [`t${taskKey.replace('task', '')}q${q.id}`]: 'correct' })}
+                              onClick={() => !isStudent && setGrades({ ...grades, [`t${taskKey!.replace('task', '')}q${q.id}`]: 'correct' })}
                               className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer"
                             >
                               <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                                {grades[`t${taskKey.replace('task', '')}q${q.id}`] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                                {grades[`t${taskKey!.replace('task', '')}q${q.id}`] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
                               </span>
                               Satisfactory (S)
                             </div>
                             <div
-                              onClick={() => !isStudent && setGrades({ ...grades, [`t${taskKey.replace('task', '')}q${q.id}`]: 'incorrect' })}
+                              onClick={() => !isStudent && setGrades({ ...grades, [`t${taskKey!.replace('task', '')}q${q.id}`]: 'incorrect' })}
                               className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer"
                             >
                               <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                                {grades[`t${taskKey.replace('task', '')}q${q.id}`] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                                {grades[`t${taskKey!.replace('task', '')}q${q.id}`] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
                               </span>
                               Not Satisfactory (NS)
                             </div>
