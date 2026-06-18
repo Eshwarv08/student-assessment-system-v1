@@ -1,0 +1,28 @@
+# Q4Booklet – Option C Page Layout Instructions
+
+## Page Layout
+
+| Page | Content |
+|------|---------|
+| Page 1 | Cover page — ACTA College logo, "Assessment Booklet", ICTCBL320 title, Student Name field |
+| Page 2 | Assessment Competency Record — student/assessor details, task results table, declarations |
+| Page 3 | Administrative use only, Unit Code/Name, Unit Summary, Target Group, Conditions, Resources, Re-assessment, Plagiarism, Complaints, Assessors Intervention |
+| Page 4 | Feedback policy, Attaching documents, Assessment Instruction, all 5 task descriptions, Competency Decision |
+| Page 5 | Reasonable Adjustment table, Cover Sheet for Submission |
+| Page 6 | Assessment Task 1 — Observation: Cable Installation instructions (A–L), Required documents and equipment |
+| Page 7 | Assessment Task 1 — Assessor Checklist: Oral assessment questions table, Evidence of performance table (first half) |
+| Page 8 | Assessment Task 1 — Assessor Checklist continued, Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration |
+| Page 9 | Assessment Task 2 — Observation: Termination Techniques instructions (AT 2.1–2.13), Required documents |
+| Page 10 | Assessment Task 2 — Assessor Checklist: Oral questions table, Evidence of performance table (first half) |
+| Page 11 | Assessment Task 2 — Assessor Checklist continued, Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration |
+| Page 12 | Assessment Task 3 — Observation: Administration and Supervision instructions (AT 3.1–3.8), Required documents |
+| Page 13 | Assessment Task 3 — Assessor Checklist: Oral questions table, Evidence of performance table (first half) |
+| Page 14 | Assessment Task 3 — Assessor Checklist continued, Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration |
+| Page 15 | Assessment Task 4 — Report: Knowledge Report instructions (AT 4.1–4.5), Required documents, Knowledge evidence questions 1–5 |
+| Page 16 | Assessment Task 4 — Knowledge evidence questions 6–15, Report answer box |
+| Page 17 | Assessment Task 4 — Assessor Checklist: Performance indicators table, Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration |
+| Page 18 | Assessment Task 5 — Written Questions and Answers: Student instructions, Questions 1–4 (MCQ with tick marks) |
+| Page 19 | Assessment Task 5 — Questions 5–7 (including Fig 1 image), Fig 2 image |
+| Page 20 | Assessment Task 5 — Questions 8–14 (including cable image for Q12) |
+| Page 21 | Assessment Task 5 — Questions 15–21 (including tool images for Q17) |
+| Page 22 | Assessment Task 5 — Questions 22–24, Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration, END OF ASSESSMENT |

@@ -11,12 +11,14 @@ interface Q1BookletProps {
   studentName?: string;
   submitDate?: string;
   isStudent?: boolean;
+  compRecord?: any;
+  setCompRecord?: (val: any) => void;
 }
 
-export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent }) => {
-  // Dummy variables to prevent errors and hide assessor functionality
-  const compRecord: any = { tasks: {}, attempts: [], evidence: {} };
-  const setCompRecord = (val: any) => { };
+export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent, compRecord: externalCompRecord, setCompRecord: externalSetCompRecord }) => {
+  const [internalCompRecord, setInternalCompRecord] = useState<any>({ tasks: {}, attempts: [], evidence: {} });
+  const compRecord = externalCompRecord ?? internalCompRecord;
+  const setCompRecord = externalSetCompRecord ?? setInternalCompRecord;
 
   const [sigModal, setSigModal] = useState<{ field: string, type: string, open: boolean } | null>(null);
   const sigModalCanvasRef = useRef<HTMLCanvasElement>(null);

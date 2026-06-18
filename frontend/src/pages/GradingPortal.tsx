@@ -4,6 +4,12 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { ArrowLeft, Save, Printer, Loader2, CheckCircle2, XCircle, Info, RotateCcw } from 'lucide-react'
 import { Q15Booklet } from '../components/Q15Booklet'
+import { Q1Booklet } from '../components/Q1Booklet'
+import { Q3Booklet } from '../components/Q3Booklet'
+import { Q4Booklet } from '../components/Q4Booklet'
+import { Q5Booklet } from '../components/Q5Booklet'
+import { Q6Booklet } from '../components/Q6Booklet'
+import { downloadBookletAsPdf } from '../lib/downloadPdf'
 import SignaturePad from 'signature_pad'
 import { getQuestionsForAssessment, questionSets } from '../data'
 import '../grading-print.css'
@@ -60,6 +66,11 @@ const GradingPortal: React.FC = () => {
 
   const currentAssessmentQuestions = getQuestionsForAssessment(submission?.assessment_id?.token || 'question-1');
   const isQuestion15 = (submission?.assessment_id?.token || '').toLowerCase() === 'question-15';
+  const isQuestion1 = (submission?.assessment_id?.token || '').toLowerCase() === 'question-1';
+  const isQuestion3 = (submission?.assessment_id?.token || '').toLowerCase() === 'question-3';
+  const isQuestion4 = (submission?.assessment_id?.token || '').toLowerCase() === 'question-4';
+  const isQuestion5 = (submission?.assessment_id?.token || '').toLowerCase() === 'question-5';
+  const isQuestion6 = (submission?.assessment_id?.token || '').toLowerCase() === 'question-6';
 
   useEffect(() => {
     if (submission) {
@@ -121,15 +132,21 @@ const GradingPortal: React.FC = () => {
     document.documentElement.classList.remove('q2-grading')
   }, [isQuestion2Assessment])
 
-  const handlePrint = () => {
-    const triggerPrint = () => window.print()
-    if (isQuestion2Assessment) {
-      requestAnimationFrame(() => {
-        setTimeout(triggerPrint, 150)
-      })
-      return
+  const handlePrint = async () => {
+    const bookletClasses = ['q1-booklet-view', 'q2-booklet-view', 'q3-booklet-view', 'q4-booklet-view', 'q5-booklet-view', 'q6-booklet-view', 'q7-booklet-view', 'q8-booklet-view', 'q9-booklet-view', 'q10-booklet-view', 'q11-booklet-view', 'q12-booklet-view', 'q13-booklet-view', 'q14-booklet-view', 'q15-booklet-view'];
+    for (const cls of bookletClasses) {
+      const booklet = document.querySelector(`.${cls}`);
+      if (booklet && booklet.querySelectorAll('.page').length > 0) {
+        const studentName = submission?.student_name || 'Assessment';
+        await downloadBookletAsPdf(cls, `${cls.replace('-booklet-view', '').toUpperCase()}-${studentName}.pdf`);
+        return;
+      }
     }
-    triggerPrint()
+    if (isQuestion2Assessment) {
+      requestAnimationFrame(() => setTimeout(() => window.print(), 150));
+      return;
+    }
+    window.print();
   }
 
   const handleDownload = async () => {
@@ -148,7 +165,7 @@ const GradingPortal: React.FC = () => {
       alert('⚠️ Error saving before download: ' + err.message)
       return
     }
-    handlePrint()
+    await handlePrint()
   }
 
   useEffect(() => {
@@ -3532,6 +3549,291 @@ const GradingPortal: React.FC = () => {
       </div>
     );
     return renderQuestion2Booklet();
+  }
+
+  if (isQuestion1 && submission) {
+    return (
+      <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
+        <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
+            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="font-black text-sm sm:text-base leading-none uppercase tracking-tight m-0 p-0 border-none text-left truncate">Reviewing: {submission.student_name}</div>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest truncate">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full md:flex md:w-auto">
+            <button
+              onClick={markAllCorrect}
+              title="Mark all answers as correct"
+              className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-amber-900/20 col-span-2 sm:col-span-1"
+            >
+              <CheckCircle2 size={14} />
+              <span className="whitespace-nowrap">Mark All Correct</span>
+            </button>
+            <button
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-green-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />}
+              <span className="whitespace-nowrap">Save Changes</span>
+            </button>
+            <button
+              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
+              <span className="whitespace-nowrap">Download</span>
+            </button>
+          </div>
+        </div>
+
+        <Q1Booklet
+          answers={studentAnswers}
+          setAnswers={setStudentAnswers}
+          onSubmit={handleDownload}
+          submitting={saveMutation.isPending}
+          studentName={submission.student_name}
+          submitDate={submission.submitted_at}
+          isStudent={false}
+          compRecord={compRecord}
+          setCompRecord={setCompRecord}
+        />
+      </div>
+    );
+  }
+
+  if (isQuestion3 && submission) {
+    return (
+      <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
+        <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
+            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="font-black text-sm sm:text-base leading-none uppercase tracking-tight m-0 p-0 border-none text-left truncate">Reviewing: {submission.student_name}</div>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest truncate">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full md:flex md:w-auto">
+            <button
+              onClick={markAllCorrect}
+              title="Mark all answers as correct"
+              className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-amber-900/20 col-span-2 sm:col-span-1"
+            >
+              <CheckCircle2 size={14} />
+              <span className="whitespace-nowrap">Mark All Correct</span>
+            </button>
+            <button
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-green-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />}
+              <span className="whitespace-nowrap">Save Changes</span>
+            </button>
+            <button
+              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
+              <span className="whitespace-nowrap">Download</span>
+            </button>
+          </div>
+        </div>
+
+        <Q3Booklet
+          answers={studentAnswers}
+          setAnswers={setStudentAnswers}
+          onSubmit={handleDownload}
+          submitting={saveMutation.isPending}
+          studentName={submission.student_name}
+          submitDate={submission.submitted_at}
+          isStudent={false}
+          compRecord={compRecord}
+          setCompRecord={setCompRecord}
+          grades={grades}
+          setGrades={setGrades}
+          taskResults={taskResults}
+          setTaskResults={setTaskResults}
+          finalResult={finalResult}
+          setFinalResult={setFinalResult}
+        />
+      </div>
+    );
+  }
+
+  if (isQuestion4 && submission) {
+    return (
+      <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
+        <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
+            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="font-black text-sm sm:text-base leading-none uppercase tracking-tight m-0 p-0 border-none text-left truncate">Reviewing: {submission.student_name}</div>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest truncate">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full md:flex md:w-auto">
+            <button
+              onClick={markAllCorrect}
+              title="Mark all answers as correct"
+              className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-amber-900/20 col-span-2 sm:col-span-1"
+            >
+              <CheckCircle2 size={14} />
+              <span className="whitespace-nowrap">Mark All Correct</span>
+            </button>
+            <button
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-green-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />}
+              <span className="whitespace-nowrap">Save Changes</span>
+            </button>
+            <button
+              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
+              <span className="whitespace-nowrap">Download</span>
+            </button>
+          </div>
+        </div>
+
+        <Q4Booklet
+          answers={studentAnswers}
+          setAnswers={setStudentAnswers}
+          onSubmit={handleDownload}
+          submitting={saveMutation.isPending}
+          studentName={submission.student_name}
+          submitDate={submission.submitted_at}
+          isStudent={false}
+          compRecord={compRecord}
+          setCompRecord={setCompRecord}
+        />
+      </div>
+    );
+  }
+
+  if (isQuestion5 && submission) {
+    return (
+      <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
+        <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
+            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="font-black text-sm sm:text-base leading-none uppercase tracking-tight m-0 p-0 border-none text-left truncate">Reviewing: {submission.student_name}</div>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest truncate">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full md:flex md:w-auto">
+            <button
+              onClick={markAllCorrect}
+              title="Mark all answers as correct"
+              className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-amber-900/20 col-span-2 sm:col-span-1"
+            >
+              <CheckCircle2 size={14} />
+              <span className="whitespace-nowrap">Mark All Correct</span>
+            </button>
+            <button
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-green-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />}
+              <span className="whitespace-nowrap">Save Changes</span>
+            </button>
+            <button
+              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
+              <span className="whitespace-nowrap">Download</span>
+            </button>
+          </div>
+        </div>
+
+        <Q5Booklet
+          answers={studentAnswers}
+          setAnswers={setStudentAnswers}
+          onSubmit={handleDownload}
+          submitting={saveMutation.isPending}
+          studentName={submission.student_name}
+          submitDate={submission.submitted_at}
+          isStudent={false}
+          compRecord={compRecord}
+          setCompRecord={setCompRecord}
+        />
+      </div>
+    );
+  }
+
+  if (isQuestion6 && submission) {
+    return (
+      <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
+        <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
+            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="min-w-0 flex-1">
+              <div className="font-black text-sm sm:text-base leading-none uppercase tracking-tight m-0 p-0 border-none text-left truncate">Reviewing: {submission.student_name}</div>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest truncate">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full md:flex md:w-auto">
+            <button
+              onClick={markAllCorrect}
+              title="Mark all answers as correct"
+              className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-amber-900/20 col-span-2 sm:col-span-1"
+            >
+              <CheckCircle2 size={14} />
+              <span className="whitespace-nowrap">Mark All Correct</span>
+            </button>
+            <button
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-green-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Save size={14} />}
+              <span className="whitespace-nowrap">Save Changes</span>
+            </button>
+            <button
+              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
+              disabled={saveMutation.isPending}
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+            >
+              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
+              <span className="whitespace-nowrap">Download</span>
+            </button>
+          </div>
+        </div>
+        <Q6Booklet
+          answers={studentAnswers}
+          setAnswers={setStudentAnswers}
+          onSubmit={handleDownload}
+          submitting={saveMutation.isPending}
+          studentName={submission.student_name}
+          submitDate={submission.submitted_at}
+          isStudent={false}
+          compRecord={compRecord}
+          setCompRecord={setCompRecord}
+        />
+      </div>
+    );
   }
 
   if (isQuestion15 && submission) {

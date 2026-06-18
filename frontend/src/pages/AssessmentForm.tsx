@@ -19,6 +19,7 @@ import { Q12Booklet } from '../components/Q12Booklet'
 import { Q13Booklet } from '../components/Q13Booklet'
 import { Q14Booklet } from '../components/Q14Booklet'
 import { Q15Booklet } from '../components/Q15Booklet'
+import { downloadBookletAsPdf } from '../lib/downloadPdf'
 import '../assessment-styles.css'
 
 const AssessmentForm: React.FC = () => {
@@ -793,7 +794,14 @@ const AssessmentForm: React.FC = () => {
             <h2 className="text-2xl font-black text-gray-800 mb-2">Assessment Submitted Successfully!</h2>
             <p className="text-gray-600 mb-6">Your responses have been recorded securely. You may now download a copy of your assessment record.</p>
             <button
-              onClick={() => window.print()}
+              onClick={async () => {
+                const bookletClass = isQ1 ? 'q1-booklet-view' : isQ2 ? 'q2-booklet-view' : isQ3 ? 'q3-booklet-view' : isQ4 ? 'q4-booklet-view' : isQ5 ? 'q5-booklet-view' : isQ6 ? 'q6-booklet-view' : isQ7 ? 'q7-booklet-view' : isQ8 ? 'q8-booklet-view' : isQ9 ? 'q9-booklet-view' : isQ10 ? 'q10-booklet-view' : isQ11 ? 'q11-booklet-view' : isQ12 ? 'q12-booklet-view' : isQ13 ? 'q13-booklet-view' : isQ14 ? 'q14-booklet-view' : isQ15 ? 'q15-booklet-view' : null;
+                if (bookletClass) {
+                  await downloadBookletAsPdf(bookletClass, `Assessment-${token}.pdf`);
+                } else {
+                  window.print();
+                }
+              }}
               className="bg-blue-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:bg-blue-700 w-full flex items-center justify-center gap-3 transition-colors"
             >
               <Printer size={24} /> Download PDF
@@ -904,33 +912,33 @@ const AssessmentForm: React.FC = () => {
                 />
               </div>
             ) : isQ4 ? (
-              <Q4Booklet 
+              <Q4Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ5 ? (
-              <Q5Booklet 
+              <Q5Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ6 ? (
-              <Q6Booklet 
+              <Q6Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ7 ? (

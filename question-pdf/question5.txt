@@ -1,0 +1,21 @@
+# ICTCBL254Booklet – Option C Page Layout Instructions
+
+
+## Page Layout
+
+| Page | Content |
+|------|---------|
+| Page 1 | Cover page — ACTA College logo, "Assessment Booklet" title, ICTCBL254 unit title "Joint metallic conductor cable in access network", Student Name field, ACTA College Pty. Ltd footer |
+| Page 2 | Assessment Competency Record — Student ID/Name and Final Assessment Date fields, Assessor Declaration with evidence checkboxes (Valid/Sufficient/Current/Authentic), Task results table (Tasks 1–3), Attempt/Date/Feedback table, Final Feedback box, Assessor and Student sign-off declarations |
+| Page 3 | Administrative use only row, Unit Code/Name, Pre-requisites, Co-requisites, Unit Summary, Target Group, Conditions and context of assessments, Specific Resources Required, Re-assessment, Plagiarism |
+| Page 4 | Complaints and appeal, Assessors Intervention, Attaching documents, Assessment Instruction, Assessment Task 1 description, Assessment Task 2 description, Assessment Task 3 description (start) |
+| Page 5 | Assessment Task 3 description (continued), Competency Decision, Reasonable Adjustment table |
+| Page 6 | Assessment Task 1 — Written Questions and Answers: Student instructions, "Make sure you" bullet list, Questions 1–3 with Satisfactory/Not Satisfactory rows |
+| Page 7 | Assessment Task 1 continued — Questions 4–10 (including True/False Q5 and multiple-choice Q10) with S/NS rows |
+| Page 8 | Assessment Task 1 continued — Questions 11–17 with S/NS rows |
+| Page 9 | Assessment Task 1 continued — Question 18, Comments/Feedback to Participant, Student Declaration, Assessor's Feedback, Result, Assessor Declaration |
+| Page 10 | Assessment Task 2 — Observation: Practical demonstration title, task description, Components, preparation Details, site-specific steps list |
+| Page 11 | Assessment Task 2 — Assessor Checklist: observed items list, Checklist table Case 1 (first set of Yes/No questions) |
+| Page 12 | Assessment Task 2 — Assessor Checklist continued (remaining Yes/No questions), Comments/Feedback to Participant, Student Declaration, Assessor's Feedback, Result, Assessor Declaration |
+| Page 13 | Assessment Task 3 — Report: task instructions, Test table (Pressure Dome test, Air leakage test), Tools Condition table, blank report answer box |
+| Page 14 | Comments/Feedback to Participant, Student Declaration, Assessor's Feedback, Result, Assessor Declaration, END OF ASSESSMENT |

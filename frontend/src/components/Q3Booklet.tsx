@@ -11,22 +11,34 @@ interface Q3BookletProps {
   studentName?: string;
   submitDate?: string;
   isStudent?: boolean;
+  compRecord?: any;
+  setCompRecord?: (val: any) => void;
+  grades?: Record<string, string>;
+  setGrades?: (val: any) => void;
+  taskResults?: Record<string, string>;
+  setTaskResults?: (val: any) => void;
+  finalResult?: string;
+  setFinalResult?: (val: any) => void;
 }
 
-export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent }) => {
+export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent, compRecord: externalCompRecord, setCompRecord: externalSetCompRecord, grades: externalGrades, setGrades: externalSetGrades, taskResults: externalTaskResults, setTaskResults: externalSetTaskResults, finalResult: externalFinalResult, setFinalResult: externalSetFinalResult }) => {
   const navigate = useNavigate();
 
-  // Dummy variables to prevent errors and hide assessor functionality
-  const grades: Record<string, string> = {};
-  const setGrades = (val: any) => { };
-  const taskResults: Record<string, string> = {}; // t1, t2, t3, t4, t5
-  const setTaskResults = (val: any) => { };
-  const compRecord: any = { tasks: {}, attempts: [], evidence: {} };
-  const setCompRecord = (val: any) => { };
-  const finalResult: string = '';
-  const setFinalResult = (val: any) => { };
+  const [internalCompRecord, setInternalCompRecord] = useState<any>({ tasks: {}, attempts: [], evidence: {} });
+  const [internalGrades, setInternalGrades] = useState<Record<string, string>>({});
+  const [internalTaskResults, setInternalTaskResults] = useState<Record<string, string>>({});
+  const [internalFinalResult, setInternalFinalResult] = useState<string>('');
+
+  const grades = externalGrades ?? internalGrades;
+  const setGrades = externalSetGrades ?? setInternalGrades;
+  const taskResults = externalTaskResults ?? internalTaskResults;
+  const setTaskResults = externalSetTaskResults ?? setInternalTaskResults;
+  const compRecord = externalCompRecord ?? internalCompRecord;
+  const setCompRecord = externalSetCompRecord ?? setInternalCompRecord;
+  const finalResult = externalFinalResult ?? internalFinalResult;
+  const setFinalResult = externalSetFinalResult ?? setInternalFinalResult;
   const markAllCorrect = () => { };
-  const handleDownload = () => window.print();
+  const handleDownload = () => onSubmit();
 
   // The signature pad logic for Q2 Booklet
   const [sigModal, setSigModal] = useState<{ field: string, type: string, open: boolean } | null>(null);

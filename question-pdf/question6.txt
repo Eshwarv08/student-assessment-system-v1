@@ -1,0 +1,27 @@
+# ICTTEN208Booklet – Option C Page Layout Instructions
+
+
+## Page Layout
+
+| Page | Content |
+|------|---------|
+| Page 1 | Cover page — ACTA College logo, "Assessment Booklet" title, ICTTEN208 unit title "Use electrical skills when working with telecommunications networks (Release 1)", Student Name field, ACTA College Pty. Ltd footer |
+| Page 2 | Assessment Competency Record — Student's Name, Assessor's Name, Assessment Site, Assessment Date/s fields, Assessor Declaration with evidence checkboxes (Valid/Sufficient/Current/Authentic), Task results table (Tasks 1–3), Attempt/Date/Feedback table, Final Feedback box, Assessor and Student sign-off declarations |
+| Page 3 | Administrative Use Only row, Unit Code/Name, Pre-requisites, Co-requisites, Unit Summary, Target Group, Conditions and Context of the Assessments, Specific Resources Required, Re-Assessment, Plagiarism, Complaints and Appeal, Assessors Intervention (start) |
+| Page 4 | Assessors Intervention (continued), Attaching documents, Assessment Instruction, Assessment Task 1 description, Assessment Task 2 description, Assessment Task 3 description, Competency Decision |
+| Page 5 | Reasonable Adjustment table, Cover Sheet for Submission of Work for Assessment |
+| Page 6 | Assessment Task 1 — Multi-choice and Written Questions and Answers: Student Instructions, "Make sure you" bullet list, Questions 1–2 with S/NS rows |
+| Page 7 | Assessment Task 1 continued — Questions 3–7 (including voltage signal waveform figure for Q3) with S/NS rows |
+| Page 8 | Assessment Task 1 continued — Questions 8–11 (including circuit diagram for Q9, parallel resistor network figure for Q11) with S/NS rows |
+| Page 9 | Assessment Task 1 continued — Questions 12–16 with S/NS rows |
+| Page 10 | Assessment Task 1 continued — Questions 17–20 (including parallel circuit diagram for Q17) with S/NS rows |
+| Page 11 | Assessment Task 1 continued — Questions 21–26 with S/NS rows |
+| Page 12 | Assessment Task 1 continued — Questions 27–30 (including cable type identification images A–D for Q30) with S/NS rows |
+| Page 13 | Assessment Task 1 continued — Q30 image E, Comments/Feedback to Participant, Student Declaration, Assessor's Feedback, Result, Assessor Declaration |
+| Page 14 | Assessment Task 2 — Observation: Practical Demonstration title, task description, Components list (multimeter, battery, resistors), preparation Details, site-specific instructions list (start) |
+| Page 15 | Resistor voltage drop table (R1–R3, Total), Assessment Task 2 — Assessor Checklist intro, observed items list |
+| Page 16 | Assessment Task 2 — Assessor Checklist: Checklist "Circuit 1" table with Yes/No questions and comments column |
+| Page 17 | Comments/Feedback to Participant, Student Declaration, Assessor's Feedback, Result, Assessor Declaration |
+| Page 18 | Assessment Task 3 — Questions and Answers: intro line, Questions 1–6 (including WHS checkbox options for Q3, True/False for Q5) |
+| Page 19 | Assessment Task 3 continued — Questions 7–13 (including UTP/coaxial/fibre features matching table for Q10) |
+| Page 20 | Assessment Task 3 continued — Questions 14–15, Comments/Feedback to Participant, Student Declaration, Assessor's Feedback, Result, Assessor Declaration, END OF ASSESSMENT, "Before you hand in your assessment" checklist |
