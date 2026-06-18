@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
-import { Link, Copy, Check, Clock, UserCheck, FileText, ChevronRight, AlertCircle, ExternalLink, ChevronDown, ChevronUp, Printer, X, Trash2 } from 'lucide-react'
+import { Link, Copy, Check, Clock, UserCheck, FileText, ChevronRight, AlertCircle, ExternalLink, ChevronDown, ChevronUp, Printer, X, Trash2, Download } from 'lucide-react'
 import Layout from '../components/Layout'
 import { availableQuestions } from '../data'
+import { SubmissionPdfRenderer } from '../components/SubmissionPdfRenderer'
 
 const Dashboard: React.FC = () => {
   const queryClient = useQueryClient()
@@ -52,6 +53,32 @@ const Dashboard: React.FC = () => {
   const [expandedStudent, setExpandedStudent] = useState<string | null>(null)
   const [expandedAssessment, setExpandedAssessment] = useState<string | null>(null)
   const [activeStudentModal, setActiveStudentModal] = useState<any>(null)
+  const [selectedPdfIds, setSelectedPdfIds] = useState<Set<string>>(new Set())
+  const [downloadingSubIds, setDownloadingSubIds] = useState<string[]>([])
+
+  useEffect(() => { setSelectedPdfIds(new Set()) }, [activeStudentModal?.student_id])
+
+  const triggerSinglePdf = (subId: string) => {
+    setDownloadingSubIds(prev => [...prev, subId])
+  }
+
+  const handleDownloadAllPdfs = () => {
+    const ids = Array.from(selectedPdfIds)
+    if (ids.length === 0) return
+    // Queue them sequentially — each renderer removes itself from the list when done
+    setDownloadingSubIds(prev => [...prev, ...ids.filter(id => !prev.includes(id))])
+  }
+
+  const gradedSubmissions = activeStudentModal?.submissions.filter((s: any) => s.status === 'graded') ?? []
+  const allGradedSelected = gradedSubmissions.length > 0 && gradedSubmissions.every((s: any) => selectedPdfIds.has(s._id))
+
+  const toggleSelectAll = () => {
+    if (allGradedSelected) {
+      setSelectedPdfIds(new Set())
+    } else {
+      setSelectedPdfIds(new Set(gradedSubmissions.map((s: any) => s._id)))
+    }
+  }
 
   // Group submissions by student
   const groupedSubmissions = React.useMemo(() => {
@@ -667,6 +694,16 @@ const Dashboard: React.FC = () => {
                   <table className="w-full text-left">
                     <thead className="bg-gray-50 border-b">
                       <tr className="text-xs uppercase font-black text-gray-500 tracking-wider">
+                        <th className="px-4 py-4 w-10">
+                          <input
+                            type="checkbox"
+                            checked={allGradedSelected}
+                            onChange={toggleSelectAll}
+                            disabled={gradedSubmissions.length === 0}
+                            title="Select all graded"
+                            className="w-4 h-4 accent-blue-700 cursor-pointer disabled:opacity-30"
+                          />
+                        </th>
                         <th className="px-5 py-4">Assessment Template</th>
                         <th className="px-5 py-4">Submitted On</th>
                         <th className="px-5 py-4">Status</th>
@@ -678,6 +715,20 @@ const Dashboard: React.FC = () => {
                         const isGraded = sub.status === 'graded';
                         return (
                           <tr key={sub._id} className="hover:bg-slate-50/50 transition-colors">
+                            <td className="px-4 py-4">
+                              {isGraded && (
+                                <input
+                                  type="checkbox"
+                                  checked={selectedPdfIds.has(sub._id)}
+                                  onChange={(e) => {
+                                    const next = new Set(selectedPdfIds)
+                                    if (e.target.checked) next.add(sub._id); else next.delete(sub._id)
+                                    setSelectedPdfIds(next)
+                                  }}
+                                  className="w-4 h-4 accent-blue-700 cursor-pointer"
+                                />
+                              )}
+                            </td>
                             <td className="px-5 py-4">
                               <div className="font-black text-slate-800 text-sm sm:text-base uppercase tracking-tight">
                                 {availableQuestions.find(q => q.id === sub.assessment_id?.token)?.name || sub.assessment_id?.name || 'Question 1'}
@@ -701,12 +752,15 @@ const Dashboard: React.FC = () => {
                               <div className="flex justify-end gap-2">
                                 {isGraded && (
                                   <button
-                                    onClick={() => {
-                                      window.location.href = `/grade/${sub._id}?print=true`;
-                                    }}
-                                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase bg-green-600 hover:bg-green-700 text-white px-3.5 py-2 rounded-xl shadow-sm transition-colors"
+                                    onClick={() => triggerSinglePdf(sub._id)}
+                                    disabled={downloadingSubIds.includes(sub._id)}
+                                    className="inline-flex items-center gap-1.5 text-xs font-black uppercase bg-green-600 hover:bg-green-700 disabled:bg-green-400 disabled:cursor-wait text-white px-3.5 py-2 rounded-xl shadow-sm transition-colors"
+                                    title="Download PDF"
                                   >
-                                    <Printer size={14} /> PDF
+                                    {downloadingSubIds.includes(sub._id)
+                                      ? <><span className="animate-spin inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full" /> Generating…</>
+                                      : <><Printer size={14} /> PDF</>
+                                    }
                                   </button>
                                 )}
                                 <button
@@ -736,7 +790,27 @@ const Dashboard: React.FC = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="px-6 py-4 bg-gray-50 border-t flex justify-end flex-shrink-0">
+            <div className="px-6 py-4 bg-gray-50 border-t flex items-center justify-between flex-shrink-0 gap-3">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleDownloadAllPdfs}
+                  disabled={selectedPdfIds.size === 0}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-sm transition-all outline-none"
+                >
+                  <Download size={15} />
+                  Download All PDFs
+                  {selectedPdfIds.size > 0 && (
+                    <span className="bg-white/25 text-white text-[10px] font-black px-2 py-0.5 rounded-full">
+                      {selectedPdfIds.size}
+                    </span>
+                  )}
+                </button>
+                {selectedPdfIds.size > 0 && (
+                  <span className="text-xs text-slate-500 font-semibold">
+                    Each PDF opens in a new tab and downloads automatically.
+                  </span>
+                )}
+              </div>
               <button
                 onClick={() => setActiveStudentModal(null)}
                 className="px-6 py-2.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-xl font-black text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm outline-none"
@@ -748,6 +822,15 @@ const Dashboard: React.FC = () => {
         </div>
       )}
       </div>
+
+      {/* Off-screen PDF renderers — one per queued download */}
+      {downloadingSubIds.map(subId => (
+        <SubmissionPdfRenderer
+          key={subId}
+          submissionId={subId}
+          onDone={() => setDownloadingSubIds(prev => prev.filter(id => id !== subId))}
+        />
+      ))}
     </Layout>
   )
 }

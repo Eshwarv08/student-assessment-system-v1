@@ -1,0 +1,23 @@
+# ICTCBL333 Booklet – Option C Page Layout Instructions
+
+
+## Page Layout
+
+| Page | Content |
+|------|---------|
+| Page 1 | Cover page — ACTA College logo, "Assessment Booklet", ICTCBL333 title, "Install aerial cable for communications applications", Student Name field |
+| Page 2 | Assessment Competency Record — student/assessor details, task results table (Task 1: Questions and Answers, Task 2: Observation, Task 3: Observation, Task 4: Report), attempt feedback table, Assessor Declaration, Student Declaration |
+| Page 3 | Administrative Use Only, Unit Code/Name, Pre-requisites, Co-requisites, Unit Summary, Target Group, Conditions and Context of the Assessments, Specific Resources Required |
+| Page 4 | Re-assessment, Plagiarism, Complaints and Appeal, Assessors Intervention, Attaching Documents, Assessment Instruction, all 4 task descriptions, Assessment Task 1 description |
+| Page 5 | Assessment Task 2, Task 3, Task 4 descriptions, Competency Decision, Reasonable Adjustment table, Cover Sheet for Submission |
+| Page 6 | Assessment Task 1 — Written Questions and Answers: Student Instructions, Questions 1–3 (Q1: True/False falling from heights, Q2: choose three terms for aerial cable, Q3: standards AS/CA S009:2013 and AS/CA S008:2010 definition table) |
+| Page 7 | Assessment Task 1 — Questions 3 continued (AS/CA S008:2010 definition), Question 4 (choose three types of aerial cable), Question 5 (broadband and baseband transmission methods table), Question 6 (PPE selection for coaxial cable work) |
+| Page 8 | Assessment Task 1 — Question 6 continued (PPE list: gloves, sunlight, footwear, drinking liquids, proper rest), Question 7 (soffit definition true/false), Question 8 (minimum bend radius for 10mm cable), Question 9 (minimum separation coaxial and low power cable), Question 10 (minimum separation low voltage and coaxial termination), Question 11 (role of a drip on coaxial cable) |
+| Page 9 | Assessment Task 1 — Question 12 (minimum sag heights for aerial cable across private driveway), Comments/Feedback to Participant, Student Declaration, Assessor Feedback, Result, Assessor Declaration |
+| Page 10 | Assessment Task 2 — Observation: Prepare to Install Aerial Coaxial Cable instructions (AT 2.1–2.7), Required Documents and Equipment |
+| Page 11 | Assessment Task 2 — Assessor Checklist: Assessor Instructions, Oral Assessment questions table, Record of Performance table (first half: provide samples of online information, obtain access to site, discuss and confirm cable route) |
+| Page 12 | Assessment Task 2 — Assessor Checklist continued: Record of Performance (select suitable cable, correct bend rate, support methods, test continuity, safety protocols, overvoltage protection), Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration |
+| Page 13 | Assessment Task 3 — Observation: Install and Terminate Aerial Two Pair Telephone Cable instructions (AT 3.1–3.4), Required Documents and Equipment, Assessment Task 3 Assessor Checklist: Oral Assessment questions table, Record of Performance table (first half: identify features, select support hardware) |
+| Page 14 | Assessment Task 3 — Assessor Checklist continued: Record of Performance (select connector type, protect cable shield, insert stripped cable, compress connectors, perform three terminations, apply safety protocols), Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration |
+| Page 15 | Assessment Task 4 — Report: Testing Termination instructions (AT 4.1–4.5), Required Documents and Equipment, Assessment Task 4 Assessor Checklist: Oral Assessment questions table |
+| Page 16 | Assessment Task 4 — Assessor Checklist continued: Record of Performance table (identify tests, select equipment, confirm operation, take tests, record results, check readings, notify customer, suggest fault causes, clean worksite, demonstrate sign off process), Comments/Feedback, Student Declaration, Assessor Feedback, Result, Assessor Declaration |

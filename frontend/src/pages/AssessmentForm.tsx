@@ -942,93 +942,93 @@ const AssessmentForm: React.FC = () => {
                 isStudent={true}
               />
             ) : isQ7 ? (
-              <Q7Booklet 
+              <Q7Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ8 ? (
-              <Q8Booklet 
+              <Q8Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ9 ? (
-              <Q9Booklet 
+              <Q9Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ10 ? (
-              <Q10Booklet 
+              <Q10Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ11 ? (
-              <Q11Booklet 
+              <Q11Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ12 ? (
-              <Q12Booklet 
+              <Q12Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ13 ? (
-              <Q13Booklet 
+              <Q13Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ14 ? (
-              <Q14Booklet 
+              <Q14Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ15 ? (
-              <Q15Booklet 
+              <Q15Booklet
                 answers={answers}
                 setAnswers={setAnswers}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                studentName={answers['first_name'] ? `${answers['first_name']} ${answers['last_name'] || ''}` : ''}
-                submitDate={answers['date_of_birth'] ? new Date().toISOString() : ''}
+                studentName={answers['st-name'] || searchParams.get('st-name') || ''}
+                submitDate={new Date().toISOString()}
                 isStudent={true}
               />
             ) : isQ1 ? (
