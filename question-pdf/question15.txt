@@ -1,0 +1,136 @@
+
+Page 1 — Cover
+(Unit Codes: ICTCBL334, ICTCBL329, ICTCBL249, ICTCBL253 / Course Title: Pit, Pipe, Manholes and Cable Hauling / Student Name field / ACTA College Pty. Ltd branding)
+
+Page 2 — Knowledge Assessment Task 1 – Checklist
+(Student Name / Did the student complete all questions correctly? / Knowledge Elements checklist mapped to unit codes ICTCBL334, ICTCBL329, ICTCBL249, ICTCBL253 / KE items: equipment features and operating requirements, existing underground services, safe operation requirements, legislation and regulations, construction design plans, WHS and environmental requirements, components for enclosures and conduit, installation methods, typical site issues, ACMA regulatory requirements, rodding/roping/mandrel techniques, precautions for over-hauling through occupied conduits / Task Outcome: Satisfactory / Not Satisfactory / Assessor Signature / Assessor Name / Date)
+
+Page 3 — Practical Assessment Task 1 – Performance Criteria Mapping (Part 1)
+(Performance Criteria for ICTCBL334: PC 1.1–1.7, 3.5 / Performance Criteria for ICTCBL249: PC 1.1–1.6, 5.3–5.4 / Performance Criteria for ICTCBL329: PC 1.1–1.8, site reinstatement, sign-off / Tick Completed column for each criterion)
+
+Page 4 — Practical Assessment Task 1 – Performance Criteria Mapping (Part 2) and Performance Evidence Mapping
+(Performance Criteria for ICTCBL253: PC 1.1–1.4, 2.1, 4.1–4.2, 4.5 / Initial Attempt / 1st Reattempt / 2nd Reattempt / Assessors Initials / Performance Evidence for ICTCBL334: PE1–PE2 / Performance Evidence for ICTCBL249: PE1–PE2, PE8 / Performance Evidence for ICTCBL329: PE4–PE7 / Performance Evidence for ICTCBL253: PE1, PE7 / Attempt and date tracking table)
+
+Page 5 — Practical Assessment Task 1 – Checklist
+(Student Name / Did the student: follow WHS/OHS requirements and Codes of Practice, refer to manufacturer guidelines, complete a JSA, assemble manhole guards around manhole, gas check manhole access hole, remove manhole lids with pit key and store correctly, assemble manhole guards around pits, remove pit lids with pit key and store correctly, gas check manhole per spot sampling procedure and record readings, replace manhole lids and store guards / Task Outcome: Satisfactory / Not Satisfactory / Assessor Signature / Assessor Name / Date)
+
+Page 6 — Practical Assessment Task 1 – Assessment Instructions and Plan of Proposed Work
+(Task description: telco technician role, site access and hauling of 50-pair cable, gas venting / Complete the following activities: 11 steps from WHS compliance through submitting work to supervisor / Plan of proposed work diagram: MH1, Pit 1, Pit 2, Pit 3 with conduit references 0100-0140, 0101-0130, 0100-0120, cable specs 50/0.40 P50 / Recorded Gas Levels table: O2 %, H2S PPM, CO PPM, LEL %)
+
+Page 7 — Practical Assessment Task 1 – Assessment Task Description
+(Scenario: telco technician preparing site for 50-pair cable replacement and prefabricated manhole installation, gas hazard area / Pre-task JSA requirement / Resources Required: Learner Guide, Student Assessment Pack, Pen, WHS/OHS Acts, Codes of Practice list, Workplace Procedure 01687W01, JSA, two-lid manhole, #6 Pit x2, manhole guards, pit keys x2, gas detector, gas action chart, retro reflective vest, gloves, hard hat, safety glasses, manufacturer specifications / Timing: assessor will advise due date)
+
+Page 8 — Knowledge Assessment Task 1 – Questions 1–6
+(Q1: NBN consists entirely of — Optical Fibre / Q2: True or False — Category 3 copper cable mainly used for voice applications — True / Q3: Australian Standard for customer cabling installation — AS/CA S008:2010 / Q4: Cable Provider Rules — government-run registration scheme / Q5: Manage health and safety on worksite — Hazard management plan / Q6: Before work begins, approvals from — Authorities and asset owners)
+
+Page 9 — Knowledge Assessment Task 1 – Questions 7–11
+(Q7: Typical tools and equipment — Trenching equipment / Q8: Facilitate easier hauling — All of the above / Q9: Name one device for cleaning conduits — open answer / Q10: Winch for copper vs optical fibre — Smaller hauling wheel / Q11: True or False — cable hauling tension and bend radius must be maintained — True)
+
+Page 10 — Knowledge Assessment Task 1 – Questions 12–17
+(Q12: Multimeter checks copper cables for — All of the above / Q13: Induction/tone generator used to — Identify open circuits / Q14: Wire map testers test for — All of the above / Q15: True or False — surge protection determined by cabling provider — False / Q16: Devices to connect feeder to cables — Hauling Eye and cable grip / Q17: Sufficient cable length in pits for — Jointing)
+
+Page 11 — Knowledge Assessment Task 1 – Questions 18–25
+(Q18: On completion send a Report promptly and get sign-off from customer / Q19: Site reinstatement responsibility — Contractor / Q20: Testing optical fibre cables — Eye damage from laser light / Q21: Support cables in pits and enclosures — Yes / Q22–25: Plan-based questions — Q22: 50mm duct diameter / Q23: P6 pit at boundary 156-158 / Q24: Manhole at boundary 150-152 / Q25: 30M conduit length between boundaries 156-158 and 158-160)
+
+Page 12 — Knowledge Assessment Task 1 – Questions 26–31
+(Q26: Permissible LEL limit in confined space — 10% of volume / Q27: Safest oxygen limit — 19.5% to 23% / Q28: True or False — use and description of mandrel — True / Q29: True or False — mandrel diameter 90% of nominal pipe diameter — True / Q30: True or False — use mandrel to check conduit capacity during rod and roping — True / Q31: True or False — purpose of rod and roping — True)
+
+Page 13 — Knowledge Assessment Task 1 – Assessment 1 Test Questions 32–39
+(Q32: Customer Access Network connects — Telecommunications network / Q33: Customer Private Network provides — All of the above / Q34: NBN consists entirely of — Optical Fibre / Q35: General Construction White Card required — Yes / Q36: Codes of Practice created to — provide guidelines for fair dealing between organisations and customers / Q37: Australian Standard for underground installation — AS/CA S009:2013 / Q38: Telecommunications Act 1997 — Legislated law / Q39: Cable Provider Rules — government-run registration scheme)
+
+Page 14 — Knowledge Assessment Task 1 – Questions 40–46
+(Q40: Street distribution plan provides — All of the above / Q41: Site access arranged by — Site supervisor or Site Manager / Q42: Witches hats are — Protective barrier / Q43: Barrier for manholes — Guard rails / Q44: Manage health and safety — Hazard management plan / Q45: One potential hazard for underground cable installation — open answer / Q46: Approvals before work from — Authorities and asset owners)
+
+Page 15 — Knowledge Assessment Task 1 – Questions 47–53
+(Q47: Typical tools, plant and equipment — All of the above / Q48: Excavation considerations — All of the above / Q49: PPE must be worn on site — True / Q50: Two constraints on installation — open answer / Q51: Installation requirements outlined in Plans and Technical Standards — True / Q52: Maximum recommended 20-pair cables in 50mm conduit — 2 / Q53: Only colour conduit for communications — White)
+
+Page 16 — Knowledge Assessment Task 1 – Questions 54–61
+(Q54: Installing conduit care — free of snag points, cut at right angle, remove burrs / Q55: Conduit outside footpath or roadway — enclosed in compliant conduit / Q56: Select correct excavation equipment — check task requirements, specifications and goals / Q57: Multimeter checks — All of the above / Q58: Induction/tone generator — Identify open circuits / Q59: Wire map testers — All of the above / Q60: Post-installation conduit tested for — All of the above / Q61: TDR checks copper cables — True)
+
+Page 17 — Knowledge Assessment Task 1 – Questions 62–68
+(Q62: Two methods for testing optical fibre — open answer / Q63: OTDR sends pulse of Light / Q64: Test setup giving most information — Both the same / Q65: Test type determined by — design parameters / Q66: Conduit ends sealed to — Prevent ingress of dirt and water / Q67: Conduit enters pit through long sides — True / Q68: Access-holes spaced approximately — 320m intervals)
+
+Page 18 — Knowledge Assessment Task 1 – Questions 69–75
+(Q69: On completion send Report and sign-off from appropriate personnel of job / Q70: Site reinstatement responsibility — Contractor / Q71: Testing optical fibre — Eye damage from laser light / Q72: Support cables in pits — Yes / Q73: Underground enclosure identification — Marked legibly / Q74: Backfill to ensure — finished surface level acceptable to local authority or carrier / Q75: Most common metals copper and aluminium, separated magnetically from insulation for reuse)
+
+Page 19 — Practical Assessment Task 2 – Performance Criteria Mapping
+(Performance Criteria for ICTCBL249: PC 1.1–1.6, 2.2, 3.1–3.2, 5.3–5.4 / Performance Criteria for ICTCBL329: PC 1.1–1.12, 2.1–2.2, 3.7 / Initial Attempt / 1st Reattempt / 2nd Reattempt / Assessors Initials table)
+
+Page 20 — Practical Assessment Task 2 – Performance Evidence Mapping
+(Performance Evidence for ICTCBL249: PE1–PE2, PE6 / Performance Evidence for ICTCBL329: PE1–PE2, PE4–PE5, PE7 / Attempt and date tracking table / Note: 2nd reattempt cannot be on same date as initial and 1st reattempt)
+
+Page 21 — Practical Assessment Task 2 – Assessment Instructions and Plan of Proposed Work
+(Complete the following 14 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, assemble cable drum, clean silt, rod conduit, attach hauling line, attach cleaning brush, prove conduit with slug, leave hauling line, flame brush cable end, fit endcap and shrink to seal, submit to supervisor / Plan of proposed work diagram: MH1, Pit 1, Pit 2, Pit 3 with cable and conduit references)
+
+Page 22 — Practical Assessment Task 2 – Checklist
+(Student Name / Did the student complete all 14 activities: WHS compliance, manufacturer guidelines, JSA, gas detector on person, assemble cable drum stand, clean silt from pit, rod conduit, attach hauling line, attach cleaning brush, prove with slug, leave hauling line, flame brush, fit endcap and shrink, submit work / Task Outcome: Satisfactory / Not Satisfactory / Assessor Signature / Assessor Name / Date)
+
+Page 23 — Practical Assessment Task 3 – Performance Criteria Mapping (Part 1)
+(Performance Criteria for ICTCBL249: PC 1.1–1.6, 3.1–3.6, 4.1–4.6 including site reinstatement and sign-off / Tick Completed column / Note: continued over page)
+
+Page 24 — Practical Assessment Task 3 – Performance Criteria Mapping (Part 2)
+(Performance Criteria for ICTCBL329: PC 1.1–1.8, 1.10, 2.1–2.2, 2.5, 2.7, 3.1–3.2, 3.3, 3.5–3.7 / Initial Attempt / 1st Reattempt / 2nd Reattempt / Assessors Initials table)
+
+Page 25 — Practical Assessment Task 3 – Performance Evidence Mapping
+(Performance Evidence for ICTCBL249: PE1–PE3, PE5–PE8 / Performance Evidence for ICTCBL329: PE1, PE3–PE7 / Attempt and date tracking table / Note: 2nd reattempt cannot be on same date as initial and 1st reattempt)
+
+Page 26 — Practical Assessment Task 3 – Timing and Assessment Instructions
+(Timing: assessor advises due date / Complete the following 22 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, attach cable grip and tape, install cable guides/slippers, attach hauling rope, attach new hauling rope, lubricate cable, haul cable within tension limits, leave sufficient cable in pits for jointing, flame brush, fit endcap and shrink, fit cable tags, coil excess cable on supports, ensure service separation, test continuity, close pits, restore site, complete red line mark-up, complete project sign-off, submit to supervisor / Plan of proposed work diagram: MH1, Pit 1, Pit 2, Pit 3)
+
+Page 27 — Practical Assessment Task 3 – Marked Up Plan and Test Result
+(Marked up plan of completed work diagram: MH1, Pit 1, Pit 2, Pit 3 with cable and conduit references 0100-0140, 0101-0130, 0100-0120, specs 50/0.40 P50 / Test result: Loop resistance of 1st pair ___ Ohms)
+
+Page 28 — Practical Assessment Task 3 – Checklist
+(Student Name / Did the student complete all 22 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, cable guides/slippers, attach cable grip, attach hauling rope, attach new hauling rope, lubricate cable, haul within tension, cut sufficient cable in pits, flame brush, fit endcap, fit cable tags, coil excess cable, test continuity, close pits, ensure service separation, restore site, complete red line mark-up, complete project sign-off, submit work / Task Outcome: Satisfactory / Not Satisfactory / Assessor Signature / Assessor Name / Date)
+
+Page 29 — Practical Assessment Task 4 – Checklist
+(Student Name / Did the student complete all 16 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, set up equipment, excavate site, shore excavation, install pit, install connecting conduits, backfill site, rod conduit, attach hauling line, attach cleaning brush, prove conduit with slug, leave hauling line, submit work / Task Outcome: Satisfactory / Not Satisfactory / Assessor Signature / Assessor Name / Date)
+
+Page 30 — Practical Assessment Task 4 – Performance Criteria Mapping
+(Performance Criteria for ICTCBL334: PC 1.1–1.7, 2.1–2.5, 3.1, 3.3–3.5 / Initial Attempt / 1st Reattempt / 2nd Reattempt / Assessors Initials table)
+
+Page 31 — Practical Assessment Task 4 – Assessment Task Description and Resources
+(Scenario: telco technician as part of team installing 4 new pits for jointing, excavation, shoring, pit installation, conduit connection, joint support bar, site reinstatement, conduit proving and rope installation / Pre-task JSA requirement / Resources Required: Learner Guide, Student Assessment Pack, Pen, WHS/OHS Acts, Codes of Practice, Workplace Procedure 01687W01, JSA, #6 pit installed, #6 Pits x1, manhole guards, pit keys x2, gas detector, gas action chart, shovel, shoring boards, conduit rodder, hauling rope, sand scoop, conduit cleaning brush, conduit slug, 50mm white UPV conduit x2m, 50mm PVC bush x2, PVC pipe adhesive and primer, fibreglass joint support bar 0.5m, paintbrush, hole saw 66mm, hacksaw, deburring tool, retro reflective vest, gloves, hard hat, safety glasses, manufacturer specifications)
+
+Page 32 — Practical Assessment Task 4 – Timing, Assessment Instructions and Plan of Proposed Work
+(Timing: assessor advises due date / Complete the following 18 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, set up equipment, excavate site, shore excavation, install pit, install connecting conduits, backfill, rod conduit, attach hauling line, attach cleaning brush, prove with slug, leave hauling line, install joint support bar, fit pit gasket and lid, submit to supervisor / Plan of proposed work diagram: Pit 1, Pit 2, Pit 3, Pit 4 with conduit references 0100-015, 0110-0125, 0120-0135, cable spec 50/0.40 P50)
+
+Page 33 — Practical Assessment Task 5 – Performance Criteria Mapping
+(Performance Criteria for ICTCBL249: PC 1.1–1.6, 2.1–2.9 including pole cable protection, conduit connection, handling existing cables, rodding, hauling, aerial/underground transition, cable length allowance, sealing, ID tagging, site clean-up, sign-off / Initial Attempt / 1st Reattempt / 2nd Reattempt / Assessors Initials table)
+
+Page 34 — Practical Assessment Task 5 – Performance Evidence Mapping
+(Performance Evidence for ICTCBL249: PE1–PE6 / Attempt and date tracking table / Note: 2nd reattempt cannot be on same date as initial and 1st reattempt)
+
+Page 35 — Practical Assessment Task 6 – Assessment Instructions and Plan of Proposed Work
+(Timing: assessor advises due date / Complete the following 23 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, set up equipment, refer to construction plan, mark out excavation area, excavate site, shore excavation, install earth mat and earth wire, install foundation base for manhole, install prefabricated manhole and plinth, install #6 pit, install connecting conduits, backfill, rod conduit, attach hauling line, attach cleaning brush, prove conduit with slug, leave hauling line, install joint support bar, fit pit gasket and lid, submit to supervisor / Plan of proposed work diagram: street-level plan showing MH1, Pit 1, Pit 2, Pit 3 on Smith Street/Jones Street intersection with conduit references)
+
+Page 36 — Practical Assessment Task 6 – Assessment Task Description and Resources (Part 1)
+(Scenario: telco technician installing prefabricated manhole, conduit and #6 pit for jointing; earth mat, base material, manhole, pit and conduit installation; site reinstatement and conduit proving / Pre-task JSA requirement / Resources Required: Learner Guide, Student Assessment Pack, Pen, WHS/OHS Acts, Codes of Practice including electrical risks, Workplace Procedure 01687W01, JSA, Cable and Conduit Plans, prefabricated manhole with plinth and covers, #6 Pits x1, 4 x manhole guard sets, pit keys x2, gas detector, gas action chart, shovel, shoring boards, conduit rodder, hauling rope, sand scoop, conduit cleaning brush, conduit slug, 50mm white UPV conduit x2m, 50mm PVC bush x2, PVC pipe adhesive and primer, fibreglass joint support bar 0.5m, paintbrush, hole saw 66mm, hacksaw, deburring tool, backfill material)
+
+Page 37 — Practical Assessment Task 6 – Assessment Resources (Continued)
+(Additional resources: 4-leg chain, excavator optional, large builder's square, marking paint, crane as applicable, crushed rock, fixing adhesive, formwork material, manhole fittings/bearers/anchor irons/earthing systems, mechanical ditching machine optional, prefabricated concrete plinth and template, ready mix concrete, shoring system, earthing kit, warning signs, wire loops and lifting slings and shackles, retro reflective vest, gloves, hard hat, safety glasses / Manufacturer specifications for all starred equipment)
+
+Page 38 — Practical Assessment Task 6 – Checklist
+(Student Name / Did the student complete all 23 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, set up equipment, refer to construction plan, mark out excavation area, excavate site, shore excavation, install earth mat and earth wire, install foundation base, install prefabricated manhole and plinth, install #6 pit, install connecting conduits, backfill, rod conduit, attach hauling line, attach cleaning brush, prove conduit with slug, leave hauling line, install joint support bar, fit pit gasket and lid, submit work / Task Outcome: Satisfactory / Not Satisfactory / Assessor Signature / Assessor Name / Date)
+
+Page 39 — Practical Assessment Task 7 – Performance Criteria Mapping and Performance Evidence Mapping
+(Performance Criteria for ICTCBL334: PC 1.2–1.7, 2.1, 3.1–3.5 / Initial Attempt / 1st Reattempt / 2nd Reattempt / Assessors Initials / Performance Evidence for ICTCBL334: PE1–PE3 / Attempt and date tracking table)
+
+Page 40 — Practical Assessment Task 7 – Assessment Instructions
+(Complete the following 12 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, set up equipment, excavate site, remove pit and conduit, install one of the pits, backfill site, compact and restore site to ground level, complete project sign-off sheet, submit to supervisor / Timing: assessor advises due date)
+
+Page 41 — Practical Assessment Task 7 – Assessment Task Description and Resources
+(Scenario: telco technician recovering obsolete pit and ducts — excavate, remove pit and conduit, backfill, reinstate site, recover or dispose of equipment / Pre-task JSA requirement / Resources Required: Learner Guide, Student Assessment Pack, Pen, WHS/OHS Acts, Codes of Practice, Workplace Procedure 01687W01, JSA, installed #6 pit with conduits, manhole guards, pit keys x2, gas detector, gas action chart, shovel, backfill material sand, retro reflective vest, gloves, hard hat, safety glasses, manufacturer specifications / Timing: assessor advises due date)
+
+Page 42 — Practical Assessment Task 7 – Checklist
+(Student Name / Did the student complete all 12 activities: WHS compliance, manufacturer guidelines, JSA, gas detector, set up equipment, excavate site, remove pit and conduit, install one of the pits, backfill site, compact and restore to ground level, complete project sign-off sheet, submit work / Task Outcome: Satisfactory / Not Satisfactory / Assessor Signature / Assessor Name / Date)
+
+Page 43 — Practical Assessment Task 7 – Project Sign-off Sheet
+(Project Sign-off Sheet: Project Name / Project Manager / Start Date / Completion Date / Project Duration / Customer / Project Goal / Project Deliverables / Clients / Project Manager Name and Signature / Customer Name and Signature / Date fields / Remarks section)
+
+Page 44 — Performance Criteria Mapping – ICTCBL253 and Performance Evidence Mapping – ICTCBL253
+(Performance Criteria for ICTCBL253: PC 1.1–1.4, 2.1–2.6, 3.1–3.2, 4.1–4.2, 4.5 / Initial Attempt / 1st Reattempt / 2nd Reattempt / Assessors Initials / Performance Evidence for ICTCBL253: PE1–PE7 including design plans, enclosure installation, two soil types, shoring excavation, specialised tools, documentation, WHS requirements / Attempt and date tracking table / Note: 2nd reattempt cannot be on same date as initial and 1st reattempt)
+
+Page 45 — Assessment Outcome Page
+(Unit Code and Title: ICTCBL334, ICTCBL329, ICTCBL249, ICTCBL253 / USI field / Course Title: Pit, Pipe, Manholes and Cable Hauling / Student Name / Cohort / Date Submitted / Trainer / Campus/Online/Distance / Learner Instructions: complete all information for marking / Submission details: hard copy with signed declaration or soft copy via LMS / Learner Declaration: authenticity statement, signature, date / Assessor Instructions: mark S or NYS for each task / Assessment Task summary table: Practical Task 1, Knowledge Task 1, Practical Tasks 2–7 — each with S/NYS circle and date field / Final Result: Not Yet Competent / Competent checkbox / Assessor Feedback: verbal feedback and written feedback fields / Assessor Declaration: fair, valid, reliable and flexible judgement, plagiarism checks, signature, name, date / Student acknowledgement signature)
+```
