@@ -268,9 +268,9 @@ const GradingPortal: React.FC = () => {
     Object.keys(currentAssessmentQuestions)
       .filter(key => key.startsWith('task'))
       .forEach(taskKey => {
-        const tNum = parseInt(taskKey.replace('task', ''));
+        const tNum = parseInt(taskKey.replace('task', '').replace('PA', '8'));
         const taskData = currentAssessmentQuestions[taskKey];
-        const tKey = `t${tNum}`;
+        const tKey = isNaN(tNum) ? taskKey.replace('task', 't') : `t${tNum}`;
 
         // Mark task outcome as Satisfactory (S)
         newTaskResults[tKey] = 'S';
@@ -285,61 +285,37 @@ const GradingPortal: React.FC = () => {
           newGrades[qKey] = 'correct';
         });
 
-        if (isQuestion15) {
-          // Q15 specific checking
-          const oralQuestions: string[] = (taskData as any).oral || [];
-          oralQuestions.forEach((_: string, idx: number) => {
-            newCompRecord[`${taskKey}_oral_${idx}`] = 'yes';
-          });
-          const perfQuestions: string[] = (taskData as any).performance || [];
-          perfQuestions.forEach((_: string, idx: number) => {
-            newCompRecord[`${taskKey}_perf_${idx}`] = 'yes';
-          });
-          const checklistItems: string[] = (taskData as any).checklistItems || [];
-          checklistItems.forEach((_: string, idx: number) => {
-            newCompRecord[`${taskKey}_chk_${idx}`] = 'yes';
-          });
-          newCompRecord[`${taskKey}_result`] = 'S';
-        } else if (isQuestion4 || isQuestion5 || isQuestion6) {
-          // Q4/Q5/Q6 use compRecord keys directly (not grades)
+        const isComponentBased = isQuestion4 || isQuestion5 || isQuestion6 || isQuestion7 || isQuestion8 || isQuestion9 || isQuestion10 || isQuestion11 || isQuestion12 || isQuestion13 || isQuestion14 || isQuestion15;
+        
+        if (isComponentBased) {
+          // Component-based assessments use compRecord keys directly
           newCompRecord[`${taskKey}_result`] = 'S';
 
-          if (isQuestion4) {
-            // task5 has a questions array — mark each S individually
-            questionsArray.forEach((q: any) => {
-              newCompRecord[`task5_q${q.id}_result`] = 'S';
-            });
-            // task1–4 use oral/performance/checklist item keys
-            const oralItems: string[] = (taskData as any).oral || [];
-            oralItems.forEach((_: string, idx: number) => {
-              newCompRecord[`${taskKey}_oral_${idx}`] = 'yes';
-            });
-            const perfItems: string[] = (taskData as any).performance || [];
-            perfItems.forEach((_: string, idx: number) => {
-              newCompRecord[`${taskKey}_perf_${idx}`] = 'yes';
-            });
-            const chkItems: string[] = (taskData as any).checklistItems || [];
-            chkItems.forEach((_: string, idx: number) => {
-              newCompRecord[`${taskKey}_chk_${idx}`] = 'yes';
-            });
-          } else {
-            // Q5/Q6: per-question S/NS in compRecord
-            questionsArray.forEach((q: any) => {
-              newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
-            });
-            // task2 observation items
-            const obsItems: string[] = (taskData as any).observationItems || [];
-            obsItems.forEach((_: string, idx: number) => {
-              newCompRecord[`${taskKey}_obs_${idx}`] = 'yes';
-            });
-            // task2 checklist items
-            const chkItems: string[] = (taskData as any).checklistItems || [];
-            chkItems.forEach((_: string, idx: number) => {
-              newCompRecord[`${taskKey}_chk_${idx}`] = 'yes';
-            });
-          }
+          questionsArray.forEach((q: any) => {
+            newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
+          });
+          
+          const oralItems: string[] = (taskData as any).oral || [];
+          oralItems.forEach((_: string, idx: number) => {
+            newCompRecord[`${taskKey}_oral_${idx}`] = 'yes';
+          });
+          
+          const perfItems: string[] = (taskData as any).performance || [];
+          perfItems.forEach((_: string, idx: number) => {
+            newCompRecord[`${taskKey}_perf_${idx}`] = 'yes';
+          });
+          
+          const chkItems: string[] = (taskData as any).checklistItems || [];
+          chkItems.forEach((_: string, idx: number) => {
+            newCompRecord[`${taskKey}_chk_${idx}`] = 'yes';
+          });
+
+          const obsItems: string[] = (taskData as any).observationItems || [];
+          obsItems.forEach((_: string, idx: number) => {
+            newCompRecord[`${taskKey}_obs_${idx}`] = 'yes';
+          });
         } else {
-          // 2. Oral / checklist items
+          // 2. Legacy assessments (Q1-Q3) use grades for Oral / checklist items
           const oralQuestions: string[] = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
           oralQuestions.forEach((_: string, i: number) => {
             const qKey = `t${tNum}q${i + 1}`;
@@ -376,8 +352,8 @@ const GradingPortal: React.FC = () => {
             if (row.cells) {
               row.cells.forEach((cell: any) => {
                 if (cell.options && cell.options.length > 0) {
-                  if (isQuestion15) {
-                    // Q15: find the "Yes" option for this cell
+                  if (isComponentBased) {
+                    // Modern assessments: find the "Yes" option for this cell
                     const yesOpt = cell.options.find((o: any) =>
                       ['Yes', 'yes', 'Satisfactory', 'S', 'C', 'Completed'].includes(o.value)
                     );

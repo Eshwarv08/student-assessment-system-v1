@@ -17,22 +17,11 @@ interface Q15BookletProps {
   setGrades?: (val: any) => void;
 }
 
-export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent, compRecord: externalCompRecord, setCompRecord: externalSetCompRecord, grades = {}, setGrades = () => { } }) => {
-  // Local variables for student view where compRecord isn't passed
-  const [localCompRecord, setLocalCompRecord] = useState<any>({ tasks: {}, attempts: [], evidence: {} });
 
+export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent, compRecord: externalCompRecord, setCompRecord: externalSetCompRecord, grades = {}, setGrades = () => { } }) => {
+  const [localCompRecord, setLocalCompRecord] = useState<any>({ tasks: {}, attempts: [], evidence: {} });
   const compRecord = externalCompRecord || localCompRecord;
   const setCompRecord = externalSetCompRecord || setLocalCompRecord;
-
-  const renderSectionIcon = (title: string) => {
-    if (!title) return null;
-    const t = title.toLowerCase();
-    if (t.includes('assessment task description')) return <FileText className="inline-block mr-2 text-blue-800" size={18} />;
-    if (t.includes('resources required')) return <Wrench className="inline-block mr-2 text-blue-800" size={18} />;
-    if (t.includes('timing')) return <Clock className="inline-block mr-2 text-blue-800" size={18} />;
-    if (t.includes('assessment instructions')) return <Info className="inline-block mr-2 text-blue-800" size={18} />;
-    return null;
-  };
 
   const [sigModal, setSigModal] = useState<{ field: string, type: string, open: boolean } | null>(null);
   const sigModalCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -98,7 +87,39 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
 
   const formatDisplayDate = (d: string) => d || '';
 
-  const q15Styles = `
+  const renderSectionIcon = (title: string) => {
+    if (!title) return null;
+    const t = title.toLowerCase();
+    if (t.includes('assessment task description')) return <FileText className="inline-block mr-2 text-blue-800" size={18} />;
+    if (t.includes('resources required')) return <Wrench className="inline-block mr-2 text-blue-800" size={18} />;
+    if (t.includes('timing')) return <Clock className="inline-block mr-2 text-blue-800" size={18} />;
+    if (t.includes('assessment instructions')) return <Info className="inline-block mr-2 text-blue-800" size={18} />;
+    return null;
+  };
+
+  const InnerHeader = () => (
+    <div className="inner-header">
+      <div className="top-row">
+        <div>
+          <span className="underline-bold">Assessment book</span><br />
+          <span className="underline-bold">{assessmentQuestions.adminInfo.unitCodeName}</span>
+        </div>
+        <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+      </div>
+    </div>
+  );
+
+  const PageFooter = ({ n }: { n: number }) => (
+    <div className="page-footer mt-auto pt-[4mm] border-t border-black flex justify-between text-[8pt]">
+      <span></span>
+      <span>Page {n} of 45</span>
+    </div>
+  );
+
+
+  return (
+    <div className="q15-booklet-view">
+      <style dangerouslySetInnerHTML={{ __html: `
       .q15-booklet-view {
         background: #d0d0d0;
         font-family: Arial, Helvetica, sans-serif !important;
@@ -184,25 +205,6 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         padding: 5px 6px;
         min-height: 22px;
       }
-      .q15-booklet-view .comp-table td { padding: 4px 6px; font-size: 9pt; }
-      .q15-booklet-view .comp-table .label-col { font-weight: bold; background: #f0f0f0; width: 36%; }
-      .q15-booklet-view .evidence-row {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        padding: 3px 0;
-        font-size: 9pt;
-      }
-      .q15-booklet-view .evidence-item { display: flex; align-items: center; gap: 4px; }
-      .q15-booklet-view .result-badge {
-        display: inline-flex; align-items: center; gap: 3px;
-        background: #cde;
-        border: 1px solid #67a;
-        border-radius: 50%;
-        width: 24px; height: 24px; justify-content: center; font-weight: bold; font-size: 10pt; color: #1e3a8a;
-      }
-      .q15-booklet-view .attempt-td { padding: 2px 4px; border: 1px solid #555; text-align: center; }
-      .q15-booklet-view .attempt-fb { padding: 2px 4px; border: 1px solid #555; }
       .q15-booklet-view .page-footer {
         margin-top: auto;
         padding-top: 4mm;
@@ -221,8 +223,6 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
       }
       .q15-booklet-view .inner-header .title-block { font-weight: bold; font-size: 11.5pt; color: #b00; }
       .q15-booklet-view .underline-bold { text-decoration: underline; font-weight: bold; }
-      .q15-booklet-view .checklist-table th { background: #e0e0e0; font-size: 9.5pt; }
-      .q15-booklet-view .checklist-table td { padding: 4px 6px; font-size: 9pt; }
       .q15-booklet-view .question-block {
         margin-bottom: 8mm;
       }
@@ -236,11 +236,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           margin: 0 !important; padding: 12mm 14mm !important; box-shadow: none !important; border: none !important;
         }
       }
-  `;
-
-  return (
-    <div className="q15-booklet-view">
-      <style dangerouslySetInnerHTML={{ __html: q15Styles }} />
+` }} />
       {/* Signature Modal */}
       {sigModal?.open && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-2 sm:p-4 no-print">
@@ -280,6 +276,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         </div>
       )}
 
+      
       {/* ═══════════════════ PAGE 1 – COVER ═══════════════════ */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
         <div style={{ border: '3.5px solid #1a5fa8', padding: '4px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
@@ -304,474 +301,3822 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
       </div>
 
 
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">KNOWLEDGE ASSESSMENT TASK 1 - CHECKLIST</h1>
+  <div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Knowledge Assessment Task 1 - Checklist</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Did the student:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Yes</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">No</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Comments</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Complete all questions correctly?</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q1': compRecord['ka1_q1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q1': compRecord['ka1_q1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td colSpan={4} className="border border-black p-2 font-bold bg-gray-100">Show an effective understanding of the following Knowledge requirements of the unit.</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE1. & ICTCBL329 KE4 & ICTCBL249 KE4 & ICTCBL253 KE1. features and operating requirements of hauling/excavation and installation to select appropriate equipment</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q2': compRecord['ka1_q2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q2': compRecord['ka1_q2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE2 & ICTCBL253 KE2. existing underground services</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q3': compRecord['ka1_q3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q3': compRecord['ka1_q3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE3. & ICTCBL329 KE5 & ICTCBL249 KE5 & ICTCBL253 KE3. Industry & manufacturer requirements for safe operation of equipment</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q4': compRecord['ka1_q4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q4': compRecord['ka1_q4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE4. & ICTCBL329 KE2 &ICTCBL249 KE2 & ICTCBL253 KE4. legislation, regulations, codes, standards, and other formal agreements that impact on the work activity/hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q5': compRecord['ka1_q5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q5': compRecord['ka1_q5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE5 & ICTCBL253 KE5. construction design plans</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q6': compRecord['ka1_q6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q6': compRecord['ka1_q6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE6. & ICTCBL329 KE6. & ICTCBL249 KE6 & ICTCBL253 KE6specific work health and safety and environmental requirements relating to the activity and site conditions</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q7': compRecord['ka1_q7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q7': compRecord['ka1_q7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE7 & ICTCBL253 KE7. components required for enclosures, pits and conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q8': compRecord['ka1_q8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q8': compRecord['ka1_q8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE8 & ICTCBL253 KE8. methods of installing enclosures and conduit as they apply to manufacturer specifications and regulatory requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q9': compRecord['ka1_q9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q9': compRecord['ka1_q9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL334 KE9. & ICTCBL329 KE6 & ICTCBL249 KE6 & ICTCBL253 KE9 typical issues and challenges that occur on site.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q10': compRecord['ka1_q10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q10': compRecord['ka1_q10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL329 KE1. &ICTCBL249 KE1 Australian Communications and Media Authority (ACMA) regulatory requirements for Telecommunications Cabling Provider Rules</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q11': compRecord['ka1_q11'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q11'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q11': compRecord['ka1_q11'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q11'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q11_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q11_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL329 KE3 & ICTCBL249 KE3 rodding, roping and mandrel techniques</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q12': compRecord['ka1_q12'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q12'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q12': compRecord['ka1_q12'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q12'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q12_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q12_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">ICTCBL329 KE7. & ICTCBL249 KE7 precautions associated with over- hauling through occupied conduits.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q13': compRecord['ka1_q13'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q13'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_q13': compRecord['ka1_q13'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_q13'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_q13_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_q13_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_outcome': compRecord['ka1_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'ka1_outcome': compRecord['ka1_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['ka1_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('ka1_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['ka1_assessor_sig'] ? <img src={compRecord['ka1_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['ka1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={2} />
+</div>
 
 
-      {/* DYNAMIC TASKS */}
-      {Object.keys(assessmentQuestions)
-        .filter(key => key.startsWith('task'))
-        .sort((a, b) => {
-          const parseKey = (k: string) => {
-            if (k === 'taskPA5') return 5.5;
-            return parseInt(k.replace('task', '')) || 0;
-          };
-          return parseKey(a) - parseKey(b);
-        })
-        .map((taskKey, idx) => {
-          const taskData = assessmentQuestions[taskKey as keyof typeof assessmentQuestions] as any;
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 1<div className="text-lg mt-1">Site Preparation for Access and Hauling</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Performance Criteria Mapping")}Performance Criteria Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task - ICTCBL334</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Obtain construction design plan from appropriate personnel and determine and obtain type of underground enclosure specified</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_1_1': compRecord['pa1_pc_334_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Arrange access to site according to required enterprise procedure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_1_2': compRecord['pa1_pc_334_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Inform appropriate personnel of existing and potential worksite hazards</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_1_3': compRecord['pa1_pc_334_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Verify location of proposed installation according to appropriate plans obtained from authorised personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_1_4': compRecord['pa1_pc_334_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Obtain information about location of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_1_5': compRecord['pa1_pc_334_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Organise plant, tools and equipment for given work and safe work practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_1_6': compRecord['pa1_pc_334_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.7 Place recognised barriers during construction according to safety and enterprise requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_1_7': compRecord['pa1_pc_334_1_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_1_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.5 Notify appropriate personnel of job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_334_3_5': compRecord['pa1_pc_334_3_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_334_3_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task - ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Arrange access to site according to required procedure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_1_1': compRecord['pa1_pc_249_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Inform appropriate personnel of identified hazards on worksite</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_1_2': compRecord['pa1_pc_249_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorized personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_1_3': compRecord['pa1_pc_249_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Obtain information about proposed locations of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_1_4': compRecord['pa1_pc_249_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_1_5': compRecord['pa1_pc_249_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS) and environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_1_6': compRecord['pa1_pc_249_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">5.3 Reinstate site to customer satisfaction and dispose of waste in an environmentally safe manner</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_5_3': compRecord['pa1_pc_249_5_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_5_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">5.4 Notify appropriate personnel about job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_249_5_4': compRecord['pa1_pc_249_5_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_249_5_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task - ICTCBL329</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Access site according to required enterprise procedures</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_1_1': compRecord['pa1_pc_329_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Verify cable installation requirements from plans and recognise constraints</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_1_2': compRecord['pa1_pc_329_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Identify from plans, correct duct to be hauled</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_1_3': compRecord['pa1_pc_329_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Inform appropriate personnel of existing and potential worksite hazards</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_1_4': compRecord['pa1_pc_329_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Select suitable tools, equipment, and protective equipment to meet required industry standards</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_1_6': compRecord['pa1_pc_329_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.7 Check for dangerous gases and place guards around open manholes following work health and safety (WHS) nd environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_1_7': compRecord['pa1_pc_329_1_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_1_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.8 Confirm correct duct/conduit to be utilised for hauling at site and access to intermediate manholes/pits along a hauling route</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_1_8': compRecord['pa1_pc_329_1_8'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_1_8'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Reinstate site to customer satisfaction and dispose of waste in environmentally safe manner as required</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_reinstate': compRecord['pa1_pc_329_reinstate'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_reinstate'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Notify appropriate personnel and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_329_notify': compRecord['pa1_pc_329_notify'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_329_notify'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
 
-          const allSections = [...(taskData.assessorSections || []).map((s: any) => ({ ...s, isAssessorOnly: true })), ...(taskData.sections || [])];
+  <PageFooter n={3} />
+</div>
 
-          const pages: any[][] = [[]];
-          allSections.forEach((section: any, sIdx: number) => {
-            const isFirstStudentSection = !section.isAssessorOnly && sIdx > 0 && allSections[sIdx - 1].isAssessorOnly;
-            if (section.pageBreak || isFirstStudentSection) {
-              if (pages[pages.length - 1].length > 0) {
-                pages.push([]);
-              }
-            }
-            pages[pages.length - 1].push(section);
-          });
 
-          if (pages[pages.length - 1].length === 0 && pages.length > 1) {
-            pages.pop();
-          }
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Performance Criteria Mapping Continued")}Performance Criteria Mapping Continued</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria assessed in this task - ICTCBL253</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td className="border border-black p-2 font-medium w-3/5">1.1 Obtain construction design plan from appropriate personnel to scope work and arrange for site access</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_1_1': compRecord['pa1_pc_253_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Notify appropriate personnel of identified safety hazards and other services that will need to be considered</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_1_2': compRecord['pa1_pc_253_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Obtain plant, tools, and safety equipment to perform tasks safely and efficiently</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_1_3': compRecord['pa1_pc_253_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Determine type of underground pit/manhole required for project as specified in construction design plan</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_1_4': compRecord['pa1_pc_253_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.1 Use tools according to enterprise guidelines and work health and safety (WHS) regulations</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_2_1': compRecord['pa1_pc_253_2_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_2_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.1 Complete reports and record alterations to plans using appropriate symbols, according to enterprise policy</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_4_1': compRecord['pa1_pc_253_4_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_4_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.2 Complete all labelling requirements according to industry standard</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_4_2': compRecord['pa1_pc_253_4_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_4_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.5 Notify appropriate personnel of job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pc_253_4_5': compRecord['pa1_pc_253_4_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pc_253_4_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+<div className="mb-4 break-inside-avoid"><table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Initial Attempt
+Circle S or NYS</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Initial Attempt
+Date</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">1st Reattempt
+S or NYS
+Date</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">2nd Reattempt
+S or NYS
+& Date</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Assessors
+Initials</th></tr></thead>
+<tbody><tr><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att1_s_nys'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_s_nys': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_date': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att1_re1'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_re1': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att1_re2'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_re2': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa1_att1_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa1_att1_sig'] ? <img src={compRecord['pa1_att1_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+</tbody></table></div>
+<div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Performance Evidence Mapping")}Performance Evidence Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Evidence</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL334</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. interpret and apply design plans and prepare for construction</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_334_pe1': compRecord['pa1_pe_334_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_334_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. use specialised hand or power tools and equipment normally used for excavation, pipe, pit and conduit installation and site restoration, safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_334_pe2': compRecord['pa1_pe_334_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_334_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. plan the works and prepare the site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_249_pe1': compRecord['pa1_pe_249_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_249_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. read and interpret drawings and designs to interpret installation requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_249_pe2': compRecord['pa1_pe_249_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_249_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE8. prepare all reports and records to industry and enterprise standards.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_249_pe8': compRecord['pa1_pe_249_pe8'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_249_pe8'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL329</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE4. use specialised hand or power tools and equipment for hauling cabling safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_329_pe4': compRecord['pa1_pe_329_pe4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_329_pe4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE5. read and interpret plan drawings</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_329_pe5': compRecord['pa1_pe_329_pe5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_329_pe5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE6. restore site and complete documentation</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_329_pe6': compRecord['pa1_pe_329_pe6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_329_pe6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE7. comply with all related safety requirements and work practices.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_329_pe7': compRecord['pa1_pe_329_pe7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_329_pe7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL253</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. interpret and apply design plans and prepare for construction</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_253_pe1': compRecord['pa1_pe_253_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_253_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE7. apply related work health and safety (WHS) requirements and work practices associated with excavation, enclosure installation and site restoration.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_pe_253_pe7': compRecord['pa1_pe_253_pe7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_pe_253_pe7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+<div className="mb-4 break-inside-avoid"><table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Initial Attempt
+Circle S or NYS</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Initial Attempt
+Date</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">1st Reattempt
+S or NYS
+Date</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">2nd Reattempt
+S or NYS
+& Date</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Assessors
+Initials</th></tr></thead>
+<tbody><tr><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att2_s_nys'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_s_nys': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att2_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_date': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att2_re1'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_re1': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_att2_re2'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_re2': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa1_att2_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa1_att2_sig'] ? <img src={compRecord['pa1_att2_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+</tbody></table></div>
 
-          if (pages.length === 0) pages.push([]);
+  <PageFooter n={4} />
+</div>
 
-          return pages.map((pageSections, pageIdx) => (
-            <div key={`${taskKey}-page-${pageIdx}`} className="page">
-              <div className="inner-header">
-                <div className="top-row">
-                  <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">{assessmentQuestions.adminInfo.unitCodeName}</span></div>
-                  <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Practical Assessment Task 1 - Checklist</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">DID THE STUDENT:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">YES</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">NO</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">COMMENTS</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_1': compRecord['pa1_cl_1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_1': compRecord['pa1_cl_1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to all tool/equipment instructions/manufacturers guidelines prior to use.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_2': compRecord['pa1_cl_2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_2': compRecord['pa1_cl_2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Complete a JSA for the task</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_3': compRecord['pa1_cl_3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_3': compRecord['pa1_cl_3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assemble manhole guards around a manhole</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_4': compRecord['pa1_cl_4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_4': compRecord['pa1_cl_4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Gas check manhole access hole</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_5': compRecord['pa1_cl_5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_5': compRecord['pa1_cl_5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Remove manhole lids with pit key and store lids correctly</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_6': compRecord['pa1_cl_6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_6': compRecord['pa1_cl_6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assemble manhole guards around the pits</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_7': compRecord['pa1_cl_7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_7': compRecord['pa1_cl_7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Remove pit lids with pit key and store correctly</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_8': compRecord['pa1_cl_8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_8': compRecord['pa1_cl_8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Gas checks the manhole as per spot sampling procedure and record readings</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_9': compRecord['pa1_cl_9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_9': compRecord['pa1_cl_9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Replace manhole lids and store guards in the correct location</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_10': compRecord['pa1_cl_10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_10': compRecord['pa1_cl_10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_cl_10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_cl_10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_cl_10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_outcome': compRecord['pa1_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_outcome': compRecord['pa1_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa1_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa1_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa1_assessor_sig'] ? <img src={compRecord['pa1_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={5} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 1<div className="text-lg mt-1">Site Preparation for Access and Hauling</div></h1>
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">Complete the following activities:<br/>1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice<br/>2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.<br/>3. Complete a JSA for the task<br/>4. Assemble manhole guards around a manhole<br/>5. Gas check manhole access hole<br/>6. Remove manhole lids with pit key and store lids correctly<br/>7. Assemble manhole guards around the pits<br/>8. Remove pit lids with pit key and store correctly<br/>9. Gas check the manhole as per spot sampling procedure and record readings<br/>10. Replace manhole lids and store guards in the correct location<br/>11. Submit your completed work to your supervisor (assessor) for inspection</p></div>
+<div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task1.png" alt="Plan of proposed work" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Plan of proposed work</div></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Recorded Gas Levels")}Recorded Gas Levels</h3><p className="whitespace-pre-wrap">Record the gas levels in the provided space during your practical demonstration.<br/>• O2 (%)<br/>• H2S (PPM)<br/>• CO (PPM)<br/>• LEL (%)</p></div>
+
+  <PageFooter n={6} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Task Description")}Assessment Task Description</h3><p className="whitespace-pre-wrap">For this assessment, you are working as a telco technician. You have been assigned a task by your supervisor to prepare the site for access and hauling of a new 50 pair cable to replace an existing cable between two pits adjacent to a manhole, and installing a new pit, a prefabricated manhole, in preparation for jointing. The supervisor has advised that this area is known for gas and that the adjacent manhole and the pits should be opened to allow the ducts to vent. You are also required to check for gas as per your workplace guidelines.<br/><br/>Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and address hazards, unwanted events and potential risks for the job.</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Resources Required")}Resources Required</h3><p className="whitespace-pre-wrap">• Learners Guide<br/>• Student Assessment Pack<br/>• Blue or Black Pen<br/>• WHS/OHS Acts/Regulations as applicable to the state of delivery<br/>• Codes of practice<br/>    ◦ How to manage work health and safety risks<br/>    ◦ Managing the work environment and facilities<br/>    ◦ Managing risks of plant in the workplace<br/>    ◦ Managing noise preventing hearing loss work<br/>    ◦ Managing the risk of falls at workplaces<br/>• Workplace procedure 01687W01 Working at Telstra Manholes and Pits<br/>• JSA-Included in this assessment pack<br/>• Installed two lid man-hole<br/>• Installed #6 Pit x2<br/>• Manhole guards*<br/>• Pit keys x2*<br/>• Gas detector*<br/>• Gas action chart<br/>• Retro reflective vest*<br/>• Gloves*<br/>• Hard Hat*<br/>• Safety glasses*<br/><br/>Manufacturers specifications and operating instructions for all tools & equipment specified with a *</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Timing")}Timing</h3><p className="whitespace-pre-wrap">Your assessor will advise you of the due date of these submissions.</p></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
                 </div>
               </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-              {pageIdx === 0 && (
-                <h1 className="section-title text-center text-blue-900 font-bold my-4">
-                  {taskData.title || taskData.observationTitle}
-                  {taskData.observationSubtitle && <div className="text-lg mt-1">{taskData.observationSubtitle}</div>}
-                </h1>
-              )}
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task1_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task1_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task1_feedback']}
+        </div>
+      </div>
 
-              {pageSections.map((section: any, sIdx: number) => {
-                if (section.type === 'text') {
-                  return (
-                    <div key={sIdx} className="mb-4">
-                      {section.title && <h3 className="font-bold mb-2 flex items-center">{renderSectionIcon(section.title)}{section.title}</h3>}
-                      <p className="whitespace-pre-wrap">{section.content}</p>
-                    </div>
-                  );
-                } else if (section.type === 'image') {
-                  return (
-                    <div key={sIdx} className="mb-6 flex flex-col items-center">
-                      {section.title && <h3 className="font-bold mb-2 w-full text-left flex items-center">{renderSectionIcon(section.title)}{section.title}</h3>}
-                      <img src={section.src} alt={section.caption || "Assessment Diagram"} className="max-w-full max-h-[400px] object-contain border border-gray-300" />
-                      {section.caption && <div className="text-center italic text-sm mt-2 text-gray-600">{section.caption}</div>}
-                    </div>
-                  );
-                } else if (section.type === 'table') {
-                  return (
-                    <div key={sIdx} className="mb-4 break-inside-avoid">
-                      {section.title && section.title.includes("Checklist") ? (
-                        <h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
-                          {section.title}
-                        </h1>
-                      ) : section.title ? (
-                        <h3 className="font-bold mb-2 flex items-center">{renderSectionIcon(section.title)}{section.title}</h3>
-                      ) : null}
-                      <table className="w-full border-collapse border border-black text-[9pt]">
-                        <thead>
-                          <tr>
-                            {section.headers?.map((h: string, hIdx: number) => (
-                              <th key={hIdx} className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">{h}</th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {section.title?.includes("Checklist") && (
-                            <tr>
-                              <td colSpan={section.headers?.length || 1} className="border border-black p-2 font-medium">
-                                Student's name: <span className="font-bold ml-2">{studentName}</span>
-                              </td>
-                            </tr>
-                          )}
-                          {section.rows?.map((row: any, rIdx: number) => (
-                            <tr key={rIdx}>
-                              {row.isSubHeader ? (
-                                <td colSpan={section.headers?.length || 1} className="border border-black p-2 font-bold bg-gray-100">{row.label}</td>
-                              ) : (
-                                <>
-                                  {row.label !== undefined && <td className="border border-black p-2 font-medium w-3/5">{row.label}</td>}
-                                  {row.cells ? (
-                                    row.cells.map((cell: any, cIdx: number) => (
-                                      <td key={cIdx} colSpan={row.colSpan || 1} className="border border-black p-2 text-center align-middle">
-                                        {cell.type === 'text' || cell.type === 'date' ? (
-                                          <input
-                                            type={cell.type}
-                                            className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none"
-                                            value={compRecord[cell.name] || ''}
-                                            onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [cell.name]: e.target.value })}
-                                            readOnly={isStudent}
-                                          />
-                                        ) : cell.type === 'signature' ? (
-                                          <div
-                                            onClick={() => !isStudent && openSigModal(cell.name, 'comp')}
-                                            className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center"
-                                          >
-                                            {compRecord[cell.name] ? (
-                                              <img src={compRecord[cell.name]} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
-                                            ) : (
-                                              <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>
-                                            )}
-                                          </div>
-                                        ) : cell.options ? (
-                                          <div className="flex flex-col gap-1 items-center justify-center">
-                                            {cell.options.map((opt: any, oIdx: number) => (
-                                              <div
-                                                key={oIdx}
-                                                className="flex gap-2 items-center cursor-pointer"
-                                                onClick={() => !isStudent && setCompRecord({ ...compRecord, [cell.name]: compRecord[cell.name] === opt.value ? '' : opt.value })}
-                                              >
-                                                <div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">
-                                                  {compRecord[cell.name] === opt.value && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}
-                                                </div>
-                                                {opt.text && <span className="text-[8.5pt]">{opt.text}</span>}
-                                              </div>
-                                            ))}
-                                          </div>
-                                        ) : null}
-                                      </td>
-                                    ))
-                                  ) : (
-                                    <td className="border border-black p-2 text-center"></td>
-                                  )}
-                                </>
-                              )}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  );
-                }
-                return null;
-              })}
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task1_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task1_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task1_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task1_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
 
-              {pageIdx === pages.length - 1 && (
-                <>
-                  {taskData.questions && (
-                    <div className="mt-8">
-                      {taskData.questions.map((q: any) => (
-                        <div key={q.id} className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
-                          <div className="p-3 sm:p-4">
-                            <div className="flex gap-2 font-bold mb-3 text-[10pt]">
-                              <span>{q.id}.</span>
-                              <span className="whitespace-pre-wrap">{q.text}</span>
-                            </div>
-
-                            <div className="pl-0 sm:pl-6 mt-2">
-                              {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
-                                <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                                  <input type="radio" checked={answers[opt.name || `t${taskKey!.replace('task', '')}q${q.id}`] === opt.value} onChange={(e) => setAnswers({ ...answers, [opt.name || `t${taskKey!.replace('task', '')}q${q.id}`]: opt.value })} className="mt-0.5" />
-                                  <label>{opt.text}</label>
-                                </div>
-                              ))}
-
-                              {q.type === 'text' && (
-                                <textarea
-                                  className="w-full border border-gray-300 p-2 min-h-[100px] resize-y"
-                                  value={answers[`t${taskKey!.replace('task', '')}q${q.id}`] || ''}
-                                  onChange={(e) => setAnswers({ ...answers, [`t${taskKey!.replace('task', '')}q${q.id}`]: e.target.value })}
-                                  placeholder="(No response)"
-                                />
-                              )}
-
-                              {q.type === 'options' && q.options?.map((opt: any, oIdx: number) => {
-                                const ansArray = answers[`t${taskKey!.replace('task', '')}q${q.id}`] || [];
-                                const checked = Array.isArray(ansArray) ? ansArray.includes(opt.value) : ansArray === opt.value;
-                                return (
-                                  <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                                    <input type="checkbox" checked={checked} onChange={(e) => {
-                                      let newArr = [...(Array.isArray(answers[`t${taskKey!.replace('task', '')}q${q.id}`]) ? answers[`t${taskKey!.replace('task', '')}q${q.id}`] : [])];
-                                      if (e.target.checked) newArr.push(opt.value);
-                                      else newArr = newArr.filter(v => v !== opt.value);
-                                      setAnswers({ ...answers, [`t${taskKey!.replace('task', '')}q${q.id}`]: newArr });
-                                    }} className="mt-0.5" />
-                                    <label>{opt.text}</label>
-                                  </div>
-                                )
-                              })}
-
-                              {q.type === 'multipart_radio' && q.parts?.map((part: any, pIdx: number) => (
-                                <div key={pIdx} className="mb-4 bg-gray-50 p-3 border border-gray-200">
-                                  <div className="font-bold mb-2 whitespace-pre-wrap">{part.text}</div>
-                                  {part.options?.map((opt: any, oIdx: number) => (
-                                    <div key={oIdx} className="flex gap-2 mb-1">
-                                      <input type="radio" checked={answers[part.name] === opt.value} onChange={(e) => setAnswers({ ...answers, [part.name]: opt.value })} />
-                                      <label>{opt.text}</label>
-                                    </div>
-                                  ))}
-                                </div>
-                              ))}
-
-                              {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tIdx: number) => (
-                                <div key={tIdx} className="mb-4 border border-gray-200 p-2">
-                                  {ti.image && <img src={ti.image} className="max-w-[200px] mb-2" alt="Diagram" />}
-                                  <input type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
-                            <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
-                              Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
-                            </div>
-                            <div
-                              onClick={() => !isStudent && setGrades({ ...grades, [`t${taskKey!.replace('task', '')}q${q.id}`]: 'correct' })}
-                              className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer"
-                            >
-                              <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                                {grades[`t${taskKey!.replace('task', '')}q${q.id}`] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                              </span>
-                              Satisfactory (S)
-                            </div>
-                            <div
-                              onClick={() => !isStudent && setGrades({ ...grades, [`t${taskKey!.replace('task', '')}q${q.id}`]: 'incorrect' })}
-                              className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer"
-                            >
-                              <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                                {grades[`t${taskKey!.replace('task', '')}q${q.id}`] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                              </span>
-                              Not Satisfactory (NS)
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {(taskData.performance || taskData.oral || taskData.checklistItems) && (
-                    <div className="mt-8">
-                      <h2 className="text-lg font-bold text-center bg-gray-200 p-2 mb-4">{taskData.checklistTitle}</h2>
-                      <p className="whitespace-pre-wrap mb-4 text-sm italic">{taskData.assessorInstructions}</p>
-
-                      <h3 className="font-bold mb-2 text-[10pt]">Record of Performance:</h3>
-                      <table className="w-full border-collapse border-[1.5px] border-black mb-6 text-[9pt]">
-                        <thead>
-                          <tr>
-                            <th rowSpan={2} className="border-[1.5px] border-black bg-[#999] text-left px-3 py-2 text-black font-bold">Did the Candidate:</th>
-                            <th colSpan={2} className="border-[1.5px] border-black bg-[#999] text-left px-3 py-2 text-black font-bold">Satisfactory</th>
-                          </tr>
-                          <tr>
-                            <th className="border-[1.5px] border-black bg-[#aaa] text-left px-3 py-1.5 text-black font-bold w-[12%]">Yes</th>
-                            <th className="border-[1.5px] border-black bg-[#aaa] text-left px-3 py-1.5 text-black font-bold w-[12%]">No</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {taskData.oral && (
-                            <>
-                              <tr>
-                                <td className="border-[1.5px] border-black bg-[#e0e0e0] italic px-3 py-1.5 text-[8.5pt]" colSpan={3}>
-                                  *See assessment task details for specific oral questions
-                                </td>
-                              </tr>
-                              {taskData.oral.map((item: string, idx: number) => (
-                                <tr key={`oral-${idx}`}>
-                                  <td className="border-[1.5px] border-black px-3 py-2">{item}</td>
-                                  <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_oral_${idx}`]: 'yes' })}>
-                                    {compRecord[`${taskKey}_oral_${idx}`] === 'yes' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
-                                  </td>
-                                  <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_oral_${idx}`]: 'no' })}>
-                                    {compRecord[`${taskKey}_oral_${idx}`] === 'no' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
-                                  </td>
-                                </tr>
-                              ))}
-                            </>
-                          )}
-
-                          {taskData.performance && (
-                            <>
-                              <tr>
-                                <td colSpan={3} className="border-[1.5px] border-black bg-[#e0e0e0] font-bold px-3 py-2 text-black">
-                                  {taskData.performanceHeader || "Evidence of Performance: Did The Candidate Satisfactorily:"}
-                                </td>
-                              </tr>
-                              {taskData.performance.map((item: string, idx: number) => (
-                                <tr key={`perf-${idx}`}>
-                                  <td className="border-[1.5px] border-black px-3 py-2">{item}</td>
-                                  <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_perf_${idx}`]: 'yes' })}>
-                                    {compRecord[`${taskKey}_perf_${idx}`] === 'yes' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
-                                  </td>
-                                  <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_perf_${idx}`]: 'no' })}>
-                                    {compRecord[`${taskKey}_perf_${idx}`] === 'no' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
-                                  </td>
-                                </tr>
-                              ))}
-                            </>
-                          )}
-
-                          {taskData.checklistItems && (
-                            <>
-                              <tr>
-                                <td colSpan={3} className="border-[1.5px] border-black bg-[#e0e0e0] font-bold px-3 py-2 text-black">
-                                  Evidence of Performance: Did The Candidate Satisfactorily:
-                                </td>
-                              </tr>
-                              {taskData.checklistItems.map((item: string, idx: number) => (
-                                <tr key={`chk-${idx}`}>
-                                  <td className="border-[1.5px] border-black px-3 py-2">{item}</td>
-                                  <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_chk_${idx}`]: 'yes' })}>
-                                    {compRecord[`${taskKey}_chk_${idx}`] === 'yes' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
-                                  </td>
-                                  <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_chk_${idx}`]: 'no' })}>
-                                    {compRecord[`${taskKey}_chk_${idx}`] === 'no' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
-                                  </td>
-                                </tr>
-                              ))}
-                            </>
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
-                    <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
-
-                    <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
-                      <tbody>
-                        <tr>
-                          <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
-                            <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
-                          </td>
-                          <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span>Signature:</span>
-                                <div
-                                  className="no-print"
-                                  onClick={() => openSigModal('student_signature', 'comp')}
-                                  style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
-                                >
-                                  {answers.student_signature_url ? (
-                                    <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
-                                  ) : (
-                                    <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
-                                  )}
-                                </div>
-                                <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
-                                  {answers.student_signature_url && (
-                                    <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
-                                  )}
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span>Date:</span>
-                                <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
-                                  {formatDisplayDate(submitDate || '')}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
-                      <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
-                      <textarea
-                        className="no-print"
-                        style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
-                        placeholder="Assessor feedback..."
-                        value={compRecord[`${taskKey}_feedback`] || ''}
-                        onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_feedback`]: e.target.value }) }}
-                        readOnly={isStudent}
-                      />
-                      <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
-                        {compRecord[`${taskKey}_feedback`]}
-                      </div>
-                    </div>
-
-                    <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
-                      Result:{' '}
-                      <span
-                        className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
-                        onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_result`]: 'S' }) }}
-                        style={{ padding: '4px' }}
-                      >
-                        Satisfactory (S)
-                        {compRecord[`${taskKey}_result`] === 'S' && (
-                          <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
-                        )}
-                      </span>
-                      <span style={{ margin: '0 8px' }}>/</span>
-                      <span
-                        className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
-                        onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_result`]: 'NS' }) }}
-                        style={{ padding: '4px' }}
-                      >
-                        Not Satisfactory (NS)
-                        {compRecord[`${taskKey}_result`] === 'NS' && (
-                          <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
-                        )}
-                      </span>
-                    </div>
-
-                    <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
-                      <tbody>
-                        <tr>
-                          <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
-                            <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
-                          </td>
-                          <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span>Signature:</span>
-                                <div
-                                  className="no-print"
-                                  onClick={() => openSigModal('assessor_signature', 'comp')}
-                                  style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
-                                >
-                                  {compRecord.assessor_signature ? (
-                                    <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
-                                  ) : (
-                                    <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
-                                  )}
-                                </div>
-                                <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
-                                  {compRecord.assessor_signature && (
-                                    <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
-                                  )}
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span>Date:</span>
-                                <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
-                                  <input
-                                    type="date"
-                                    style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                                    value={compRecord.assessment_date || ''}
-                                    onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
-                                    readOnly={isStudent}
-                                  />
-                                </span>
-                                <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
-                                  {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
                   </div>
-                </>
-              )}
-            </div>
-          ))
-        })}
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={7} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">KNOWLEDGE ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS</h1>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Student Instructions")}Student Instructions</h3><p className="whitespace-pre-wrap">Choose the correct answer for each of the following questions. Refer to your learner guide where specified. For questions referring to a plan, use the provided image.</p></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>1.</span><span className="whitespace-pre-wrap">1. The NBN (National Broadband Network) at the moment consists entirely of:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'a' })} className="mt-0.5" /><label>a) Copper cable</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'b' })} className="mt-0.5" /><label>b) Cat 7 cabling</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'c' })} className="mt-0.5" /><label>c) Optical Fibre</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'd' })} className="mt-0.5" /><label>d) Coaxial cable</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q1': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q1'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q1': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q1'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>2.</span><span className="whitespace-pre-wrap">2. Identify whether the following statement is true or false: Category 3 copper cable is mainly used for voice applications.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q2'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q2': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q2'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q2': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q2': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q2'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q2': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q2'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>3.</span><span className="whitespace-pre-wrap">3. The Australian Standard that specifies installation requirements for customer cabling is:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'a' })} className="mt-0.5" /><label>a) AUSTRALIAN STANDARD AS/NZ 3000:2007</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'b' })} className="mt-0.5" /><label>b) | 017153a07 | TELSTRA’S LEAD-IN TRENCHING REQUIREMENTS.</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'c' })} className="mt-0.5" /><label>c) AUSTRALIAN STANDARD AS/CA S008:2010</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'd' })} className="mt-0.5" /><label>d) AUSTRALIAN STANDARD AS/CA S009:2013</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q3': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q3'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q3': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q3'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>4.</span><span className="whitespace-pre-wrap">4. The Cable Provider Rules in Australia are:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'a' })} className="mt-0.5" /><label>a) An industry-run registration scheme designed to promote self-regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'b' })} className="mt-0.5" /><label>b) A government run registration scheme designed to promote government regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'c' })} className="mt-0.5" /><label>c) A scheme in industry that is no longer used because of self-regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q4': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q4'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q4': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q4'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>5.</span><span className="whitespace-pre-wrap">5. To manage health and safety on a worksite there should be:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'a' })} className="mt-0.5" /><label>a) Hazard management plan</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'b' })} className="mt-0.5" /><label>b) Free hard hats</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'c' })} className="mt-0.5" /><label>c) Weather management plan</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q5': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q5'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q5': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q5'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>6.</span><span className="whitespace-pre-wrap">6. Before work begins, approvals should be obtained from:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'a' })} className="mt-0.5" /><label>a) Likelihood that nothing will go wrong so don’t bother</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'b' })} className="mt-0.5" /><label>b) No approvals are required</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'c' })} className="mt-0.5" /><label>c) Authorities and asset owners</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q6': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q6'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q6': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q6'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={8} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>7.</span><span className="whitespace-pre-wrap">7. Typical tools and equipment may include:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'a' })} className="mt-0.5" /><label>a) Shovels</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'b' })} className="mt-0.5" /><label>b) Trenching equipment</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'c' })} className="mt-0.5" /><label>c) Jointing equipment</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q7': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q7'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q7': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q7'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>8.</span><span className="whitespace-pre-wrap">8. To facilitate easier hauling of cables into conduits, which of the following can be used?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'a' })} className="mt-0.5" /><label>a) Lubrication of the cable and ducts</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'b' })} className="mt-0.5" /><label>b) The use of cable guides</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'c' })} className="mt-0.5" /><label>c) The use of conduit guides</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q8': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q8'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q8': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q8'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>9.</span><span className="whitespace-pre-wrap">9. Name one device for cleaning conduits.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q9'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q9': e.target.value })} placeholder="(No response)" />
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q9': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q9'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q9': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q9'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>10.</span><span className="whitespace-pre-wrap">10. How does a winch used for small copper cables differ to one used for optical fibre cables?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'a' })} className="mt-0.5" /><label>a) They are the same</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'b' })} className="mt-0.5" /><label>b) Smaller hauling wheel</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'c' })} className="mt-0.5" /><label>c) Larger hauling wheel</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q10': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q10'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q10': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q10'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>11.</span><span className="whitespace-pre-wrap">11. Identify whether the following statement is true or false: There is a need to ensure that the cable hauling tension is correct for the cable and that the bend radius is maintained and care is taken to protect the cable sheath during cable installation procedures.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q11'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q11': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q11'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q11': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q11': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q11'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q11': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q11'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={9} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>12.</span><span className="whitespace-pre-wrap">12. A multimeter can be used to check copper cables for:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'a' })} className="mt-0.5" /><label>a) Continuity</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'b' })} className="mt-0.5" /><label>b) Short circuits</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'c' })} className="mt-0.5" /><label>c) Loop resistance</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q12': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q12'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q12': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q12'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>13.</span><span className="whitespace-pre-wrap">13. An induction/tone generator can be used to:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'a' })} className="mt-0.5" /><label>a) Measuring cable pair loop resistance</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'b' })} className="mt-0.5" /><label>b) Identifying pairs within cables</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'c' })} className="mt-0.5" /><label>c) Identify open circuits</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q13': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q13'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q13': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q13'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>14.</span><span className="whitespace-pre-wrap">14. Wire map testers can test for:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'a' })} className="mt-0.5" /><label>a) Open circuit</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'b' })} className="mt-0.5" /><label>b) Short circuit</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'c' })} className="mt-0.5" /><label>c) Reversed or split pairs</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q14': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q14'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q14': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q14'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>15.</span><span className="whitespace-pre-wrap">15. Identify whether the following statement is true or false: The need for surge protection on copper cables is determined by the cabling provider.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q15'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q15': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q15'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q15': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q15': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q15'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q15': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q15'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>16.</span><span className="whitespace-pre-wrap">16. Devices used to connect the feeder to cables are:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'a' })} className="mt-0.5" /><label>a) Cables are never hauled this way</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'b' })} className="mt-0.5" /><label>b) Hauling Eye & cable grip</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'c' })} className="mt-0.5" /><label>c) Screw on cable cap or glue on cap</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q16': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q16'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q16': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q16'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>17.</span><span className="whitespace-pre-wrap">17. Sufficient cable length should be left in pits for:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'a' })} className="mt-0.5" /><label>a) Cables are left as short as possible</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'b' })} className="mt-0.5" /><label>b) Hauling</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'c' })} className="mt-0.5" /><label>c) Jointing</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q17': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q17'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q17': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q17'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={10} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>18.</span><span className="whitespace-pre-wrap">18. On completion of the work, it is essential to send a ________ promptly to all parties and get sign off from the ________.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'a' })} className="mt-0.5" /><label>a) Gift, ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'b' })} className="mt-0.5" /><label>b) Report, customer</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'c' })} className="mt-0.5" /><label>c) On completion nothing more is done</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q18': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q18'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q18': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q18'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>19.</span><span className="whitespace-pre-wrap">19. Reinstatement of the site is the responsibility of:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'a' })} className="mt-0.5" /><label>a) ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'b' })} className="mt-0.5" /><label>b) Customer</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'c' })} className="mt-0.5" /><label>c) Contractor</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q19': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q19'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q19': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q19'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>20.</span><span className="whitespace-pre-wrap">20. Care must be taken when testing optical fibre cables to avoid:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'a' })} className="mt-0.5" /><label>a) Foot damage due to the high weight of the fibres</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'b' })} className="mt-0.5" /><label>b) Eye damage due to the laser light in the fibres</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'c' })} className="mt-0.5" /><label>c) Optical fibre is not dangerous</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q20': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q20'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q20': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q20'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>21.</span><span className="whitespace-pre-wrap">21. Is it necessary to support cables in pits and enclosures?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q21'] === 'yes'} onChange={(e) => setAnswers({ ...answers, 't2q21': 'yes' })} className="mt-0.5" /><label>a) Yes</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q21'] === 'no'} onChange={(e) => setAnswers({ ...answers, 't2q21': 'no' })} className="mt-0.5" /><label>b) No</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q21': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q21'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q21': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q21'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task1.png" alt="Plan for Questions 22-25" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Plan for Questions 22-25</div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>22.</span><span className="whitespace-pre-wrap">22. What is the diameter of duct is installed between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q22'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q22': 'a' })} className="mt-0.5" /><label>a) 100mm</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q22'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q22': 'b' })} className="mt-0.5" /><label>b) 50mm</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q22'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q22': 'c' })} className="mt-0.5" /><label>c) 60mm</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q22': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q22'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q22': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q22'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>23.</span><span className="whitespace-pre-wrap">23. What type (size) of pit is installed at the boundary of 156 and 158 Hamilton Rd?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q23'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q23': 'a' })} className="mt-0.5" /><label>a) P4</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q23'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q23': 'b' })} className="mt-0.5" /><label>b) P5</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q23'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q23': 'c' })} className="mt-0.5" /><label>c) P6</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q23': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q23'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q23': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q23'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>24.</span><span className="whitespace-pre-wrap">24. What kind of infrastructure is installed at the boundary of 150 and 152 Hamilton Rd?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q24'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q24': 'a' })} className="mt-0.5" /><label>a) Manhole</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q24'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q24': 'b' })} className="mt-0.5" /><label>b) Rope</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q24'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q24': 'c' })} className="mt-0.5" /><label>c) Conduit</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q24': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q24'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q24': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q24'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={11} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>25.</span><span className="whitespace-pre-wrap">25. What is the length of conduit is required to be installed in between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q25'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q25': 'a' })} className="mt-0.5" /><label>a) 26M</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q25'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q25': 'b' })} className="mt-0.5" /><label>b) 30M</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q25'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q25': 'c' })} className="mt-0.5" /><label>c) 22M</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q25': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q25'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q25': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q25'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>26.</span><span className="whitespace-pre-wrap">26. What is the permissible limit of LEL (Lower Explosive Limit) gases in a confined space?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q26'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q26': 'a' })} className="mt-0.5" /><label>a) 10% of the volume</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q26'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q26': 'b' })} className="mt-0.5" /><label>b) 5% of the volume</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q26'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q26': 'c' })} className="mt-0.5" /><label>c) 8% of the volume</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q26': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q26'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q26': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q26'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>27.</span><span className="whitespace-pre-wrap">27. What is the safest limit of oxygen in atmosphere?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q27'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q27': 'a' })} className="mt-0.5" /><label>a) 19.5% to 23%</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q27'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q27': 'b' })} className="mt-0.5" /><label>b) 23% to 27%</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q27'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q27': 'c' })} className="mt-0.5" /><label>c) 15% to 19.5%</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q27': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q27'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q27': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q27'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>28.</span><span className="whitespace-pre-wrap">28. What is the use of a Mandrel? Mandrels are used to prove the integrity of installed conduit runs. They will also remove small amounts of debris that may be in the conduit. Manufactured from high-strength aluminium alloy tube. Centre rod is plated all-thread steel. Eye on each end.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q28'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q28': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q28'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q28': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q28': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q28'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q28': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q28'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>29.</span><span className="whitespace-pre-wrap">29. How many percentage points should a mandrels be from a conduit size? The effective diameter of the mandrel must be 90 percent of the nominal pipe diameter and verified using a proving ring. The mandrel is sized to allow for up to 5% deformation of the installed pipe.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q29'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q29': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q29'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q29': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q29': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q29'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q29': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q29'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>30.</span><span className="whitespace-pre-wrap">30. How could avoid conduits get overhauled? Use the Mandrill to check the available capacity of the Conduit during rod and roping activity.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q30'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q30': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q30'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q30': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q30': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q30'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q30': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q30'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={12} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>31.</span><span className="whitespace-pre-wrap">31. What is the purpose of rod and roping? Rod and Roping is when new and existing conduit is proved and feed with rope to assist in the cable hauling on an existing copper and fibre cable for repairs, upgrades and new infrastructure works.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q31'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q31': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q31'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q31': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q31': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q31'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q31': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q31'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>32.</span><span className="whitespace-pre-wrap">32. The Customer Access Network connects end users of the:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q32'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q32': 'a' })} className="mt-0.5" /><label>a) Network boundary</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q32'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q32': 'b' })} className="mt-0.5" /><label>b) Telecommunications network</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q32'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q32': 'c' })} className="mt-0.5" /><label>c) Property entry point</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q32'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q32': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q32': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q32'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q32': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q32'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>33.</span><span className="whitespace-pre-wrap">33. A Customer Private Network provides:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q33'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q33': 'a' })} className="mt-0.5" /><label>a) An external telecommunications network that forms part of the global telecommunications network</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q33'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q33': 'b' })} className="mt-0.5" /><label>b) A standalone internal telecommunications network that does not providing access to the global telecommunications network</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q33'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q33': 'c' })} className="mt-0.5" /><label>c) An internal telecommunications network as well as providing access to the global telecommunications network</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q33'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q33': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q33': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q33'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q33': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q33'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>34.</span><span className="whitespace-pre-wrap">34. The National Broadband Network (NBN) currently consists entirely of:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q34'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q34': 'a' })} className="mt-0.5" /><label>a) Copper cable</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q34'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q34': 'b' })} className="mt-0.5" /><label>b) Cat 7 cabling</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q34'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q34': 'c' })} className="mt-0.5" /><label>c) Optical Fibre</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q34'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q34': 'd' })} className="mt-0.5" /><label>d) Coaxial cable</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q34': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q34'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q34': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q34'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>35.</span><span className="whitespace-pre-wrap">35. Is it a requirement to hold a General Construction White Card to work on construction sites?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q35'] === 'yes'} onChange={(e) => setAnswers({ ...answers, 't2q35': 'yes' })} className="mt-0.5" /><label>a) Yes</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q35'] === 'no'} onChange={(e) => setAnswers({ ...answers, 't2q35': 'no' })} className="mt-0.5" /><label>b) No</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q35': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q35'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q35': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q35'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>36.</span><span className="whitespace-pre-wrap">36. The Code of Practise are created to:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q36'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q36': 'a' })} className="mt-0.5" /><label>a) Ensure worst practice outcomes & promote negative behaviour changes in the industry</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q36'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q36': 'b' })} className="mt-0.5" /><label>b) Provide guidelines for fair dealing between organisations and their customers</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q36'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q36': 'c' })} className="mt-0.5" /><label>c) Provide guidelines for fair dealing between organisations</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q36'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q36': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q36': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q36'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q36': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q36'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>37.</span><span className="whitespace-pre-wrap">37. The Australian Standard that specifies underground Installation requirements for customer cabling is:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q37'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q37': 'a' })} className="mt-0.5" /><label>a) AUSTRALIAN STANDARD AS/NZ 3000:2007</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q37'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q37': 'b' })} className="mt-0.5" /><label>b) | 017153a07 | TELSTRA’S LEAD-IN TRENCHING REQUIREMENTS.</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q37'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q37': 'c' })} className="mt-0.5" /><label>c) AUSTRALIAN STANDARD AS/CA S008:2010</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q37'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q37': 'd' })} className="mt-0.5" /><label>d) AUSTRALIAN STANDARD AS/CA S009:2013</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q37': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q37'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q37': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q37'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>38.</span><span className="whitespace-pre-wrap">38. The Telecommunications Act 1997 is:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q38'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q38': 'a' })} className="mt-0.5" /><label>a) An industry body</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q38'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q38': 'b' })} className="mt-0.5" /><label>b) Legislated law</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q38'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q38': 'c' })} className="mt-0.5" /><label>c) A voluntary standard</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q38'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q38': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q38': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q38'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q38': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q38'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={13} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>39.</span><span className="whitespace-pre-wrap">39. The Cable Provider Rules in Australia are best characterised as?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q39'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q39': 'a' })} className="mt-0.5" /><label>a) An industry-run registration scheme designed to promote self-regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q39'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q39': 'b' })} className="mt-0.5" /><label>b) A government run registration scheme designed to promote government regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q39'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q39': 'c' })} className="mt-0.5" /><label>c) A scheme in industry that is no longer used because of self-regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q39'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q39': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q39': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q39'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q39': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q39'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>40.</span><span className="whitespace-pre-wrap">40. A typical street distribution plan might provide information on…</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q40'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q40': 'a' })} className="mt-0.5" /><label>a) The location of conduit runs</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q40'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q40': 'b' })} className="mt-0.5" /><label>b) The location of electricity pedestals</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q40'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q40': 'c' })} className="mt-0.5" /><label>c) The location of pits</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q40'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q40': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q40': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q40'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q40': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q40'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>41.</span><span className="whitespace-pre-wrap">41. Access to a site is usually arranged by the …</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q41'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q41': 'a' })} className="mt-0.5" /><label>a) ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q41'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q41': 'b' })} className="mt-0.5" /><label>b) Site supervisor or Site Manager</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q41'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q41': 'c' })} className="mt-0.5" /><label>c) No need for access permission for cablers</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q41'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q41': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q41': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q41'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q41': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q41'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>42.</span><span className="whitespace-pre-wrap">42. Witches hats are a form of …</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q42'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q42': 'a' })} className="mt-0.5" /><label>a) They are never used anymore</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q42'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q42': 'b' })} className="mt-0.5" /><label>b) Flashing strobe light</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q42'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q42': 'c' })} className="mt-0.5" /><label>c) Children’s toy</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q42'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q42': 'd' })} className="mt-0.5" /><label>d) Protective barrier</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q42': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q42'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q42': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q42'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>43.</span><span className="whitespace-pre-wrap">43. One form of barrier that could be used to protect people in manholes is …</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q43'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q43': 'a' })} className="mt-0.5" /><label>a) Hard hats</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q43'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q43': 'b' })} className="mt-0.5" /><label>b) Guard rails</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q43'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q43': 'c' })} className="mt-0.5" /><label>c) Safety glasses</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q43'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q43': 'd' })} className="mt-0.5" /><label>d) Orange</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q43': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q43'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q43': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q43'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>44.</span><span className="whitespace-pre-wrap">44. To manage health and safety and inform personnel on a worksite hazards there should be a …</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q44'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q44': 'a' })} className="mt-0.5" /><label>a) Hazard management plan</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q44'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q44': 'b' })} className="mt-0.5" /><label>b) Free hard hats</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q44'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q44': 'c' })} className="mt-0.5" /><label>c) Weather management plan</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q44'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q44': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q44': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q44'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q44': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q44'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>45.</span><span className="whitespace-pre-wrap">45. List one potential hazard that might be encountered when installing underground cable…</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q45'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q45': e.target.value })} placeholder="(No response)" />
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q45': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q45'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q45': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q45'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={14} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>46.</span><span className="whitespace-pre-wrap">46. Before work begins approvals should be obtained from…</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q46'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q46': 'a' })} className="mt-0.5" /><label>a) Likelihood that nothing will go wrong so don’t bother</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q46'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q46': 'b' })} className="mt-0.5" /><label>b) No approvals are required</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q46'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q46': 'c' })} className="mt-0.5" /><label>c) Authorities and asset owners</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q46'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q46': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q46': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q46'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q46': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q46'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>47.</span><span className="whitespace-pre-wrap">47. Typical tools, plant and equipment may include…</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q47'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q47': 'a' })} className="mt-0.5" /><label>a) Shovels</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q47'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q47': 'b' })} className="mt-0.5" /><label>b) Trenching equipment</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q47'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q47': 'c' })} className="mt-0.5" /><label>c) Jointing equipment</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q47'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q47': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q47': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q47'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q47': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q47'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>48.</span><span className="whitespace-pre-wrap">48. Excavation for existing underground enclosures should be conduction with consideration for:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q48'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q48': 'a' })} className="mt-0.5" /><label>a) Trench width kept to a minimum</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q48'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q48': 'b' })} className="mt-0.5" /><label>b) Adequate clearances for ease of access</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q48'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q48': 'c' })} className="mt-0.5" /><label>c) Shoring of trenches as required</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q48'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q48': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q48': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q48'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q48': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q48'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>49.</span><span className="whitespace-pre-wrap">49. Personal Protective Equipment (PPE) must be worn on site?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q49'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q49': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q49'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q49': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q49': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q49'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q49': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q49'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>50.</span><span className="whitespace-pre-wrap">50. List two things that may cause constraints on your installation?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q50'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q50': e.target.value })} placeholder="(No response)" />
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q50': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q50'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q50': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q50'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>51.</span><span className="whitespace-pre-wrap">51. The installation requirements for underground telecommunications installations are outlined in Plans and Technical Standards.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q51'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q51': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q51'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q51': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q51': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q51'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q51': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q51'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>52.</span><span className="whitespace-pre-wrap">52. The maximum recommended number of 20 pair cables in a 50 mm conduit is?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q52'] === '5'} onChange={(e) => setAnswers({ ...answers, 't2q52': '5' })} className="mt-0.5" /><label>5</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q52'] === '4'} onChange={(e) => setAnswers({ ...answers, 't2q52': '4' })} className="mt-0.5" /><label>4</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q52'] === '3'} onChange={(e) => setAnswers({ ...answers, 't2q52': '3' })} className="mt-0.5" /><label>3</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q52'] === '2'} onChange={(e) => setAnswers({ ...answers, 't2q52': '2' })} className="mt-0.5" /><label>2</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q52': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q52'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q52': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q52'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={15} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>53.</span><span className="whitespace-pre-wrap">53. The only colour conduit for communications cable is?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q53'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q53': 'a' })} className="mt-0.5" /><label>a) Green</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q53'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q53': 'b' })} className="mt-0.5" /><label>b) Orange</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q53'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q53': 'c' })} className="mt-0.5" /><label>c) White</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q53'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q53': 'd' })} className="mt-0.5" /><label>d) Yellow</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q53': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q53'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q53': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q53'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>54.</span><span className="whitespace-pre-wrap">54. When installing conduit, conduit bends or couplings care should be taken to ensure:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q54'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q54': 'a' })} className="mt-0.5" /><label>a) Free of external marks on the outside of the conduit and that the conduit ends must be of a green or blue in colour</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q54'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q54': 'b' })} className="mt-0.5" /><label>b) Free of snag points by cutting the end of the conduit at a right angle to the axis of the conduit and removing all burrs and sharp edges using a file or scraper</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q54'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q54': 'c' })} className="mt-0.5" /><label>c) Conduit is self-installing and doesn’t require any additional work</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q54'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q54': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q54': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q54'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q54': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q54'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>55.</span><span className="whitespace-pre-wrap">55. Telecommunications underground conduit installed in a location other than a public footpath or roadway?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q55'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q55': 'a' })} className="mt-0.5" /><label>a) No special conditions required</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q55'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q55': 'b' })} className="mt-0.5" /><label>b) Enclosed in a red conduit for easy identification</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q55'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q55': 'c' })} className="mt-0.5" /><label>c) Enclosed in a compliant conduit</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q55'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q55': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q55': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q55'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q55': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q55'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>56.</span><span className="whitespace-pre-wrap">56. To ensure you have selected the correct excavation equipment and plants:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q56'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q56': 'a' })} className="mt-0.5" /><label>a) You will need to check the task requirements, specifications and goals</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q56'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q56': 'b' })} className="mt-0.5" /><label>b) You will need to check the weather, time and goals</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q56'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q56': 'c' })} className="mt-0.5" /><label>c) You will need to check the user guides for the work, who is on site and goals</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q56'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q56': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q56': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q56'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q56': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q56'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>57.</span><span className="whitespace-pre-wrap">57. A multimeter can be used to check copper cables for?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q57'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q57': 'a' })} className="mt-0.5" /><label>a) Continuity</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q57'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q57': 'b' })} className="mt-0.5" /><label>b) Short circuits</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q57'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q57': 'c' })} className="mt-0.5" /><label>c) Loop resistance</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q57'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q57': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q57': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q57'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q57': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q57'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>58.</span><span className="whitespace-pre-wrap">58. An induction /tone generator can be used to?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q58'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q58': 'a' })} className="mt-0.5" /><label>a) Measuring cable pair loop resistance</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q58'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q58': 'b' })} className="mt-0.5" /><label>b) Identifying pairs within cables</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q58'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q58': 'c' })} className="mt-0.5" /><label>c) Identify open circuits</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q58'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q58': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q58': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q58'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q58': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q58'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>59.</span><span className="whitespace-pre-wrap">59. Wire map testers can test for?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q59'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q59': 'a' })} className="mt-0.5" /><label>a) Open circuit</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q59'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q59': 'b' })} className="mt-0.5" /><label>b) Short circuit</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q59'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q59': 'c' })} className="mt-0.5" /><label>c) Reversed or split pairs</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q59'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q59': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q59': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q59'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q59': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q59'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>60.</span><span className="whitespace-pre-wrap">60. On completion of installation conduits should be tested for blockages to ensure they are free from impediments to cable hauling:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q60'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q60': 'a' })} className="mt-0.5" /><label>a) Sures edges</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q60'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q60': 'b' })} className="mt-0.5" /><label>b) Blockages</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q60'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q60': 'c' })} className="mt-0.5" /><label>c) Kinks</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q60'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q60': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q60': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q60'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q60': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q60'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={16} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>61.</span><span className="whitespace-pre-wrap">61. A (TDR) Time Domain Reflectometer can be used to check copper cables for continuity, Short circuits, open circuit, cable length, and fault location.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q61'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q61': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q61'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q61': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q61': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q61'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q61': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q61'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>62.</span><span className="whitespace-pre-wrap">62. Name two methods for testing Optical Fibre cable?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q62'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q62': e.target.value })} placeholder="(No response)" />
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q62': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q62'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q62': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q62'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>63.</span><span className="whitespace-pre-wrap">63. An (OTDR) Optical Time Domain Reflectometer sends a pulse of light down the cable to locate insertion loss on optical fibre cables?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q63'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q63': 'a' })} className="mt-0.5" /><label>a) Voltage</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q63'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q63': 'b' })} className="mt-0.5" /><label>b) Light</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q63'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q63': 'c' })} className="mt-0.5" /><label>c) High frequency</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q63'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q63': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q63': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q63'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q63': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q63'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>64.</span><span className="whitespace-pre-wrap">64. Which test setup will give the operator the most information in when testing Optical Fibre cable?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q64'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q64': 'a' })} className="mt-0.5" /><label>a) Light Source/Power Meter method</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q64'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q64': 'b' })} className="mt-0.5" /><label>b) OTDR</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q64'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q64': 'c' })} className="mt-0.5" /><label>c) Both the same</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q64'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q64': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q64': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q64'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q64': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q64'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>65.</span><span className="whitespace-pre-wrap">65. The types of test equipment and the type of test will be determined by:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q65'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q65': 'a' })} className="mt-0.5" /><label>a) Test results</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q65'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q65': 'b' })} className="mt-0.5" /><label>b) The design parameters</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q65'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q65': 'c' })} className="mt-0.5" /><label>c) What day the tests are done on</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q65'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q65': 'd' })} className="mt-0.5" /><label>d) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q65': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q65'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q65': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q65'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>66.</span><span className="whitespace-pre-wrap">66. Conduit ends are sealed to…</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q66'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q66': 'a' })} className="mt-0.5" /><label>a) Prevent the ingress of dirt and water</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q66'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q66': 'b' })} className="mt-0.5" /><label>b) To make it easier to haul through ducts</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q66'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q66': 'c' })} className="mt-0.5" /><label>c) The sealing makes jointing easier</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q66'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q66': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q66': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q66'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q66': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q66'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>67.</span><span className="whitespace-pre-wrap">67. Conduit should enter a pit or access hole through the long sides.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q67'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q67': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q67'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q67': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q67': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q67'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q67': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q67'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={17} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>68.</span><span className="whitespace-pre-wrap">68. Wherever practicable, access-holes should be spaced at approximately…</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q68'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q68': 'a' })} className="mt-0.5" /><label>a) 230 m intervals</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q68'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q68': 'b' })} className="mt-0.5" /><label>b) 320 m intervals</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q68'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q68': 'c' })} className="mt-0.5" /><label>c) 330 m intervals</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q68'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q68': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q68': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q68'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q68': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q68'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>69.</span><span className="whitespace-pre-wrap">69. On completion of the work it is essential to send a report promptly to all parties and get sign off from the customer.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q69'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q69': 'a' })} className="mt-0.5" /><label>a) Gift, ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q69'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q69': 'b' })} className="mt-0.5" /><label>b) Report, customer</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q69'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q69': 'c' })} className="mt-0.5" /><label>c) On completion, appropriate personnel of job</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q69'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q69': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q69': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q69'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q69': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q69'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>70.</span><span className="whitespace-pre-wrap">70. Reinstatement of the site is the responsibility of …</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q70'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q70': 'a' })} className="mt-0.5" /><label>a) ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q70'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q70': 'b' })} className="mt-0.5" /><label>b) Customer</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q70'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q70': 'c' })} className="mt-0.5" /><label>c) Contractor</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q70'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q70': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q70': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q70'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q70': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q70'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>71.</span><span className="whitespace-pre-wrap">71. Care must be taken when testing optical fibre cables to avoid …</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q71'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q71': 'a' })} className="mt-0.5" /><label>a) Foot damage due to the high weight of the fibres</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q71'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q71': 'b' })} className="mt-0.5" /><label>b) Eye damage due to the laser light in the fibres</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q71'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q71': 'c' })} className="mt-0.5" /><label>c) Optical fibre is not dangerous</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q71'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q71': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q71': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q71'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q71': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q71'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>72.</span><span className="whitespace-pre-wrap">72. Is it necessary to support cables in pits and enclosures?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q72'] === 'yes'} onChange={(e) => setAnswers({ ...answers, 't2q72': 'yes' })} className="mt-0.5" /><label>a) Yes</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q72'] === 'no'} onChange={(e) => setAnswers({ ...answers, 't2q72': 'no' })} className="mt-0.5" /><label>b) No</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q72': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q72'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q72': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q72'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>73.</span><span className="whitespace-pre-wrap">73. To enable future underground enclosure identification at a future date all enclosures must be …</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q73'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q73': 'a' })} className="mt-0.5" /><label>a) Marked legibly</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q73'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q73': 'b' })} className="mt-0.5" /><label>b) Coloured red or green</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q73'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q73': 'c' })} className="mt-0.5" /><label>c) Cables don’t need to be marked</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q73'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q73': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q73': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q73'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q73': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q73'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>74.</span><span className="whitespace-pre-wrap">74. Backfill of the site should be undertaken to ensure?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q74'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q74': 'a' })} className="mt-0.5" /><label>a) the finished surface level does not settle beyond that acceptable to the contractor</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q74'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q74': 'b' })} className="mt-0.5" /><label>b) the finished surface level does not settle beyond that acceptable to the local authority or the carrier</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q74'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q74': 'c' })} className="mt-0.5" /><label>c) the finished surface level does not settle beyond that acceptable to the ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q74'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q74': 'd' })} className="mt-0.5" /><label>d) the finished surface level is the responsibility of the local authority or the carrier</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q74': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q74'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q74': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q74'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task2_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task2_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task2_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task2_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task2_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task2_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task2_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <PageFooter n={18} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 2<div className="text-lg mt-1">Rod, Rope, Clean and Prove Conduit</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 2 - Performance Criteria Mapping")}Practical Assessment Task 2 - Performance Criteria Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task – ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Arrange access to site according to required procedure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_1': compRecord['pa2_pc_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Inform appropriate personnel of identified hazards on worksite</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_2': compRecord['pa2_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorised personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_3': compRecord['pa2_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Obtain information about proposed locations of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_4': compRecord['pa2_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_5': compRecord['pa2_pc_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS) And environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_6': compRecord['pa2_pc_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.2 Connect conduit to pits or manholes as designed according to industry standards and asset owner requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_2_2': compRecord['pa2_pc_2_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_2_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.1 Handle existing cables in a way that avoids cable damage</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_3_1': compRecord['pa2_pc_3_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_3_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.2 Use roping techniques to prove that underground conduit is clear for hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_3_2': compRecord['pa2_pc_3_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_3_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">5.3 Reinstate site to customer satisfaction and dispose of waste in an environmentally salle manner</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_5_3': compRecord['pa2_pc_5_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_5_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">5.4 Notify appropriate personnel about job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_5_4': compRecord['pa2_pc_5_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_5_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task – ICTCBL329</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Access site according to required enterprise procedures</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_1': compRecord['pa2_pc_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Verify cable installation requirements from plans and recognise constraints</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_2': compRecord['pa2_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Identify from plans, correct duct to be hauled</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_3': compRecord['pa2_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Inform appropriate personnel of existing and potential worksite hazards</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_4': compRecord['pa2_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Obtain information about location of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_5': compRecord['pa2_pc_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Select suitable tools, equipment, and protective equipment to meet required industry standards.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_6': compRecord['pa2_pc_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.7 Check for dangerous gases and place guards around open manholes following work health and safety (WHS) and environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_7': compRecord['pa2_pc_1_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.8 Confirm correct duct/conduit to be utilised for hauling at site and access to intermediate manholes/pits along the hauling route</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_8': compRecord['pa2_pc_1_8'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_8'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.9 Rod and rope the conduit/duct to be hauled</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_9': compRecord['pa2_pc_1_9'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_9'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.10 Set-up cable installation equipment according to manufacturer requirements and enterprise guidelines</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_10': compRecord['pa2_pc_1_10'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_10'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.11 Clean debris and obstructions from conduit using appropriate mandrels</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_11': compRecord['pa2_pc_1_11'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_11'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.12 Seal cable ends to exclude entrance of foreign matter</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_1_12': compRecord['pa2_pc_1_12'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_1_12'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.1 Run hauling feeder through conduit to enable cable hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_2_1': compRecord['pa2_pc_2_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_2_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.2 Use rodding techniques to prove that conduit is clear for hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_2_2': compRecord['pa2_pc_2_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_2_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.7 Notify appropriate personnel and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pc_3_7': compRecord['pa2_pc_3_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pc_3_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={19} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 2 - Performance Evidence Mapping")}Practical Assessment Task 2 - Performance Evidence Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Evidence</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. plan the works and prepare the site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe1': compRecord['pa2_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. read and interpret drawings and designs to interpret installation requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe2': compRecord['pa2_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE6. use specialised hand or power tools and equipment for hauling cable safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe6': compRecord['pa2_pe_pe6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL329</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. use the correct type of rope for cable hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe1': compRecord['pa2_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. use various rodding, roping and mandrel techniques as prior requirements to hauling cable</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe2': compRecord['pa2_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE4. restore site and complete documentation</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe4': compRecord['pa2_pe_pe4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE5. use specialised hand or power tools and equipment for hauling cabling safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe5': compRecord['pa2_pe_pe5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE7. comply with all related safety requirements and work practices.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_pe_pe7': compRecord['pa2_pe_pe7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_pe_pe7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={20} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 2<div className="text-lg mt-1">Rod, Rope, Clean and Prove Conduit</div></h1>
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">Complete the following activities:<br/>1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice<br/>2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.<br/>3. Refer to the completed JSA for the task<br/>4. Ensure gas detector is on and carried on your person<br/>5. Assemble cable drum stand and fit drum to cable following all manual handling requirements.<br/>6. Clean any silt from bottom of pit<br/>7. Rod conduit<br/>8. Attach hauling line and draw through conduit<br/>9. Attach cleaning brush to hauling line and clean debris from conduit<br/>10. Prove conduit with appropriate size slug<br/>11. Leave hauling line in conduit<br/>12. Flame brush cable end<br/>13. Fit endcap and shrink to seal cable<br/>14. Submit your completed work to your supervisor (assessor) for inspection</p></div>
+<div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task2.png" alt="Rodding and Roping setup" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Rodding and Roping setup</div></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Plan of proposed work")}Plan of proposed work</h3><p className="whitespace-pre-wrap">MH1 to Pit 1: 0100-0140, 50/0.40 P50 2.15<br/>Pit 1 to Pit 2: 0101-0130, 50/0.40 P50 2.10<br/>Pit 2 to Pit 3: 0100-0120, 50/0.40 P50 2.30</p></div>
+
+  <PageFooter n={21} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Practical Assessment Task 2 - Checklist</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Did the student:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Yes</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">No</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Comments</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_1': compRecord['pa2_cl_1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_1': compRecord['pa2_cl_1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to all tool/equipment instructions/manufacturers guidelines prior to use.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_2': compRecord['pa2_cl_2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_2': compRecord['pa2_cl_2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to the completed JSA for the task</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_3': compRecord['pa2_cl_3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_3': compRecord['pa2_cl_3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure gas detector is on and carried on your person</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_4': compRecord['pa2_cl_4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_4': compRecord['pa2_cl_4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assemble cable drum stand and fit drum to cable following all manual handling requirements.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_5': compRecord['pa2_cl_5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_5': compRecord['pa2_cl_5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Clean any silt from bottom of pit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_6': compRecord['pa2_cl_6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_6': compRecord['pa2_cl_6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Rod conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_7': compRecord['pa2_cl_7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_7': compRecord['pa2_cl_7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach hauling line and draw through conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_8': compRecord['pa2_cl_8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_8': compRecord['pa2_cl_8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach cleaning brush to hauling line and clean debris from conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_9': compRecord['pa2_cl_9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_9': compRecord['pa2_cl_9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Prove conduit with appropriate size slug</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_10': compRecord['pa2_cl_10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_10': compRecord['pa2_cl_10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Leave hauling line in conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_11': compRecord['pa2_cl_11'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_11'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_11': compRecord['pa2_cl_11'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_11'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_11_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_11_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Flame brush cable end</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_12': compRecord['pa2_cl_12'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_12'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_12': compRecord['pa2_cl_12'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_12'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_12_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_12_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Fit endcap and shrink to seal cable</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_13': compRecord['pa2_cl_13'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_13'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_13': compRecord['pa2_cl_13'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_13'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_13_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_13_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Submit your completed work to your supervisor (assessor) for inspection</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_14': compRecord['pa2_cl_14'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_14'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_14': compRecord['pa2_cl_14'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_cl_14'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_cl_14_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_cl_14_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_outcome': compRecord['pa2_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa2_outcome': compRecord['pa2_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa2_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa2_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa2_assessor_sig'] ? <img src={compRecord['pa2_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa2_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task3_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task3_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task3_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task3_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task3_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task3_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task3_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={22} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 3<div className="text-lg mt-1">Haul Cable</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 3 - Performance Criteria Mapping")}Practical Assessment Task 3 - Performance Criteria Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task – ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Arrange access to site according to required procedure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_1': compRecord['pa3_pc_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Inform appropriate personnel of identified hazards on worksite</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_2': compRecord['pa3_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorised personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_3': compRecord['pa3_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Obtain information about proposed locations of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_4': compRecord['pa3_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_5': compRecord['pa3_pc_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS) And environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_6': compRecord['pa3_pc_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.1 Handle existing cables in a way that avoids cable damage</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_1': compRecord['pa3_pc_3_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.2 Use roping techniques to prove that underground conduit is clear for hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_2': compRecord['pa3_pc_3_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.3 Attach cable to rope for hauling, lubricate cable as required and haul at correct tension, maintaining smooth passage between dispenser and hauler</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_3': compRecord['pa3_pc_3_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.4 Haul cable through conduit to facilitate aerial to underground transition/underground to aerial transition, as required by the design</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_4': compRecord['pa3_pc_3_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.5 Maintain cable and services separations in parallel runs and crossovers to meet manufacturer and regulatory requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_5': compRecord['pa3_pc_3_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.6 Maintain sufficient cable length allowance for jointing and ensure cable is laid up and bent within bending radius tolerance for cable materials in underground enclosure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_6': compRecord['pa3_pc_3_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.1 Seal cables according to enterprise requirements to ensure no sheath damage</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_1': compRecord['pa3_pc_4_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.2 Tag cable for future identification</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_2': compRecord['pa3_pc_4_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.3 Test cable for continuity</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_3': compRecord['pa3_pc_4_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.4 Record and report test results for escalation</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_4': compRecord['pa3_pc_4_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.5 Record any approved alteration to original design using correct symbols and return to appropriate personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_5': compRecord['pa3_pc_4_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.5 Complete and sign reports, as required, according to enterprise policy</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_5': compRecord['pa3_pc_4_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.6 Reinstate site to customer satisfaction and dispose of waste in an environmentally safe manner</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_6': compRecord['pa3_pc_4_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.6 Certify by appropriate personnel about job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_4_6': compRecord['pa3_pc_4_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_4_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task – ICTCBL329</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Access site according to required enterprise procedures</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_1': compRecord['pa3_pc_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Verify cable installation requirements from plans and recognise constraints</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_2': compRecord['pa3_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Identify from plans, correct duct to be hauled</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_3': compRecord['pa3_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Inform appropriate personnel of existing and potential worksite hazards</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_4': compRecord['pa3_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Obtain information about location of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_5': compRecord['pa3_pc_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Select suitable tools, equipment, and protective equipment to meet required industry standards.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_6': compRecord['pa3_pc_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.7 Check for dangerous gases and place guards around open manholes following work health and safety (WHS) and environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_7': compRecord['pa3_pc_1_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.8 Confirm correct duct/conduit to be utilised for hauling at site and access to intermediate manholes/pits along the hauling route</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_8': compRecord['pa3_pc_1_8'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_8'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.10 Set-up cable installation equipment according to manufacturer requirements and enterprise guidelines</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_1_10': compRecord['pa3_pc_1_10'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_1_10'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.1 Attach cable to hauling feeder according to manufacturer specifications</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_2_1': compRecord['pa3_pc_2_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_2_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.2 Employ cable slippers or rollers to ensure no sheath damage when hauling into and out of enclosures</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_2_2': compRecord['pa3_pc_2_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_2_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.5 Lubricate cable and haul evenly at correct tension to reduce risk of cable damage</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_2_5': compRecord['pa3_pc_2_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_2_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.5 Maintain sufficient cable length allowance for jointing and ensure cable is housed within bending radius tolerance for cable materials in an underground enclosure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_5': compRecord['pa3_pc_3_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.7 Maintain cable and services separations in parallel runs and crossovers according to manufacturer and regulatory requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_2_7': compRecord['pa3_pc_2_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_2_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.1 Tag all cables to enable future identification</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_1': compRecord['pa3_pc_3_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.2.2 Seal cable ends according to enterprise requirements to prevent entrance of foreign material</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_2_2': compRecord['pa3_pc_3_2_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_2_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.3 Place cable on supports in enclosures to reduce damage to conductors and enable ease of access for maintenance</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_3': compRecord['pa3_pc_3_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.5 Complete installation reports and design amendments accurately, and file promptly according to customer requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_5': compRecord['pa3_pc_3_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.6 Reinstate site to customer satisfaction and dispose of waste in environmentally safe manner as required</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_6': compRecord['pa3_pc_3_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.7 Notify appropriate personnel and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pc_3_7': compRecord['pa3_pc_3_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pc_3_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={23} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 3 - Performance Evidence Mapping")}Practical Assessment Task 3 - Performance Evidence Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Evidence</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. plan the works and prepare the site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe1': compRecord['pa3_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. read and interpret drawings and designs to interpret installation requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe2': compRecord['pa3_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE3. haul cable applying related work health and safety (WHS) requirements and work practices</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe3': compRecord['pa3_pe_pe3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE5. use cable dispensing equipment</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe5': compRecord['pa3_pe_pe5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE6. use specialised hand or power tools and equipment for hauling cable safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe6': compRecord['pa3_pe_pe6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE7. test the installation, document, and escalate the test result</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe7': compRecord['pa3_pe_pe7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE8. prepare all reports and records to industry and enterprise standards.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe8': compRecord['pa3_pe_pe8'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe8'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL329</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. use correct type of rope for cable hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe1': compRecord['pa3_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. use various rodding, roping and mandrel techniques as prior requirements to hauling cable</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe2': compRecord['pa3_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE3. haul cable safely applying related work health and safety (WHS) requirements and work practices</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe3': compRecord['pa3_pe_pe3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE4. restore site and complete documentation</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe4': compRecord['pa3_pe_pe4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE5. use specialised hand or power tools and equipment for hauling cabling safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe5': compRecord['pa3_pe_pe5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE7. comply with all related safety requirements and work practices.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_pe_pe7': compRecord['pa3_pe_pe7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_pe_pe7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={24} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Practical Assessment Task 3 - Checklist</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Did the student:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Yes</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">No</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Comments</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_1': compRecord['pa3_cl_1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_1': compRecord['pa3_cl_1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to all tool/equipment instructions/manufacturers guidelines prior to use.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_2': compRecord['pa3_cl_2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_2': compRecord['pa3_cl_2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to the completed JSA for the task</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_3': compRecord['pa3_cl_3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_3': compRecord['pa3_cl_3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure gas detector is on and carried on your person</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_4': compRecord['pa3_cl_4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_4': compRecord['pa3_cl_4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure cable guides/slippers are installed correctly</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_5': compRecord['pa3_cl_5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_5': compRecord['pa3_cl_5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach cable grip to cable and tape on</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_6': compRecord['pa3_cl_6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_6': compRecord['pa3_cl_6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach hauling rope to cable grip eye and tie off securely.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_7': compRecord['pa3_cl_7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_7': compRecord['pa3_cl_7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach a new hauling rope to the cable grip eye</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_8': compRecord['pa3_cl_8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_8': compRecord['pa3_cl_8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Lubricate the cable</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_9': compRecord['pa3_cl_9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_9': compRecord['pa3_cl_9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Haul the cable ensuring hauling tension is not exceeded</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_10': compRecord['pa3_cl_10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_10': compRecord['pa3_cl_10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure cable is cut with sufficient left in pits for jointing</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_11': compRecord['pa3_cl_11'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_11'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_11': compRecord['pa3_cl_11'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_11'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_11_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_11_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Flame brush cable end</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_12': compRecord['pa3_cl_12'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_12'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_12': compRecord['pa3_cl_12'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_12'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_12_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_12_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Fit endcap and shrink to seal cable</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_13': compRecord['pa3_cl_13'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_13'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_13': compRecord['pa3_cl_13'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_13'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_13_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_13_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Fit cable tags to both ends of cable</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_14': compRecord['pa3_cl_14'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_14'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_14': compRecord['pa3_cl_14'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_14'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_14_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_14_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Coil excess cable and secure to cable supports</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_15': compRecord['pa3_cl_15'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_15'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_15': compRecord['pa3_cl_15'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_15'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_15_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_15_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Test the continuity of the cable</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_16': compRecord['pa3_cl_16'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_16'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_16': compRecord['pa3_cl_16'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_16'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_16_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_16_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Close pits</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_17': compRecord['pa3_cl_17'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_17'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_17': compRecord['pa3_cl_17'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_17'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_17_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_17_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure sufficient separation from other services in pits</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_18': compRecord['pa3_cl_18'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_18'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_18': compRecord['pa3_cl_18'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_18'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_18_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_18_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Restore site and clean and return all tools and equipment to the appropriate location</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_19': compRecord['pa3_cl_19'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_19'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_19': compRecord['pa3_cl_19'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_cl_19'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_cl_19_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_cl_19_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_outcome': compRecord['pa3_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa3_outcome': compRecord['pa3_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa3_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa3_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa3_assessor_sig'] ? <img src={compRecord['pa3_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa3_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={25} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 3<div className="text-lg mt-1">Haul Cable</div></h1>
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">Complete the following activities:<br/>1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice<br/>2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.<br/>3. Refer to the completed JSA for the task<br/>4. Ensure gas detector is on and carried on your person<br/>5. Attach cable grip to cable and tape on<br/>6. Ensure cable guides/slippers are installed correctly<br/>7. Attach hauling rope to cable grip eye and tie off securely.<br/>8. Attach a new hauling rope to the cable grip eye<br/>9. Lubricate the cable<br/>10. Haul the cable ensuring that you do not exceed the manufacturers hauling tension<br/>11. Ensure sufficient cable is left in pits for jointing and cut from drum.<br/>12. Flame brush cable end<br/>13. Fit endcap and shrink to seal cable<br/>14. Fit cable tags to both ends of cable<br/>15. Coil excess cable and secure to cable supports<br/>16. Ensure sufficient separation from other services in pits<br/>17. Test the continuity of the cable<br/>18. Close pits<br/>19. Restore site and clean and return all tools and equipment to the appropriate location<br/>20. Complete red line mark-up of plan showing completed work<br/>21. Complete project sign off sheet and get customer (assessor) approval<br/>22. Submit your completed work to your supervisor (assessor) for inspection</p></div>
+<div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task3.png" alt="Hauling operation plan" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Hauling operation plan</div></div>
+
+  <PageFooter n={26} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task3b.png" alt="Hauling equipment setup" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Hauling equipment setup</div></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Test Results")}Test Results</h3><p className="whitespace-pre-wrap">Record the test results for continuity and loop resistance.<br/>Loop resistance of 1st pair: ________ Ohms</p></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task4_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task4_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task4_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task4_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task4_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task4_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task4_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={27} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 4<div className="text-lg mt-1">Install 4 New Pits</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 4 - Performance Criteria Mapping")}Practical Assessment Task 4 - Performance Criteria Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task – ICTCBL334</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Obtain construction design plan from appropriate personnel and determine and obtain type of underground enclosure specified</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_1_1': compRecord['pa4_pc_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Arrange access to site according to required enterprise procedure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_1_2': compRecord['pa4_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Inform appropriate personnel of existing and potential worksite hazards</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_1_3': compRecord['pa4_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Verify location of proposed installation according to appropriate plans obtained from authorised personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_1_4': compRecord['pa4_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Obtain information about location of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_1_5': compRecord['pa4_pc_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Organise plant, tools and equipment for given work and safe work practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_1_6': compRecord['pa4_pc_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.7 Place recognised barriers during construction according to safety and enterprise requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_1_7': compRecord['pa4_pc_1_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_1_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.1 Excavate site, maintaining stability and allowing ease of access</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_2_1': compRecord['pa4_pc_2_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_2_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.2 Install enclosure or pit according to design specifications, and work health and safety (WHS) and environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_2_2': compRecord['pa4_pc_2_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_2_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.3 Install conduit according to specifications and manufacturer requirements, ensuring internal surface from impediments and sharp edges for cable hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_2_3': compRecord['pa4_pc_2_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_2_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.4 Seal conduit entry into enclosure against foreign matter</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_2_4': compRecord['pa4_pc_2_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_2_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.5 Install cable support structure and access facilities in pits according to specifications</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_2_5': compRecord['pa4_pc_2_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_2_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.1 Complete backfill safely using suitable soil and materials that ensure conduit protection</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_3_1': compRecord['pa4_pc_3_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_3_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.3 Restore site according to requirements of enterprise or approving authority and customer satisfaction</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_3_3': compRecord['pa4_pc_3_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_3_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.4 Complete reports on installation and design amendments accurately and file promptly according to requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_3_4': compRecord['pa4_pc_3_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_3_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.5 Notify appropriate personnel of job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pc_3_5': compRecord['pa4_pc_3_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pc_3_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={28} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 4 - Performance Evidence Mapping")}Practical Assessment Task 4 - Performance Evidence Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Evidence</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL334</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. interpret and apply design plans and prepare for construction</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pe_pe1': compRecord['pa4_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. use specialised hand or power tools and equipment normally used for excavation, pipe, pit and conduit installation and site restoration, safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pe_pe2': compRecord['pa4_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE3. place sand bed/foundation of suitable material prior to installing pit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pe_pe3': compRecord['pa4_pe_pe3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pe_pe3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE4. connect conduits to pit according to standard specifications</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pe_pe4': compRecord['pa4_pe_pe4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pe_pe4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE5. install pit accessories such as support structures and gaskets according to requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pe_pe5': compRecord['pa4_pe_pe5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pe_pe5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE7. apply related work health and safety (WHS) requirements and work practices associated with excavation, enclosure installation and site restoration.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_pe_pe7': compRecord['pa4_pe_pe7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_pe_pe7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={29} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 4<div className="text-lg mt-1">Install 4 New Pits</div></h1>
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Task Description")}Assessment Task Description</h3><p className="whitespace-pre-wrap">For this assessment, you are working as a telco technician. You have been assigned a task as part of a team by your supervisor to install 4 new pits in preparation for jointing. You will be required set up all equipment, excavate the site, shore up the excavation, install one of the pits, install the connecting conduits to the adjacent pits, install a joint support bar and reinstate the site and prove the conduit and install rope in preparation for hauling.<br/><br/>Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and address hazards, unwanted events, and potential risks for the job.</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Resources Required")}Resources Required</h3><p className="whitespace-pre-wrap">• Learners Guide<br/>• Student Assessment Pack<br/>• Blue or Black Pen<br/>• WHS/OHS Acts/Regulations as applicable to the state of delivery<br/>• Codes of practice<br/>    ◦ How to manage work health and safety risks<br/>    ◦ Managing the work environment and facilities<br/>    ◦ Managing risks of plant in the workplace<br/>    ◦ Managing noise preventing hearing loss work<br/>    ◦ Managing the risk of falls at workplaces<br/>• Workplace procedure 01687W01 Working at Telstra Manholes and Pits<br/>• JSA-Included in this assessment pack<br/>• Installed #6 pit<br/>• #6 Pits x1<br/>• Manhole guards*<br/>• Pit keys x2*<br/>• Gas detector*<br/>• Gas action chart<br/>• Shovel<br/>• Shoring boards<br/>• Conduit rodder<br/>• Hauling rope*<br/>• Sand scoop*<br/>• Conduit cleaning brush*<br/>• Conduits slug*<br/>• 50mm white UPV Conduit x 2 metres*<br/>• 50mm PVC Bush x 2*<br/>• PVC Pipe adhesive and primer*<br/>• Fibreglass joint support bar x 0.5metres<br/>• 10mm paintbrush*<br/>• Hole saw 66mm*<br/>• Hack saw*<br/>• Deburring tool*<br/>• Retro reflective vest*<br/>• Gloves*<br/>• Hard Hat*<br/>• Safety glasses*<br/><br/>Manufacturers specifications and operating instructions for all tools & equipment specified with a *</p></div>
+
+  <PageFooter n={30} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">Complete the following activities:<br/>1. Ensure that all tasks follow WHS/OHS requirements.<br/>2. Refer to tool/equipment instructions prior to use.<br/>3. Refer to the completed JSA.<br/>4. Ensure gas detector is on.<br/>5. Set up all equipment.<br/>6. Excavate the site.<br/>7. Shore up the excavation.<br/>8. Install one of the pits.<br/>9. Install the connecting conduits to the adjacent pits.<br/>10. Backfill site.<br/>11. Rod conduit.<br/>12. Attach hauling line and draw through conduit.<br/>13. Attach cleaning brush and clean debris.<br/>14. Prove conduit with appropriate slug.<br/>15. Leave hauling line in conduit.<br/>16. Install a joint support bar in the pit.<br/>17. Fit the pit gasket and pit lid.<br/>18. Submit your completed work for inspection.</p></div>
+<div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task4.png" alt="Pit installation plan" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Pit installation plan</div></div>
+
+  <PageFooter n={31} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Practical Assessment Task 4 - Checklist</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Did the student:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Yes</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">No</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Comments</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_1': compRecord['pa4_cl_1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_1': compRecord['pa4_cl_1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to all tool/equipment instructions/manufacturers guidelines prior to use.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_2': compRecord['pa4_cl_2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_2': compRecord['pa4_cl_2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to the completed JSA for the task</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_3': compRecord['pa4_cl_3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_3': compRecord['pa4_cl_3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure gas detector is on and carried on your person</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_4': compRecord['pa4_cl_4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_4': compRecord['pa4_cl_4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Set up all equipment</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_5': compRecord['pa4_cl_5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_5': compRecord['pa4_cl_5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Excavate the site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_6': compRecord['pa4_cl_6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_6': compRecord['pa4_cl_6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Shore up the excavation</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_7': compRecord['pa4_cl_7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_7': compRecord['pa4_cl_7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install one of the pits</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_8': compRecord['pa4_cl_8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_8': compRecord['pa4_cl_8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install the connecting conduits to the adjacent pits</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_9': compRecord['pa4_cl_9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_9': compRecord['pa4_cl_9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Backfill site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_10': compRecord['pa4_cl_10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_10': compRecord['pa4_cl_10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Rod conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_11': compRecord['pa4_cl_11'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_11'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_11': compRecord['pa4_cl_11'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_11'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_11_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_11_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach hauling line and draw through conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_12': compRecord['pa4_cl_12'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_12'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_12': compRecord['pa4_cl_12'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_12'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_12_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_12_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach cleaning brush to hauling line and clean debris from conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_13': compRecord['pa4_cl_13'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_13'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_13': compRecord['pa4_cl_13'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_13'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_13_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_13_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Prove conduit with appropriate size slug</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_14': compRecord['pa4_cl_14'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_14'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_14': compRecord['pa4_cl_14'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_14'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_14_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_14_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Leave hauling line in conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_15': compRecord['pa4_cl_15'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_15'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_15': compRecord['pa4_cl_15'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_15'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_15_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_15_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Submit your completed work to your supervisor (assessor) for inspection</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_16': compRecord['pa4_cl_16'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_16'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_16': compRecord['pa4_cl_16'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_cl_16'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_cl_16_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_cl_16_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_outcome': compRecord['pa4_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa4_outcome': compRecord['pa4_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa4_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa4_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa4_assessor_sig'] ? <img src={compRecord['pa4_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa4_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task5_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task5_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task5_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task5_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task5_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task5_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task5_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={32} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 5<div className="text-lg mt-1">Performance Criteria & Checklist</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 5 - Performance Criteria Mapping (ICTCBL249)")}Practical Assessment Task 5 - Performance Criteria Mapping (ICTCBL249)</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task – ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Arrange access to site according to required procedure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_1_1': compRecord['pa5_pc_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Inform appropriate personnel of identified hazards on worksite</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_1_2': compRecord['pa5_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorised personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_1_3': compRecord['pa5_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Obtain information about proposed locations of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_1_4': compRecord['pa5_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_1_5': compRecord['pa5_pc_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS) and environmental requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_1_6': compRecord['pa5_pc_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.1 InstaIl cable protection on pole for transition using approved hardware according to industry standards and asset owner requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_1': compRecord['pa5_pc_2_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.2 Connect conduit to pits or manholes as designed according to industry standards and asset owner requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_2': compRecord['pa5_pc_2_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.3 Haule existing cables in a way that avoids cable damage</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_3': compRecord['pa5_pc_2_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.4 Rodding techniques to prove that underground conduit is clear for hauling</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_4': compRecord['pa5_pc_2_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.5 Attach cable to rope for hauling, lubricate cable as required and haul at correct tension, maintaining smooth passage between dispenser and hauler</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_5': compRecord['pa5_pc_2_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.5 Pull cable through conduit to facilitate aerial to underground transition/underground to aerial transition, as required</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_5': compRecord['pa5_pc_2_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.5 Retain sufficient cable length allowance for jointing and ensure cable is laid up and bent within bending radius tolerance for materials in underground enclosure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_5': compRecord['pa5_pc_2_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.7 Cables according to enterprise requirements to ensure no sheath damage</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_7': compRecord['pa5_pc_2_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.8 Attach ID tag for future identification</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_8': compRecord['pa5_pc_2_8'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_8'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.8 Clean the site to customer satisfaction and dispose of waste in an environmentally safe manner</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_8': compRecord['pa5_pc_2_8'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_8'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.9 Appropriate personnel about job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pc_2_9': compRecord['pa5_pc_2_9'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pc_2_9'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={33} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 5 - Performance Evidence Mapping (ICTCBL249)")}Practical Assessment Task 5 - Performance Evidence Mapping (ICTCBL249)</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Evidence</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL249</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. plan the works and prepare the site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pe_pe1': compRecord['pa5_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. read and interpret drawings and designs to interpret installation requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pe_pe2': compRecord['pa5_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE3. haul cable applying related work health and safety (WHS) requirements and work practices</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pe_pe3': compRecord['pa5_pe_pe3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pe_pe3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE4. transition cable from aerial to underground or underground to aerial</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pe_pe4': compRecord['pa5_pe_pe4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pe_pe4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE5. use cable dispensing equipment</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pe_pe5': compRecord['pa5_pe_pe5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pe_pe5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE6. use specialized hand or power tools and equipment for hauling cable safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_pe_pe6': compRecord['pa5_pe_pe6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_pe_pe6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={34} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">For Practical Assessment Task 5, you will be assessed on the following performance criteria, performance evidence and checklist items.</p></div>
+<div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Practical Assessment Task 5 - Checklist (ICTCBL249)</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Did the student:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Yes</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">No</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Comments</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_1': compRecord['pa5_cl_1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_1': compRecord['pa5_cl_1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to all tool/equipment instructions/manufacturers guidelines prior to use.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_2': compRecord['pa5_cl_2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_2': compRecord['pa5_cl_2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to the completed JSA for the task</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_3': compRecord['pa5_cl_3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_3': compRecord['pa5_cl_3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure gas detector is on and carried on your person</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_4': compRecord['pa5_cl_4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_4': compRecord['pa5_cl_4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Perform rodding, roping, and hauling setup</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_5': compRecord['pa5_cl_5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_5': compRecord['pa5_cl_5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure correct cable haul without exceeding manufacturer tension</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_6': compRecord['pa5_cl_6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_6': compRecord['pa5_cl_6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Transition cable from aerial to underground or vice versa as specified</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_7': compRecord['pa5_cl_7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_7': compRecord['pa5_cl_7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Tag cables at both ends correctly</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_8': compRecord['pa5_cl_8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_8': compRecord['pa5_cl_8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Comply with WHS and environmental site clean practices</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_9': compRecord['pa5_cl_9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_9': compRecord['pa5_cl_9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Submit completed task and JSA for assessor review</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_10': compRecord['pa5_cl_10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_10': compRecord['pa5_cl_10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_cl_10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_cl_10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_cl_10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_outcome': compRecord['pa5_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa5_outcome': compRecord['pa5_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa5_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa5_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa5_assessor_sig'] ? <img src={compRecord['pa5_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa5_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa5_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={35} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['taskPA5_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'taskPA5_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['taskPA5_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'taskPA5_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['taskPA5_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'taskPA5_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['taskPA5_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={36} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 6<div className="text-lg mt-1">Install Prefabricated Manhole, Conduit and Pit</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 6 - Performance Criteria Mapping")}Practical Assessment Task 6 - Performance Criteria Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task - ICTCBL253</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.1 Obtain construction design plan from appropriate personnel to scope work and arrange for site access</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_1_1': compRecord['pa6_pc_1_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_1_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Notify appropriate personnel of identified safety hazards and other services that will need to be considered</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_1_2': compRecord['pa6_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Obtain plant, tools, and safety equipment to perform tasks safely and efficiently</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_1_3': compRecord['pa6_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Determine type of underground pit/manhole required for project as specified in construction design plan</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_1_4': compRecord['pa6_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.1 Use tools according to enterprise guidelines and work health and safety (WHS) regulations</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_2_1': compRecord['pa6_pc_2_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_2_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.2 Determine excavation meets specification of design plan</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_2_2': compRecord['pa6_pc_2_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_2_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.3 Place foundation of suitable material to provide safe and stable footing prior to installing underground enclosure in excavation</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_2_3': compRecord['pa6_pc_2_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_2_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.4 Place recognised barrier over construction where enclosure is to be installed overpower cables according to enterprise requirements or agreements with other authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_2_4': compRecord['pa6_pc_2_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_2_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.5 Install earth mat facility under enclosure as required by enterprise</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_2_5': compRecord['pa6_pc_2_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_2_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.6 Install enclosure specified in construction design plan according to manufacturer specifications using specified materials</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_2_6': compRecord['pa6_pc_2_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_2_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.1 Install conduit in trench to enterprise specifications</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_3_1': compRecord['pa6_pc_3_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_3_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.2 Connect conduit to enclosure according to manufacturer specifications and industry practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_3_2': compRecord['pa6_pc_3_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_3_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.1 Complete reports and record alterations to plans using appropriate symbols, according to enterprise policy</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_4_1': compRecord['pa6_pc_4_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_4_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.2 Complete all labelling requirements according to industry standard</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_4_2': compRecord['pa6_pc_4_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_4_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">4.5 Notify appropriate personnel of job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pc_4_5': compRecord['pa6_pc_4_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pc_4_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={37} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 6 - Performance Evidence Mapping")}Practical Assessment Task 6 - Performance Evidence Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Evidence</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL253</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. interpret and apply design plans and prepare for construction</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pe_pe1': compRecord['pa6_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. install enclosures including pipe, pit, and prefabricated manholes</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pe_pe2': compRecord['pa6_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE3. construct in two different soil types: sand, rock, soil, or combination soil types</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pe_pe3': compRecord['pa6_pe_pe3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pe_pe3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE4. shore an excavation site to meet enterprise and regulatory requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pe_pe4': compRecord['pa6_pe_pe4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pe_pe4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE5. use specialised hand or power tools and equipment normally used for excavation, pipe, conduit installation and site restoration safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pe_pe5': compRecord['pa6_pe_pe5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pe_pe5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE6. complete and document specified work</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pe_pe6': compRecord['pa6_pe_pe6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pe_pe6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE7. apply related work health and safety (WHS) requirements and work practices associated with excavation, enclosure installation and site restoration.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_pe_pe7': compRecord['pa6_pe_pe7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_pe_pe7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={38} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Practical Assessment Task 6 - Checklist</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Did the student:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Yes</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">No</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Comments</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_1': compRecord['pa6_cl_1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_1': compRecord['pa6_cl_1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to all tool/equipment instructions/manufacturers guidelines prior to use.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_2': compRecord['pa6_cl_2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_2': compRecord['pa6_cl_2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to the completed JSA for the task</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_3': compRecord['pa6_cl_3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_3': compRecord['pa6_cl_3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure gas detector is on and carried on your person</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_4': compRecord['pa6_cl_4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_4': compRecord['pa6_cl_4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Set up all equipment</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_5': compRecord['pa6_cl_5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_5': compRecord['pa6_cl_5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to the construction plan.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_6': compRecord['pa6_cl_6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_6': compRecord['pa6_cl_6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Mark out the excavation area using marking paint</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_7': compRecord['pa6_cl_7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_7': compRecord['pa6_cl_7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Excavate the site.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_8': compRecord['pa6_cl_8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_8': compRecord['pa6_cl_8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Shore up the excavation</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_9': compRecord['pa6_cl_9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_9': compRecord['pa6_cl_9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install an earth mat and connecting earth wire in preparation for the manhole installation.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_10': compRecord['pa6_cl_10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_10': compRecord['pa6_cl_10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install a foundation base for the manhole.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_11': compRecord['pa6_cl_11'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_11'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_11': compRecord['pa6_cl_11'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_11'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_11_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_11_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install the prefabricated manhole and plinth.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_12': compRecord['pa6_cl_12'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_12'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_12': compRecord['pa6_cl_12'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_12'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_12_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_12_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install the #6 pit.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_13': compRecord['pa6_cl_13'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_13'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_13': compRecord['pa6_cl_13'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_13'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_13_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_13_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install the connecting conduits to the adjacent pits.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_14': compRecord['pa6_cl_14'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_14'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_14': compRecord['pa6_cl_14'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_14'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_14_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_14_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Backfill site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_15': compRecord['pa6_cl_15'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_15'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_15': compRecord['pa6_cl_15'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_15'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_15_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_15_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Rod conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_16': compRecord['pa6_cl_16'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_16'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_16': compRecord['pa6_cl_16'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_16'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_16_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_16_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach hauling line and draw through conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_17': compRecord['pa6_cl_17'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_17'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_17': compRecord['pa6_cl_17'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_17'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_17_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_17_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Attach cleaning brush to hauling line and clean debris from conduit.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_18': compRecord['pa6_cl_18'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_18'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_18': compRecord['pa6_cl_18'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_18'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_18_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_18_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Prove conduit with appropriate size slug.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_19': compRecord['pa6_cl_19'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_19'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_19': compRecord['pa6_cl_19'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_19'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_19_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_19_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Leave hauling line in conduit.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_20': compRecord['pa6_cl_20'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_20'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_20': compRecord['pa6_cl_20'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_20'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_20_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_20_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install a joint support bar in the pit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_21': compRecord['pa6_cl_21'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_21'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_21': compRecord['pa6_cl_21'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_21'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_21_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_21_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Fit the pit gasket and pit lid</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_22': compRecord['pa6_cl_22'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_22'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_22': compRecord['pa6_cl_22'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_22'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_22_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_22_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Submit your completed work to your supervisor (assessor) for inspection</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_23': compRecord['pa6_cl_23'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_23'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_23': compRecord['pa6_cl_23'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_cl_23'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_cl_23_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_cl_23_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_outcome': compRecord['pa6_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa6_outcome': compRecord['pa6_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa6_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa6_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa6_assessor_sig'] ? <img src={compRecord['pa6_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa6_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={39} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 6<div className="text-lg mt-1">Install Prefabricated Manhole, Conduit and Pit</div></h1>
+  <div className="mb-4"><p className="whitespace-pre-wrap">Your assessor will advise you of the due date of these submissions.</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">Complete the following activities:<br/>1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice.<br/>2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.<br/>3. Refer to the completed JSA for the task.<br/>4. Ensure gas detector is on and carried on your person.<br/>5. Set up all equipment.<br/>6. Refer to the construction plan.<br/>7. Mark out the excavation area using marking paint.<br/>8. Excavate the site.<br/>9. Shore up the excavation.<br/>10. Install an earth mat and connecting earth wire in preparation for the manhole installation.<br/>11. Install a foundation base for the manhole.<br/>12. Install the prefabricated manhole and plinth.<br/>13. Install the #6 pit.<br/>14. Install the connecting conduits to the adjacent pits.<br/>15. Backfill site.<br/>16. Rod conduit.<br/>17. Attach hauling line and draw through conduit.<br/>18. Attach cleaning brush to hauling line and clean debris from conduit.<br/>19. Prove conduit with appropriate size slug.<br/>20. Leave hauling line in conduit.<br/>21. Install a joint support bar in the pit.<br/>22. Fit the pit gasket and pit lid.<br/>23. Submit your completed work to your supervisor (assessor) for inspection.</p></div>
+<div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task6.png" alt="Plan of proposed work" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Plan of proposed work</div></div>
+
+  <PageFooter n={40} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Task Description")}Assessment Task Description</h3><p className="whitespace-pre-wrap">For this assessment, you are working as a telco technician. You have been assigned a task as part of a team by your supervisor to install a prefabricated manhole, conduit and a 6 pit in preparation for jointing. You will be required set up all equipment, excavate the site, shore up the excavation, install base material, install an earth mat, install the prefabricated manhole, install the 6 pit, install the connecting conduits from the manhole to the adjacent pit and reinstate the site and prove the conduit and install rope in preparation for hauling.<br/><br/>Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and addressed hazards, unwanted events, and potential risks for the job.</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Resources Required")}Resources Required</h3><p className="whitespace-pre-wrap">• Learners Guide<br/>• Student Assessment Pack<br/>• Blue or Black Pen<br/>• WHS/OHS Acts/Regulations as applicable to the state of delivery<br/>• Codes of practice<br/>    ◦ How to manage work health and safety risks<br/>    ◦ Managing the work environment and facilities<br/>    ◦ Managing risks of plant in the workplace<br/>    ◦ Managing noise preventing hearing loss work<br/>    ◦ Managing the risk of falls at workplaces<br/>    ◦ Managing electrical risks in the workplace<br/>• Workplace procedure 01687W01 Working at Telstra Manholes and Pits<br/>• JSA-Included in this assessment pack<br/>• Cable and Conduit Plans - Included in this assessment pack<br/>• 1 x Prefabricated manhole with plinth and covers<br/>• 1 x #6 Pits x1<br/>• 4 x sets of Manhole guards*<br/>• Pit keys x2*<br/>• Gas detector*<br/>• Gas action chart<br/>• Shovel<br/>• Shoring boards<br/>• Conduit rodder<br/>• Hauling rope*<br/>• Sand scoop*<br/>• Conduit cleaning brush*<br/>• Conduit slug*<br/>• 50mm white UPV Conduit x 2 meters*<br/>• 50mm PVC Bush x 2*<br/>• PVC Pipe adhesive and primer*<br/>• Fiberglass joint support bar x 0.5metres<br/>• 10mm paintbrush*<br/>• Hole saw 66mm*<br/>• Hack saw*<br/>• Deburring tool*<br/>• Backfill material (sand)<br/>• 4 leg chain<br/>• Excavator (optional)<br/>• Large Builder’s Square<br/>• Marking paint<br/>• Crane (as applicable to the type of prefabricated manhole)<br/>• Crushed Rock<br/>• Fixing adhesive<br/>• Formwork material<br/>• Manhole fittings, bearers, anchor irons and earthing systems<br/>• Mechanical ditching machine (optional)<br/>• Prefabricated concrete plinth and template<br/>• Ready mix concrete<br/>• Shoring system<br/>• Earthing Kit<br/>• Warning Signs<br/>• Wire Loops and associated lifting slings and shackles<br/>• Retro reflective vest*<br/>• Gloves*<br/>• Hard Hat*<br/>• Safety glasses*<br/><br/>Manufacturer’s specifications and operating instructions for all tools & equipment specifi *</p></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task6_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task6_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task6_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task6_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task6_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task6_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task6_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={41} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 7<div className="text-lg mt-1">Remove Pit and Conduit</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 7 - Performance Criteria Mapping")}Practical Assessment Task 7 - Performance Criteria Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Criteria</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Criteria assessed in this task – ICTCBL334</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.2 Arrange access to site according to required enterprise procedure</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_1_2': compRecord['pa7_pc_1_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_1_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.3 Inform appropriate personnel of existing and potential worksite hazards</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_1_3': compRecord['pa7_pc_1_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_1_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.4 Verify location of proposed installation according to appropriate plans obtained from authorized personnel</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_1_4': compRecord['pa7_pc_1_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_1_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.5 Obtain information about location of other services from relevant authorities</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_1_5': compRecord['pa7_pc_1_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_1_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.6 Organise plant, tools, and equipment for given work and safe work practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_1_6': compRecord['pa7_pc_1_6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_1_6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">1.7 Place recognised barriers during construction according to safety and enterprise requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_1_7': compRecord['pa7_pc_1_7'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_1_7'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">2.1 Excavate site, maintaining stability and allowing ease of access</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_2_1': compRecord['pa7_pc_2_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_2_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.1 Complete backfill safely using suitable soil and materials that ensure conduit protection</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_3_1': compRecord['pa7_pc_3_1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_3_1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.2 Recover obsolete materials and equipment and return to appropriate point for disposal</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_3_2': compRecord['pa7_pc_3_2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_3_2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.3 Restore site according to requirements of enterprise or approving authority and customer satisfaction</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_3_3': compRecord['pa7_pc_3_3'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_3_3'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.4 Complete reports on installation and design amendments accurately and file promptly according requirements</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_3_4': compRecord['pa7_pc_3_4'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_3_4'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">3.5 Notify appropriate personnel of job completion and obtain sign-off</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pc_3_5': compRecord['pa7_pc_3_5'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pc_3_5'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={42} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 7 - Performance Evidence Mapping")}Practical Assessment Task 7 - Performance Evidence Mapping</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Performance Evidence</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Tick Completed</th></tr></thead>
+<tbody><tr><td colSpan={2} className="border border-black p-2 font-bold bg-gray-100">Performance Evidence assessed in this task-ICTCBL334</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE1. interpret and apply design plans and prepare for construction</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pe_pe1': compRecord['pa7_pe_pe1'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pe_pe1'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE2. use specialised hand or power tools and equipment normally used for excavation, installation and site restoration safely</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pe_pe2': compRecord['pa7_pe_pe2'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pe_pe2'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PE6. recover obsolete materials and equipment and return to appropriate point for disposal.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_pe_pe6': compRecord['pa7_pe_pe6'] === 'Completed' ? '' : 'Completed' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_pe_pe6'] === 'Completed' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+<div className="mb-4 break-inside-avoid"><h1 className="text-[14pt] font-bold bg-[#c0cddf] py-2 px-3 rounded-sm border border-black text-left mb-4 mt-2">
+Practical Assessment Task 7 – Checklist</h1>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Did the student:</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Yes</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">No</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Comments</th></tr></thead>
+<tbody><tr><td colSpan={4} className="border border-black p-2 font-medium">Student's name: <span className="font-bold ml-2">{studentName}</span></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_1': compRecord['pa7_cl_1'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_1'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_1': compRecord['pa7_cl_1'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_1'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_1_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_1_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to all tool/equipment instructions/manufacturers guidelines prior to use.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_2': compRecord['pa7_cl_2'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_2'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_2': compRecord['pa7_cl_2'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_2'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_2_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_2_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Refer to the completed JSA for the task</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_3': compRecord['pa7_cl_3'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_3'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_3': compRecord['pa7_cl_3'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_3'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_3_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_3_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Ensure gas detector is on and carried on your person</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_4': compRecord['pa7_cl_4'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_4'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_4': compRecord['pa7_cl_4'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_4'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_4_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_4_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Set up all equipment</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_5': compRecord['pa7_cl_5'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_5'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_5': compRecord['pa7_cl_5'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_5'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_5_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_5_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Excavate the site.</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_6': compRecord['pa7_cl_6'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_6'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_6': compRecord['pa7_cl_6'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_6'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_6_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_6_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Remove pit and conduit</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_7': compRecord['pa7_cl_7'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_7'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_7': compRecord['pa7_cl_7'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_7'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_7_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_7_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Install one of the pits</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_8': compRecord['pa7_cl_8'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_8'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_8': compRecord['pa7_cl_8'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_8'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_8_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_8_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Backfill site</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_9': compRecord['pa7_cl_9'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_9'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_9': compRecord['pa7_cl_9'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_9'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_9_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_9_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Compact and restore site to ground level</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_10': compRecord['pa7_cl_10'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_10'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_10': compRecord['pa7_cl_10'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_10'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_10_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_10_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Complete project sign off sheet</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_11': compRecord['pa7_cl_11'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_11'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_11': compRecord['pa7_cl_11'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_11'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_11_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_11_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Submit your completed work to your supervisor (assessor) for inspection</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_12': compRecord['pa7_cl_12'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_12'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_12': compRecord['pa7_cl_12'] === 'No' ? '' : 'No' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_cl_12'] === 'No' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_cl_12_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cl_12_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Task Outcome:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_outcome': compRecord['pa7_outcome'] === 'Satisfactory' ? '' : 'Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_outcome'] === 'Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa7_outcome': compRecord['pa7_outcome'] === 'Not Satisfactory' ? '' : 'Not Satisfactory' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['pa7_outcome'] === 'Not Satisfactory' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Satisfactory</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_outcome_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_outcome_comments': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor signature</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('pa7_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['pa7_assessor_sig'] ? <img src={compRecord['pa7_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor name</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Enter assessor name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Date</td><td colSpan={3} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['pa7_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={43} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">PRACTICAL ASSESSMENT TASK 7<div className="text-lg mt-1">Remove Pit and Conduit</div></h1>
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">Complete the following activities:<br/>1. Ensure WHS/OHS requirements are followed.<br/>2. Refer to JSA and gas detector check.<br/>3. Set up all equipment.<br/>4. Excavate the site.<br/>5. Remove obsolete pit and conduit.<br/>6. Install one of the pits (as replacement/new installation).<br/>7. Backfill site.<br/>8. Compact and restore site to ground level.<br/>9. Complete project sign off sheet.<br/>10. Submit your completed work for inspection.</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Project Sign-off Sheet")}Project Sign-off Sheet</h3><p className="whitespace-pre-wrap">Ensure the following details are recorded upon completion:<br/>• Project Name, Project Manager, Customer<br/>• Start Date, Completion Date, Project Duration<br/>• Project Goal and Deliverables<br/>• Signatures of Project Manager and Customer</p></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task7_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task7_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task7_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task7_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task7_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task7_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task7_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={44} />
+</div>
+
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">ASSESSMENT COVER SHEET<div className="text-lg mt-1">Project Signoff and Final Outcome</div></h1>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 7 - Project Signoff Sheet")}Practical Assessment Task 7 - Project Signoff Sheet</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Project Signoff Fields</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Assessor / Customer Entries</th></tr></thead>
+<tbody><tr><td className="border border-black p-2 font-medium w-3/5">Project Name:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_project_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_project_name': e.target.value })} readOnly={isStudent} placeholder="Enter project name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Project Manager:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_project_manager'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_project_manager': e.target.value })} readOnly={isStudent} placeholder="Enter project manager..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Start Date:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_start_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_start_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Completion Date:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_completion_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_completion_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Project Duration:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_duration'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_duration': e.target.value })} readOnly={isStudent} placeholder="Enter duration..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Customer:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_customer'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_customer': e.target.value })} readOnly={isStudent} placeholder="Enter customer name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Project Goal:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_goal'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_goal': e.target.value })} readOnly={isStudent} placeholder="Enter project goal..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Project Deliverables:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_deliverables'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_deliverables': e.target.value })} readOnly={isStudent} placeholder="Enter project deliverables..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Project Manager Signature:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('signoff_pm_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['signoff_pm_sig'] ? <img src={compRecord['signoff_pm_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Project Manager Name:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_pm_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_pm_name': e.target.value })} readOnly={isStudent} placeholder="Enter project manager name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">PM Signoff Date:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_pm_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_pm_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Customer Signature:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('signoff_customer_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['signoff_customer_sig'] ? <img src={compRecord['signoff_customer_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Customer Name:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_customer_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_customer_name': e.target.value })} readOnly={isStudent} placeholder="Enter customer name..." /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Customer Signoff Date:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_customer_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_customer_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Remarks:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['signoff_remarks'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'signoff_remarks': e.target.value })} readOnly={isStudent} placeholder="Enter remarks..." /></td></tr>
+</tbody></table></div>
+<div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("ASSESSMENT OUTCOME COVER SHEET")}ASSESSMENT OUTCOME COVER SHEET</h3>
+<table className="w-full border-collapse border border-black text-[9pt]">
+<thead><tr><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Assessment Task / Information</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Result / Option</th><th className="border border-black bg-gray-200 p-2 text-center font-bold whitespace-pre-wrap">Date / Signature / Details</th></tr></thead>
+<tbody><tr><td className="border border-black p-2 font-medium w-3/5">Unit Code & Title: ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_usi'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_usi': e.target.value })} readOnly={isStudent} placeholder="USI: Enter USI..." /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_usi_label'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_usi_label': e.target.value })} readOnly={isStudent} placeholder="USI details" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Course Title:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_course_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_course_name': e.target.value })} readOnly={isStudent} placeholder="Pit, Pipe, Manholes and Cable Hauling" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_course_empty'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_course_empty': e.target.value })} readOnly={isStudent} placeholder="Course Title" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Student Name:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_student_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_student_name': e.target.value })} readOnly={isStudent} placeholder="Enter student name..." /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_student_empty'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_student_empty': e.target.value })} readOnly={isStudent} placeholder="Student Details" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Cohort (if known):</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_cohort'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_cohort': e.target.value })} readOnly={isStudent} placeholder="Enter cohort..." /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_submit_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_submit_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Trainer Name:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_trainer'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_trainer': e.target.value })} readOnly={isStudent} placeholder="Enter trainer name..." /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_campus'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_campus': e.target.value })} readOnly={isStudent} placeholder="Campus / Online / Distance" /></td></tr>
+<tr><td colSpan={3} className="border border-black p-2 font-bold bg-gray-100">Learner Declaration: I certify that the attached material is my original work. I consent to my assessment being checked, electronically or otherwise, for plagiarism, collusion, and use of model answers, correct referencing or any other form of misrepresentation. I have not submitted this assessment for any other course or unit.</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Learner Signature:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('outcome_student_decl_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['outcome_student_decl_sig'] ? <img src={compRecord['outcome_student_decl_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_student_decl_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_student_decl_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td colSpan={3} className="border border-black p-2 font-bold bg-gray-100">Assessment Tasks Summary (Assessor Use Only):</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Practical Assessment Task 1 (Site Prep)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat1_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat1_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_pat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Knowledge Assessment Task 1 (Q&A)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_kat1_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_kat1_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_kat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Practical Assessment Task 2 (Rod, Rope, Clean)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat2_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat2_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_pat2_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Practical Assessment Task 3 (Haul Cable)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat3_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat3_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_pat3_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Practical Assessment Task 4 (Install Pits)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat4_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat4_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_pat4_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Practical Assessment Task 5 (Install Conduit)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat5_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat5_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_pat5_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Practical Assessment Task 6 (Prefab Manhole)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat6_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat6_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_pat6_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Practical Assessment Task 7 (Remove Pit/Conduit)</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'S' ? '' : 'S' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat7_result'] === 'S' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>S</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'NYS' ? '' : 'NYS' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_pat7_result'] === 'NYS' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>NYS</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_pat7_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Final Result (Assessor decision):</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div className="flex flex-col gap-1 items-center justify-center"><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_final_result': compRecord['outcome_final_result'] === 'C' ? '' : 'C' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_final_result'] === 'C' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Competent (C)</span></div><div className="flex gap-2 items-center cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_final_result': compRecord['outcome_final_result'] === 'NYC' ? '' : 'NYC' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_final_result'] === 'NYC' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span>Not Yet Competent (NYC)</span></div></div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_verbal_feedback'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_verbal_feedback': e.target.value })} readOnly={isStudent} placeholder="Verbal feedback provided?" /></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor Feedback / Comments:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_assessor_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_comments': e.target.value })} readOnly={isStudent} placeholder="Additional feedback (if required)..." /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_assessor_feedback_empty'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_feedback_empty': e.target.value })} readOnly={isStudent} placeholder="(Assessor feedback continued)" /></td></tr>
+<tr><td colSpan={3} className="border border-black p-2 font-bold bg-gray-100">Assessor Declaration: I declare that I have conducted a fair, valid, reliable and flexible judgement of this assessment in accordance with the Principles of Assessment and the Rules of Evidence as outlined in the Standards for RTOs 2015. I have provided appropriate feedback. I also declare that I have undertaken appropriate assessment integrity checks (Check for plagiarism, Copying/Collusion/Authenticity, Cheating).</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor Name & Signature:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_name': e.target.value })} readOnly={isStudent} placeholder="Assessor Name..." /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('outcome_assessor_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['outcome_assessor_sig'] ? <img src={compRecord['outcome_assessor_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Assessor Date Checked:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_assessor_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_date': e.target.value })} readOnly={isStudent} placeholder="" /></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="text" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_assessor_decl_empty'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_decl_empty': e.target.value })} readOnly={isStudent} placeholder="Declaration verified" /></td></tr>
+<tr><td colSpan={3} className="border border-black p-2 font-bold bg-gray-100">Student Acknowledgment: I acknowledge that I have been advised of the assessment outcome. If the outcome was NYC, I have also received feedback on reassessment.</td></tr>
+<tr><td className="border border-black p-2 font-medium w-3/5">Student Signature:</td><td colSpan={1} className="border border-black p-2 text-center align-middle"><div onClick={() => !isStudent && openSigModal('outcome_student_ack_sig', 'comp')} className="w-full border-b border-black border-dashed min-h-[20px] cursor-pointer flex items-center justify-center">{compRecord['outcome_student_ack_sig'] ? <img src={compRecord['outcome_student_ack_sig']} className="max-h-[25px] max-w-[100px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td><td colSpan={1} className="border border-black p-2 text-center align-middle"><input type="date" className="w-full border-b border-black border-dashed min-h-[20px] bg-transparent text-center focus:outline-none" value={compRecord['outcome_student_ack_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_student_ack_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={45} />
+</div>
+
 
     </div>
   );
