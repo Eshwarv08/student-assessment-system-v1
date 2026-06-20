@@ -266,6 +266,17 @@ app.delete('/api/common-assessments/:id', checkDbConnection, authenticate, async
 app.post('/api/submissions', checkDbConnection, async (req, res) => {
   try {
     const { assessment_id, student_name, student_id, answers, signature_url } = req.body;
+    
+    if (student_id) {
+      const existingSubmission = await Submission.findOne({
+        assessment_id,
+        student_id
+      });
+      if (existingSubmission) {
+        return res.status(400).json({ error: 'You have already submitted this assessment.' });
+      }
+    }
+
     const submission = new Submission({
       assessment_id,
       student_name,

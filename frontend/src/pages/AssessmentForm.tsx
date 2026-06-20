@@ -28,7 +28,10 @@ const AssessmentForm: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(() => {
+    const tokenParams = new URLSearchParams(window.location.search).get('token');
+    return tokenParams ? localStorage.getItem(`assessment_submitted_${tokenParams}`) === 'true' : false;
+  })
   const [assessment, setAssessment] = useState<any>(null)
   const [answers, setAnswers] = useState<any>(() => {
     const tokenParams = new URLSearchParams(window.location.search).get('token');
@@ -378,10 +381,11 @@ const AssessmentForm: React.FC = () => {
 
       setSubmitted(true)
       if (token) {
-        localStorage.removeItem(`assessment_answers_${token}`);
+        localStorage.setItem(`assessment_submitted_${token}`, 'true');
+        // We keep the answers in localStorage so the student can still download the PDF after refreshing
       }
     } catch (err: any) {
-      alert('Error submitting assessment: ' + err.message)
+      alert(err.message || 'Error submitting assessment')
     } finally {
       setSubmitting(false)
     }
