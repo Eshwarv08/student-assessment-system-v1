@@ -21,7 +21,8 @@ interface Q15BookletProps {
 export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent, compRecord: externalCompRecord, setCompRecord: externalSetCompRecord, grades = {}, setGrades = () => { } }) => {
   const [localCompRecord, setLocalCompRecord] = useState<any>({ tasks: {}, attempts: [], evidence: {} });
   const compRecord = externalCompRecord || localCompRecord;
-  const setCompRecord = externalSetCompRecord || setLocalCompRecord;
+  const _setCompRecord = externalSetCompRecord || setLocalCompRecord;
+  const setCompRecord = (val: any) => { if (!isStudent) _setCompRecord(val); };
 
   const [sigModal, setSigModal] = useState<{ field: string, type: string, open: boolean } | null>(null);
   const sigModalCanvasRef = useRef<HTMLCanvasElement>(null);

@@ -34,7 +34,8 @@ const PageFooter = ({ n }: { n: number }) => (
 export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onSubmit, submitting, studentName, submitDate, isStudent, compRecord: externalCompRecord, setCompRecord: externalSetCompRecord }) => {
   const [internalCompRecord, setInternalCompRecord] = useState<any>({ tasks: {}, attempts: [], evidence: {} });
   const compRecord = externalCompRecord ?? internalCompRecord;
-  const setCompRecord = externalSetCompRecord ?? setInternalCompRecord;
+  const _setCompRecord = externalSetCompRecord ?? setInternalCompRecord;
+  const setCompRecord = (val: any) => { if (!isStudent) _setCompRecord(val); };
 
   const [sigModal, setSigModal] = useState<{ field: string, type: string, open: boolean } | null>(null);
   const sigModalCanvasRef = useRef<HTMLCanvasElement>(null);

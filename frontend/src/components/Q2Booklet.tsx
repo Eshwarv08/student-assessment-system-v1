@@ -905,8 +905,14 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-2">
                   Date:
-                  <span className="border-b border-dashed border-gray-400 inline-block min-w-[80px] text-center ml-1">
-                    {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
+                  />
+                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                   </span>
                 </div>
               </td>
@@ -1413,8 +1419,14 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                    {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
+                  />
+                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                   </span>
                 </div>
               </td>
@@ -1467,7 +1479,13 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={compRecord.assessment_date || ''}
+                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  />
+                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -1753,8 +1771,14 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                    {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
+                  />
+                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                   </span>
                 </div>
               </td>
@@ -1807,7 +1831,13 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={compRecord.assessment_date || ''}
+                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  />
+                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -2039,8 +2069,14 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                    {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
+                  />
+                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                   </span>
                 </div>
               </td>
@@ -2093,7 +2129,13 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={compRecord.assessment_date || ''}
+                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  />
+                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -2626,8 +2668,14 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                    {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/________'}
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
+                  />
+                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                   </span>
                 </div>
               </td>
@@ -2680,7 +2728,13 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  <input
+                    type="date"
+                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    value={compRecord.assessment_date || ''}
+                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  />
+                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
