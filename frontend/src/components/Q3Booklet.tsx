@@ -30,13 +30,21 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
   const [internalFinalResult, setInternalFinalResult] = useState<string>('');
 
   const grades = externalGrades ?? internalGrades;
-  const setGrades = externalSetGrades ?? setInternalGrades;
+  const _setGrades = externalSetGrades ?? setInternalGrades;
+  const setGrades = (val: any) => { if (!isStudent) _setGrades(val); };
+  
   const taskResults = externalTaskResults ?? internalTaskResults;
-  const setTaskResults = externalSetTaskResults ?? setInternalTaskResults;
+  const _setTaskResults = externalSetTaskResults ?? setInternalTaskResults;
+  const setTaskResults = (val: any) => { if (!isStudent) _setTaskResults(val); };
+  
   const compRecord = externalCompRecord ?? internalCompRecord;
-  const setCompRecord = externalSetCompRecord ?? setInternalCompRecord;
+  const _setCompRecord = externalSetCompRecord ?? setInternalCompRecord;
+  const setCompRecord = (val: any) => { if (!isStudent) _setCompRecord(val); };
+  
   const finalResult = externalFinalResult ?? internalFinalResult;
-  const setFinalResult = externalSetFinalResult ?? setInternalFinalResult;
+  const _setFinalResult = externalSetFinalResult ?? setInternalFinalResult;
+  const setFinalResult = (val: any) => { if (!isStudent) _setFinalResult(val); };
+  
   const markAllCorrect = () => { };
   const handleDownload = () => onSubmit();
 
