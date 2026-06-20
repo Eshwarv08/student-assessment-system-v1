@@ -39,6 +39,8 @@ const GradingPortal: React.FC = () => {
   const [taskResults, setTaskResults] = useState<any>({})
   const [studentAnswers, setStudentAnswers] = useState<any>({})
   const [finalResult, setFinalResult] = useState<string>('')
+  const [isDownloading, setIsDownloading] = useState(false)
+
   const [sigModal, setSigModal] = useState<{ open: boolean, field: string, type: 'task' | 'comp' | 'grades' } | null>(null)
   const sigCanvasRef = useRef<HTMLCanvasElement>(null)
   const sigPadRef = useRef<SignaturePad | null>(null)
@@ -166,6 +168,7 @@ const GradingPortal: React.FC = () => {
   }
 
   const handleDownload = async () => {
+    setIsDownloading(true);
     try {
       const data = await api.updateSubmission(id!, {
         grades,
@@ -179,9 +182,11 @@ const GradingPortal: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ['submission', id] })
     } catch (err: any) {
       alert('⚠️ Error saving before download: ' + err.message)
+      setIsDownloading(false);
       return
     }
     await handlePrint()
+    setIsDownloading(false);
   }
 
   useEffect(() => {
@@ -1341,11 +1346,11 @@ const GradingPortal: React.FC = () => {
             </button>
             <button
               onClick={handleDownload}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50"
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -3612,12 +3617,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -3668,12 +3673,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -3730,12 +3735,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -3786,12 +3791,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -3842,12 +3847,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -3897,12 +3902,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -3952,12 +3957,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -4007,12 +4012,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -4062,12 +4067,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -4117,12 +4122,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -4172,12 +4177,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -4227,12 +4232,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -4282,12 +4287,12 @@ const GradingPortal: React.FC = () => {
               <span className="whitespace-nowrap">Save Changes</span>
             </button>
             <button
-              onClick={() => { saveMutation.mutate(); setTimeout(() => handlePrint(), 500); }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 col-span-1"
+              onClick={handleDownload}
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''} col-span-1`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>

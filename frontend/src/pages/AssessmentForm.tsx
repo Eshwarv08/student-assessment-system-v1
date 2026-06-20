@@ -55,6 +55,8 @@ const AssessmentForm: React.FC = () => {
   }, [answers, token]);
 
   const [showErrors, setShowErrors] = useState(false)
+  const [isDownloading, setIsDownloading] = useState(false)
+
   const [signatureEmpty, setSignatureEmpty] = useState(true)
   const [toast, setToast] = useState<{ message: string; type: 'error' | 'success' } | null>(null)
   const assessmentQuestions = getQuestionsForAssessment(token)
@@ -799,16 +801,23 @@ const AssessmentForm: React.FC = () => {
             <p className="text-gray-600 mb-6">Your responses have been recorded securely. You may now download a copy of your assessment record.</p>
             <button
               onClick={async () => {
-                const bookletClass = isQ1 ? 'q1-booklet-view' : isQ2 ? 'q2-booklet-view' : isQ3 ? 'q3-booklet-view' : isQ4 ? 'q4-booklet-view' : isQ5 ? 'q5-booklet-view' : isQ6 ? 'q6-booklet-view' : isQ7 ? 'q7-booklet-view' : isQ8 ? 'q8-booklet-view' : isQ9 ? 'q9-booklet-view' : isQ10 ? 'q10-booklet-view' : isQ11 ? 'q11-booklet-view' : isQ12 ? 'q12-booklet-view' : isQ13 ? 'q13-booklet-view' : isQ14 ? 'q14-booklet-view' : isQ15 ? 'q15-booklet-view' : null;
-                if (bookletClass) {
-                  await downloadBookletAsPdf(bookletClass, `Assessment-${token}.pdf`);
-                } else {
-                  window.print();
+                setIsDownloading(true);
+                try {
+                  const bookletClass = isQ1 ? 'q1-booklet-view' : isQ2 ? 'q2-booklet-view' : isQ3 ? 'q3-booklet-view' : isQ4 ? 'q4-booklet-view' : isQ5 ? 'q5-booklet-view' : isQ6 ? 'q6-booklet-view' : isQ7 ? 'q7-booklet-view' : isQ8 ? 'q8-booklet-view' : isQ9 ? 'q9-booklet-view' : isQ10 ? 'q10-booklet-view' : isQ11 ? 'q11-booklet-view' : isQ12 ? 'q12-booklet-view' : isQ13 ? 'q13-booklet-view' : isQ14 ? 'q14-booklet-view' : isQ15 ? 'q15-booklet-view' : null;
+                  if (bookletClass) {
+                    await downloadBookletAsPdf(bookletClass, `Assessment-${token}.pdf`);
+                  } else {
+                    window.print();
+                  }
+                } finally {
+                  setIsDownloading(false);
                 }
               }}
-              className="bg-blue-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:bg-blue-700 w-full flex items-center justify-center gap-3 transition-colors"
+              disabled={isDownloading}
+              className={`bg-blue-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:bg-blue-700 w-full flex items-center justify-center gap-3 transition-colors ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              <Printer size={24} /> Download PDF
+              {isDownloading ? <Loader2 className="animate-spin" size={24} /> : <Printer size={24} />} 
+              {isDownloading ? 'Downloading...' : 'Download PDF'}
             </button>
           </div>
         </div>
