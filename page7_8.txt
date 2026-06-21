@@ -1,0 +1,299 @@
+<div className="page">
+  <InnerHeader />
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Task Description")}Assessment Task Description</h3><p className="whitespace-pre-wrap">For this assessment, you are working as a telco technician. You have been assigned a task by your supervisor to prepare the site for access and hauling of a new 50 pair cable to replace an existing cable between two pits adjacent to a manhole, and installing a new pit, a prefabricated manhole, in preparation for jointing. The supervisor has advised that this area is known for gas and that the adjacent manhole and the pits should be opened to allow the ducts to vent. You are also required to check for gas as per your workplace guidelines.<br/><br/>Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and address hazards, unwanted events and potential risks for the job.</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Resources Required")}Resources Required</h3><p className="whitespace-pre-wrap">• Learners Guide<br/>• Student Assessment Pack<br/>• Blue or Black Pen<br/>• WHS/OHS Acts/Regulations as applicable to the state of delivery<br/>• Codes of practice<br/>    ◦ How to manage work health and safety risks<br/>    ◦ Managing the work environment and facilities<br/>    ◦ Managing risks of plant in the workplace<br/>    ◦ Managing noise preventing hearing loss work<br/>    ◦ Managing the risk of falls at workplaces<br/>• Workplace procedure 01687W01 Working at Telstra Manholes and Pits<br/>• JSA-Included in this assessment pack<br/>• Installed two lid man-hole<br/>• Installed #6 Pit x2<br/>• Manhole guards*<br/>• Pit keys x2*<br/>• Gas detector*<br/>• Gas action chart<br/>• Retro reflective vest*<br/>• Gloves*<br/>• Hard Hat*<br/>• Safety glasses*<br/><br/>Manufacturers specifications and operating instructions for all tools & equipment specified with a *</p></div>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Timing")}Timing</h3><p className="whitespace-pre-wrap">Your assessor will advise you of the due date of these submissions.</p></div>
+
+    <div className="mt-8" style={{ pageBreakInside: 'avoid' }}>
+      <h3 style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '12px' }}>Comments/Feedback to Participant</h3>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black', marginBottom: '20px' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('student_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
+                  >
+                    {answers.student_signature_url ? (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {answers.student_signature_url && (
+                      <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                    {formatDisplayDate(submitDate || '')}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ border: '1.5px solid black', padding: '8px', minHeight: '120px', marginBottom: '20px' }}>
+        <p style={{ fontWeight: 'bold', margin: '0 0 8px 0', fontSize: '10pt' }}>Assessor's Feedback:</p>
+        <textarea
+          className="no-print"
+          style={{ width: '100%', minHeight: '90px', border: 'none', resize: 'vertical', fontFamily: "'Times New Roman', serif", fontSize: '10.5pt', padding: 0, outline: 'none', backgroundColor: 'transparent' }}
+          placeholder="Assessor feedback..."
+          value={compRecord['task1_feedback'] || ''}
+          onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, 'task1_feedback': e.target.value }) }}
+          readOnly={isStudent}
+        />
+        <div className="hidden print:block" style={{ whiteSpace: 'pre-wrap', minHeight: '90px', fontSize: '10.5pt' }}>
+          {compRecord['task1_feedback']}
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginBottom: '20px', fontWeight: 'bold', fontSize: '12.5pt' }}>
+        Result:{' '}
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task1_result': 'S' }) }}
+          style={{ padding: '4px' }}
+        >
+          Satisfactory (S)
+          {compRecord['task1_result'] === 'S' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+        <span style={{ margin: '0 8px' }}>/</span>
+        <span
+          className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`}
+          onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, 'task1_result': 'NS' }) }}
+          style={{ padding: '4px' }}
+        >
+          Not Satisfactory (NS)
+          {compRecord['task1_result'] === 'NS' && (
+            <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>
+          )}
+        </span>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse', border: '1.5px solid black' }}>
+        <tbody>
+          <tr>
+            <td style={{ width: '60%', borderRight: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
+              <p style={{ margin: 0, lineHeight: '1.4', fontSize: '10pt' }}><span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.</p>
+            </td>
+            <td style={{ width: '40%', padding: '8px 12px', position: 'relative', fontSize: '10pt' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Signature:</span>
+                  <div
+                    className="no-print"
+                    onClick={() => openSigModal('assessor_signature', 'comp')}
+                    style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
+                  >
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    ) : (
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                    )}
+                  </div>
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
+                    {compRecord.assessor_signature && (
+                      <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                    )}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span>Date:</span>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                    <input
+                      type="date"
+                      style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                      readOnly={isStudent}
+                    />
+                  </span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
+                    {compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  <PageFooter n={7} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+  <h1 className="section-title text-center text-blue-900 font-bold my-4">KNOWLEDGE ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS</h1>
+<div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Student Instructions")}Student Instructions</h3><p className="whitespace-pre-wrap">Choose the correct answer for each of the following questions. Refer to your learner guide where specified. For questions referring to a plan, use the provided image.</p></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>1.</span><span className="whitespace-pre-wrap">1. The NBN (National Broadband Network) at the moment consists entirely of:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'a' })} className="mt-0.5" /><label>a) Copper cable</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'b' })} className="mt-0.5" /><label>b) Cat 7 cabling</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'c' })} className="mt-0.5" /><label>c) Optical Fibre</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q1'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q1': 'd' })} className="mt-0.5" /><label>d) Coaxial cable</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q1': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q1'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q1': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q1'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>2.</span><span className="whitespace-pre-wrap">2. Identify whether the following statement is true or false: Category 3 copper cable is mainly used for voice applications.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q2'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q2': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q2'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q2': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q2': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q2'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q2': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q2'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>3.</span><span className="whitespace-pre-wrap">3. The Australian Standard that specifies installation requirements for customer cabling is:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'a' })} className="mt-0.5" /><label>a) AUSTRALIAN STANDARD AS/NZ 3000:2007</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'b' })} className="mt-0.5" /><label>b) | 017153a07 | TELSTRA’S LEAD-IN TRENCHING REQUIREMENTS.</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'c' })} className="mt-0.5" /><label>c) AUSTRALIAN STANDARD AS/CA S008:2010</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q3'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q3': 'd' })} className="mt-0.5" /><label>d) AUSTRALIAN STANDARD AS/CA S009:2013</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q3': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q3'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q3': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q3'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>4.</span><span className="whitespace-pre-wrap">4. The Cable Provider Rules in Australia are:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'a' })} className="mt-0.5" /><label>a) An industry-run registration scheme designed to promote self-regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'b' })} className="mt-0.5" /><label>b) A government run registration scheme designed to promote government regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'c' })} className="mt-0.5" /><label>c) A scheme in industry that is no longer used because of self-regulation</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q4'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q4': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q4': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q4'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q4': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q4'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>5.</span><span className="whitespace-pre-wrap">5. To manage health and safety on a worksite there should be:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'a' })} className="mt-0.5" /><label>a) Hazard management plan</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'b' })} className="mt-0.5" /><label>b) Free hard hats</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'c' })} className="mt-0.5" /><label>c) Weather management plan</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q5'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q5': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q5': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q5'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q5': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q5'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>6.</span><span className="whitespace-pre-wrap">6. Before work begins, approvals should be obtained from:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'a' })} className="mt-0.5" /><label>a) Likelihood that nothing will go wrong so don’t bother</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'b' })} className="mt-0.5" /><label>b) No approvals are required</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'c' })} className="mt-0.5" /><label>c) Authorities and asset owners</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q6'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q6': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q6': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q6'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q6': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q6'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={8} />

@@ -1,0 +1,2421 @@
+========== PAGE 1 ==========
+  1 |    Assessment Booklet
+  2 |  ICTCBL334 ICTCBL329 ICTCBL249
+  3 |                   ICTCBL253
+  4 | 
+  5 | 
+  6 | Pit, Pipe, Manholes and Cable Hauling
+  7 | 
+  8 | 
+  9 | 
+ 10 | 
+ 11 |   Student Name:
+ 12 | 
+ 13 | 
+ 14 |                    ACTA College Pty. Ltd
+
+========== PAGE 2 ==========
+  1 |    ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | Knowledge Assessment Task 1 - Checklist
+  4 | Student's name:
+  5 | 
+  6 | Did the student:                                                                                         Completed             Comments
+  7 |                                                                                                          successfully
+  8 | 
+  9 | 
+ 10 |                                                                                                         Yes        No
+ 11 | 
+ 12 | 
+ 13 | Complete all questions correctly?
+ 14 | 
+ 15 | Show an effective understanding of the following Knowledge requirements of the unit.
+ 16 | 
+ 17 | ICTCBL334 KE1. & ICTCBL329 KE4 & ICTCBL249 KE4 & ICTCBL253 KE1. features and operating
+ 18 | requirements of hauling/excavation and installation to select appropriate equipment
+ 19 | 
+ 20 | 
+ 21 | ICTCBL334 KE2 & ICTCBL253 KE2. existing underground services
+ 22 | 
+ 23 | ICTCBL334 KE3. & ICTCBL329 KES & ICTCBL249 KE5 & ICTCBL253 KE3. Industry & manufacturer
+ 24 | requirements for safe operation of equipment
+ 25 | 
+ 26 | 
+ 27 | ICTCBL334 KE4. & ICTCBL329 KE2 &ICTCBL249 KE2 & ICTCBL253 KE4. legislation, regulations, codes,
+ 28 | standards, and other formal agreements that impact on the work activity/hauling
+ 29 | 
+ 30 | 
+ 31 | ICTCBL334 KES & ICTCBL253 KE5. construction design plans
+ 32 | 
+ 33 | ICTCBL334 KE6. & ICTCBL329 KE6. & ICTCBL249 KE6 & ICTCBL253 KE6specific work health and safety
+ 34 | and environmental requirements relating to the activity and site conditions
+ 35 | 
+ 36 | 
+ 37 | ICTCBL334 KE7 & ICTCBL253 KE7. components required for enclosures, pits and conduit
+ 38 | 
+ 39 | ICTCBL334 KE8 & ICTCBL253 KE8. methods of installing enclosures and conduit as they apply to
+ 40 | manufacturer specifications and regulatory requirements
+ 41 | 
+ 42 | 
+ 43 | ICTCBL334 KE9. & ICTCBL329 KE6 & ICTCBL249 KE6 & ICTCBL253 KE9 typical issues and challenges that
+ 44 | occur on site.
+ 45 | 
+ 46 | 
+ 47 | ICTCBL329 KE1. &ICTCBL249 KE1 Australian Communications and Media Authority (ACMA) regulatory
+ 48 | requirements for Telecommunications Cabling Provider Rules
+ 49 | 
+ 50 | 
+ 51 | ICTCBL329 KE3 & ICTCBL249 KE3 rodding, roping and mandrel techniques
+ 52 | 
+ 53 | ICTCBL329 KE7. & ICTCBL249 KE7 precautions associated with over- hauling through occupied conduits.
+ 54 | 
+ 55 | Task Outcome:                                                    Satisfactory                         Not Satisfactory
+ 56 | 
+ 57 | Assessor signature
+ 58 | 
+ 59 | Assessor name
+ 60 | 
+ 61 | Date
+ 62 | 
+ 63 | 
+ 64 |     ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                       Page 2 of 45
+
+========== PAGE 3 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 1
+  5 | Performance Criteria Mapping
+  6 | 
+  7 | 
+  8 |                                        Performance Criteria assessed in this task - ICTCBL334                                              Tick Completed
+  9 | 
+ 10 | 
+ 11 |  1.1 Obtain construction design plan from appropriate personnel and determine and obtain type of underground enclosure
+ 12 |  specified
+ 13 | 
+ 14 |  1.2 Arrange access to site according to required enterprise procedure
+ 15 |  1.3 Inform appropriate personnel of existing and potential worksite hazards
+ 16 |  1.4 Verify location of proposed installation according to appropriate plans obtained from authorised personnel
+ 17 |  1.5 Obtain information about location of other services from relevant authorities
+ 18 |  1.6 Organise plant, tools and equipment for given work and safe work practice
+ 19 |  1.7 Place recognised barriers during construction according to safety and enterprise requirements
+ 20 |  3.5 Notify appropriate personnel of job completion and obtain sign-off
+ 21 | 
+ 22 | 
+ 23 |                                        Performance Criteria assessed in this task - ICTCBL249                                              Tick Completed
+ 24 | 
+ 25 | 
+ 26 |  1.1 Arrange access to site according to required procedure
+ 27 |  1.2 Inform appropriate personnel of identified hazards on worksite
+ 28 |  1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorized personnel
+ 29 | 
+ 30 | 
+ 31 |  1.4 Obtain information about proposed locations of other services from relevant authorities
+ 32 |  1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines
+ 33 |  1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS) and
+ 34 |  environmental requirements
+ 35 | 
+ 36 |  5.3 Reinstate site to customer satisfaction and dispose of waste in an environmentally safe manner
+ 37 |  5.4 Notify appropriate personnel about job completion and obtain sign-off
+ 38 | 
+ 39 | 
+ 40 |                                        Performance Criteria assessed in this task - ICTCBL329                                              Tick Completed
+ 41 | 
+ 42 | 
+ 43 |  1.1 Access site according to required enterprise procedures
+ 44 |  1.2 Verify cable installation requirements from plans and recognise constraints
+ 45 |  1.3 Identify from plans, correct duct to be hauled
+ 46 |  1.4 Inform appropriate personnel of existing and potential worksite hazards
+ 47 |  1.6 Select suitable tools, equipment, and protective equipment to meet required industry standards
+ 48 |  1.7 Check for dangerous gases and place guards around open manholes following work health and safety (WHS) nd environmental
+ 49 |  requirements
+ 50 | 
+ 51 |  1.8 Confirm correct duct/conduit to be utilised for hauling at site and access to intermediate manholes/pits along e hauling route
+ 52 | 
+ 53 | 
+ 54 |  Reinstate site to customer satisfaction and dispose of waste in environmentally safe manner as required
+ 55 |  Notify appropriate personnel and obtain sign-off
+ 56 | 
+ 57 | 
+ 58 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                   Page 3 of 45
+
+========== PAGE 4 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 1
+  5 | Performance Criteria Mapping Continued
+  6 |                                          Performance Criteria assessed in this task - ICTCBL253                                            Tick Completed
+  7 | 
+  8 |  1.1 Obtain construction design plan from appropriate personnel to scope work and arrange for site access
+  9 |  1.2 Notify appropriate personnel of identified safety hazards and other services that will need to be considered
+ 10 |  1.3 Obtain plant, tools, and safety equipment to perform tasks safely and efficiently
+ 11 |  1.4 Determine type of underground pit/manhole required for project as specified in construction design plan
+ 12 |  2.1 Use tools according to enterprise guidelines and work health and safety (WHS) regulations
+ 13 |  4.1 Complete reports and record alterations to plans using appropriate symbols, according to enterprise policy
+ 14 |  4.2 Complete all labelling requirements according to industry standard
+ 15 |  4.5 Notify appropriate personnel of job completion and obtain sign-off
+ 16 |         Initial Attempt                     Initial Attempt                   1st Reattempt                    2nd Reattempt                  Assessors
+ 17 |         Circle S or NYS                           Date                           S or NYS                         S or NYS                     Initials
+ 18 |                                                                                    Date                            & Date
+ 19 | 
+ 20 |              S/NYS                                / /                             S/NYS                              S/NYS
+ 21 |                                                                                    / /                                / /
+ 22 | 
+ 23 | 
+ 24 | 
+ 25 | Performance Evidence Mapping
+ 26 | 
+ 27 |                                        Performance Evidence assessed in this task-ICTCBL334                                             Tick Completed
+ 28 | 
+ 29 |  PE1. interpret and apply design plans and prepare for construction
+ 30 |  PE2. use specialised hand or power tools and equipment normally used for excavation, pipe, pit and conduit installation and site
+ 31 |  restoration, safely
+ 32 | 
+ 33 |                                        Performance Evidence assessed in this task-ICTCBL249                                             Tick Completed
+ 34 |  PE1. plan the works and prepare the site
+ 35 |  PE2. read and interpret drawings and designs to interpret installation requirements
+ 36 |  PE8. prepare all reports and records to industry and enterprise standards.
+ 37 |                                        Performance Evidence assessed in this task-ICTCBL329                                             Tick Completed
+ 38 |  PE4. use specialised hand or power tools and equipment for hauling cabling safely
+ 39 |  PE5. read and interpret plan drawings
+ 40 |  PE6. restore site and complete documentation
+ 41 |  PE7. comply with all related safety requirements and work practices.
+ 42 |                                        Performance Evidence assessed in this task-ICTCBL253                                             Tick Completed
+ 43 |  PE1. interpret and apply design plans and prepare for construction
+ 44 |  PE7. apply related work health and safety (WHS) requirements and work practices associated with excavation, enclosure
+ 45 |  installation and site restoration.
+ 46 | 
+ 47 |         Initial Attempt                     Initial Attempt                   1st Reattempt                  2nd Reattempt                   Assessors
+ 48 |         Circle S or NYS                           Date                           S or NYS                       S or NYS                      Initials
+ 49 |                                                                                    Date                          & Date
+ 50 | 
+ 51 |              S/NYS                               / /                             S/NYS                              S/NYS
+ 52 |                                                                                   / /                                / /
+ 53 | 
+ 54 | 
+ 55 | 
+ 56 | 
+ 57 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                 Page 4 of 45
+
+========== PAGE 5 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 1 - Checklist
+  5 | 
+  6 | Student's name:
+  7 | 
+  8 | Did the student:                                                                                         Completed             Comments
+  9 |                                                                                                          successfully
+ 10 | 
+ 11 | 
+ 12 |                                                                                                         Yes        No
+ 13 | 
+ 14 | Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+ 15 | Codes of Practice
+ 16 | 
+ 17 | Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 18 | 
+ 19 | 
+ 20 | Complete a JSA for the task
+ 21 | 
+ 22 | 
+ 23 | 
+ 24 | Assemble manhole guards around a manhole
+ 25 | 
+ 26 | 
+ 27 | Gas check manhole access hole
+ 28 | 
+ 29 | 
+ 30 | Remove manhole lids with pit key and store lids correctly
+ 31 | 
+ 32 | Assemble manhole guards around the pits
+ 33 | 
+ 34 | 
+ 35 | Remove pit lids with pit key and store correctly
+ 36 | 
+ 37 | Gas checks the manhole as per spot sampling procedure and record readings
+ 38 | 
+ 39 | 
+ 40 | 
+ 41 | Replace manhole lids and store guards in the correct location
+ 42 | 
+ 43 | 
+ 44 | Submit the completed work to your supervisor (assessor) for Inspection
+ 45 | 
+ 46 | 
+ 47 | Task Outcome:                                                      Satisfactory                       Not Satisfactory
+ 48 | 
+ 49 | Assessor signature
+ 50 | 
+ 51 | Assessor name
+ 52 | 
+ 53 | Date
+ 54 | 
+ 55 | 
+ 56 | 
+ 57 | 
+ 58 |     ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                       Page 5 of 45
+
+========== PAGE 6 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Prac�cal Assessment Task 1
+  5 | Assessment Instructions
+  6 | Complete the following activities:
+  7 | 
+  8 |    1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+  9 |        Codes of Practice
+ 10 |    2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 11 |    3. Complete a JSA for the task
+ 12 |    4. Assemble manhole guards around a manhole
+ 13 |    5. Gas check manhole access hole
+ 14 |    6. Remove manhole lids with pit key and store lids correctly
+ 15 |    7. Assemble manhole guards around the pits
+ 16 |    8. Remove pit lids with pit key and store correctly
+ 17 |    9. Gas check the manhole as per spot sampling procedure and record readings
+ 18 |    10. Replace manhole lids and store guards in the correct location
+ 19 |    11. Submit your completed work to your supervisor (assessor) for inspection
+ 20 | 
+ 21 | 
+ 22 | Plan of proposed work
+ 23 | 
+ 24 |                  MH1                                      Pit 1                           Pit 2                       Pit 3
+ 25 |                                 0100-0140                                  0101-0130                0100-0120
+ 26 | 
+ 27 |                               50/0.40 P50 2.15                         50/0.40 P50 2.10           50/0.40 P50 2.30
+ 28 | 
+ 29 | 
+ 30 | 
+ 31 | Recorded Gas Levels
+ 32 | 
+ 33 |                                                  Gas                    Level
+ 34 |                                                  02                                            %
+ 35 |                                                  H2S                                         PPM
+ 36 |                                                  CO                                          PPM
+ 37 |                                                  LEL                                           %
+ 38 | 
+ 39 | 
+ 40 | 
+ 41 | 
+ 42 |     ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                              Page 6 of 45
+
+========== PAGE 7 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 1
+  5 | 
+  6 | Assessment Task Description
+  7 | For this assessment, you are working as a telco technician. You have been assigned a task by your supervisor to prepare the site for access and hauling
+  8 | of a new 50 pair cable to replace an existing cable between two pits adjacent to a manhole, and installing a new pit, a prefabricated manhole, in
+  9 | preparation for jointing. The supervisor has advised that this area is known for gas and that the adjacent manhole and the pits should be opened to
+ 10 | allow the ducts to vent. You are also required to check for gas as per your workplace guidelines.
+ 11 | 
+ 12 | Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and addressed hazards,
+ 13 | unwanted events and potential risks for the job.
+ 14 | 
+ 15 | 
+ 16 | Resources Required
+ 17 |     •    Learners Guide
+ 18 |     •    Student Assessment Pack
+ 19 |     •    Blue or Black Pen
+ 20 |     •    WHS/OHS Acts/Regulations as applicable to the state of delivery
+ 21 |     •    Codes of practice
+ 22 |               o    How to manage work health and safety risks
+ 23 |               o    Managing the work environment and facilities
+ 24 |               o    Managing risks of plant in the workplace
+ 25 |               o    Managing noise preventing hearing loss work
+ 26 |               o    Managing electrical risks in the workplace
+ 27 |               o    Managing the risk of falls at workplaces
+ 28 |     •    Workplace procedure 01687W01 Working at Telstra Manholes and Pits
+ 29 |     •    JSA-Included in this assessment pack
+ 30 |     •    Installed two lid man-hole
+ 31 |     •    Installed #6 Pit x2
+ 32 |     •    Manhole guards*
+ 33 |     •    Pit keys x2*
+ 34 |     •    Gas detector*
+ 35 |     •    Gas action chart
+ 36 |     •    Retro reflective vest*
+ 37 |     •    Gloves*
+ 38 |     •    Hard Hat*
+ 39 |     •    Safety glasses*
+ 40 |     •    Manufacturers specifications and operating instructions for all tools & equipment specified with a *.
+ 41 | 
+ 42 | 
+ 43 | 
+ 44 | 
+ 45 | Timing
+ 46 | Your assessor will advise you of the due date of these submissions.
+ 47 | 
+ 48 | 
+ 49 | 
+ 50 | 
+ 51 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                Page 7 of 45
+
+========== PAGE 8 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 |                                         Choose the Correct Answer
+  6 |   1. The NBN (National Broadband Network) at the moment consists entirely of:
+  7 |   Please refer to learner guide page: 15
+  8 | 
+  9 |          a)        Copper cable
+ 10 |          b)        Cat 7 cabling
+ 11 |          c)        Optical Fibre
+ 12 |          d)        Coaxial cable
+ 13 | 
+ 14 |   2. Identify whether the following statement is true or false:
+ 15 |   Please refer to learner guide page: 7
+ 16 | 
+ 17 |        Category 3 copper cable is mainly used for voice applications.
+ 18 | 
+ 19 |               a)    True
+ 20 |               b)    False
+ 21 | 
+ 22 |   3. The Australian Standard that specifies installation requirements for customer cabling is:
+ 23 |   Please refer to learner guide page: 20
+ 24 | 
+ 25 |          a)        AUSTRALIAN STANDARD AS/NZ 3000:2007
+ 26 | 
+ 27 |          b)        | 017153a07 | TELSTRA’S LEAD-IN TRENCHING REQUIREMENTS.
+ 28 | 
+ 29 |          c)        AUSTRALIAN STANDARD AS/CA S008:2010
+ 30 | 
+ 31 |          d)        AUSTRALIAN STANDARD AS/CA S009:2013
+ 32 | 
+ 33 | 
+ 34 |   4. The Cable Provider Rules in Australia are:
+ 35 |   Please refer to learner guide page: 20
+ 36 | 
+ 37 |          a)        An industry-run registration scheme designed to promote self-regulation
+ 38 |          b)        A government run registration scheme designed to promote government regulation
+ 39 |          c)        A scheme in industry that is no longer used because of self-regulation
+ 40 |          d)        All of the above
+ 41 | 
+ 42 | 
+ 43 |   5. To manage health and safety on a worksite there should be:
+ 44 |   Please refer to learner guide page: 32
+ 45 | 
+ 46 |          a)        Hazard management plan
+ 47 |          b)        Free hard hats
+ 48 |          c)        Weather management plan
+ 49 |          d)        None of the above
+ 50 | 
+ 51 | 
+ 52 |   6. Before work begins, approvals should be obtained from:
+ 53 |   Please refer to learner guide page: 36-37
+ 54 |          a)        Likelihood that nothing will go wrong so don’t bother
+ 55 |          b)        No approvals are required
+ 56 |          c)        Authorities and asset owners
+ 57 |          d)        None of the above
+ 58 | 
+ 59 | 
+ 60 | 
+ 61 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                    Page 8 of 45
+
+========== PAGE 9 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   7. Typical tools and equipment may include:
+  7 |   Please refer to learner guide page: 38
+  8 | 
+  9 |          a)        Shovels
+ 10 |          b)        Trenching equipment
+ 11 |          c)        Jointing equipment
+ 12 |          d)        All of the above
+ 13 | 
+ 14 | 
+ 15 |   8. To facilitate easier hauling of cables into conduits, which of the following can be used?
+ 16 |   Please refer to learner guide page: 42
+ 17 | 
+ 18 |          a)        Lubrication of the cable and ducts
+ 19 |          b)        The use of cable guides
+ 20 |          c)        The use of conduit guides
+ 21 | 
+ 22 |          d)        All of the above
+ 23 | 
+ 24 | 
+ 25 |   9. Name one device for cleaning conduits.
+ 26 |   Please refer to learner guide page: 39-41
+ 27 | 
+ 28 | 
+ 29 | 
+ 30 | 
+ 31 |   10. How does a winch used for small copper cables differ to one used for optical fibre cables?
+ 32 |   Please refer to learner guide page: 46
+ 33 | 
+ 34 |          a)        They are the same
+ 35 |          b)        Smaller hauling wheel
+ 36 |          c)        Larger hauling wheel
+ 37 |          d)        All of the above
+ 38 | 
+ 39 | 
+ 40 |   11. Identify whether the following statement is true or false:
+ 41 |   Please refer to learner guide page: 47
+ 42 | 
+ 43 |       There is a need to eensure that the cable hauling tension is correct for the cable and that the bend radius is maintained and
+ 44 |       care is taken to protect the cable sheath during cable installation procedures.
+ 45 | 
+ 46 |               a)    True
+ 47 |               b)    False
+ 48 | 
+ 49 | 
+ 50 | 
+ 51 | 
+ 52 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 9 of 45
+
+========== PAGE 10 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   12. A multimeter can be used to check copper cables for:
+  7 |   Please refer to learner guide page: 51
+  8 | 
+  9 |           a)        Continuity
+ 10 |           b)        Short circuits
+ 11 |           c)        Loop resistance
+ 12 |           d)        All of the above
+ 13 | 
+ 14 | 
+ 15 |   13. An induction/tone generator can be used to:
+ 16 |   Please refer to learner guide page: 51-52
+ 17 | 
+ 18 |           a)        Measuring cable pair loop resistance
+ 19 |           b)        Identifying pairs within cables
+ 20 |           c)        Identify open circuits
+ 21 |           d)        None of the above
+ 22 | 
+ 23 | 
+ 24 |   14. Wire map testers can test for:
+ 25 |   Please refer to learner guide page: 52
+ 26 | 
+ 27 |           a)        Open circuit
+ 28 |           b)        Short circuit
+ 29 |           c)        Reversed or split pairs
+ 30 |           d)        All of the above
+ 31 | 
+ 32 | 
+ 33 |   15. Identify whether the following statement is true or false:
+ 34 |   Please refer to learner guide page: 50
+ 35 | 
+ 36 |        The need for surge protection on copper cables is determined by the cabling provider.
+ 37 | 
+ 38 |                a)    True
+ 39 |                b)    False
+ 40 | 
+ 41 | 
+ 42 |   16. Devices used to connect the feeder to cables are:
+ 43 |   Please refer to learner guide page: 42-43
+ 44 | 
+ 45 |           a)        Cables are never hauled this way
+ 46 |           b)        Hauling Eye & cable grip
+ 47 |           c)        Screw on cable cap or glue on cap
+ 48 |           d)        None of the above
+ 49 | 
+ 50 | 
+ 51 |   17. Sufficient cable length should be left in pits for:
+ 52 |   Please refer to learner guide page: 48
+ 53 | 
+ 54 |           a)        Cables are left as short as possible
+ 55 |           b)        Hauling
+ 56 |           c)        Jointing
+ 57 |           d)        None of the above
+ 58 | 
+ 59 | 
+ 60 | 
+ 61 | 
+ 62 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024               Page 10 of 45
+
+========== PAGE 11 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   18. On completion of the work, it is essential to send a                          promptly to all parties and get
+  7 |       sign off from the                             .
+  8 | 
+  9 |   Please refer to learner guide page: 59-60
+ 10 | 
+ 11 |          a)        Gift, ACMA
+ 12 |          b)        Report, customer
+ 13 |          c)        On completion nothing more is done
+ 14 |          d)        None of the above
+ 15 | 
+ 16 | 
+ 17 |   19. Reinstatement of the site is the responsibility of:
+ 18 |   Please refer to learner guide page: 59-60
+ 19 | 
+ 20 |          a)        ACMA
+ 21 |          b)        Customer
+ 22 |          c)        Contractor
+ 23 |          d)        All of the above
+ 24 | 
+ 25 | 
+ 26 |   20. Care must be taken when testing optical fibre cables to avoid:
+ 27 |   Please refer to learner guide page: 30
+ 28 | 
+ 29 |          a)        Foot damage due to the high weight of the fibres
+ 30 |          b)        Eye damage due to the laser light in the fibres
+ 31 |          c)        Optical fibre is not dangerous
+ 32 |          d)        All of the above
+ 33 | 
+ 34 | 
+ 35 |   21. Is it necessary to support cables in pits and enclosures?
+ 36 |   Please refer to learner guide page: 48-49
+ 37 | 
+ 38 |               a)    Yes
+ 39 |               b)    No
+ 40 | 
+ 41 |   Use the attached plan to answer the following questions
+ 42 |   22. What is the diameter of duct is installed between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?
+ 43 |               a) 100mm                b) 50mm           c) 60mm
+ 44 | 
+ 45 | 
+ 46 |   23. What type (size) of pit is installed at the boundary of 156 and 158 Hamilton Rd?
+ 47 |               a) P4                   b) P5             c) P6
+ 48 | 
+ 49 | 
+ 50 |   24. What kind of infrastructure is installed at the boundary of 150 and 152 Hamilton Rd?
+ 51 |               a) Manhole              b) Rope           c) Conduit
+ 52 | 
+ 53 | 
+ 54 |   25. What is the length of conduit is required to be installed in between boundary of 156 and 158 and boundary of 158 and 160
+ 55 |   Hamilton Rd?
+ 56 | 
+ 57 |               a) 26M                  b) 30M            c)22M
+ 58 | 
+ 59 | 
+ 60 | 
+ 61 | 
+ 62 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                         Page 11 of 45
+
+========== PAGE 12 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   26. What is the permissible limit of LEL gases in a confined space?
+  7 | 
+  8 |            a) 10% of the volume          b)5% of the volume             c) 8% of the volume
+  9 | 
+ 10 | 
+ 11 | 
+ 12 |   27. What is the safest limit of oxygen in atmosphere?
+ 13 | 
+ 14 |            a)19.5% to 23%                b) 23% to 27%                  c) 15% to 19.5%
+ 15 | 
+ 16 |   28. What is the use of a Mandrel?
+ 17 | 
+ 18 |   True or False
+ 19 | 
+ 20 |   Mandrels are used to prove the integrity of installed conduit runs. They will also remove small amounts of debris that may be in the
+ 21 |   conduit. Manufactured from high-strength aluminium alloy tube. Centre rod is plated all-thread steel. Eye on each end
+ 22 | 
+ 23 |            a)     True
+ 24 |            b)     False
+ 25 | 
+ 26 |   29. How many percentage points should a mandrels be from a conduit size? True or False
+ 27 |   The effective diameter of the mandrel must be 90 percent of the nominal pipe diameter and verified using a proving ring. The mandrel
+ 28 |   is sized to allow for up to 5% deformation of the installed pipe
+ 29 | 
+ 30 |            a)     True
+ 31 |            b)     False
+ 32 | 
+ 33 |    30.How could avoid conduits get overhauled? True or
+ 34 |   False
+ 35 | 
+ 36 |   Use the Mandrill to check the available capacity of the Conduit during rod and roping activity
+ 37 | 
+ 38 |            a)     True
+ 39 |            b)     False
+ 40 | 
+ 41 |    31. What is the purpose of rod and roping?
+ 42 | 
+ 43 |   True or False
+ 44 | 
+ 45 |   Rod and Roping is when new and existing conduit is proved and feed with rope to assist in the cable hauling on an existing copper
+ 46 |   and fibre cable for repairs, upgrades and new infrastructure works.
+ 47 | 
+ 48 |            a)     True
+ 49 |            b)     False
+ 50 | 
+ 51 | 
+ 52 | 
+ 53 | 
+ 54 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 12 of 45
+
+========== PAGE 13 ==========
+  1 |    ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | Assessment 1 – TestQuestions
+  6 |    32. The Customer Access Network connects end users of the
+  7 | 
+  8 |       a) Network boundary
+  9 |       b) Telecommunications network
+ 10 |       c) Property entry point
+ 11 |       d) None of the above
+ 12 | 
+ 13 |    33. A Customer Private Network provides.
+ 14 | 
+ 15 |       a) An external telecommunications network that forms part of the global telecommunications network
+ 16 |       b) A standalone internal telecommunications network that does not providing access to the global telecommunications network
+ 17 |       c) An internal telecommunications network as well as providing access to the global telecommunications network
+ 18 |       d) All of the above
+ 19 | 
+ 20 |    34. The National Broadband Network (NBN) currently consists entirely of:
+ 21 | 
+ 22 |       a) Copper cable
+ 23 |       b) Cat 7 cabling
+ 24 |       c) Optical Fibre
+ 25 |       d) Coaxial cable
+ 26 | 
+ 27 |    35. Is it a requirement to hold a General Construction White Card to work on construction sites?
+ 28 | 
+ 29 |       a) Yes
+ 30 |       b) No
+ 31 | 
+ 32 |    36. The Code of Practise are created to:
+ 33 | 
+ 34 |       a) ensure worst practice outcomes & promote negative behaviour changes in the industry
+ 35 |       b) provide guidelines for fair dealing between organisations and their customers
+ 36 |       c) provide guidelines for fair dealing between organisations
+ 37 |       d) All of the above
+ 38 | 
+ 39 |    37. The Australian Standard that specifies underground Installation requirements for customer cabling is:
+ 40 | 
+ 41 |       a) AUSTRALIAN STANDARD AS/NZ 3000:2007
+ 42 |       b) | 017153a07 | TELSTRA’S LEAD-IN TRENCHING REQUIREMENTS.
+ 43 |       c) AUSTRALIAN STANDARD AS/CA S008:2010
+ 44 |       d) AUSTRALIAN STANDARD AS/CA S009:2013
+ 45 | 
+ 46 |    38. The Telecommunications Act 1997 is:
+ 47 | 
+ 48 |       a) An industry body
+ 49 |       b) Legislated law
+ 50 |       c) A voluntary standard
+ 51 |       d) All of the above
+ 52 | 
+ 53 |    39. The Cable Provider Rules in Australia are best characterised as?
+ 54 | 
+ 55 |         a) An industry-run registration scheme designed to promote self-regulation
+ 56 |         b) A government run registration scheme designed to promote government regulation
+ 57 |         c) A scheme in industry that is no longer used because of self-regulation
+ 58 |         d) All of the above
+ 59 | 
+ 60 | 
+ 61 | 
+ 62 | 
+ 63 |    ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                         Page 13 of 45
+
+========== PAGE 14 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   40. A typical street distribution plan might provide information on…
+  7 | 
+  8 |        a) The location of conduit runs
+  9 |        b) The location of electricity pedestals
+ 10 |        c) The location of pits
+ 11 |        d) All of the above
+ 12 | 
+ 13 |   41. Access to a site is usually arranged by the …
+ 14 | 
+ 15 |        a) ACMA
+ 16 |        b) Site supervisor or Site Manager
+ 17 |        c) No need for access permission for cablers
+ 18 |        d) None of the above
+ 19 | 
+ 20 |   42. Witches hats are a form of …
+ 21 | 
+ 22 |        a) They are never used anymore
+ 23 |        b) Flashing strobe light
+ 24 |        c) Children’s toy
+ 25 |        d) Protective barrier
+ 26 | 
+ 27 |   43. One form of barrier that could be used to protect people in manholes is …
+ 28 |        a) Hard hats
+ 29 |        b) Guard rails
+ 30 |        c) Safety glasses
+ 31 |        d) orange
+ 32 | 
+ 33 |   44. To manage health and safety and inform personnel on a worksite hazards there should be a …
+ 34 | 
+ 35 |        a) Hazard management plan
+ 36 |        b) Free hard hats
+ 37 |        c) Weather management plan
+ 38 |        d) None of the above
+ 39 | 
+ 40 |   45. List one potential hazard that might be encountered when installing underground cable…
+ 41 | 
+ 42 | 
+ 43 | 
+ 44 | 
+ 45 |   46. Before work begins approvals should be obtained from…
+ 46 | 
+ 47 |        a) Likelihood that nothing will go wrong so don’t bother
+ 48 |        b) No approvals are required
+ 49 |        c) authorities and asset owners
+ 50 |        d) None of the above
+ 51 | 
+ 52 | 
+ 53 | 
+ 54 | 
+ 55 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                   Page 14 of 45
+
+========== PAGE 15 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   47. Typical tools, plant and equipment may include…
+  7 | 
+  8 |        a) Shovels
+  9 |        b) Trenching equipment
+ 10 |        c) Jointing equipment
+ 11 |        d) All of the above
+ 12 | 
+ 13 |   48. Excavation for existing underground enclosures should be conduction with consideration for LG page 42
+ 14 | 
+ 15 |        a) Trench width kept to a minimum
+ 16 |        b) Adequate clearances for ease of access
+ 17 |        c) Shoring of trenches as required
+ 18 |        d) All of the above
+ 19 | 
+ 20 |   49. Personal Protective Equipment (PPE) must be worn on site?
+ 21 |        a) True
+ 22 |        b) False
+ 23 | 
+ 24 |   50. List two things that may cause constraints on your installation?
+ 25 | 
+ 26 | 
+ 27 | 
+ 28 | 
+ 29 |   51. The installation requirements for underground telecommunications installations are outlined in Plans and Technical Standards
+ 30 | 
+ 31 |        a) True
+ 32 |        b) False
+ 33 | 
+ 34 |   52. The maximum recommended number of 20 pair cables in a 50 mm conduit is?
+ 35 | 
+ 36 |        ☐5
+ 37 |        ☐4
+ 38 |        ☐3
+ 39 |        ☐2
+ 40 | 
+ 41 | 
+ 42 |   53. The only colour conduit for communications cable is?
+ 43 | 
+ 44 |        a) Green
+ 45 |        b) Orange
+ 46 |        c) White
+ 47 |        d) Yellow
+ 48 | 
+ 49 | 
+ 50 | 
+ 51 | 
+ 52 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                            Page 15 of 45
+
+========== PAGE 16 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   54. When installing conduit, conduit bends or couplings care should be taken to ensure:
+  7 | 
+  8 |        a) free of external marks on the outside of the conduit and that the conduit ends must be of a green or blue in colour
+  9 |        b) free of snag points by cutting the end of the conduit at a right angle to the axis of the conduit and removing all burrs and sharp
+ 10 |        edges using a file or scraper
+ 11 |        c) Conduit is self-installing and doesn’t require any additional work
+ 12 |        d) All of the above
+ 13 | 
+ 14 |   55. Telecommunications underground conduit installed in a location other than a public footpath or roadway?
+ 15 | 
+ 16 |        a) No special conditions required
+ 17 |        b) Enclosed in a red conduit for easy identification
+ 18 |        c) enclosed in a compliant conduit
+ 19 |        d) All of the above
+ 20 | 
+ 21 |   56. To ensure you have selected the correct excavation equipment and plants
+ 22 | 
+ 23 |        a) you will need to check the task requirements, specifications and goals
+ 24 |        b) you will need to check the weather, time and goals
+ 25 |        c) you will need to check the user guides for the work, who is on site and goals
+ 26 |        d) None of the above
+ 27 | 
+ 28 |   57. A multimeter can be used to check copper cables for?
+ 29 | 
+ 30 |        a) Continuity
+ 31 |        b) Short circuits
+ 32 |        c) loop resistance
+ 33 |        d) All of the above
+ 34 | 
+ 35 |   58. An induction /tone generator can be used to?
+ 36 | 
+ 37 |        a) measuring cable pair loop resistance
+ 38 |        b) Identifying pairs within cables
+ 39 |        c) Identify open circuits
+ 40 |        d) None of the above
+ 41 | 
+ 42 |   59. Wire map testers can test for?
+ 43 |        a) Open circuit
+ 44 |        b) Short circuit
+ 45 |        c) Reversed or split pairs
+ 46 |        d) All of the above
+ 47 | 
+ 48 | 
+ 49 |   60. On completion of installation conduits should be tested for                      to ensure they are free from impediments to cable
+ 50 |       hauling:
+ 51 | 
+ 52 |        a) sures edges
+ 53 |        b) Blockages
+ 54 |        c) kinks
+ 55 |        d) All of the above
+ 56 | 
+ 57 |   61. A (TDR) Time Domain Reflectometer can be used to check copper cables for continuity, Short circuits, open circuit, cable length,
+ 58 |       and fault location
+ 59 | 
+ 60 |        a) True
+ 61 |        b) False
+ 62 | 
+ 63 | 
+ 64 | 
+ 65 | 
+ 66 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                 Page 16 of 45
+
+========== PAGE 17 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 | 
+  7 |   62. Name two methods for testing Optical Fibre cable?
+  8 | 
+  9 | 
+ 10 | 
+ 11 | 
+ 12 |   63. An (OTDR) Optical Time Domain Reflectometer sends a pulse of                          down the cable to locate insertion loss on
+ 13 |       optical fibre cables?
+ 14 | 
+ 15 |        a) Voltage
+ 16 |        b) Light
+ 17 |        c) High frequency
+ 18 |        d) None of the above
+ 19 | 
+ 20 |   64. Which test setup will give the operator the most information in when testing Optical Fibre cable?
+ 21 |        a) Light Source/Power Meter method
+ 22 |        b) OTDR
+ 23 |        c) Both the same
+ 24 |        d) All of the above
+ 25 | 
+ 26 |   65. The types of test equipment and the type of test will be determined by
+ 27 |        a) Test results
+ 28 |        b) the design parameters
+ 29 |        c) What day the tests are done on
+ 30 |        d) False
+ 31 | 
+ 32 |   66. Conduit ends are sealed to…
+ 33 | 
+ 34 |        a) Prevent the ingress of dirt and water
+ 35 |        b) To make it easier to haul through ducts
+ 36 |        c) The sealing makes jointing easier
+ 37 |        d) None of the above
+ 38 | 
+ 39 | 
+ 40 |   67. Conduit should enter a pit or access hole through the long sides.
+ 41 | 
+ 42 |        a) True
+ 43 |        b) False
+ 44 | 
+ 45 |   68. Wherever practicable, access-holes should be spaced at approximately…
+ 46 | 
+ 47 |        a) access-holes should be spaced at approximately 230 m intervals
+ 48 |        b) access-holes should be spaced at approximately 320 m intervals
+ 49 |        c) access-holes should be spaced at approximately 330 m intervals
+ 50 |        d) None of the above
+ 51 | 
+ 52 | 
+ 53 | 
+ 54 | 
+ 55 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                              Page 17 of 45
+
+========== PAGE 18 ==========
+  1 |   ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Knowledge Assessment Task 1
+  5 | 
+  6 |   69. On completion of the work it is essential to send a                                    promptly to all parties and get sign off from
+  7 |       the                                     .
+  8 | 
+  9 |        a) Gift, ACMA
+ 10 |        b) Report, customer
+ 11 |        c) On completion, appropriate personnel of job
+ 12 |        d) None of the above
+ 13 | 
+ 14 |   70. Reinstatement of the site is the responsibility of …
+ 15 | 
+ 16 |        a) ACMA
+ 17 |        b) Customer
+ 18 |        c) Contractor
+ 19 |        d) All of the above
+ 20 | 
+ 21 |   71. Care must be taken when testing optical fibre cables to avoid …
+ 22 | 
+ 23 |        a) Foot damage due to the high weight of the fibres
+ 24 |        b) Eye damage due to the laser light in the fibres
+ 25 |        c) Optical fibre is not dangerous
+ 26 |        d) All of the above
+ 27 | 
+ 28 |   72. Is it necessary to support cables in pits and enclosures?
+ 29 | 
+ 30 |        a) Yes
+ 31 |        b) No
+ 32 | 
+ 33 |   73. To enable future underground enclosure identification at a future date all enclosures must be …
+ 34 | 
+ 35 |        a) Marked legibly
+ 36 |        b) Coloured red or green
+ 37 |        c) Cables don’t need to be marked
+ 38 |        d) None of the above
+ 39 | 
+ 40 |   74. Backfill of the site should be undertaken to ensure?
+ 41 | 
+ 42 |        a) the finished surface level does not settle beyond that acceptable to the contractor
+ 43 |        b) the finished surface level does not settle beyond that acceptable to the local authority or the carrier
+ 44 |        c) the finished surface level does not settle beyond that acceptable to the ACMA
+ 45 |        d) the finished surface level is the responsibility of the local authority or the carrier
+ 46 | 
+ 47 | 
+ 48 | 
+ 49 |   75. The most common metals used in cables are                        and                    .
+ 50 |        Recycling plants will granulate and then separate the metal from the                            . Using this process, the plastic is
+ 51 |        removed and the copper, aluminium or other metals present are separated                                   for recycling. These metals
+ 52 |        are then smelted for reuse in new metal products. Similarly the plastic is melted and extruded for
+ 53 |                         .
+ 54 | 
+ 55 |             a)   Plastic, Rubber, Cables, Magnetically, Destruction
+ 56 |             b)   copper, aluminium, insulation, magnetically, reuse
+ 57 |             c)   Lead, Bronze, Insulation, magnetically, destruction
+ 58 | 
+ 59 | 
+ 60 | 
+ 61 | 
+ 62 |   ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                 Page 18 of 45
+
+========== PAGE 19 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 2
+  5 | Performance Criteria Mapping
+  6 | 
+  7 |                                        Performance Criteria assessed in this task – ICTCBL249                                           Tick Completed
+  8 | 
+  9 |  1.1 Arrange access to site according to required procedure
+ 10 | 
+ 11 |  1.2 Inform appropriate personnel of identified hazards on worksite
+ 12 | 
+ 13 |  1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorised personnel
+ 14 | 
+ 15 |  1.4 Obtain information about proposed locations of other services from relevant authorities
+ 16 | 
+ 17 |  1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines
+ 18 | 
+ 19 |  1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS)
+ 20 |      And environmental requirements
+ 21 |  2.2 Connect conduit to pits or manholes as designed according to industry standards and asset owner requirements
+ 22 |  3.1 Handle existing cables in a way that avoids cable damage
+ 23 |  3.2 Use roping techniques to prove that underground conduit is clear for hauling
+ 24 | 
+ 25 |  5.3 Reinstate site to customer satisfaction and dispose of waste in an environmentally salle manner
+ 26 | 
+ 27 |  5.4 Notify appropriate personnel about job completion and obtain sign-off
+ 28 | 
+ 29 | 
+ 30 |                                        Performance Criteria assessed in this task – ICTCBL329                                           Tick Completed
+ 31 | 
+ 32 |  1.1 Access site according to required enterprise procedures
+ 33 | 
+ 34 |  1.2 Verify cable installation requirements from plans and recognise constraints
+ 35 | 
+ 36 |  1.3 Identify from plans, correct duct to be hauled
+ 37 | 
+ 38 |  1.4 Inform appropriate personnel of existing and potential worksite hazards
+ 39 | 
+ 40 |  1.5 Obtain information about location of other services from relevant authorities
+ 41 | 
+ 42 |  1.6 Select suitable tools, equipment, and protective equipment to meet required industry standards.
+ 43 | 
+ 44 |  1.7 Check for dangerous gases and place guards around open manholes following work health and safety (WHS)
+ 45 |      and environmental requirements
+ 46 |  1.8 Confirm correct duct/conduit to be utilised for hauling at site and access to intermediate manholes/pits along the
+ 47 |      hauling route
+ 48 |  1.9 Rod and rope the conduit/duct to be hauled
+ 49 | 
+ 50 |  1.10 Set-up cable installation equipment according to manufacturer requirements and enterprise guidelines
+ 51 | 
+ 52 |  1.11 Clean debris and obstructions from conduit using appropriate mandrels
+ 53 | 
+ 54 |  1.12 Seal cable ends to exclude entrance of foreign matter
+ 55 | 
+ 56 |  2.1 Run hauling feeder through conduit to enable cable hauling
+ 57 | 
+ 58 |  2.2 Use rodding techniques to prove that conduit is clear for hauling
+ 59 | 
+ 60 |  3.7 Notify appropriate personnel and obtain sign-off
+ 61 | 
+ 62 |          Initial Attempt                   Initial Attempt                     1st Reattempt                  2nd Reattempt                Assessors
+ 63 |          Circle S or NYS                         Date                             S or NYS                       S or NYS                   Initials
+ 64 |                                                                                     Date                          & Date
+ 65 | 
+ 66 |              S/NYS                               / /                               S/NYS                           S/NYS
+ 67 |                                                                                     / /                             / /
+ 68 | 
+ 69 | 
+ 70 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 19 of 45
+
+========== PAGE 20 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 2
+  5 | 
+  6 | Performance Evidence Mapping
+  7 | 
+  8 |                                        Performance Evidence assessed in this task-ICTCBL249                                           Tick Completed
+  9 |  PE1. plan the works and prepare the site
+ 10 |  PE2. read and interpret drawings and designs to interpret installation requirements
+ 11 |  PE6. use specialised hand or power tools and equipment for hauling cable safely
+ 12 |                                        Performance Evidence assessed in this task-ICTCBL329                                           Tick Completed
+ 13 |  PE1. use the correct type of rope for cable hauling
+ 14 |  PE2. use various rodding, roping and mandrel techniques as prior requirements to hauling cable
+ 15 |  PE4. restore site and complete documentation
+ 16 |  PE5. use specialised hand or power tools and equipment for hauling cabling safely
+ 17 |  PE7. comply with all related safety requirements and work practices.
+ 18 |          Initial Attempt                    Initial Attempt                1st Reattempt                    2nd Reattempt                  Assessors
+ 19 |          Circle S or NYS                          Date                        S or NYS                         S or NYS                     Initials
+ 20 |                                                                                 Date                            & Date
+ 21 | 
+ 22 |              S/NYS                               / /                            S/NYS                            S/NYS
+ 23 |                                                                                  / /                              / /
+ 24 | 
+ 25 | 
+ 26 | 
+ 27 | 2nd reattempt cannot be undertaken on the same date as the initial and 1st reattempt. (see ******* Students) The last date of this observation is to
+ 28 | match the date for this assessment on the ass****** page.
+ 29 | 
+ 30 | 
+ 31 | 
+ 32 | 
+ 33 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 20 of 45
+
+========== PAGE 21 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 2
+  5 | Assessment Instructions
+  6 | 
+  7 | Complete the following activities:
+  8 | 1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+  9 |    Codes of Practice
+ 10 | 2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 11 | 3. Refer to the completed JSA for the task
+ 12 | 4. Ensure gas detector is on and carried on your person
+ 13 | 5. Assemble cable drum stand and fit drum to cable following all manual handling requirements.
+ 14 | 6. Clean any silt from bottom of pit
+ 15 | 7. Rod conduit
+ 16 | 8. Attach hauling line and draw through conduit
+ 17 | 9. Attach cleaning brush to hauling line and clean debris from conduit
+ 18 | 10. Prove conduit with appropriate size slug
+ 19 | 11. Leave hauling line in conduit
+ 20 | 12. Flame brush cable end
+ 21 | 13. Fit endcap and shrink to seal cable
+ 22 | 14. Submit your completed work to your supervisor (assessor) for inspection
+ 23 | 
+ 24 | 
+ 25 | 
+ 26 | Plan of proposed work
+ 27 | 
+ 28 |                  MH1                                      Pit 1                         Pit 2                        Pit 3
+ 29 |                                 0100-0140                                  0101-0130               0100-0120
+ 30 | 
+ 31 |                             50/0.40 P50 2.15                         50/0.40 P50 2.10           50/0.40 P50 2.30
+ 32 | 
+ 33 | 
+ 34 | 
+ 35 | 
+ 36 |     ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                             Page 21 of 45
+
+========== PAGE 22 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 2 - Checklist
+  5 | 
+  6 | Student's name:
+  7 | 
+  8 | Did the student:                                                                                         Completed            Comments
+  9 |                                                                                                          successfully
+ 10 | 
+ 11 | 
+ 12 |                                                                                                         Yes        No
+ 13 | 
+ 14 | Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+ 15 | Codes of Practice
+ 16 | 
+ 17 | Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 18 | 
+ 19 | 
+ 20 | Refer to the completed JSA for the task
+ 21 | 
+ 22 | 
+ 23 | 
+ 24 | Ensure gas detector is on and carried on your person
+ 25 | 
+ 26 | 
+ 27 | Assemble cable drum stand and fit drum to cable following all manual handling requirements.
+ 28 | 
+ 29 | 
+ 30 | Clean any silt from bottom of pit
+ 31 | 
+ 32 | Rod conduit
+ 33 | 
+ 34 | 
+ 35 | Attach hauling line and draw through conduit
+ 36 | 
+ 37 | Attach cleaning brush to hauling line and clean debris from conduit
+ 38 | 
+ 39 | 
+ 40 | 
+ 41 | Prove conduit with appropriate size slug
+ 42 | 
+ 43 | 
+ 44 | Leave hauling line in conduit
+ 45 | 
+ 46 | 
+ 47 | Flame brush cable end
+ 48 | 
+ 49 | 
+ 50 | Fit endcap and shrink to seal cable
+ 51 | 
+ 52 | 
+ 53 | Submit your completed work to your supervisor (assessor) for inspection
+ 54 | 
+ 55 | 
+ 56 | Task Outcome:                                                         Satisfactory                    Not Satisfactory
+ 57 | 
+ 58 | Assessor signature
+ 59 | 
+ 60 | Assessor name
+ 61 | 
+ 62 | Date
+ 63 | 
+ 64 | 
+ 65 | 
+ 66 | 
+ 67 |     ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                       Page 22 of 45
+
+========== PAGE 23 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 3
+  5 | Performance Criteria Mapping
+  6 | 
+  7 |                                            Performance Criteria assessed in this task – ICTCBL249                                       Tick Completed
+  8 | 
+  9 |  1.1 Arrange access to site according to required procedure
+ 10 | 
+ 11 |  1.2 Inform appropriate personnel of identified hazards on worksite
+ 12 | 
+ 13 |  1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorised personnel
+ 14 | 
+ 15 |  1.4 Obtain information about proposed locations of other services from relevant authorities
+ 16 | 
+ 17 |  1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines
+ 18 | 
+ 19 |  1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS)
+ 20 |      And environmental requirements
+ 21 |  3.1 Handle existing cables in a way that avoids cable damage
+ 22 |  3.2 Use roping techniques to prove that underground conduit is clear for hauling
+ 23 | 
+ 24 |  3.3 Attach cable to rope for hauling, lubricate cable as required and haul at correct tension, maintaining smooth passage
+ 25 |      between dispenser and hauler
+ 26 |  3.4 Haul cable through conduit to facilitate aerial to underground transition/underground to aerial transition, as required by
+ 27 |      the design
+ 28 |  3.5 Maintain cable and services separations in parallel runs and crossovers to meet manufacturer and regulatory requirements
+ 29 | 
+ 30 |  3.6 Maintain sufficient cable length allowance for jointing and ensure cable is laid up and bent within bending radius
+ 31 |      tolerance for cable materials in underground enclosure
+ 32 |  4.1 Seal cables according to enterprise requirements to ensure no sheath damage
+ 33 | 
+ 34 |  4.2 Tag cable for future identification
+ 35 | 
+ 36 |  4.3 Test cable for continuity
+ 37 | 
+ 38 |  4.4 Record and report test results for escalation
+ 39 | 
+ 40 |  4.5Record any approved alteration to original design using correct symbols and return to appropriate personnel
+ 41 | 
+ 42 |  4.5Complete and sign reports, as required, according to enterprise policy
+ 43 | 
+ 44 |  4.6 Reinstate site to customer satisfaction and dispose of waste in an environmentally safe manner
+ 45 | 
+ 46 |  4.6 Certify by appropriate personnel about job completion and obtain sign-off
+ 47 | 
+ 48 | 
+ 49 | 
+ 50 | * Continued over page....
+ 51 | 
+ 52 | 
+ 53 | 
+ 54 | 
+ 55 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 23 of 45
+
+========== PAGE 24 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 3
+  5 | Performance Criteria Mapping Continued
+  6 | 
+  7 |                                         Performance Criteria assessed in this task – ICTCBL329                                        Tick Completed
+  8 | 
+  9 |  1.1 Access site according to required enterprise procedures
+ 10 | 
+ 11 |  1.2 Verify cable installation requirements from plans and recognise constraints
+ 12 | 
+ 13 |  1.3 Identify from plans, correct duct to be hauled
+ 14 | 
+ 15 |  1.4 Inform appropriate personnel of existing and potential worksite hazards
+ 16 | 
+ 17 |  1.5 Obtain information about location of other services from relevant authorities
+ 18 | 
+ 19 |  1.6 Select suitable tools, equipment, and protective equipment to meet required industry standards.
+ 20 | 
+ 21 |  1.7 Check for dangerous gases and place guards around open manholes following work health and safety (WHS)
+ 22 |      and environmental requirements
+ 23 |  1.8 Confirm correct duct/conduit to be utilised for hauling at site and access to intermediate manholes/pits along the
+ 24 |      hauling route
+ 25 |  1.10 Set-up cable installation equipment according to manufacturer requirements and enterprise guidelines
+ 26 | 
+ 27 |  2.1Attach cable to hauling feeder according to manufacturer specifications
+ 28 | 
+ 29 |  2.2Employ cable slippers or rollers to ensure no sheath damage when hauling into and out of enclosures
+ 30 | 
+ 31 |  2.5 Lubricate cable and haul evenly at correct tension to reduce risk of cable damage
+ 32 | 
+ 33 |  3.5 Maintain sufficient cable length allowance for jointing and ensure cable is housed within bending radius lerance for cable
+ 34 |  materials in an underground enclosure
+ 35 |  2.7 Maintain cable and services separations in parallel runs and crossovers according to manufacturer and egulatory requirements
+ 36 | 
+ 37 |  3.1 Tag all cables to enable future identification
+ 38 | 
+ 39 |  3.2.2 Seal cable ends according to enterprise requirements to prevent entrance of foreign material
+ 40 | 
+ 41 |  3.3 Place cable on supports in enclosures to reduce damage to conductors and enable ease of access for maintenance
+ 42 | 
+ 43 |  3.5 Complete installation reports and design amendments accurately, and file promptly according to customer requirements
+ 44 | 
+ 45 |  3.6 Reinstate site to customer satisfaction and dispose of waste in environmentally safe manner as required
+ 46 | 
+ 47 |  3.7 Notify appropriate personnel and obtain sign-off
+ 48 | 
+ 49 |          Initial Attempt                     Initial Attempt                   1st Reattempt                   2nd Reattempt             Assessors
+ 50 |          Circle S or NYS                           Date                           S or NYS                        S or NYS                Initials
+ 51 |                                                                                     Date                           & Date
+ 52 | 
+ 53 |              S/NYS                                / /                              S/NYS                           S/NYS
+ 54 |                                                                                     / /                             / /
+ 55 | 
+ 56 | 
+ 57 | 
+ 58 | 
+ 59 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                             Page 24 of 45
+
+========== PAGE 25 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 3
+  5 | 
+  6 | Performance Evidence Mapping
+  7 | 
+  8 |                                        Performance Evidence assessed in this task-ICTCBL249                                           Tick Completed
+  9 |  PE1. plan the works and prepare the site
+ 10 |  PE2. read and interpret drawings and designs to interpret installation requirements
+ 11 |  PE3. haul cable applying related work health and safety (WHS) requirements and work practices
+ 12 |  PE5. use cable dispensing equipment
+ 13 |  PE6. use specialised hand or power tools and equipment for hauling cable safely
+ 14 |  PE7. test the installation, document, and escalate the test result
+ 15 |  PE8. prepare all reports and records to industry and enterprise standards.
+ 16 | 
+ 17 | 
+ 18 |                                        Performance Evidence assessed in this task-ICTCBL329                                           Tick Completed
+ 19 |  PE1. use the correct type of rope for cable hauling
+ 20 |  PE3. haul underground cable by applying work health and safety (WHS) requirements, work practices and industry standards
+ 21 |  PE4. use specialised hand or power tools and equipment for hauling cabling safely
+ 22 |  PE5. read and interpret plan drawings
+ 23 |  PE6. restore site and complete documentation
+ 24 |  PE7. comply with all related safety requirements and work practices.
+ 25 |          Initial Attempt                    Initial Attempt                   1st Reattempt                 2nd Reattempt                  Assessors
+ 26 |          Circle S or NYS                          Date                           S or NYS                      S or NYS                     Initials
+ 27 |                                                                                    Date                         & Date
+ 28 | 
+ 29 |              S/NYS                               / /                             S/NYS                           S/NYS
+ 30 |                                                                                   / /                             / /
+ 31 | 
+ 32 | 
+ 33 | 
+ 34 | 2nd reattempt cannot be undertaken on the same date as the initial and 1st reattempt. (see Instructions to Students) The last date of this observation
+ 35 | is to match the date for this assessment on the assessment outcome page.
+ 36 | 
+ 37 | 
+ 38 | 
+ 39 | 
+ 40 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 25 of 45
+
+========== PAGE 26 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 3
+  5 | Timing
+  6 | Your assessor will advise you of the due date of these submissions.
+  7 | Assessment Instructions
+  8 | Complete the following activities:
+  9 |     1.   Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice
+ 10 |     2.   Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 11 |     3.   Refer to the completed JSA for the task
+ 12 |     4.   Ensure gas detector is on and carried on your person
+ 13 |     5.   6. Attach cable grip to cable and tape on
+ 14 |     6.   Ensure cable guides/slippers are installed correctly
+ 15 |     7.   Attach hauling rope to cable grip eye and tie off securely.
+ 16 |     8.   Attach a new hauling rope to the cable grip eye
+ 17 |     9.   Lubricate the cable
+ 18 |     10. Haul the cable ensuring that you do not exceed the manufacturers hauling tension
+ 19 |     11. Ensure sufficient cable is left in pits for jointing and cut from drum.
+ 20 |     12. Flame brush cable end
+ 21 |     13. Fit endcap and shrink to seal cable
+ 22 |     14. Fit cable tags to both ends of cable
+ 23 |     15. Coil excess cable and secure to cable supports
+ 24 |     16. Ensure sufficient separation from other services in pits
+ 25 |     17. Test the continuity of the cable
+ 26 |     18. Close pits
+ 27 |     19. Restore site and clean and return all tools and equipment to the appropriate location
+ 28 |     20. Complete red line mark-up of plan showing completed work
+ 29 |     21. Complete project sign off sheet and get customer (assessor) approval
+ 30 |     22. Submit your completed work to your supervisor (assessor) for inspection
+ 31 | 
+ 32 | 
+ 33 | Timing
+ 34 | Your assessor will advise you of the due date of these submissions.
+ 35 | 
+ 36 | Plan of proposed work
+ 37 | 
+ 38 | 
+ 39 |                      MH1                                         Pit 1                                Pit 2                            Pit 3
+ 40 |                                      0100-0140                                    0101-0130                        0100-0120
+ 41 | 
+ 42 |                                 50/0.40 P50 2.15                              50/0.40 P50 2.10                50/0.40 P50 2.30
+ 43 | 
+ 44 | 
+ 45 | 
+ 46 | 
+ 47 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                              Page 26 of 45
+
+========== PAGE 27 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 3
+  5 | 
+  6 | 
+  7 | Marked up plan of completed work
+  8 | 
+  9 | 
+ 10 | 
+ 11 |               MH1                                      Pit 1                             Pit 2                  Pit 3
+ 12 |                                  0100-0140                               0101-0130                 0100-0120
+ 13 | 
+ 14 |                              50/0.40 P50 2.15                         50/0.40 P50 2.10           50/0.40 P50 2.30
+ 15 | 
+ 16 | 
+ 17 | 
+ 18 | Test result
+ 19 | Loop resistance of 1" pair ________________Ohms
+ 20 | 
+ 21 | 
+ 22 | 
+ 23 | 
+ 24 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                            Page 27 of 45
+
+========== PAGE 28 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 3 - Checklist
+  5 | Student's name:
+  6 | Did the student:                                                                                         Completed            Comments
+  7 |                                                                                                          successfully
+  8 |                                                                                                         Yes        No
+  9 | 
+ 10 | Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+ 11 | Codes of Practice
+ 12 | Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 13 | 
+ 14 | Refer to the completed JSA for the task
+ 15 | Ensure gas detector is on and carried on your person
+ 16 | 
+ 17 | Ensure cable guides/slippers are installed correctly
+ 18 | 
+ 19 | Attach cable grip to cable and tape on
+ 20 | 
+ 21 | Attach hauling rope to cable grip eye and tie off securely.
+ 22 | 
+ 23 | Attach a new hauling rope to the cable grip eye
+ 24 | 
+ 25 | Lubricate the cable
+ 26 | 
+ 27 | Haul the cable ensuring hauling tension is not exceeded
+ 28 | 
+ 29 | Ensure cable is cut with sufficient left in pits for jointing
+ 30 | 
+ 31 | Flame brush cable end
+ 32 | 
+ 33 | Fit endcap and shrink to seal cable
+ 34 | 
+ 35 | Fit cable tags to both ends of cable
+ 36 | 
+ 37 | Coil excess cable and secure to cable supports
+ 38 | 
+ 39 | Test the continuity of the cable
+ 40 | 
+ 41 | Close pits
+ 42 | 
+ 43 | Ensure sufficient separation from other services in pits
+ 44 | 
+ 45 | Restore site and clean and return all tools and equipment to the appropriate location
+ 46 | 
+ 47 | Complete red line mark-up of plan showing completed work
+ 48 | 
+ 49 | Complete project sign off sheet and get approval
+ 50 | 
+ 51 | Submit your completed work to your supervisor (assessor) for inspection
+ 52 | 
+ 53 | 
+ 54 | 
+ 55 | Task Outcome:                                                      Satisfactory                       Not Satisfactory
+ 56 | 
+ 57 | Assessor signature
+ 58 | 
+ 59 | Assessor name
+ 60 | 
+ 61 | Date
+ 62 | 
+ 63 | 
+ 64 |     ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                       Page 28 of 45
+
+========== PAGE 29 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 4 - Checklist
+  5 | Student's name:
+  6 | 
+  7 | Did the student:                                                                                         Completed            Comments
+  8 |                                                                                                          successfully
+  9 |                                                                                                         Yes        No
+ 10 | 
+ 11 | Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+ 12 | Codes of Practice
+ 13 | Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 14 | 
+ 15 | Refer to the completed JSA for the task
+ 16 | Ensure gas detector is on and carried on your person
+ 17 | 
+ 18 |  Set up all equipment
+ 19 | 
+ 20 | Excavate the site
+ 21 | 
+ 22 | Shore up the excavation
+ 23 | 
+ 24 | Install one of the pits
+ 25 | 
+ 26 | Install the connecting conduits to the adjacent pits
+ 27 | 
+ 28 | Backfill site
+ 29 | 
+ 30 | Rod conduit
+ 31 | 
+ 32 | Attach hauling line and draw through conduit
+ 33 | 
+ 34 | Attach cleaning brush to hauling line and clean debris from conduit
+ 35 | 
+ 36 | Prove conduit with appropriate size slug
+ 37 | 
+ 38 | Leave hauling line in conduit
+ 39 | 
+ 40 | Submit your completed work to your supervisor (assessor) for inspection
+ 41 | 
+ 42 | 
+ 43 | 
+ 44 | Task Outcome:                                                         Satisfactory                    Not Satisfactory
+ 45 | 
+ 46 | Assessor signature
+ 47 | 
+ 48 | Assessor name
+ 49 | 
+ 50 | Date
+ 51 | 
+ 52 | 
+ 53 | 
+ 54 | 
+ 55 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                      Page 29 of 45
+
+========== PAGE 30 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 4
+  5 | Performance Criteria Mapping
+  6 | 
+  7 |                                          Performance Criteria assessed in this task – ICTCBL334                                           Tick Completed
+  8 | 
+  9 |  1.1 Obtain construction design plan from appropriate personnel and determine and obtain type of under* enclosure specified
+ 10 | 
+ 11 |  1.2 Arrange access to site according to required enterprise procedure
+ 12 | 
+ 13 |  1.3 Inform appropriate personnel of existing and potential worksite hazards
+ 14 | 
+ 15 |  1.4 Verify location of proposed installation according to appropriate plans obtained from authorised pe *
+ 16 | 
+ 17 |  1.5 Obtain information about location of other services from relevant authorities
+ 18 | 
+ 19 |  1.6 Organise plant, tools and equipment for given work and safe work practice
+ 20 |  1.7 Place recognised barriers during construction according to safety and enterprise requirements
+ 21 |  2.1 Excavate site, maintaining stability and allowing ease of access
+ 22 |  2.2 Install enclosure or pit according to design specifications, and work health and safety (WHS) and environmental requirements
+ 23 | 
+ 24 |  2.3 Install conduit according to specifications and manufacturer requirements, ensuring internal surfa *
+ 25 |  from impediments and sharp edges for cable hauling
+ 26 |  2.4 Seal conduit entry into enclosure against foreign matter
+ 27 | 
+ 28 |  2.5 Install cable support structure and access facilities in pits according to specifications
+ 29 | 
+ 30 |  3.1 Complete backfill safely using suitable soil and materials that ensure conduit protection
+ 31 | 
+ 32 |  3.3 Restore site according to requirements of enterprise or approving authority and customer satisfa *
+ 33 | 
+ 34 |  3.4 Complete reports on installation and design amendments accurately and file promptly according * requirements
+ 35 | 
+ 36 |  3.5 Notify appropriate personnel of job completion and obtain sign-off
+ 37 | 
+ 38 |          Initial Attempt                     Initial Attempt                     1st Reattempt               2nd Reattempt                   Assessors
+ 39 |          Circle S or NYS                           Date                             S or NYS                    S or NYS                      Initials
+ 40 |                                                                                       Date                       & Date
+ 41 | 
+ 42 |               S/NYS                                / /                                S/NYS                      S/NYS
+ 43 |                                                                                        / /                        / /
+ 44 | 
+ 45 | 
+ 46 | 
+ 47 | 
+ 48 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                 Page 30 of 45
+
+========== PAGE 31 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 4
+  5 | Assessment Task Description
+  6 | For this assessment, you are working as a telco technician. You have been assigned a task as part of a team by your supervisor to install 4 new pits in
+  7 | preparation for jointing. You will be required set up all equipment, excavate the site, shore up the excavation, install one of the pits, install the
+  8 | connecting conduits to the adjacent pits, install a joint support bar and reinstate the site and prove the conduit and install rope in preparation for
+  9 | hauling.
+ 10 | 
+ 11 | Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and addressed hazards,
+ 12 | unwanted events, and potential risks for the job.
+ 13 | 
+ 14 | 
+ 15 | Resources Required
+ 16 |      •    Learners Guide
+ 17 |      •    Student Assessment Pack
+ 18 |      •    Blue or Black Pen
+ 19 |      •    WHS/OHS Acts/Regulations as applicable to the state of delivery
+ 20 |      •    Codes of practice
+ 21 |                o How to manage work health and safety risks
+ 22 |                o Managing the work environment and facilities
+ 23 |                o Managing risks of plant in the workplace
+ 24 |                o Managing noise preventing hearing loss work
+ 25 |                o Managing the risk of falls at workplaces
+ 26 |      •    Workplace procedure 01687W01 Working at Telstra Manholes and Pits
+ 27 |      •    JSA-Included in this assessment pack
+ 28 |      •    Installed #6 pit
+ 29 |      •    #6 Pits x1
+ 30 |      •    Manhole guards*
+ 31 |      •    Pit keys x2*
+ 32 |      •    Gas detector*
+ 33 |      •    Gas action chart
+ 34 |      •    Shovel
+ 35 |      •    Shoring boards
+ 36 |      •    Conduit rodder
+ 37 |      •    Hauling rope*
+ 38 |      •    Sand scoop*
+ 39 |      •    Conduit cleaning brush*
+ 40 |      •    Conduits slug*
+ 41 |      •    50mm white UPV Conduit x 2 metres*
+ 42 |      •    50mm PVC Bush x 2*
+ 43 |      •    PVC Pipe adhesive and primer*
+ 44 |      •    Fibreglass joint support bar x 0.5metres
+ 45 |      •    10mm paintbrush*
+ 46 |      •    Hole saw 66mm*
+ 47 |      •    Hack saw*
+ 48 |      •    Deburring tool*
+ 49 |      •    Retro reflective vest*
+ 50 |      •    Gloves*
+ 51 |      •    Hard Hat*
+ 52 |      •    Safety glasses*
+ 53 | 
+ 54 | Manufacturers specifications and operating instructions for all tools & equipment specified with a *
+ 55 | 
+ 56 | 
+ 57 | 
+ 58 | 
+ 59 |       ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                 Page 31 of 45
+
+========== PAGE 32 ==========
+  1 |       ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 4
+  5 | Timing
+  6 | Your assessor will advise you of the due date of these submissions.
+  7 | 
+  8 | Assessment Instructions
+  9 | Complete the following activities:
+ 10 | 1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice
+ 11 | 2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 12 | 3. Refer to the completed JSA for the task
+ 13 | 4. Ensure gas detector is on and carried on your person
+ 14 | 5. Set up all equipment
+ 15 | 6. Excavate the site
+ 16 | 7. Shore up the excavation
+ 17 | 8. Install one of the pits
+ 18 | 9. Install the connecting conduits to the adjacent pits
+ 19 | 10. Backfill site
+ 20 | 11. Rod conduit
+ 21 | 12. Attach hauling line and draw through conduit
+ 22 | 13. Attach cleaning brush to hauling line and clean debris from conduit
+ 23 | 14. Prove conduit with appropriate size slug
+ 24 | 15. Leave hauling line in conduit
+ 25 | 16. Install a joint support bar in the pit
+ 26 | 17. Fit the pit gasket and pit lid
+ 27 | 18. Submit your completed work to your supervisor (assessor) for inspection
+ 28 | 
+ 29 | 
+ 30 | 
+ 31 | 
+ 32 | Plan of proposed work
+ 33 | 
+ 34 | 
+ 35 | 
+ 36 | 
+ 37 |       ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                       Page 32 of 45
+
+========== PAGE 33 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 5
+  5 | Performance Criteria Mapping
+  6 | 
+  7 |                                         Performance Criteria assessed in this task – ICTCBL249                                          Tick Completed
+  8 | 
+  9 |  1.1Arrange access to site according to required procedure
+ 10 | 
+ 11 |  1.2Inform appropriate personnel of identified hazards on worksite
+ 12 | 
+ 13 |  1.3 Confirm hauling location of proposed cable according to appropriate plan specifications obtained from authorised nel
+ 14 |  1.4 Obtain information about proposed locations of other services from relevant authorities
+ 15 | 
+ 16 |  1.5 Set up tools and equipment required for safe work practice according to enterprise guidelines
+ 17 |  1.6 Check for dangerous gases and place guards around open manholes according to work health and safety (WHS) and mental
+ 18 |  requirements
+ 19 |  2.1InstaIl cable protection on pole for transition using approved hardware according to industry standards and asset owner ments
+ 20 |  2.2 Connect conduit to pits or manholes as designed according to industry standards and asset owner requirements
+ 21 | 
+ 22 |  2.3 Haule existing cables in a way that avoids cable damage
+ 23 | 
+ 24 |  2.4 Rodding techniques to prove that underground conduit is clear for hauling
+ 25 | 
+ 26 |  2.5 Attach cable to rope for hauling, lubricate cable as required and haul at correct tension, maintaining smooth passage dispenser
+ 27 |  and hauler
+ 28 |  2.5Pull cable through conduit to facilitate aerial to underground transition/underground to aerial transition, as required by
+ 29 | 
+ 30 |  2.5 Retain sufficient cable length allowance for jointing and ensure cable is laid up and bent within bending radius tolerance
+ 31 |  materials in underground enclosure
+ 32 |  2.7 Cables according to enterprise requirements to ensure no sheath damage
+ 33 | 
+ 34 |  2.8 Attach ID tag for future identification
+ 35 | 
+ 36 |  2.8 Clean the site to customer satisfaction and dispose of waste in an environmentally safe manner
+ 37 | 
+ 38 |  2.9 Appropriate personnel about job completion and obtain sign-off
+ 39 | 
+ 40 |          Initial Attempt                       Initial Attempt                1st Reattempt                    2nd Reattempt               Assessors
+ 41 |          Circle S or NYS                             Date                        S or NYS                         S or NYS                  Initials
+ 42 |                                                                                    Date                            & Date
+ 43 | 
+ 44 |               S/NYS                                 / /                           S/NYS                             S/NYS
+ 45 |                                                                                    / /                               / /
+ 46 | 
+ 47 | 
+ 48 | 
+ 49 | 
+ 50 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 33 of 45
+
+========== PAGE 34 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 5
+  5 | 
+  6 | Performance Evidence Mapping
+  7 | 
+  8 |                                        Performance Evidence assessed in this task-ICTCBL249                                           Tick Completed
+  9 |  PE1. plan the works and prepare the site
+ 10 |  PE2. read and interpret drawings and designs to interpret installation requirements
+ 11 |  PE3. haul cable applying related work health and safety (WHS) requirements and work practices
+ 12 |  PE4. transition cable from aerial to underground or underground to aerial
+ 13 |  PE5. use cable dispensing equipment
+ 14 |  PE6. use specialized hand or power tools and equipment for hauling cable safely
+ 15 |          Initial Attempt                    Initial Attempt                  1st Reattempt                  2nd Reattempt                  Assessors
+ 16 |          Circle S or NYS                          Date                          S or NYS                       S or NYS                     Initials
+ 17 |                                                                                   Date                          & Date
+ 18 | 
+ 19 |              S/NYS                               / /                            S/NYS                            S/NYS
+ 20 |                                                                                  / /                              / /
+ 21 | 
+ 22 | 
+ 23 | 
+ 24 | 2nd reattempt cannot be undertaken on the same date as the initial and 1st reattempt. (see Instructions to Students) The last date of this observation
+ 25 | is to match the date for this assessment on the assessment outcome page.
+ 26 | 
+ 27 | 
+ 28 | 
+ 29 | 
+ 30 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 34 of 45
+
+========== PAGE 35 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 6
+  5 | 
+  6 | Your assessor will advise you of the due date of these submissions.
+  7 | Assessment Instructions
+  8 | Complete the following activities:
+  9 |    1. Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+ 10 |        Codes of Practice.
+ 11 |    2. Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 12 |    3. Refer to the completed JSA for the task.
+ 13 |    4. Ensure gas detector is on and carried on your person.
+ 14 |    5. Set up all equipment.
+ 15 |    6. Refer to the construction plan.
+ 16 |    7. Mark out the excavation area using marking paint.
+ 17 |    8. Excavate the site.
+ 18 |    9. Shore up the excavation.
+ 19 |    10. Install an earth mat and connecting earth wire in preparation for the manhole installation.
+ 20 |    11. Install a foundation base for the manhole.
+ 21 |    12. Install the prefabricated manhole and plinth.
+ 22 |    13. Install the #6 pit.
+ 23 |    14. Install the connecting conduits to the adjacent pits.
+ 24 |    15. Backfill site.
+ 25 |    16. Rod conduit
+ 26 |    17. Attach hauling line and draw through conduit.
+ 27 |    18. Attach cleaning brush to hauling line and clean debris from conduit.
+ 28 |    19. Prove conduit with appropriate size slug.
+ 29 |    20. Leave hauling line in conduit.
+ 30 |    21. Install a joint support bar in the pit.
+ 31 |    22. Fit the pit gasket and pit lid.
+ 32 |    23. Submit your completed work to your supervisor (assessor) for inspection.
+ 33 | 
+ 34 | Plan of proposed work
+ 35 | 
+ 36 | 
+ 37 | 
+ 38 | 
+ 39 |     ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024             Page 35 of 45
+
+========== PAGE 36 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 6
+  5 | 
+  6 | Assessment Task Description
+  7 | For this assessment, you are working as a telco technician. You have been assigned a task as part of a team by your supervisor to install a prefabricated
+  8 | manhole, conduit and a 6 pit in preparation for jointing. You will be required set up all equipment, excavate the site, shore up the excavation, install
+  9 | base material, install an earth mat, install the prefabricated manhole, install the #6 pit, install the connecting conduits from the manhole to the
+ 10 | adjacent pit and reinstate the site and prove the conduit and install rope in preparation for hauling.
+ 11 | 
+ 12 | Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and addressed hazards,
+ 13 | unwanted events, and potential risks for the job.
+ 14 | 
+ 15 | 
+ 16 | Resources Required
+ 17 |     •    Learners Guide
+ 18 |     •    Student Assessment Pack
+ 19 |     •    Blue or Black Pen
+ 20 |     •    WHS/OHS Acts/Regulations as applicable to the state of delivery.
+ 21 |     •    Codes of practice
+ 22 |               o How to manage work health and safety risks
+ 23 |               o Managing the work environment and facilities
+ 24 |               o Managing risks of plant in the workplace
+ 25 |               o Managing noise preventing hearing loss work
+ 26 |               o Managing the risk of falls at workplaces
+ 27 |               o Managing electrical risks in the workplace
+ 28 |     •    Workplace procedure 01687W01 Working at Telstra Manholes and Pits
+ 29 |     •    JSA-Included in this assessment pack.
+ 30 |     •    Cable and Conduit Plans - Included in this assessment pack.
+ 31 |     •    1 x Prefabricated manhole with plinth and covers.
+ 32 |     •    1 x #6 Pits x1
+ 33 |     •    4 x sets of Manhole guards*
+ 34 |     •    Pit keys x2*
+ 35 |     •    Gas detector*
+ 36 |     •    Gas action chart
+ 37 |     •    Shovel
+ 38 |     •    Shoring boards
+ 39 |     •    Conduit rodder
+ 40 |     •    Hauling rope*
+ 41 |     •    Sand scoop*
+ 42 |     •    Conduit cleaning brush*
+ 43 |     •    Conduit slug*
+ 44 |     •    50mm white UPV Conduit x 2 meters*
+ 45 |     •    50mm PVC Bush x 2*
+ 46 |     •    PVC Pipe adhesive and primer*
+ 47 |     •    Fiberglass joint support bar x 0.5metres
+ 48 |     •    10mm paintbrush*
+ 49 |     •    Hole saw 66mm*
+ 50 |     •    Hack saw*
+ 51 |     •    Deburring tool*
+ 52 |     •    Backfill material (sand)
+ 53 | 
+ 54 | 
+ 55 | 
+ 56 | 
+ 57 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                 Page 36 of 45
+
+========== PAGE 37 ==========
+  1 |    ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 6
+  5 | 
+  6 | Assessment Resources – Continued
+  7 | 
+  8 |   •   4 leg chain
+  9 | 
+ 10 |   •   Excavator (optional)
+ 11 | 
+ 12 |   •   Large Builder's Square
+ 13 | 
+ 14 |   •   Marking paint
+ 15 | 
+ 16 |   •   Crane (as applicable to the type of prefabricated manhole)
+ 17 | 
+ 18 |   •   Crushed Rock
+ 19 | 
+ 20 |   •   Fixing adhesive
+ 21 | 
+ 22 |   •   Formwork material
+ 23 | 
+ 24 |   •   Manhole fittings, bearers, anchor irons and earthing systems
+ 25 | 
+ 26 |   •   Mechanical ditching machine (optional)
+ 27 | 
+ 28 |   •   Prefabricated concrete plinth and template.
+ 29 | 
+ 30 |   •   Ready mix concrete
+ 31 | 
+ 32 |   •   Shoring system
+ 33 | 
+ 34 |   •   Earthing Kit
+ 35 | 
+ 36 |   •   Warning Signs
+ 37 | 
+ 38 |   •   Wire Loops and associated lifting slings and shackles.
+ 39 | 
+ 40 |   •   Retro reflective vest*
+ 41 | 
+ 42 |   •   Gloves*
+ 43 | 
+ 44 |   •   Hard Hat*
+ 45 | 
+ 46 |   •   Safety glasses*
+ 47 | 
+ 48 |   Manufacturer's specifications and operating instructions for all tools & equipment specifi *
+ 49 | 
+ 50 | 
+ 51 | 
+ 52 | 
+ 53 |    ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                Page 37 of 45
+
+========== PAGE 38 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 6 - Checklist
+  5 | 
+  6 | Student's name:
+  7 |                                                                                                          Completed            Comments
+  8 |                                                                                                          successfully
+  9 | Did the student:                                                                                        Yes       No
+ 10 | 
+ 11 | Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+ 12 | Codes of Practice
+ 13 | Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 14 | Refer to the completed JSA for the task
+ 15 | Ensure gas detector is on and carried on your person
+ 16 | 
+ 17 | Set up all equipment
+ 18 | Refer to the construction plan.
+ 19 | 
+ 20 | Mark out the excavation area using marking paint
+ 21 | 
+ 22 | Excavate the site.
+ 23 | 
+ 24 | Shore up the excavation
+ 25 | 
+ 26 | Install an earth mat and connecting earth wire in preparation for the manhole installation.
+ 27 | 
+ 28 | Install a foundation base for the manhole.
+ 29 | 
+ 30 | Install the prefabricated manhole and plinth.
+ 31 | 
+ 32 | Install the #6 pit.
+ 33 | 
+ 34 | Install the connecting conduits to the adjacent pits.
+ 35 | 
+ 36 | Backfill site
+ 37 | 
+ 38 | Rod conduit
+ 39 | 
+ 40 | Attach hauling line and draw through conduit
+ 41 | 
+ 42 | Attach cleaning brush to hauling line and clean debris from conduit
+ 43 | 
+ 44 | Prove conduit with appropriate size slug
+ 45 | 
+ 46 | Leave hauling line in conduit
+ 47 | 
+ 48 | Install a joint support bar in the pit
+ 49 | 
+ 50 | Fit the pit gasket and pit lid
+ 51 | 
+ 52 | Submit your completed work to your supervisor (assessor) for inspection
+ 53 | 
+ 54 | 
+ 55 | Task Outcome:                                                         Satisfactory                    Not Satisfactory
+ 56 | 
+ 57 | Assessor signature
+ 58 | 
+ 59 | Assessor name
+ 60 | 
+ 61 | Date
+ 62 | 
+ 63 | 
+ 64 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                      Page 38 of 45
+
+========== PAGE 39 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 7
+  5 | Performance Criteria Mapping
+  6 |                                         Performance Criteria assessed in this task – ICTCBL334                                          Tick Completed
+  7 | 
+  8 |  1.2 Arrange access to site according to required enterprise procedure
+  9 |  1.3 Inform appropriate personnel of existing and potential worksite hazards
+ 10 |  1.4 Verify location of proposed installation according to appropriate plans obtained from authorized *
+ 11 |  1.5 Obtain information about location of other services from relevant authorities
+ 12 |  1.6 Organise plant, tools, and equipment for given work and safe work practice
+ 13 |  1.7 Place recognised barriers during construction according to safety and enterprise requirements
+ 14 |  2.1 Excavate site, maintaining stability and allowing ease of access
+ 15 |  3.1 Complete backfill safely using suitable soil and materials that ensure conduit protection
+ 16 |  3.2 Recover obsolete materials and equipment and return to appropriate point for disposal
+ 17 |  3.3 Restore site according to requirements of enterprise or approving authority and customer ***
+ 18 |  3.4 Complete reports on installation and design amendments accurately and file promptly according requirements
+ 19 |  3.5 Notify appropriate personnel of job completion and obtain sign-off
+ 20 |          Initial Attempt                   Initial Attempt                    1st Reattempt                    2nd Reattempt               Assessors
+ 21 |          Circle S or NYS                         Date                            S or NYS                         S or NYS                  Initials
+ 22 |                                                                                    Date                            & Date
+ 23 | 
+ 24 |              S/NYS                               / /                              S/NYS                            S/NYS
+ 25 |                                                                                    / /                              / /
+ 26 | 
+ 27 | 
+ 28 | 
+ 29 | Performance Evidence Mapping
+ 30 | 
+ 31 |                                        Performance Evidence assessed in this task-ICTCBL334                                         Tick Completed
+ 32 |  PE1. interpret and apply design plans and prepare for construction
+ 33 |  PE2. use specialised hand or power tools and equipment normally used for excavation ,installation and site
+ 34 |       restoration, safely
+ 35 | 
+ 36 |  PE3. excavate for installation of an enclosure and conduit according to industry standard Work health and safety requirements
+ 37 |  and work practices
+ 38 | 
+ 39 |         Initial Attempt                    Initial Attempt                  1st Reattempt                     2nd Reattempt               Assessors
+ 40 |         Circle S or NYS                          Date                          S or NYS                          S or NYS                  Initials
+ 41 |                                                                                  Date                             & Date
+ 42 | 
+ 43 |              S/NYS                              / /                              S/NYS                           S/NYS
+ 44 |                                                                                   / /                             / /
+ 45 | 
+ 46 | 
+ 47 | 
+ 48 | 
+ 49 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                              Page 39 of 45
+
+========== PAGE 40 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 7
+  5 | Assessment Instructions
+  6 | Complete the following activities:
+  7 | 
+  8 |     1.   Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate Codes of Practice
+  9 | 
+ 10 |     2.   Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 11 | 
+ 12 |     3.   Refer to the completed JSA for the task
+ 13 | 
+ 14 |     4.   Ensure gas detector is on and carried on your person
+ 15 | 
+ 16 |     5.   Set up all equipment
+ 17 | 
+ 18 |     6.   Excavate the site
+ 19 | 
+ 20 |     7.   Remove pit and conduit
+ 21 | 
+ 22 |     8.   Install one of the pits
+ 23 | 
+ 24 |     9.   Backfill site
+ 25 | 
+ 26 |     10. Compact and restore site to ground level
+ 27 | 
+ 28 |     11. Complete project sign off sheet
+ 29 | 
+ 30 |     12. Submit your completed work to your supervisor (assessor) for inspection
+ 31 | 
+ 32 | 
+ 33 | 
+ 34 | Timing
+ 35 | 
+ 36 | Your assessor will advise you of the due date of these submissions.
+ 37 | 
+ 38 | 
+ 39 | 
+ 40 | 
+ 41 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                              Page 40 of 45
+
+========== PAGE 41 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 7
+  5 | Assessment Task Description
+  6 | 
+  7 | For this assessment, you are working as a telco technician. You have been assigned a task by your supervisor to recover an obsolete pit and ducts. You
+  8 | are to excavate and remove the pit and conduits, backfill, and reinstate the site and recover or dispose of all equipment as directed.
+  9 | 
+ 10 | Prior to commencing the task, you are required to assess the work site and complete a Job Safety Analysis (JSA) to capture and addressed hazards,
+ 11 | unwanted events, and potential risks for the job.
+ 12 | 
+ 13 | 
+ 14 | Resources Required
+ 15 |     •    Learners Guide
+ 16 |     •    Student Assessment Pack
+ 17 |     •    Blue or Black Pen
+ 18 |     •    WHS/OHS Acts/Regulations as applicable to the state of delivery
+ 19 |     •    Codes of practice
+ 20 |          o How to manage work health and safety risks
+ 21 |          o Managing the work environment and facilities
+ 22 |          o Managing risks of plant in the workplace
+ 23 |          o Managing noise preventing hearing loss work
+ 24 |          o Managing the risk of falls at workplaces
+ 25 |     •    Workplace procedure 01687W01 Working at Telstra Manholes and Pits
+ 26 |     •    JSA-Included in this assessment pack
+ 27 |     •    Installed #6 Pit with conduits installed
+ 28 |     •    Manhole guards*
+ 29 |     •    Pit keys x2*
+ 30 |     •    Gas detector*
+ 31 |     •    Gas action chart
+ 32 |     •    Shovel
+ 33 |     •    Backfill material (sand)
+ 34 |     •    Retro reflective vest*
+ 35 |     •    Gloves*
+ 36 |     •    Hard Hat*
+ 37 |     •    Safety glasses*
+ 38 |     •    Manufacturers specifications and operating instructions for all tools & equipment specified with a*.
+ 39 | 
+ 40 | 
+ 41 | Timing
+ 42 | Your assessor will advise you of the due date of these submissions.
+ 43 | 
+ 44 | 
+ 45 | 
+ 46 | 
+ 47 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                               Page 41 of 45
+
+========== PAGE 42 ==========
+  1 |     ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 7 – Checklist
+  5 | 
+  6 | 
+  7 | Student's name:
+  8 |                                                                                                          Completed            Comments
+  9 |                                                                                                          successfully
+ 10 | Did the student:                                                                                        Yes       No
+ 11 | 
+ 12 | Ensure that all tasks will follow all applicable WHS/OHS requirements and procedures in appropriate
+ 13 | Codes of Practice
+ 14 | Refer to all tool/equipment instructions/manufacturers guidelines prior to use.
+ 15 | Refer to the completed JSA for the task
+ 16 | Ensure gas detector is on and carried on your person
+ 17 | 
+ 18 | Set up all equipment
+ 19 | Excavate the site.
+ 20 | 
+ 21 | Remove pit and conduit
+ 22 | 
+ 23 | Install one of the pits
+ 24 | 
+ 25 | Backfill site
+ 26 | 
+ 27 | Compact and restore site to ground level
+ 28 | 
+ 29 | Complete project sign off sheet
+ 30 | 
+ 31 | Submit your completed work to your supervisor (assessor) for inspection
+ 32 | 
+ 33 | 
+ 34 | 
+ 35 | Task Outcome:                                                      Satisfactory                       Not Satisfactory
+ 36 | 
+ 37 | Assessor signature
+ 38 | 
+ 39 | Assessor name
+ 40 | 
+ 41 | Date
+ 42 | 
+ 43 | 
+ 44 | 
+ 45 | 
+ 46 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                      Page 42 of 45
+
+========== PAGE 43 ==========
+  1 |    ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | 
+  4 | Practical Assessment Task 7 – Checklist
+  5 | Project Signoff Sheet
+  6 | 
+  7 | 
+  8 | 
+  9 | 
+ 10 |                                                   Project Sign-off Sheet
+ 11 |                         Project Name:                                 Project Manager:
+ 12 | 
+ 13 |                         Start Date:                                   Completion Date:
+ 14 |                         Project Duration:                             Customer:
+ 15 | 
+ 16 |                         Project Goal:
+ 17 | 
+ 18 | 
+ 19 | 
+ 20 |                         Project Deliverables:
+ 21 | 
+ 22 | 
+ 23 | 
+ 24 |                         Clients:
+ 25 | 
+ 26 | 
+ 27 |                         By signing this document, I acknowledge       By signing this document, I acknowledge
+ 28 |                         that I have delivered all levels the stated   that I have received all the stated
+ 29 |                         deliverables at the agreed to quality         deliverables at the agreed to quality
+ 30 |                         levels.                                       levels
+ 31 |                         Project Manager Name and Signature:           Customer Name and Signature:
+ 32 | 
+ 33 | 
+ 34 | 
+ 35 |                         Date:                                         Date:
+ 36 | 
+ 37 | 
+ 38 | 
+ 39 | 
+ 40 |                        Remarks
+ 41 | 
+ 42 | 
+ 43 | 
+ 44 | 
+ 45 |    ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                               Page 43 of 45
+
+========== PAGE 44 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | Performance Criteria Mapping
+  4 |                                          Performance Criteria assessed in this task - ICTCBL253                                            Tick Completed
+  5 | 
+  6 |  1.1 Obtain construction design plan from appropriate personnel to scope work and arrange for site access
+  7 |  1.2 Notify appropriate personnel of identified safety hazards and other services that will need to be considered
+  8 |  1.3 Obtain plant, tools, and safety equipment to perform tasks safely and efficiently
+  9 |  1.4 Determine type of underground pit/manhole required for project as specified in construction design plan
+ 10 |  2.1 Use tools according to enterprise guidelines and work health and safety (WHS) regulations
+ 11 |  2.2 Determine excavation meets specification of design plan
+ 12 |  2.3 Place foundation of suitable material to provide safe and stable footing prior to installing underground enclosure in excavation
+ 13 |  2.4 Place recognised barrier over construction where enclosure is to be installed overpower cables according to enterprise
+ 14 |  requirements or agreements with other authorities
+ 15 |  2.5 Install earth mat facility under enclosure as required by enterprise
+ 16 |  2.6 Install enclosure specified in construction design plan according to manufacturer specifications using specified materials
+ 17 |  3.1 Install conduit in trench to enterprise specifications
+ 18 |  3.2 Connect conduit to enclosure according to manufacturer specifications and industry practice
+ 19 |  4.1 Complete reports and record alterations to plans using appropriate symbols, according to enterprise policy
+ 20 |  4.2 Complete all labelling requirements according to industry standard
+ 21 |  4.5 Notify appropriate personnel of job completion and obtain sign-off
+ 22 |          Initial Attempt                    Initial Attempt                     1st Reattempt                   2nd Reattempt                 Assessors
+ 23 |          Circle S or NYS                          Date                             S or NYS                        S or NYS                    Initials
+ 24 |                                                                                      Date                           & Date
+ 25 |              S/NYS                                / /                               S/NYS                           S/NYS
+ 26 |                                                                                      / /                             / /
+ 27 | 
+ 28 | 
+ 29 | 
+ 30 | Performance Evidence Mapping
+ 31 | 
+ 32 |                                         Performance Evidence assessed in this task-ICTCBL253                                            Tick Completed
+ 33 | 
+ 34 |  PE1. interpret and apply design plans and prepare for construction
+ 35 | 
+ 36 |  PE2. install enclosures including pipe, pit, and prefabricated manholes
+ 37 |  PE3. construct in two different soil types: sand, rock, soil, or combination soil types
+ 38 | 
+ 39 |  PE4.shore an excavation site to meet enterprise and regulatory requirements
+ 40 | 
+ 41 |  PES. use specialised hand or power tools and equipment normally used for excavation, pipe, conduit installation and site
+ 42 |  restoration safely
+ 43 |  PE6. complete and document specified work
+ 44 | 
+ 45 |  PE7. apply related work health and safety (WHS) requirements and work practices associated with excavation, enclosure
+ 46 |  installation and site restoration.
+ 47 |          Initial Attempt                    Initial Attempt                    1st Reattempt                  2nd Reattempt                  Assessors
+ 48 |          Circle S or NYS                          Date                            S or NYS                       S or NYS                     Initials
+ 49 |                                                                                     Date                          & Date
+ 50 | 
+ 51 |              S/NYS                               / /                               S/NYS                            S/NYS
+ 52 |                                                                                     / /                              / /
+ 53 | 
+ 54 | 
+ 55 | 2nd reattempt cannot be undertaken on the same date as the initial and 1st reattempt. (see Instructions to Students) The last date of this observation
+ 56 | is to match the date for this assessment on the assessment outcome page.
+ 57 | 
+ 58 | 
+ 59 | 
+ 60 | 
+ 61 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                 Page 44 of 45
+
+========== PAGE 45 ==========
+  1 |      ICTCBL334 ICTCBL329 ICTCBL249 ICTCBL253 - Pit, Pipe, Manholes and Cable Hauling
+  2 | 
+  3 | Assessment Outcome
+  4 | Unit Code & Title:                                 ICTCBL334 ICTCBL329 ICTCBL249               USI
+  5 |                                                    ICTCBL253
+  6 | Course Title:                                      Pit, Pipe, Manholes and Cable Hauling
+  7 | Student Name:
+  8 | Cohort (if known):                                                                             Date Submitted:
+  9 | 
+ 10 | Trainer:                                                                                       Campus/On line/Distance:
+ 11 | 
+ 12 | Learner Instructions:                              All Learner information MUST be completed for your assignment to be accepted for marking.
+ 13 |                                                    Hard Copy: Complete your
+ 14 |                                                    assessment, sign the Learner
+ 15 | Submission/presentation                            declaration below and submit it
+ 16 | details:                                           to your trainer.
+ 17 | 
+ 18 |                                                    Soft Copy: If submitting via the
+ 19 |                                                    LMS, email or another electronic
+ 20 |                                                    format, you must include a copy
+ 21 |                                                    of the learner declaration below
+ 22 |                                                    (this is provided with the Submit
+ 23 |                                                    Button in the LMS)
+ 24 | Learner Declaration:
+ 25 | I certify that the attached material is my original work. I
+ 26 | consent to my assessment being checked, electronically or              Signature:         _________________________________
+ 27 | otherwise, for plagiarism, collusion, and use of model
+ 28 | answers, correct referencing or any other form of                      Date:              _____/_______/__________
+ 29 | misrepresentation. I have not submitted this assessment
+ 30 | for any other course or unit.
+ 31 | Assessor Instructions:
+ 32 | Mark each assessment task as either Satisfactory (S) or Not Yet Satisfactory (NYS) and the complete the appropriate date. Tick the box
+ 33 | appropriate to the assessment judgment, indicate if verbal feed was given and add written feedback as required for learners. Read and agree to
+ 34 | the assessor declaration, sign and date this cover sheet, and if applicable record the result on the Institute's LMS and hand the completed SAP to
+ 35 | student administration or the training manager.
+ 36 |                                     Assessment Task                                                  Circle S or                   Date
+ 37 |                                                                                                         NYS
+ 38 | Practical Assessment Task 1                                                                            S NYS                 ______/_______/__
+ 39 | Knowledge Assessment Task 1                                                                            S NYS                 _____/_______/___
+ 40 | Practical Assessment Task 2                                                                            S NYS                 _____/_______/___
+ 41 | Practical Assessment Task 3                                                                            S NYS                 _____/_______/___
+ 42 | Practical Assessment Task 4                                                                            S NYS                 _____/_______/___
+ 43 | Practical Assessment Task 5                                                                            S NYS                 _____/_______/___
+ 44 | Practical Assessment Task 6                                                                            S NYS                 _____/_______/___
+ 45 | Practical Assessment Task 7                                                                            S NYS                 _____/_______/___
+ 46 | Final Result                     (Please check box)         Not Yet Competent                                             Competent
+ 47 | Assessor Feedback                                Verbal feedback Provided –
+ 48 |                                                        Additional feedback (if required)
+ 49 | Assessor:                                                                       Assessor
+ 50 | I declare that I have conducted a fair, valid, reliable and flexible
+ 51 | judgement of this assessment in accordance to the Principles of                 Name       :    _________________________________
+ 52 | Assessment and the Rules of Evidence as outlined in the Standards. for
+ 53 | RTOS 2015.                                                                      Assessor
+ 54 | I have provided appropriate feedback. I also declare that I have
+ 55 | undertaken appropriate assessment integrity checks:
+ 56 |       •     Check for plagiarism
+ 57 |                                                                                 Signature:      _________________________________
+ 58 |       •     Check for Copying/Collusion/Authenticity (learner's own
+ 59 |             work)
+ 60 |                                                                                 Date:           _____/_______/__________
+ 61 |       •     Cheating or use of model answers
+ 62 | I acknowledge that I have been advised of the assessment                        Student
+ 63 | outcome. If the outcome was NYC, I have also received
+ 64 | feedback on reassessment                                                        Signature:      _________________________________
+ 65 | 
+ 66 | 
+ 67 | -
+ 68 |      ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V1.0 | 2024                                                Page 45 of 45

@@ -1,0 +1,62 @@
+--- PAGE 31 ---
+<InnerHeader />
+  <div className="bg-[#dae3f3] py-2 px-3 mb-6 w-full flex-shrink-0">
+    <h1 className="text-[14pt] font-bold text-black text-left m-0 p-0">Practical Assessment Task 4</h1>
+  </div>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{render
+...
+><br/>Manufacturers specifications and operating instructions for all tools & equipment specified with a *</p></div>
+  <PageFooter n={31} />
+</div>
+
+
+--- PAGE 32 ---
+<InnerHeader />
+  <div className="bg-[#dae3f3] py-2 px-3 mb-6 w-full flex-shrink-0">
+    <h1 className="text-[14pt] font-bold text-black text-left m-0 p-0">Practical Assessment Task 4</h1>
+  </div>
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{render
+...
+border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Pit installation plan</div></div>
+  <PageFooter n={32} />
+</div>
+
+
+--- PAGE 33 ---
+<InnerHeader />
+  <div className="bg-[#dae3f3] py-2 px-3 mb-6 w-full flex-shrink-0">
+    <h1 className="text-[14pt] font-bold text-black text-left m-0 p-0">Practical Assessment Task 5</h1>
+    <div className="text-[10pt] text-black text-left m-0 p-0 mt-1">Performance Criteria Mapping</div>
+  </di
+...
+r><td colSpan={2} className="p-0 border-0">{renderAttemptsSignature()}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <PageFooter n={33} />
+</div>
+
+
+--- PAGE 34 ---
+<InnerHeader />
+  <div className="mb-4 break-inside-avoid"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Practical Assessment Task 5 - Performance Evidence Mapping (ICTCBL249)")}Practical Assessment Task 5 - Performance Evidence Mapping (ICTCBL249)</h3>
+<table className="w-
+...
+t-red-600 font-bold text-lg leading-none">✓</span>}</div><span></span></div></div></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={34} />
+</div>
+
+
+--- PAGE 35 ---
+<InnerHeader />
+  <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Assessment Instructions")}Assessment Instructions</h3><p className="whitespace-pre-wrap">For Practical Assessment Task 5, you will be assessed on the following performance criteria, perfor
+...
+..compRecord, 'pa5_date': e.target.value })} readOnly={isStudent} placeholder="" /></td></tr>
+</tbody></table></div>
+
+  <PageFooter n={35} />
+</div>
+
+

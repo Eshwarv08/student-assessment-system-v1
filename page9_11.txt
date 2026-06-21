@@ -1,0 +1,470 @@
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>7.</span><span className="whitespace-pre-wrap">7. Typical tools and equipment may include:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'a' })} className="mt-0.5" /><label>a) Shovels</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'b' })} className="mt-0.5" /><label>b) Trenching equipment</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'c' })} className="mt-0.5" /><label>c) Jointing equipment</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q7'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q7': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q7': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q7'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q7': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q7'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>8.</span><span className="whitespace-pre-wrap">8. To facilitate easier hauling of cables into conduits, which of the following can be used?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'a' })} className="mt-0.5" /><label>a) Lubrication of the cable and ducts</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'b' })} className="mt-0.5" /><label>b) The use of cable guides</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'c' })} className="mt-0.5" /><label>c) The use of conduit guides</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q8'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q8': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q8': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q8'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q8': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q8'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>9.</span><span className="whitespace-pre-wrap">9. Name one device for cleaning conduits.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q9'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q9': e.target.value })} placeholder="(No response)" />
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q9': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q9'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q9': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q9'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>10.</span><span className="whitespace-pre-wrap">10. How does a winch used for small copper cables differ to one used for optical fibre cables?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'a' })} className="mt-0.5" /><label>a) They are the same</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'b' })} className="mt-0.5" /><label>b) Smaller hauling wheel</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'c' })} className="mt-0.5" /><label>c) Larger hauling wheel</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q10'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q10': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q10': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q10'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q10': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q10'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>11.</span><span className="whitespace-pre-wrap">11. Identify whether the following statement is true or false: There is a need to ensure that the cable hauling tension is correct for the cable and that the bend radius is maintained and care is taken to protect the cable sheath during cable installation procedures.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q11'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q11': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q11'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q11': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q11': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q11'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q11': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q11'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={9} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>12.</span><span className="whitespace-pre-wrap">12. A multimeter can be used to check copper cables for:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'a' })} className="mt-0.5" /><label>a) Continuity</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'b' })} className="mt-0.5" /><label>b) Short circuits</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'c' })} className="mt-0.5" /><label>c) Loop resistance</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q12'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q12': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q12': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q12'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q12': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q12'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>13.</span><span className="whitespace-pre-wrap">13. An induction/tone generator can be used to:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'a' })} className="mt-0.5" /><label>a) Measuring cable pair loop resistance</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'b' })} className="mt-0.5" /><label>b) Identifying pairs within cables</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'c' })} className="mt-0.5" /><label>c) Identify open circuits</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q13'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q13': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q13': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q13'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q13': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q13'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>14.</span><span className="whitespace-pre-wrap">14. Wire map testers can test for:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'a' })} className="mt-0.5" /><label>a) Open circuit</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'b' })} className="mt-0.5" /><label>b) Short circuit</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'c' })} className="mt-0.5" /><label>c) Reversed or split pairs</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q14'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q14': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q14': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q14'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q14': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q14'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>15.</span><span className="whitespace-pre-wrap">15. Identify whether the following statement is true or false: The need for surge protection on copper cables is determined by the cabling provider.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q15'] === 'true'} onChange={(e) => setAnswers({ ...answers, 't2q15': 'true' })} className="mt-0.5" /><label>a) True</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q15'] === 'false'} onChange={(e) => setAnswers({ ...answers, 't2q15': 'false' })} className="mt-0.5" /><label>b) False</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q15': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q15'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q15': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q15'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>16.</span><span className="whitespace-pre-wrap">16. Devices used to connect the feeder to cables are:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'a' })} className="mt-0.5" /><label>a) Cables are never hauled this way</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'b' })} className="mt-0.5" /><label>b) Hauling Eye & cable grip</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'c' })} className="mt-0.5" /><label>c) Screw on cable cap or glue on cap</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q16'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q16': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q16': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q16'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q16': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q16'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>17.</span><span className="whitespace-pre-wrap">17. Sufficient cable length should be left in pits for:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'a' })} className="mt-0.5" /><label>a) Cables are left as short as possible</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'b' })} className="mt-0.5" /><label>b) Hauling</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'c' })} className="mt-0.5" /><label>c) Jointing</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q17'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q17': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q17': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q17'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q17': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q17'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={10} />
+</div>
+
+<div className="page">
+  <InnerHeader />
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>18.</span><span className="whitespace-pre-wrap">18. On completion of the work, it is essential to send a ________ promptly to all parties and get sign off from the ________.</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'a' })} className="mt-0.5" /><label>a) Gift, ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'b' })} className="mt-0.5" /><label>b) Report, customer</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'c' })} className="mt-0.5" /><label>c) On completion nothing more is done</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q18'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q18': 'd' })} className="mt-0.5" /><label>d) None of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q18': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q18'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q18': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q18'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>19.</span><span className="whitespace-pre-wrap">19. Reinstatement of the site is the responsibility of:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'a' })} className="mt-0.5" /><label>a) ACMA</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'b' })} className="mt-0.5" /><label>b) Customer</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'c' })} className="mt-0.5" /><label>c) Contractor</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q19'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q19': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q19': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q19'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q19': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q19'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>20.</span><span className="whitespace-pre-wrap">20. Care must be taken when testing optical fibre cables to avoid:</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'a' })} className="mt-0.5" /><label>a) Foot damage due to the high weight of the fibres</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'b' })} className="mt-0.5" /><label>b) Eye damage due to the laser light in the fibres</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'c' })} className="mt-0.5" /><label>c) Optical fibre is not dangerous</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q20'] === 'd'} onChange={(e) => setAnswers({ ...answers, 't2q20': 'd' })} className="mt-0.5" /><label>d) All of the above</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q20': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q20'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q20': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q20'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>21.</span><span className="whitespace-pre-wrap">21. Is it necessary to support cables in pits and enclosures?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q21'] === 'yes'} onChange={(e) => setAnswers({ ...answers, 't2q21': 'yes' })} className="mt-0.5" /><label>a) Yes</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q21'] === 'no'} onChange={(e) => setAnswers({ ...answers, 't2q21': 'no' })} className="mt-0.5" /><label>b) No</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q21': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q21'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q21': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q21'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task1.png" alt="Plan for Questions 22-25" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Plan for Questions 22-25</div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>22.</span><span className="whitespace-pre-wrap">22. What is the diameter of duct is installed between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q22'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q22': 'a' })} className="mt-0.5" /><label>a) 100mm</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q22'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q22': 'b' })} className="mt-0.5" /><label>b) 50mm</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q22'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q22': 'c' })} className="mt-0.5" /><label>c) 60mm</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q22': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q22'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q22': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q22'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>23.</span><span className="whitespace-pre-wrap">23. What type (size) of pit is installed at the boundary of 156 and 158 Hamilton Rd?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q23'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q23': 'a' })} className="mt-0.5" /><label>a) P4</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q23'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q23': 'b' })} className="mt-0.5" /><label>b) P5</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q23'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q23': 'c' })} className="mt-0.5" /><label>c) P6</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q23': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q23'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q23': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q23'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+<div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
+<div className="p-3 sm:p-4">
+<div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>24.</span><span className="whitespace-pre-wrap">24. What kind of infrastructure is installed at the boundary of 150 and 152 Hamilton Rd?</span></div>
+<div className="pl-0 sm:pl-6 mt-2">
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q24'] === 'a'} onChange={(e) => setAnswers({ ...answers, 't2q24': 'a' })} className="mt-0.5" /><label>a) Manhole</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q24'] === 'b'} onChange={(e) => setAnswers({ ...answers, 't2q24': 'b' })} className="mt-0.5" /><label>b) Rope</label></div>
+<div className="flex gap-2 mb-2 items-center"><input type="radio" checked={answers['t2q24'] === 'c'} onChange={(e) => setAnswers({ ...answers, 't2q24': 'c' })} className="mt-0.5" /><label>c) Conduit</label></div>
+</div></div>
+<div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
+      <div className="w-[40%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black flex items-center">
+        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}><span style={{ position: 'absolute', top: '-4px', left: '0px', fontSize: '11px', color: '#1e3a8a', fontWeight: 'bold' }}>✓</span></span>)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q24': 'correct' })} className="w-[30%] p-1 sm:p-2 text-blue-800 border-r-[1.5px] border-black bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q24'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Satisfactory (S)
+      </div>
+      <div onClick={() => !isStudent && setGrades({ ...grades, 't2q24': 'incorrect' })} className="w-[30%] p-1 sm:p-2 text-blue-800 bg-[#fce4d6] flex justify-center items-center text-center leading-tight cursor-pointer">
+        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1e3a8a', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+          {grades['t2q24'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+        </span>
+        Not Satisfactory (NS)
+      </div>
+    </div></div>
+  <PageFooter n={11} />
