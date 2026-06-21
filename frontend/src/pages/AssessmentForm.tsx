@@ -29,14 +29,20 @@ const AssessmentForm: React.FC = () => {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(() => {
-    const tokenParams = new URLSearchParams(window.location.search).get('token');
-    return tokenParams ? localStorage.getItem(`assessment_submitted_${tokenParams}`) === 'true' : false;
+    const searchParams = new URLSearchParams(window.location.search);
+    const tokenParams = searchParams.get('token');
+    const stId = searchParams.get('st-id');
+    const suffix = stId ? `${tokenParams}_${stId}` : tokenParams;
+    return tokenParams ? localStorage.getItem(`assessment_submitted_${suffix}`) === 'true' : false;
   })
   const [assessment, setAssessment] = useState<any>(null)
   const [answers, setAnswers] = useState<any>(() => {
-    const tokenParams = new URLSearchParams(window.location.search).get('token');
+    const searchParams = new URLSearchParams(window.location.search);
+    const tokenParams = searchParams.get('token');
+    const stId = searchParams.get('st-id');
     if (tokenParams) {
-      const saved = localStorage.getItem(`assessment_answers_${tokenParams}`);
+      const suffix = stId ? `${tokenParams}_${stId}` : tokenParams;
+      const saved = localStorage.getItem(`assessment_answers_${suffix}`);
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -50,9 +56,11 @@ const AssessmentForm: React.FC = () => {
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem(`assessment_answers_${token}`, JSON.stringify(answers));
+      const stId = searchParams.get('st-id');
+      const suffix = stId ? `${token}_${stId}` : token;
+      localStorage.setItem(`assessment_answers_${suffix}`, JSON.stringify(answers));
     }
-  }, [answers, token]);
+  }, [answers, token, searchParams]);
 
   const [showErrors, setShowErrors] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
@@ -383,7 +391,9 @@ const AssessmentForm: React.FC = () => {
 
       setSubmitted(true)
       if (token) {
-        localStorage.setItem(`assessment_submitted_${token}`, 'true');
+        const stId = searchParams.get('st-id');
+        const suffix = stId ? `${token}_${stId}` : token;
+        localStorage.setItem(`assessment_submitted_${suffix}`, 'true');
         // We keep the answers in localStorage so the student can still download the PDF after refreshing
       }
     } catch (err: any) {

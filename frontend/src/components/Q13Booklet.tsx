@@ -256,7 +256,7 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
                     {answers.student_signature_url ? (
                       <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
                     ) : (
-                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
+                      <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>
                     )}
                   </div>
                   <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
