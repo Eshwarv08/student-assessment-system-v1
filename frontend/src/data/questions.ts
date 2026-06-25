@@ -797,16 +797,38 @@ export const assessmentQuestions = {
     },
     {
       "id": 27,
-      "text": "Knowledge evidence: basic electrical principles. What is Insulation?",
-      "type": "radio",
-      "limit": null,
-      "options": [
-        { "type": "radio", "name": "t5q27", "value": "a", "text": "The process of keeping heat, sound, or electricity from spreading." },
-        { "type": "radio", "name": "t5q27", "value": "b", "text": "The flow of electrons through a conductor." },
-        { "type": "radio", "name": "t5q27", "value": "c", "text": "The ability to store electrical charge." },
-        { "type": "radio", "name": "t5q27", "value": "d", "text": "The opposition to current flow." }
-      ],
-      "textInputs": []
+      "text": "Knowledge evidence: basic electrical principles of:",
+      "type": "custom_q27",
+      "parts": [
+        {
+          "name": "t5q27_1",
+          "title": "Insulation, resistance",
+          "subtitle": "What is Insulation?",
+          "text": "The process of keeping heat, sound, or electricity from spreading is called Insulation?",
+          "label": "True or False"
+        },
+        {
+          "name": "t5q27_2",
+          "title": "",
+          "subtitle": "Resistance is measured in Ohms",
+          "text": "",
+          "label": "True or False?"
+        },
+        {
+          "name": "t5q27_3",
+          "title": "Capacitance",
+          "subtitle": "Capacitance is measured in grams.",
+          "text": "",
+          "label": "True or False"
+        },
+        {
+          "name": "t5q27_4",
+          "title": "Impedance – as causes of, impedance, attenuation and cross-talk",
+          "subtitle": "The interference caused between two cables carrying current parallel to one another is known as Cross-Talk?",
+          "text": "",
+          "label": "True or False?"
+        }
+      ]
     },
     {
       "id": 28,
@@ -1718,14 +1740,14 @@ export const assessmentQuestions = {
     },
     {
       "id": 48,
-      "text": "When installing customer cabling in a ceiling space, you notice a low-voltage (LV) power cable. What is the minimum separation required between the customer cable and the LV cable?",
+      "text": "You have been contracted to install telephone and data cables to the cubicles in a new office fit out. The telephone and data cables can only be run within the suspended ceiling. How must you install these cables?",
       "type": "radio",
       "limit": null,
       "options": [
-        { "type": "radio", "name": "t6q48", "value": "a", "text": "25mm" },
-        { "type": "radio", "name": "t6q48", "value": "b", "text": "50mm or a durable insulating barrier" },
-        { "type": "radio", "name": "t6q48", "value": "c", "text": "150mm" },
-        { "type": "radio", "name": "t6q48", "value": "d", "text": "300mm" }
+        { "type": "radio", "name": "t6q48", "value": "a", "text": "a. The cables can be laid on the ceiling tiles provided the cables are separated from any other services as required by ASICA S009" },
+        { "type": "radio", "name": "t6q48", "value": "b", "text": "b. The cables can be tied to the ceiling hanger rods provided the cables are tied to the hanger rods according to the cable manufacturer's requirements" },
+        { "type": "radio", "name": "t6q48", "value": "c", "text": "c. The cables must have their own independent support system" },
+        { "type": "radio", "name": "t6q48", "value": "d", "text": "d. The cables can be attached to any suitable structures within the ceiling space including the water pipes used for the sprinkler system provided you obtain the building owners approval" }
       ],
       "textInputs": []
     },
