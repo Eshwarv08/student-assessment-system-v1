@@ -524,425 +524,256 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
       
 {/* ═══════════════════ PAGE 1 – COVER ═══════════════════ */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
-        <div style={{ border: '3.5px solid #1a5fa8', padding: '4px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ border: '1.2px solid #1a5fa8', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+        <div style={{ border: '3.5px solid #5b9bd5', padding: '4px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <div style={{ border: '1.2px solid #5b9bd5', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
 
-            {/* Skilscope Logo */}
+            {/* ACTA Logo */}
             <img
-              src="/assets/Skilscope.png"
-              alt="Skilscope Logo"
-              style={{ width: '300px', height: '300px', objectFit: 'contain', marginBottom: '5mm', marginTop: '5mm' }}
+              src="/assets/acta-logo.png"
+              alt="ACTA Logo"
+              style={{ width: '220px', height: 'auto', objectFit: 'contain', marginBottom: '4mm', marginTop: '15mm' }}
             />
 
-            {/* <div style={{ fontSize: '13pt', fontWeight: 'bold', color: '#991b1b', marginBottom: '10mm', fontFamily: 'Arial, sans-serif', letterSpacing: '0.3px' }}>RTO NO: 40954</div> */}
-            <div style={{ fontSize: '44pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
-            <div style={{ background: '#1a5fa8', height: '11px', width: '100%', margin: '5mm 0' }}></div>
-            <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', color: '#000', marginBottom: '5mm', marginTop: '5mm', letterSpacing: '0.6px' }}>ICTCBL322</div>
-            <div style={{ fontSize: '21pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm' }}>
-              Splice and terminate optical fibre cable<br />for telecommunications projects
+            <div style={{ fontSize: '12pt', fontWeight: 'bold', color: '#8b0000', marginBottom: '15mm', fontFamily: 'Arial, sans-serif', letterSpacing: '0.3px' }}>RTO NO: 40954</div>
+            
+            <div style={{ fontSize: '46pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
+            <div style={{ background: '#5b9bd5', height: '12px', width: '100%', margin: '4mm 0' }}></div>
+            <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '6mm', marginTop: '6mm' }}>ICTCBL322</div>
+            <div style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm' }}>
+              Install, test and terminate optical<br />fiber cable on customer premises
             </div>
-            <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
-                Student Name: <span style={{ display: 'inline-block', borderBottom: '1.8px solid #000', width: '110mm', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
+            
+            <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: '15pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', paddingLeft: '8%' }}>
+                Student Name: <span style={{ display: 'inline-block', borderBottom: '1px solid #000', width: '110mm', fontWeight: 'normal', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left', marginLeft: '6px' }}>{studentName}</span>
               </div>
-              <div style={{ textAlign: 'center', fontSize: '11pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '18mm' }}>ACTA College Pty. Ltd</div>
+              <div style={{ textAlign: 'center', fontSize: '10pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '35mm', marginBottom: '10mm' }}>ACTA College Pty. Ltd</div>
             </div>
 
           </div>
         </div>
-        <div className="page-footer"><span></span><span>Page 1 of 18</span></div>
       </div>
 
       
 {/* ═══════════════════ PAGE 2 – ASSESSMENT COMPETENCY RECORD ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div className="title-block">
-              <div><span className="underline-bold">Assessment book</span></div>
-              <div><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            </div>
-            <div className="logo-block">
-              <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
-            </div>
+        {/* Header matching image */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT COMPETENCY RECORD</h1>
-        <div className="intro-box">
+        <h1 style={{ textAlign: 'center', fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase', margin: '0 0 4mm 0' }}>ASSESSMENT COMPETENCY RECORD</h1>
+        
+        <div style={{ background: '#d9d9d9', border: '1px solid #555', padding: '6px 8px', fontSize: '9pt', marginBottom: '6mm', textAlign: 'left', lineHeight: '1.4' }}>
           This form is to be completed by the assessor and used as the final record of the student competence in these discipline. All student submissions including any associated documents and checklists are to be attached to this cover sheet before placing on the students file. Student results are not to be entered onto the Student Database unless all relevant paperwork is completed and attached to this form.
         </div>
 
-        <table className="comp-table" style={{ marginBottom: '5px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '10pt' }}>
           <tbody>
-            <tr><td className="label-col">Student's Name</td><td className="field-value-cell font-bold">{studentName}</td></tr>
             <tr>
-              <td className="label-col">Assessor's Name</td>
-              <td className="field-value-cell">
-                <input
-                  type="text"
-                  className={`w-full bg-transparent border-b border-dashed border-gray-400 focus:border-blue-500 outline-none px-2 py-0.5 text-slate-800 font-bold ${isStudent ? 'cursor-default pointer-events-none' : ''}`}
-                  value={compRecord.assessor_name || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })}
-                  placeholder="Enter Assessor Name"
-                  readOnly={isStudent}
-                  tabIndex={isStudent ? -1 : 0}
-                />
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px', width: '35%' }}>Student's Name</td>
+              <td style={{ border: '1px solid #555', padding: '6px' }}>{studentName}</td>
+            </tr>
+            <tr>
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px' }}>Assessor's Name</td>
+              <td style={{ border: '1px solid #555', padding: '6px' }}>
+                <input type="text" className={`w-full bg-transparent border-none outline-none font-bold text-slate-800 ${isStudent ? 'cursor-default pointer-events-none' : ''}`} value={compRecord.assessor_name || ''} onChange={(e) => setCompRecord({ ...compRecord, assessor_name: e.target.value })} readOnly={isStudent} tabIndex={isStudent ? -1 : 0} />
               </td>
             </tr>
             <tr>
-              <td className="label-col">Assessment Site</td>
-              <td className="field-value-cell">
-                <input
-                  type="text"
-                  className="w-full bg-transparent border-b border-dashed border-gray-400 focus:border-blue-500 outline-none px-2 py-0.5 text-slate-800 font-bold"
-                  value={compRecord.assessment_site || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })}
-                  placeholder="Enter Assessment Site"
-                />
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px' }}>Assessment Site</td>
+              <td style={{ border: '1px solid #555', padding: '6px' }}>
+                <input type="text" className="w-full bg-transparent border-none outline-none font-bold text-slate-800" value={compRecord.assessment_site || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_site: e.target.value })} />
               </td>
             </tr>
             <tr>
-              <td className="label-col">Assessment Date/s</td>
-              <td className="field-value-cell font-bold">
-                <input
-                  type="date"
-                  className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer"
-                  value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                />
-                <span className="hidden print:inline">{formatDisplayDate(compRecord.assessment_date)}</span>
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px' }}>Assessment Date</td>
+              <td style={{ border: '1px solid #555', padding: '6px' }}>
+                <input type="date" className="no-print w-full bg-transparent border-none outline-none font-bold text-slate-800 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                <span className="hidden print:inline font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
               </td>
             </tr>
           </tbody>
         </table>
 
-        {/* Assessor Declaration */}
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '4px' }}>
+        {/* Assessor Declaration Table */}
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td colSpan={2} style={{ border: '1px solid #555', background: '#f0f0f0', fontWeight: 'bold', padding: '3px 6px', fontSize: '9pt' }}>Assessor Declaration</td>
+              <td colSpan={5} style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px' }}>Assessor Declaration</td>
             </tr>
             <tr>
-              <td colSpan={2} style={{ border: '1px solid #555', padding: '4px 6px', fontSize: '9pt' }}>In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.</td>
+              <td colSpan={5} style={{ border: '1px solid #555', padding: '6px' }}>In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.</td>
             </tr>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '4px 6px', fontSize: '9pt', fontWeight: 'bold', width: '38%' }}>Evidence is Confirmed as:</td>
-              <td style={{ border: '1px solid #555', padding: '4px 6px', fontSize: '9pt' }}>
-                <span
-                  className={`cb cursor-pointer ${compRecord.evidence?.valid ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, valid: !compRecord.evidence?.valid } })}
-                ></span> Valid &nbsp;&nbsp;
-                <span
-                  className={`cb cursor-pointer ${compRecord.evidence?.sufficient ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, sufficient: !compRecord.evidence?.sufficient } })}
-                ></span> Sufficient &nbsp;&nbsp;
-                <span
-                  className={`cb cursor-pointer ${compRecord.evidence?.current ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, current: !compRecord.evidence?.current } })}
-                ></span> Current &nbsp;&nbsp;
-                <span
-                  className={`cb cursor-pointer ${compRecord.evidence?.authentic ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, authentic: !compRecord.evidence?.authentic } })}
-                ></span> Authentic
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px', width: '45%' }}>Evidence is Confirmed as:</td>
+              <td style={{ border: '1px solid #555', padding: '6px', textAlign: 'center', width: '13.75%' }}>
+                <div className="flex items-center justify-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, valid: !compRecord.evidence?.valid } })}>
+                  <div className="w-[14px] h-[14px] border-[1px] border-black bg-white relative flex justify-center items-center">
+                    {compRecord.evidence?.valid && <span className="text-red-600 font-bold text-lg absolute -top-[3px]">✓</span>}
+                  </div> Valid
+                </div>
+              </td>
+              <td style={{ border: '1px solid #555', padding: '6px', textAlign: 'center', width: '13.75%' }}>
+                <div className="flex items-center justify-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, sufficient: !compRecord.evidence?.sufficient } })}>
+                  <div className="w-[14px] h-[14px] border-[1px] border-black bg-white relative flex justify-center items-center">
+                    {compRecord.evidence?.sufficient && <span className="text-red-600 font-bold text-lg absolute -top-[3px]">✓</span>}
+                  </div> Sufficient
+                </div>
+              </td>
+              <td style={{ border: '1px solid #555', padding: '6px', textAlign: 'center', width: '13.75%' }}>
+                <div className="flex items-center justify-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, current: !compRecord.evidence?.current } })}>
+                  <div className="w-[14px] h-[14px] border-[1px] border-black bg-white relative flex justify-center items-center">
+                    {compRecord.evidence?.current && <span className="text-red-600 font-bold text-lg absolute -top-[3px]">✓</span>}
+                  </div> Current
+                </div>
+              </td>
+              <td style={{ border: '1px solid #555', padding: '6px', textAlign: 'center', width: '13.75%' }}>
+                <div className="flex items-center justify-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, authentic: !compRecord.evidence?.authentic } })}>
+                  <div className="w-[14px] h-[14px] border-[1px] border-black bg-white relative flex justify-center items-center">
+                    {compRecord.evidence?.authentic && <span className="text-red-600 font-bold text-lg absolute -top-[3px]">✓</span>}
+                  </div> Authentic
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
 
-        {/* Attach docs + Final Result */}
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '4px' }}>
+        {/* Attach docs + Final Result Table */}
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '4px 6px', fontWeight: 'bold', fontSize: '9pt', width: '40%' }}>Please attach the following documentation to this form</td>
-              <td style={{ border: '1px solid #555', padding: '4px 6px', fontWeight: 'bold', fontSize: '9pt', width: '22%', textAlign: 'center' }}>Result</td>
-              <td rowSpan={5} style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top', width: '38%' }}>
-                <div style={{ fontWeight: 'bold', marginBottom: '3px' }}>FINAL ASSESSMENT RESULT:</div>
-                <div className="checkbox-row cursor-pointer" onClick={() => setFinalResult('C')}>
-                  <span className={`cb-sq ${finalResult === 'C' ? 'checked' : ''}`}></span> Competent (C)
+              <td colSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', padding: '6px', fontWeight: 'bold', width: '58.75%' }}>Please attach the following documentation to this form</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold', textAlign: 'center', width: '13.75%' }}>Result</td>
+              <td rowSpan={6} style={{ border: '1px solid #555', background: '#bfbfbf', padding: '6px', verticalAlign: 'middle', width: '27.5%', textAlign: 'center' }}>
+                <div style={{ fontWeight: 'bold', marginBottom: '16px' }}>FINAL ASSESSMENT<br/>RESULT:</div>
+                <div className="flex flex-col items-start gap-3 ml-[15%]">
+                  <div className="flex items-center gap-2 cursor-pointer" onClick={() => setFinalResult('C')}>
+                    <div className="w-[14px] h-[14px] border-[1px] border-black bg-white relative flex justify-center items-center shrink-0">
+                      {finalResult === 'C' && <span className="text-red-600 font-bold text-xl absolute -top-[5px]">✓</span>}
+                    </div> <span className="font-bold whitespace-nowrap">Competent (C)</span>
+                  </div>
+                  <div className="flex items-center gap-2 cursor-pointer" onClick={() => setFinalResult('NC')}>
+                    <div className="w-[14px] h-[14px] border-[1px] border-black bg-white relative flex justify-center items-center shrink-0">
+                      {finalResult === 'NC' && <span className="text-red-600 font-bold text-xl absolute -top-[5px]">✓</span>}
+                    </div> <span className="font-bold whitespace-nowrap">Not Competent (NC)</span>
+                  </div>
                 </div>
-                <div className="checkbox-row cursor-pointer" onClick={() => setFinalResult('NC')}>
-                  <span className={`cb-sq ${finalResult === 'NC' ? 'checked' : ''}`}></span> Not Competent (NC)
-                </div>
               </td>
             </tr>
-            <tr>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                Assessment Task 1 &nbsp;
-                <span
-                  className={`cb cursor-pointer ${compRecord.tasks?.t1 ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}
-                ></span> Observation 1
-              </td>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                {taskResults['t1'] === 'S' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t1: 'NS' })}>S</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t1: 'S' })}>S</span>
-                )}
-                {' '}/{' '}
-                {taskResults['t1'] === 'NS' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t1: 'S' })}>NS</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t1: 'NS' })}>NS</span>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                Assessment Task 2 &nbsp;
-                <span
-                  className={`cb cursor-pointer ${compRecord.tasks?.t2 ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}
-                ></span> Observation 2
-              </td>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                {taskResults['t2'] === 'S' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t2: 'NS' })}>S</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t2: 'S' })}>S</span>
-                )}
-                {' '}/{' '}
-                {taskResults['t2'] === 'NS' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t2: 'S' })}>NS</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t2: 'NS' })}>NS</span>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                Assessment Task 3 &nbsp;
-                <span
-                  className={`cb cursor-pointer ${compRecord.tasks?.t3 ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}
-                ></span> Observation 3
-              </td>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                {taskResults['t3'] === 'S' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t3: 'NS' })}>S</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t3: 'S' })}>S</span>
-                )}
-                {' '}/{' '}
-                {taskResults['t3'] === 'NS' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t3: 'S' })}>NS</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t3: 'NS' })}>NS</span>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                Assessment Task 4 &nbsp;
-                <span
-                  className={`cb cursor-pointer ${compRecord.tasks?.t4 ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}
-                ></span> Written question and answers
-              </td>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                {taskResults['t4'] === 'S' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t4: 'NS' })}>S</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t4: 'S' })}>S</span>
-                )}
-                {' '}/{' '}
-                {taskResults['t4'] === 'NS' ? (
-                  <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t4: 'S' })}>NS</span>
-                ) : (
-                  <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t4: 'NS' })}>NS</span>
-                )}
-              </td>
-            </tr>
+            {/* Task rows */}
+            {[
+              { id: 't1', label: 'Assessment Task 1', type: 'Questions and Answers' },
+              { id: 't2', label: 'Assessment Task 2', type: 'Observation' },
+              { id: 't3', label: 'Assessment Task 3', type: 'Observation' },
+              { id: 't4', label: 'Assessment Task 4', type: 'Observation' },
+              { id: 't5', label: 'Assessment Task 5', type: 'Observation' }
+            ].map((task) => (
+              <tr key={task.id}>
+                <td style={{ border: '1px solid #555', padding: '8px 6px', fontWeight: 'bold', width: '25%' }}>{task.label}</td>
+                <td style={{ border: '1px solid #555', padding: '8px 6px' }}>
+                  <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [task.id]: !compRecord.tasks?.[task.id] } })}>
+                    <div className="w-[12px] h-[12px] border-[1px] border-black bg-white relative flex justify-center items-center shrink-0">
+                      {compRecord.tasks?.[task.id] && <span className="text-black font-bold text-sm absolute -top-[2px]">✓</span>}
+                    </div> <span>{task.type}</span>
+                  </div>
+                </td>
+                <td style={{ border: '1px solid #555', padding: '8px 6px', textAlign: 'center' }}>
+                  <div className="flex justify-center items-center gap-1">
+                    <span className="cursor-pointer px-1 relative" onClick={() => setTaskResults({ ...taskResults, [task.id]: 'S' })}>
+                      S
+                      {taskResults[task.id] === 'S' && <div className="absolute inset-0 border-[1.5px] border-red-600 rounded-full scale-[1.3] -top-[1px]"></div>}
+                    </span>
+                    <span>/</span>
+                    <span className="cursor-pointer px-1 relative" onClick={() => setTaskResults({ ...taskResults, [task.id]: 'NS' })}>
+                      NS
+                      {taskResults[task.id] === 'NS' && <div className="absolute inset-0 border-[1.5px] border-red-600 rounded-full scale-[1.1] -top-[1px]"></div>}
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
         {/* Attempt table */}
-        <table className="attempt-table" style={{ marginBottom: '5px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td className="attempt-num" style={{ background: '#e0e0e0', fontWeight: 'bold' }}>Attempt</td>
-              <td className="attempt-date" style={{ background: '#e0e0e0', fontWeight: 'bold' }}>Date</td>
-              <td className="attempt-fb" style={{ background: '#e0e0e0', fontWeight: 'bold' }}>Assessor's Feedback (as Required):</td>
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px', textAlign: 'center', width: '12%' }}>Attempt</td>
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px', textAlign: 'center', width: '25%' }}>Date</td>
+              <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px', textAlign: 'center' }}>Assessor's Feedback (as Required):</td>
             </tr>
+            {[0, 1, 2].map((idx) => (
+              <tr key={idx}>
+                <td style={{ border: '1px solid #555', padding: '6px', textAlign: 'center', fontWeight: 'bold' }}>{idx + 1}</td>
+                <td style={{ border: '1px solid #555', padding: '6px' }}>
+                  <input type="date" className="w-full bg-transparent border-none outline-none text-slate-800 py-0.5 cursor-pointer no-print text-center" value={compRecord.attempts?.[idx]?.date || ''} onChange={(e) => { const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])]; if (!att[idx]) att[idx] = { date: '', feedback: '' }; att[idx].date = e.target.value; setCompRecord({ ...compRecord, attempts: att }); }} />
+                  <span className="hidden print:block text-center">{formatDisplayDate(compRecord.attempts?.[idx]?.date)}</span>
+                </td>
+                <td style={{ border: '1px solid #555', padding: '6px' }}>
+                  <input type="text" className="w-full bg-transparent border-none outline-none text-slate-800 py-0.5" value={compRecord.attempts?.[idx]?.feedback || ''} onChange={(e) => { const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])]; if (!att[idx]) att[idx] = { date: '', feedback: '' }; att[idx].feedback = e.target.value; setCompRecord({ ...compRecord, attempts: att }); }} />
+                </td>
+              </tr>
+            ))}
             <tr>
-              <td className="attempt-num">1</td>
-              <td className="attempt-date">
-                <input
-                  type="date"
-                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
-                  value={compRecord.attempts?.[0]?.date || ''}
-                  onChange={(e) => {
-                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                    if (!att[0]) att[0] = { date: '', feedback: '' };
-                    att[0].date = e.target.value;
-                    setCompRecord({ ...compRecord, attempts: att });
-                  }}
-                />
-                <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[0]?.date)}</span>
-              </td>
-              <td className="attempt-fb">
-                <input
-                  type="text"
-                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
-                  value={compRecord.attempts?.[0]?.feedback || ''}
-                  onChange={(e) => {
-                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                    if (!att[0]) att[0] = { date: '', feedback: '' };
-                    att[0].feedback = e.target.value;
-                    setCompRecord({ ...compRecord, attempts: att });
-                  }}
-                  placeholder="Provide attempt 1 feedback"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td className="attempt-num">2</td>
-              <td className="attempt-date">
-                <input
-                  type="date"
-                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
-                  value={compRecord.attempts?.[1]?.date || ''}
-                  onChange={(e) => {
-                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                    if (!att[1]) att[1] = { date: '', feedback: '' };
-                    att[1].date = e.target.value;
-                    setCompRecord({ ...compRecord, attempts: att });
-                  }}
-                />
-                <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[1]?.date)}</span>
-              </td>
-              <td className="attempt-fb">
-                <input
-                  type="text"
-                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
-                  value={compRecord.attempts?.[1]?.feedback || ''}
-                  onChange={(e) => {
-                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                    if (!att[1]) att[1] = { date: '', feedback: '' };
-                    att[1].feedback = e.target.value;
-                    setCompRecord({ ...compRecord, attempts: att });
-                  }}
-                  placeholder="Provide attempt 2 feedback"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td className="attempt-num">3</td>
-              <td className="attempt-date">
-                <input
-                  type="date"
-                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
-                  value={compRecord.attempts?.[2]?.date || ''}
-                  onChange={(e) => {
-                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                    if (!att[2]) att[2] = { date: '', feedback: '' };
-                    att[2].date = e.target.value;
-                    setCompRecord({ ...compRecord, attempts: att });
-                  }}
-                />
-                <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[2]?.date)}</span>
-              </td>
-              <td className="attempt-fb">
-                <input
-                  type="text"
-                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
-                  value={compRecord.attempts?.[2]?.feedback || ''}
-                  onChange={(e) => {
-                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                    if (!att[2]) att[2] = { date: '', feedback: '' };
-                    att[2].feedback = e.target.value;
-                    setCompRecord({ ...compRecord, attempts: att });
-                  }}
-                  placeholder="Provide attempt 3 feedback"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={2} style={{ border: '1px solid #555', fontWeight: 'bold', padding: '3px 6px', textAlign: 'center', fontSize: '9pt' }}>Final Feedback:</td>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                <textarea
-                  className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 text-xs py-0.5"
-                  value={compRecord.final_feedback || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
-                  placeholder="Enter final summary feedback here..."
-                />
+              <td colSpan={2} style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px', textAlign: 'center' }}>Final Feedback:</td>
+              <td style={{ border: '1px solid #555', padding: '6px' }}>
+                <textarea className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 py-0.5" value={compRecord.final_feedback || ''} onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })} />
               </td>
             </tr>
           </tbody>
         </table>
 
         {/* Declaration */}
-        <div style={{ fontSize: '11pt', fontWeight: 'bold', marginBottom: '3px' }}>Declaration</div>
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '8px' }}>
+        <div style={{ fontSize: '13pt', fontWeight: 'bold', marginBottom: '2px' }}>Declaration</div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
+              <td style={{ border: '1px solid #555', padding: '10px 8px', width: '60%', verticalAlign: 'top', lineHeight: '1.4' }}>
                 <strong>Assessor:</strong> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
+              <td style={{ border: '1px solid #555', padding: '10px 8px', verticalAlign: 'middle' }}>
+                <div className="flex items-center gap-2 mb-4">
                   Signature:
-                  <div
-                    onClick={() => openSigModal('assessor_signature', 'comp')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[30px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {compRecord.assessor_signature ? (
-                      <img src={compRecord.assessor_signature} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign Here</span>
-                    )}
+                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[30px] border-b border-black px-2 flex-1 relative">
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[35px] max-w-[120px] object-contain inline-block absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="mt-2">
+                <div className="flex items-center gap-2">
                   Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1"
-                    value={compRecord.assessor_sig_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline ml-1 font-bold">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
+                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1" value={compRecord.assessor_sig_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px]">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
                 </div>
               </td>
             </tr>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', verticalAlign: 'top' }}>
+              <td style={{ border: '1px solid #555', padding: '10px 8px', verticalAlign: 'top', lineHeight: '1.4' }}>
                 <strong>Student:</strong> I declare that I accept the assessment competency outcome and consider the feedback of my assessor positively. I also declare that the work submitted is my own, and has not been copied or plagiarised from any person or source.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
+              <td style={{ border: '1px solid #555', padding: '10px 8px', verticalAlign: 'middle' }}>
+                <div className="flex items-center gap-2 mb-4">
                   Signature:
-                  <div
-                    onClick={() => openSigModal('student_signature', 'submission')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[30px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {answers.student_signature_url || submission.signature_url ? (
-                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign Here</span>
-                    )}
+                  <div onClick={() => openSigModal('student_signature', 'submission')} className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[30px] border-b border-black px-2 flex-1 relative">
+                    {(answers.student_signature_url || submission.signature_url) && <img src={answers.student_signature_url || submission.signature_url} className="max-h-[35px] max-w-[120px] object-contain inline-block absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="mt-2">
+                <div className="flex items-center gap-2">
                   Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
-                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
-                  />
-                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
-                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
-                  </span>
+                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px]">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 2 of 18</span>
         </div>
       </div>
@@ -950,427 +781,428 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
       
 {/* ═══════════════════ PAGE 3 – UNIT INFO ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
         {/* Admin Use Only */}
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '0', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td colSpan={2} style={{ border: '1px solid #555', background: '#f0f0f0', fontWeight: 'bold', padding: '3px 6px', fontSize: '9pt' }}>Administrative Use Only:</td>
+              <td colSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', fontSize: '10.5pt' }}>Administrative Use Only:</td>
             </tr>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', width: '50%' }}>Entered into Student Management Database</td>
-              <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                <span
-                  className={`cb cursor-pointer ${compRecord.entered_db ? 'checked' : ''}`}
-                  onClick={() => setCompRecord({ ...compRecord, entered_db: !compRecord.entered_db })}
-                ></span>
-                Signature/Initial:
-                <div
-                  onClick={() => openSigModal('assessor_signature', 'comp')}
-                  className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[20px] px-2 ml-1"
-                >
-                  {compRecord.assessor_signature ? (
-                    <img src={compRecord.assessor_signature} className="max-h-[16px] max-w-[80px] object-contain inline-block" />
-                  ) : (
-                    <span className="text-[9px] text-slate-400">Sign</span>
-                  )}
+              <td style={{ border: '1px solid #555', borderTop: 'none', padding: '10px 6px', width: '40%' }}>Entered into Student Management Database</td>
+              <td style={{ border: '1px solid #555', borderTop: 'none', padding: '10px 6px' }}>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, entered_db: !compRecord.entered_db })}>
+                    <div className="w-[12px] h-[12px] border-[1px] border-black bg-white relative flex justify-center items-center">
+                      {compRecord.entered_db && <span className="text-black font-bold text-sm absolute -top-[2px]">✓</span>}
+                    </div> Signature/Initial
+                  </div>
+                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[20px] border-b border-black px-2 flex-1 relative mx-1">
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[100px] object-contain inline-block absolute bottom-0" />}
+                  </div>
+                  Date:
+                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer w-28 ml-1" value={compRecord.db_entry_date || ''} onChange={(e) => setCompRecord({ ...compRecord, db_entry_date: e.target.value })} />
+                  <span className="hidden print:inline border-b border-black w-28 text-center ml-1">{formatDisplayDate(compRecord.db_entry_date)}</span>
                 </div>
-                &nbsp; Date:
-                <input
-                  type="date"
-                  className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent text-xs ml-1 cursor-pointer w-24"
-                  value={compRecord.db_entry_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, db_entry_date: e.target.value })}
-                />
-                <span className="hidden print:inline ml-1">{formatDisplayDate(compRecord.db_entry_date)}</span>
               </td>
             </tr>
           </tbody>
         </table>
 
         {/* Unit info table */}
-        <table className="unit-info-table">
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt' }}>
           <tbody>
-            <tr><td className="key-col">Unit Code/Name</td><td className="font-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</td></tr>
-            <tr><td className="key-col">Pre-requisites</td><td>N/A</td></tr>
-            <tr><td className="key-col">Co-requisites</td><td>N/A</td></tr>
+            <tr><td style={{ border: '1px solid #555', borderTop: 'none', padding: '6px', width: '22%', fontWeight: 'bold' }}>Unit Code/Name</td><td style={{ border: '1px solid #555', borderTop: 'none', padding: '6px' }}>ICTCBL322 – Install, test and terminate optical fibre cable on customer premises</td></tr>
+            <tr><td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Pre-requisites</td><td style={{ border: '1px solid #555', padding: '6px' }}>N/A</td></tr>
+            <tr><td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Co-requisites</td><td style={{ border: '1px solid #555', padding: '6px' }}>N/A</td></tr>
             <tr>
-              <td className="key-col">Unit Summary</td>
-              <td>This unit describes the skills and knowledge required to splice and terminate optical fibre cable within an optical telecommunications transmission environment for new installations or upgrades of an optical backbone or access network, to achieve greater bandwidth and capacity required by emerging technology convergence for next generation networks (NGN).</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Unit Summary</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>This unit describes the skills and knowledge required to install and test optical fibre cable on a customer's premises for communications applications using a range of terminations that may include direct termination, fusion splicing and mechanical splicing.</td>
             </tr>
             <tr>
-              <td className="key-col">Target Group</td>
-              <td>
-                <p>It applies to technical staff who splice and terminate optical fibre cable for telecommunications projects for commercial or industrial fibre to the premises (FTTP) non-mechanical splicing installations.</p>
-                <p style={{ marginTop: '3px' }}>All client cabling work in the telecommunications, fire, security and data industries must be performed by a registered cabler. All cablers are required to register with an Australian Communications and Media Authority (ACMA) accredited registrar.</p>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Target Group</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>
+                <p>It applies to technical staff who place, secure and terminate optical fibre cable in new installations and upgrades or maintain existing networks in domestic, commercial and industrial installations. Communications applications include digital and analogy, telephony, data, video, digital broadcasting, computer networks, local area networks (LAN), wide area networks (WAN) and multimedia.</p>
               </td>
             </tr>
             <tr>
-              <td className="key-col">Conditions and Context of the Assessments</td>
-              <td>
-                <p>Skills must be assessed in a workplace or simulated environment where conditions are typical of those in a telecommunications work environment or workplace.</p>
-                <p style={{ marginTop: '3px' }}>Access is required to:</p>
-                <ul style={{ paddingLeft: '16px', margin: '2px 0' }}>
-                  <li>site/s where splicing and termination of optical fibre cable can be conducted</li>
-                  <li>special purpose tools, equipment and materials currently used in industry such as optical fibre testing equipment</li>
-                  <li>relevant regulatory and equipment documentation that impacts on optical fibre cable installation activities.</li>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Conditions and Context of the Assessments</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>
+                <p>Gather evidence to demonstrate consistent performance in conditions that are safe and replicate the workplace. Noise levels, production flow, interruptions and time variances should be typical of those experienced in the telecommunications – cabling field of work and include access to special purpose tools, equipment and materials.</p>
+                <p style={{ marginTop: '8px' }}>These include access to:</p>
+                <ul style={{ paddingLeft: '16px', margin: '4px 0', listStyleType: 'disc' }}>
+                  <li>site/s where installation and termination of optical fibre cable can be conducted</li>
+                  <li style={{ marginTop: '4px' }}>special purpose tools, equipment and materials currently used in industry such as optical fibre testing equipment</li>
+                  <li style={{ marginTop: '4px' }}>relevant regulatory and equipment documentation that impacts on optical fibre cable installation activities.</li>
                 </ul>
-                <p style={{ marginTop: '3px' }}>Assessors of this unit must satisfy the requirements for assessors in applicable vocational education and training legislation, frameworks and/or standards.</p>
+                <p style={{ marginTop: '8px' }}>Assessors of this unit must satisfy the requirements for assessors in applicable vocational education and training legislation, frameworks and/or standards.</p>
               </td>
             </tr>
             <tr>
-              <td className="key-col">Specific Resources Required</td>
-              <td>
-                <ul style={{ paddingLeft: '16px', margin: '2px 0' }}>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Specific Resources Required</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>
+                <ul style={{ paddingLeft: '16px', margin: '2px 0', listStyleType: 'disc' }}>
                   <li>Learner Guide</li>
-                  <li>Assessment Booklet</li>
-                  <li>Practical Workshop</li>
-                  <li>Manufacturers Manuals and specifications</li>
-                  <li>Workplace policy and procedures</li>
+                  <li style={{ marginTop: '4px' }}>Assessment Booklet</li>
+                  <li style={{ marginTop: '4px' }}>Practical Workshop</li>
+                  <li style={{ marginTop: '4px' }}>Manufacturers Manuals and specifications</li>
+                  <li style={{ marginTop: '4px' }}>Workplace policy and procedures</li>
                 </ul>
               </td>
             </tr>
             <tr>
-              <td className="key-col">Re-Assessment</td>
-              <td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Re-assessment</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>
                 <p>Students who are unsuccessful at achieving competency at the first attempt will be offered coaching, information and additional time (other needs if required) before a second and possibly a third attempt is made. If the student is not able to satisfactorily complete the assessment after the third attempt the student will be deemed Not Competent and resulted as such. The student may re-enrol in the qualification at a later to date to gain successful completion of the unit/s.</p>
-                <p style={{ marginTop: '3px' }}>For further details refer to ACTA College Assessment Policy and Procedure.</p>
+                <p style={{ marginTop: '8px' }}>For further details refer to ACTA College Assessment Policy and Procedure.</p>
               </td>
             </tr>
             <tr>
-              <td className="key-col">Plagiarism</td>
-              <td>ACTA College considers plagiarism and cheating as serious student misconduct and this may result either in a student's exclusion from a unit or course or may have to complete a reassessment depending on individual case.</td>
-            </tr>
-            <tr>
-              <td className="key-col">Complaints and Appeal</td>
-              <td>Where a student wishes to appeal an assessment decision they are required to notify their assessor in the first instance. Where appropriate the assessor may decide to re-assess the student to ensure a fair and equitable decision is gained. The assessor shall complete a written report regarding the reassessment outlining the reasons why assessment was or was not granted.</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Plagiarism</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>ACTA College considers plagiarism and cheating as serious student misconduct and this may result either in a student's exclusion from a unit or course or may have to complete a re-assessment depending on individual case.</td>
             </tr>
           </tbody>
         </table>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 3 of 18</span>
         </div>
       </div>
 
       {/* ═══════════════════ PAGE 4 – INSTRUCTIONS ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <table className="unit-info-table">
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td className="key-col">Assessors Intervention</td>
-              <td>
+              <td style={{ border: '1px solid #555', padding: '6px', width: '22%', fontWeight: 'bold' }}>Complaints and Appeal</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>Where a student wishes to appeal an assessment decision they are required to notify their assessor in the first instance. Where appropriate the assessor may decide to re-assess the student to ensure a fair and equitable decision is gained. The assessor shall complete a written report regarding the re-assessment outlining the reasons why assessment was or was not granted.</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Assessors Intervention</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>
                 <p>Assessors are to check that the student is ready for assessment, and defer the assessment if they are not. It is important that assessors do not teach at the assessment but allow students to competence for themselves.</p>
-                <p style={{ marginTop: '3px' }}>Feedback is to be given at the completion of the assessment using the feedback to student. If a student does not meet a standard, the assessor is to sit down with them and assist them in their understanding. Should you disagree with the assessment outcome, you can appeal the decision as stated in the Student Handbook.</p>
-                <p style={{ marginTop: '3px' }}>Your student record must indicate that you have all required skills and knowledge in completing the task. For each assessment, the assessor is to act as a supervisor and not interfere with the assessment. In the event that the assessment activities will impact on your safety or that of others, the assessment must be stopped immediately.</p>
+                <p style={{ marginTop: '8px' }}>Feedback is to be given at the completion of the assessment using the feedback to student. If a student does not meet a standard, the assessor is to sit down with them and assist them in their understanding. Should you disagree with the assessment outcome, you can appeal the decision as stated in the Student Handbook.</p>
+                <p style={{ marginTop: '8px' }}>Your student record must indicate that you have all required skills and knowledge in completing the task. For each assessment, the assessor is to act as a supervisor and not interfere with the assessment. In the event that the assessment activities will impact on your safety or that of others, the assessment must be stopped immediately.</p>
               </td>
             </tr>
             <tr>
-              <td className="key-col">Attaching Documents</td>
-              <td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Attaching Documents</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>
                 <p>Attached documents are accepted but must be labelled with the following information:</p>
-                <p>Unit Name and Title, Students name, Student ID, Date of Submissions, Student signature.</p>
+                <p style={{ marginTop: '4px' }}>Unit Name and Title, Students name, Student ID, Date of Submissions, Student signature.</p>
               </td>
             </tr>
             <tr>
-              <td className="key-col">Assessment Instruction</td>
-              <td>
-                <p>Assessment is mapped to the unit and must be completed by the end of each unit. This is a summative assessment, which requires each student to have adequate practice prior to undertaking this assessment.</p>
-                <p style={{ marginTop: '3px' }}>The assessment consists of 5 tasks. Assessment Task 1, Assessment Task 2, Assessment Task 3 and Assessment Task 4</p>
-                <p style={{ marginTop: '3px' }}>Assessment Task 1 is Observation 1</p>
-                <p>Assessment Task 2 is Observation 2</p>
-                <p>Assessment Task 3 is Observation 3</p>
-                <p>Assessment Task 4 is Observation\nAssessment Task 5 is Observation</p>
-                <p style={{ marginTop: '3px' }}>For answers to written questions, reports and projects, you must:</p>
-                <p>• Print clearly in black or blue pen or type it as a word document</p>
-                <p>• Answer each of the key points and /or follow instructions</p>
-                <p>• Assessments written in pencil or are illegible will not be accepted.</p>
-                <p style={{ marginTop: '3px' }}>Ask your assessor if you do not understand any part of the assessment. Whist your assessor cannot tell you the answer, he/she may be able to re-word a question or instruction to assist in a better understanding for you.</p>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Assessment Instruction</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>
+                <p>Assessment is mapped to the unit and must be completed by the end of each unit. This is a summative assessment, which requires each student to have adequate practice prior to undertaking this assessment</p>
+                <p style={{ marginTop: '8px' }}>The assessment consists of five tasks. Assessment Task 1, Assessment Task 2, Assessment Task 3, Assessment Task 4 and Assessment Task 5.</p>
+                <p style={{ marginTop: '8px' }}>Assessment Task 1 is Written questions and answers</p>
+                <p style={{ marginTop: '4px' }}>Assessment Task 2 is Observation</p>
+                <p style={{ marginTop: '4px' }}>Assessment Task 3 is Observation</p>
+                <p style={{ marginTop: '4px' }}>Assessment Task 4 is Observation</p>
+                <p style={{ marginTop: '4px' }}>Assessment Task 5 is Observation</p>
+                <p style={{ marginTop: '8px' }}>For answers to written questions, reports and projects, you must:</p>
+                <p style={{ marginTop: '4px' }}>• Print clearly in black or blue pen or type it as a word document</p>
+                <p style={{ marginTop: '4px' }}>• Answer each of the key points and /or follow instructions</p>
+                <p style={{ marginTop: '4px' }}>• Assessments written in pencil or are illegible will not be accepted.</p>
+                <p style={{ marginTop: '8px' }}>Ask your assessor if you do not understand any part of the assessment. Whist your assessor cannot tell you the answer, he/she may be able to re-word a question or instruction to assist in a better understanding for you.</p>
               </td>
             </tr>
             <tr>
-              <td className="key-col">Assessment Task 1:</td>
-              <td>In this assessment the candidate need to demonstrate their skills in preparing cables for a fibre termination point (FTP) such as fibre cabinet or an underground closure. As instructed by the assessor the candidate will have to work on the equipment depending on the FTP and the resources available. The candidate needs to follow the instructions and carry out the task appropriately.</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Assessment Task 1:</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>This is a questions and answers assessment over time. The assessor must provide students with sufficient information to complete this assessment over the duration of the full day training session. At the beginning of each review session the students should be given a few minutes to familiarize yourself with the questions. Students should be given extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor. The assessor must follow the session plan aligning on which day to conduct the practical observation</td>
             </tr>
             <tr>
-              <td className="key-col">Assessment Task 2:</td>
-              <td>In this assessment task the candidate should complete a fusion splice by following the given instructions. The process adopted for fusion splice depends on the assessment environment and the resources available. Based on the information provided by the assessor the fusion splice need to demonstrate on the appropriate cable.</td>
-            </tr>
-            <tr>
-              <td className="key-col">Assessment Task 3:</td>
-              <td>In this assessment, the candidate should demonstrate their knowledge in completing an "in-line" mechanical splice by following the industry and organisational policy and procedures. The process adopted for fusion splice depends on the assessment environment and the resources available. Based on the information provided by the assessor the fusion splice need to demonstrate on the appropriate cable.</td>
-            </tr>
-            <tr>
-              <td className="key-col">Assessment Task 4:</td>
-              <td>This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45-60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 5 in front of you and answer the questions as the information becomes clear to you. At the beginning of each review session you will be given a few minutes to familiarise yourself with the questions. You will be given extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor.</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Assessment Task 2:</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>Assume your own home is a property into which you will be installing optical fiber. Prepare a check list for gaining entry to your home as if it were not your own</td>
             </tr>
           </tbody>
         </table>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 4 of 18</span>
         </div>
       </div>
 
       {/* ═══════════════════ PAGE 5 – COMPETENCY DECISION + REASONABLE ADJUSTMENT + COVER SHEET ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <table className="unit-info-table" style={{ marginBottom: '8px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt', marginBottom: '6mm' }}>
           <tbody>
             <tr>
-              <td className="key-col">Competency Decision</td>
-              <td>Student must satisfactorily complete each assessment tasks to be Competent (C) in the unit. Student with unsatisfactory completion of any of the assignment tasks will be deemed Not Yet Competent (NYC).</td>
+              <td style={{ border: '1px solid #555', padding: '6px', width: '22%', fontWeight: 'bold' }}>Assessment Task 3:</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>This assessment task requires candidates to demonstrate a fusion splice</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Assessment Task 4:</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>This assessment task requires candidates to Demonstrate an 'in-line' mechanical splice</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Assessment Task 5:</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>This assessment task require candidates to Undertake testing to make an insertion loss measurement.</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Competency Decision</td>
+              <td style={{ border: '1px solid #555', padding: '6px', lineHeight: '1.4' }}>Student must satisfactorily complete each assessment tasks to be Competent (C) in the unit. Student with unsatisfactory completion of any of the assignment tasks will be deemed Not Yet Competent (NYC).</td>
             </tr>
           </tbody>
         </table>
 
         {/* Reasonable Adjustment */}
-        <div style={{ border: '1px solid #555', padding: '6px 8px', marginBottom: '8px', fontSize: '9pt' }}>
-          <div style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '4px' }}>Reasonable Adjustment</div>
-          <p>To meet the needs of all learners' adjustments can be made to the way assessments are conducted but not to the requirements of the assessment. The purpose of these adjustments is to enhance fairness and flexibility so that the specific needs of students can be met.</p>
-          <p style={{ marginTop: '4px' }}>ACTA college will take meaningful, transparent and reasonable steps to consult, consider and implement reasonable adjustments for students with disability and learning difficulties.</p>
-          <div className="spacer-sm"></div>
-          <table className="ra-table">
-            <thead>
-              <tr>
-                <th>Reasonable Adjustment Provided</th>
-                <th>Reason for Reasonable Adjustment</th>
-                <th>Outcome</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ verticalAlign: 'top' }}>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, edu_support: !compRecord.reasonable_adjustment?.edu_support } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.edu_support ? 'checked' : ''}`}></span> Educational and bilingual support
-                  </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, oral_q: !compRecord.reasonable_adjustment?.oral_q } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.oral_q ? 'checked' : ''}`}></span> Presenting questions orally
-                  </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, diagram_instructions: !compRecord.reasonable_adjustment?.diagram_instructions } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.diagram_instructions ? 'checked' : ''}`}></span> Presenting work instructions in diagrammatic form
-                  </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, extra_time: !compRecord.reasonable_adjustment?.extra_time } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.extra_time ? 'checked' : ''}`}></span> Extra time to complete
-                  </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, others: !compRecord.reasonable_adjustment?.others } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.others ? 'checked' : ''}`}></span> Others:
-                  </div>
-                </td>
-                <td>
-                  <textarea
-                    className="w-full bg-transparent border-none outline-none resize-none h-24 text-xs text-slate-800"
-                    value={compRecord.reasonable_adjustment?.reason || ''}
-                    onChange={(e) => setCompRecord({
-                      ...compRecord,
-                      reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value }
-                    })}
-                    placeholder="Reason for adjustment..."
-                  />
-                </td>
-                <td>
-                  <textarea
-                    className="w-full bg-transparent border-none outline-none resize-none h-24 text-xs text-slate-800"
-                    value={compRecord.reasonable_adjustment?.outcome || ''}
-                    onChange={(e) => setCompRecord({
-                      ...compRecord,
-                      reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value }
-                    })}
-                    placeholder="Outcome details..."
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
+          <tbody>
+            <tr>
+              <td colSpan={3} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', fontSize: '10pt' }}>Reasonable Adjustment</td>
+            </tr>
+            <tr>
+              <td colSpan={3} style={{ border: '1px solid #555', padding: '10px 8px', lineHeight: '1.4' }}>
+                <p>To meet the needs of all learners' adjustments can be made to the way assessments are conducted but not to the requirements of the assessment. The purpose of these adjustments is to enhance fairness and flexibility so that the specific needs of students can be met.</p>
+                <p style={{ marginTop: '8px' }}>ACTA college will take meaningful, transparent and reasonable steps to consult, consider and implement reasonable adjustments for students with disability and learning difficulties.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold', textAlign: 'center', width: '35%' }}>Reasonable Adjustment Provided</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold', textAlign: 'center', width: '35%' }}>Reason for Reasonable Adjustment</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold', textAlign: 'center' }}>Outcome</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', padding: '6px', verticalAlign: 'top', lineHeight: '1.5' }}>
+                <div className="flex items-center gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, edu_support: !compRecord.reasonable_adjustment?.edu_support } })}>
+                  <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0">
+                    {compRecord.reasonable_adjustment?.edu_support && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                  </div> <span>Educational and bilingual support</span>
+                </div>
+                <div className="flex items-center gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, oral_q: !compRecord.reasonable_adjustment?.oral_q } })}>
+                  <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0">
+                    {compRecord.reasonable_adjustment?.oral_q && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                  </div> <span>Presenting questions orally</span>
+                </div>
+                <div className="flex items-start gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, diagram_instructions: !compRecord.reasonable_adjustment?.diagram_instructions } })}>
+                  <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0 mt-[2px]">
+                    {compRecord.reasonable_adjustment?.diagram_instructions && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                  </div> <span>Presenting work instructions in diagrammatic or pictorial form instead of words and sentences</span>
+                </div>
+                <div className="flex items-start gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, extra_time: !compRecord.reasonable_adjustment?.extra_time } })}>
+                  <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0 mt-[2px]">
+                    {compRecord.reasonable_adjustment?.extra_time && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                  </div> <span>Extra time to complete a course or assessment</span>
+                </div>
+                <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, others: !compRecord.reasonable_adjustment?.others } })}>
+                  <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0">
+                    {compRecord.reasonable_adjustment?.others && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                  </div> <span>Others:</span>
+                </div>
+              </td>
+              <td style={{ border: '1px solid #555', padding: '6px', verticalAlign: 'top' }}>
+                <textarea className="w-full bg-transparent border-none outline-none resize-none h-40 text-[9.5pt] text-slate-800" value={compRecord.reasonable_adjustment?.reason || ''} onChange={(e) => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, reason: e.target.value } })} />
+              </td>
+              <td style={{ border: '1px solid #555', padding: '6px', verticalAlign: 'top' }}>
+                <textarea className="w-full bg-transparent border-none outline-none resize-none h-40 text-[9.5pt] text-slate-800" value={compRecord.reasonable_adjustment?.outcome || ''} onChange={(e) => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, outcome: e.target.value } })} />
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* Cover Sheet */}
-        <div style={{ marginTop: '10mm', textAlign: 'center' }}>
-          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '5mm' }}>COVER SHEET FOR SUBMISSION OF WORK FOR ASSESSMENT</div>
-          <div style={{ fontSize: '10pt', fontWeight: 'bold', marginBottom: '2mm' }}>A cover sheet must be included with each submission of work.</div>
-          <div style={{ fontSize: '10pt', fontWeight: 'bold' }}>Work submitted without a signed cover sheet will be returned unmarked.</div>
+        <div style={{ marginTop: '10mm', paddingBottom: '10mm' }}>
+          <div style={{ fontSize: '12pt', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '5mm', background: '#99ccff', padding: '4px 8px', display: 'inline-block', width: '100%' }}>COVER SHEET FOR SUBMISSION OF WORK FOR ASSESSMENT</div>
+          <div style={{ fontSize: '9.5pt', fontWeight: 'bold', marginBottom: '5mm', marginLeft: '2mm' }}>A cover sheet must be included with each submission of work.</div>
+          <div style={{ fontSize: '9.5pt', fontWeight: 'bold', marginLeft: '2mm' }}>Work submitted without a signed cover sheet will be returned unmarked.</div>
         </div>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 5 of 18</span>
         </div>
       </div>
 
       
+      {/* ═══════════════════ PAGE 6 – ASSESSMENT TASK 1 ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS</h1>
-        <p style={{ fontWeight: 'bold', marginBottom: '2px', fontSize: '9.5pt' }}>Student Instructions:</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '3px' }}>This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45-60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 1 in front of you and answer the questions as the information becomes clear to you.</p>
+        <div style={{ textAlign: 'center', marginBottom: '4mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 1 – WRITTEN QUESTIONS AND ANSWERS</div>
+        </div>
 
-        <p style={{ fontWeight: 'bold', marginBottom: '2px', fontSize: '9.5pt' }}>Make sure you:</p>
-        <ul className="steps-list" style={{ marginBottom: '5px' }}>
-          <li>Answer all questions</li>
-          <li>Print clearly or select and circle the appropriate answer or type it as a word document.</li>
-          <li>Use a blue or black pen. Assessments written in pencil will not be accepted.</li>
-        </ul>
-        {/* Q1 */}
+        <div style={{ fontSize: '10.5pt', lineHeight: '1.3' }}>
+          <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>Student Instructions:</div>
+          <div style={{ marginBottom: '8px' }}>This is a written assessment that will test your knowledge. This assessment may be completed over the duration of the training day or in one sitting of about 45 - 60 minutes. As you learn, practice and review knowledge and skills, you will keep Assessment 1 in front of you and answer the questions as the information becomes clear to you. At the beginning of each review session you will be given a few minutes to familiarise yourself with the questions. You will be given extra time at the end of the day to complete this assessment or to clarify facts with the Trainer/Assessor.</div>
+
+          <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>Make sure you:</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0 12px 0', listStyleType: 'disc' }}>
+            <li style={{ marginBottom: '2px' }}>Answer all questions</li>
+            <li style={{ marginBottom: '2px' }}>Print clearly or select and circle the appropriate answer or type it as a word document.</li>
+            <li style={{ marginBottom: '2px' }}>Use a blue or black pen. Assessments written in pencil will not be accepted.</li>
+            <li style={{ marginBottom: '2px' }}>Ask your assessor if you do not understand a question. Whist your assessor cannot tell you the answer, he/she may be able to re-word the question for you</li>
+            <li style={{ marginBottom: '2px' }}>Do not talk to your classmates. If you are caught discussion the answers you will be asked to leave and your assessment will not be marked.</li>
+            <li style={{ marginBottom: '2px' }}>Do not cheat. Anyone caught cheating will automatically be marked Not Competent for this unit. There are NO EXCEPTIONS to this rule.</li>
+          </ul>
+        </div>
+
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '14px' }}>
+          <thead>
+            <tr><th colSpan={3} style={{ border: '1px solid #555', background: '#5b9bd5', padding: '6px', fontSize: '13pt', textAlign: 'center', fontWeight: 'bold', color: 'black' }}>Questions</th></tr>
+          </thead>
           <tbody>
-            <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>1. Optical fibre is normally made from: (PC 1.5)</td></tr>
+            {/* Q1 */}
             <tr>
-              <td style={{ border: '1px solid #777', padding: '8px 12px', fontSize: '9.5pt' }}>
-                {[{"val": "a", "text": "Window glass"}, {"val": "b", "text": "Water"}, {"val": "c", "text": "Lead crystal"}, {"val": "d", "text": "Silica glass or plastic"}].map((opt) => {
-                  const isSelected = (answers['t1q1'] || '').toLowerCase() === opt.val;
-                  return (
-                    <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q1': opt.val })}>
-                      <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
-                      {opt.val.toUpperCase()}. &nbsp; {opt.text}
-                    </div>
-                  );
-                })}
+              <td colSpan={3} style={{ border: '1px solid #555', padding: '8px 12px', fontSize: '10.5pt' }}>
+                <div style={{ marginBottom: '4px' }}>1. Optical fibre is normally made from: (PC 1.5)</div>
+                <div style={{ paddingLeft: '24px' }}>
+                  {[{"val": "a", "text": "Window glass"}, {"val": "b", "text": "Water"}, {"val": "c", "text": "Lead crystal"}, {"val": "d", "text": "Silica glass or plastic"}].map((opt) => {
+                    const isSelected = (answers['t1q1'] || '').toLowerCase() === opt.val;
+                    return (
+                      <div key={opt.val} className={`cursor-pointer hover:opacity-80`} style={{ marginTop: '4px' }} onClick={() => setAnswers({ ...answers, 't1q1': opt.val })}>
+                        <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
+                          <span className={isSelected ? 'text-red-600 font-bold' : ''}>{opt.val.toUpperCase()}.</span>
+                          {isSelected && <span style={{ position: 'absolute', top: '-1px', left: '-4px', width: '20px', height: '20px', border: '2px solid red', borderRadius: '50%' }}></span>}
+                        </span>
+                        {opt.text}
+                      </div>
+                    );
+                  })}
+                </div>
               </td>
             </tr>
             <tr>
-              <td style={{ padding: '0', border: 'none' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', margin: '0' }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ width: '38%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center' }}>
-                        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}>✓</span>)
-                      </td>
-                      <td onClick={() => setGrades({ ...grades, t1q1: 'correct' })} style={{ width: '31%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
-                        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                          {grades['t1q1'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                        </span>
-                        Satisfactory (S)
-                      </td>
-                      <td onClick={() => setGrades({ ...grades, t1q1: 'incorrect' })} style={{ width: '31%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
-                        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                          {grades['t1q1'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                        </span>
-                        Not Satisfactory (NS)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>          </tbody>
-        </table>
-
-        {/* Q2 */}
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '14px' }}>
-          <tbody>
-            <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>2. As a ray enters glass from air, its velocity will change because of the refractive index of glass. As a consequence, the ………change. (PC 1.6)</td></tr>
+              <td colSpan={3} style={{ borderLeft: '1px solid #555', borderRight: '1px solid #555', borderBottom: '1px solid #555', height: '24px' }}></td>
+            </tr>
             <tr>
-              <td style={{ border: '1px solid #777', padding: '8px 12px', fontSize: '9.5pt' }}>
-                {[{"val": "a", "text": "Frequency"}, {"val": "b", "text": "Wave length"}, {"val": "c", "text": "Frequency and wave length"}, {"val": "d", "text": "None of the above"}].map((opt) => {
-                  const isSelected = (answers['t1q2'] || '').toLowerCase() === opt.val;
-                  return (
-                    <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q2': opt.val })}>
-                      <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
-                      {opt.val.toUpperCase()}. &nbsp; {opt.text}
-                    </div>
-                  );
-                })}
+              <td style={{ width: '38%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold' }}>
+                Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px', textAlign: 'center', lineHeight: '10px' }}><span style={{ color: '#1a3fa8', fontSize: '12px', fontWeight: 'bold' }}>✓</span></span>)
+              </td>
+              <td onClick={() => setGrades({ ...grades, t1q1: 'correct' })} style={{ width: '31%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
+                <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                  {grades['t1q1'] === 'correct' && <span style={{ position: 'absolute', top: '-4px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                </span>
+                Satisfactory (S)
+              </td>
+              <td onClick={() => setGrades({ ...grades, t1q1: 'incorrect' })} style={{ width: '31%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
+                <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                  {grades['t1q1'] === 'incorrect' && <span style={{ position: 'absolute', top: '-4px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                </span>
+                Not Satisfactory (NS)
+              </td>
+            </tr>
+
+            {/* Q2 */}
+            <tr>
+              <td colSpan={3} style={{ border: '1px solid #555', padding: '8px 12px', fontSize: '10.5pt' }}>
+                <div style={{ marginBottom: '4px' }}>2. As a ray enters glass from air, its velocity will change because of the refractive index of glass. As a consequence, the ………change. (PC 1.6)</div>
+                <div style={{ paddingLeft: '24px' }}>
+                  {[{"val": "a", "text": "Frequency"}, {"val": "b", "text": "Wave length"}, {"val": "c", "text": "Frequency and wave length"}, {"val": "d", "text": "None of the above"}].map((opt) => {
+                    const isSelected = (answers['t1q2'] || '').toLowerCase() === opt.val;
+                    return (
+                      <div key={opt.val} className={`cursor-pointer hover:opacity-80`} style={{ marginTop: '4px' }} onClick={() => setAnswers({ ...answers, 't1q2': opt.val })}>
+                        <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
+                          <span className={isSelected ? 'text-red-600 font-bold' : ''}>{opt.val.toUpperCase()}.</span>
+                          {isSelected && <span style={{ position: 'absolute', top: '-1px', left: '-4px', width: '20px', height: '20px', border: '2px solid red', borderRadius: '50%' }}></span>}
+                        </span>
+                        {opt.text}
+                      </div>
+                    );
+                  })}
+                </div>
               </td>
             </tr>
             <tr>
-              <td style={{ padding: '0', border: 'none' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', margin: '0' }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ width: '38%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center' }}>
-                        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}>✓</span>)
-                      </td>
-                      <td onClick={() => setGrades({ ...grades, t1q2: 'correct' })} style={{ width: '31%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
-                        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                          {grades['t1q2'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                        </span>
-                        Satisfactory (S)
-                      </td>
-                      <td onClick={() => setGrades({ ...grades, t1q2: 'incorrect' })} style={{ width: '31%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
-                        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                          {grades['t1q2'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                        </span>
-                        Not Satisfactory (NS)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>          </tbody>
-        </table>
-
-        {/* Q3 */}
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '14px' }}>
-          <tbody>
-            <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>3. The two fields that makeup an electromagnetic wave are called: (PC 1.2)</td></tr>
+              <td colSpan={3} style={{ borderLeft: '1px solid #555', borderRight: '1px solid #555', borderBottom: '1px solid #555', height: '24px' }}></td>
+            </tr>
             <tr>
-              <td style={{ border: '1px solid #777', padding: '8px 12px', fontSize: '9.5pt' }}>
-                {[{"val": "a", "text": "Electric and magnetostrictive"}, {"val": "b", "text": "Electric and magnetic"}, {"val": "c", "text": "Electronic and magnetic"}, {"val": "d", "text": "Electronic and magnetostrictive"}].map((opt) => {
-                  const isSelected = (answers['t1q3'] || '').toLowerCase() === opt.val;
-                  return (
-                    <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q3': opt.val })}>
-                      <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
-                      {opt.val.toUpperCase()}. &nbsp; {opt.text}
-                    </div>
-                  );
-                })}
+              <td style={{ width: '38%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold' }}>
+                Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px', textAlign: 'center', lineHeight: '10px' }}><span style={{ color: '#1a3fa8', fontSize: '12px', fontWeight: 'bold' }}>✓</span></span>)
+              </td>
+              <td onClick={() => setGrades({ ...grades, t1q2: 'correct' })} style={{ width: '31%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
+                <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                  {grades['t1q2'] === 'correct' && <span style={{ position: 'absolute', top: '-4px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                </span>
+                Satisfactory (S)
+              </td>
+              <td onClick={() => setGrades({ ...grades, t1q2: 'incorrect' })} style={{ width: '31%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
+                <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                  {grades['t1q2'] === 'incorrect' && <span style={{ position: 'absolute', top: '-4px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                </span>
+                Not Satisfactory (NS)
+              </td>
+            </tr>
+
+            {/* Q3 */}
+            <tr>
+              <td colSpan={3} style={{ border: '1px solid #555', padding: '8px 12px', fontSize: '10.5pt' }}>
+                <div style={{ marginBottom: '4px' }}>3. The two fields that makeup an electromagnetic wave are called: (PC 1.2)</div>
+                <div style={{ paddingLeft: '24px' }}>
+                  {[{"val": "a", "text": "Electric and magnetostrictive"}, {"val": "b", "text": "Electric and magnetic"}, {"val": "c", "text": "Electronic and magnetic"}, {"val": "d", "text": "Electronic and magnetostrictive"}].map((opt) => {
+                    const isSelected = (answers['t1q3'] || '').toLowerCase() === opt.val;
+                    return (
+                      <div key={opt.val} className={`cursor-pointer hover:opacity-80`} style={{ marginTop: '4px' }} onClick={() => setAnswers({ ...answers, 't1q3': opt.val })}>
+                        <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
+                          <span className={isSelected ? 'text-red-600 font-bold' : ''}>{opt.val.toUpperCase()}.</span>
+                          {isSelected && <span style={{ position: 'absolute', top: '-1px', left: '-4px', width: '20px', height: '20px', border: '2px solid red', borderRadius: '50%' }}></span>}
+                        </span>
+                        {opt.text}
+                      </div>
+                    );
+                  })}
+                </div>
               </td>
             </tr>
             <tr>
-              <td style={{ padding: '0', border: 'none' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', margin: '0' }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ width: '38%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center' }}>
-                        Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px' }}>✓</span>)
-                      </td>
-                      <td onClick={() => setGrades({ ...grades, t1q3: 'correct' })} style={{ width: '31%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
-                        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                          {grades['t1q3'] === 'correct' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                        </span>
-                        Satisfactory (S)
-                      </td>
-                      <td onClick={() => setGrades({ ...grades, t1q3: 'incorrect' })} style={{ width: '31%', border: '1px solid #777', padding: '6px', background: '#faefe2', color: '#1a3fa8', fontSize: '9pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
-                        <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
-                          {grades['t1q3'] === 'incorrect' && <span style={{ position: 'absolute', top: '-6px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
-                        </span>
-                        Not Satisfactory (NS)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <td colSpan={3} style={{ borderLeft: '1px solid #555', borderRight: '1px solid #555', borderBottom: '1px solid #555', height: '24px' }}></td>
+            </tr>
+            <tr>
+              <td style={{ width: '38%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold' }}>
+                Assessor to tick (<span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', verticalAlign: 'middle', marginLeft: '2px', textAlign: 'center', lineHeight: '10px' }}><span style={{ color: '#1a3fa8', fontSize: '12px', fontWeight: 'bold' }}>✓</span></span>)
               </td>
-            </tr>          </tbody>
+              <td onClick={() => setGrades({ ...grades, t1q3: 'correct' })} style={{ width: '31%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
+                <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                  {grades['t1q3'] === 'correct' && <span style={{ position: 'absolute', top: '-4px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                </span>
+                Satisfactory (S)
+              </td>
+              <td onClick={() => setGrades({ ...grades, t1q3: 'incorrect' })} style={{ width: '31%', border: '1px solid #555', padding: '6px', background: '#fce4d6', color: '#1a3fa8', fontSize: '9.5pt', fontWeight: 'bold', textAlign: 'center', cursor: 'pointer' }}>
+                <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1.5px solid #1a3fa8', background: '#fff', position: 'relative', marginRight: '6px', verticalAlign: 'middle' }}>
+                  {grades['t1q3'] === 'incorrect' && <span style={{ position: 'absolute', top: '-4px', left: '-1px', fontSize: '15px', color: '#cc0000', fontWeight: 'bold' }}>✓</span>}
+                </span>
+                Not Satisfactory (NS)
+              </td>
+            </tr>
+          </tbody>
         </table>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 6 of 18</span>
         </div>
       </div>
@@ -2204,85 +2036,111 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
 
       {/* ═══════════════════ PAGE 11 – TASK 2 OBSERVATION ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 2</h1>
-        <h2 className="sub-title">Prepare for Optical Cable Installation</h2>
-        <p style={{ fontSize: '9.5pt', marginBottom: '3px' }}>Step1: Assume your own home is a property into which you will be installing optical fibre. Prepare a check list for gaining entry to your home as if it were not your own. In that list:</p>
-        <div className="spacer-sm"></div>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.1 Identify and locate regulations relevant to optical fibre cabling and obtain as sample (one page) of ACMA or Australian standards regulations</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.2 List the administrative steps you would take to gain access to the property</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.3 Identify a common hazard found in most cabling worksites</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.4 Select the correct authority to report tis WHS hazard</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.5 Select the tools suitable for installing cable-including installing a lead in from a Telco pit and splicing fibres.</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.6 Select suitable cable and hardware for a standard domestic cable installation</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.7 Select a route for the cable installation with suitable bend ratios and discuss and adapt it by consulting with the customer-role played by your assessor</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.8 Conduct and record the results of a cable drum test. Prepare cables for a fibre termination</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.9 Clean and inspect a connector end face using wet and dry cleaning and inspection methods</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.10 All work to be conducted in line with regulatory and WHS requirements including avoiding hazards of laser based systems and risk injury due to optical fibres.</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.11 List the PPE used to control hazards when working with laser and optical fibre.</p>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>Step2: Candidates are required to prepare a single-end cable for termination</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.12 Cable preparation process</p>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Remove the outer cable sheath of a standard cable</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Expose the loose tubes and separate one tube</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Clean the fibres for splicing</span></div>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT2.13 Connector inspection and cleaning process</p>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Connector dismantled and reassembled</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Connector inspection to asses cleaning need</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Dry clean connectors</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Wet clean connectors</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Inspect the connector after each cleaning</span></div>
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>Required Documents and Equipment</p>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cleaning agents and devices</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cable stripping tool</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cable cleaving tool</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Samples of single end cable</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Multi-fibre connectors and single fibre connectors</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• A range of adaptors</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cleaning products</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Manual inspection ,microscopes and/or video inspection probes</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• PPE for working with cable</span></div>
+        <div style={{ textAlign: 'center', marginBottom: '6mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 2 – OBSERVATION</div>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', marginTop: '3mm' }}>Prepare for Optical Cable Installation</div>
+        </div>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div style={{ fontSize: '10.5pt', lineHeight: '1.4' }}>
+          <div style={{ fontWeight: 'bold', marginBottom: '2px' }}>Step1:</div>
+          <div style={{ marginBottom: '4px' }}>Assume your own home is a property into which you will be installing optical fibre. Prepare a check list for gaining entry to your home as if it were not your own. In that list:</div>
+          <div style={{ marginBottom: '2px' }}>AT2.1 Identify and locate regulations relevant to optical fibre cabling and obtain as sample (one page) of ACMA or Australian standards regulations</div>
+          <div style={{ marginBottom: '2px' }}>AT2.2 List the administrative steps you would take to gain access to the property</div>
+          <div style={{ marginBottom: '2px' }}>AT2.3 Identify a common hazard found in most cabling worksites</div>
+          <div style={{ marginBottom: '2px' }}>AT2.4 Select the correct authority to report tis WHS hazard</div>
+          <div style={{ marginBottom: '2px' }}>AT2.5 Select the tools suitable for installing cable-including installing a lead in from a Telco pit and splicing fibres.</div>
+          <div style={{ marginBottom: '2px' }}>AT2.6 Select suitable cable and hardware for a standard domestic cable installation</div>
+          <div style={{ marginBottom: '2px' }}>AT2.7 Select a route for the cable installation with suitable bend ratios and discuss and adapt it by consulting with the customer-role played by your assessor</div>
+          <div style={{ marginBottom: '2px' }}>AT2.8 Conduct and record the results of a cable drum test. Prepare cables for a fibre termination</div>
+          <div style={{ marginBottom: '2px' }}>AT2.9 Clean and inspect a connector end face using wet and dry cleaning and inspection methods</div>
+          <div style={{ marginBottom: '2px' }}>AT2.10 All work to be conducted in line with regulatory and WHS requirements including avoiding hazards of laser based systems and risk injury due to optical fibres.</div>
+          <div style={{ marginBottom: '8px' }}>AT2.11 List the PPE used to control hazards when working with laser and optical fibre.</div>
+
+          <div style={{ fontWeight: 'bold', marginBottom: '2px' }}>Step2:</div>
+          <div style={{ marginBottom: '2px' }}>Candidates are required to prepare a single-end cable for termination</div>
+          <div style={{ marginBottom: '2px' }}>AT2.12 Cable preparation process</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0 4px 0', listStyleType: 'disc' }}>
+            <li>Remove the outer cable sheath of a standard cable</li>
+            <li>Expose the loose tubes and separate one tube</li>
+            <li>Clean the fibres for splicing</li>
+          </ul>
+          <div style={{ marginBottom: '2px' }}>AT2.13 Connector inspection and cleaning process</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0 8px 0', listStyleType: 'disc' }}>
+            <li>Connector dismantled and reassembled</li>
+            <li>Connector inspection to asses cleaning need</li>
+            <li>Dry clean connectors</li>
+            <li>Wet clean connectors</li>
+            <li>Inspect the connector after each cleaning</li>
+          </ul>
+
+          <div style={{ fontWeight: 'bold', fontSize: '11.5pt', marginBottom: '4px' }}>Required Documents and Equipment</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0', listStyleType: 'disc' }}>
+            <li>Cleaning agents and devices</li>
+            <li>Cable stripping tool</li>
+            <li>Cable cleaving tool</li>
+            <li>Samples of single end cable</li>
+            <li>Multi-fibre connectors and single fibre connectors</li>
+            <li>A range of adaptors</li>
+            <li>Cleaning products</li>
+            <li>Manual inspection ,microscopes and/or video inspection probes</li>
+            <li>PPE for working with cable</li>
+          </ul>
+        </div>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 11 of 18</span>
         </div>
       </div>
+
       {/* ═══════════════════ PAGE 12 – TASK 2 ASSESSOR CHECKLIST ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 2 – ASSESSOR CHECKLIST</h1>
-        <p className="italic-note">This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.</p>
+        <div style={{ textAlign: 'center', marginBottom: '4mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 2 – ASSESSOR CHECKLIST</div>
+        </div>
+
+        <div style={{ fontSize: '10pt', fontStyle: 'italic', marginBottom: '4px', lineHeight: '1.4' }}>
+          This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.
+        </div>
+        <div style={{ fontSize: '10pt', marginBottom: '4px', lineHeight: '1.4' }}>
+          The observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.
+        </div>
+        <div style={{ fontSize: '10pt', fontWeight: 'bold', marginBottom: '2px' }}>Assessor Instructions:</div>
+        <div style={{ fontSize: '10pt', marginBottom: '6px', lineHeight: '1.4' }}>
+          The assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.
+        </div>
+
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Record of Performance:</div>
         
-        <table className="chk-table" style={{ marginTop: '10px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10pt', marginBottom: '6mm' }}>
           <thead>
-            <tr><td className="chk-q">Record of Performance: Did the Candidate:</td><td className="chk-case">Satisfactory</td><td className="chk-comment">Comments</td></tr>
+            <tr>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '70%' }}>Did the Candidate:</td>
+              <td colSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px' }}>Satisfactory</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontStyle: 'italic', padding: '6px' }}>*See assessment task 2 AT2.13 cable preparation and AT1.14 connector inspection and cleaning</td>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>Yes</td>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>No</td>
+            </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colSpan={3} style={{ fontWeight: 'bold', padding: '3px 6px', background: '#f5f5f5' }}>
-                Date Observed:
-                <input
-                  type="date"
-                  className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
-                  value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                />
-                <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
-              </td>
-            </tr>
             {[
               "Obtain or describe the regulations for optical fibre cabling?",
               "Observe correct procedures for gaining access to a cabling worksite?",
@@ -2290,33 +2148,23 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
               "Plan a cable route in consultation with the customer (the assessor)?",
               "Select tools suitable for installation along cable route?",
               "Select suitable hardware-cable and connectors-for the cable route and customer needs?",
-              "Expose, clean and prepare the loose tubes ready for splicing?",
+              "Expose, clean and prepare the loose tubes ready for splicing?*",
               "Demonstrate wet and dry cleaning methods for connector end faces and adaptors?",
               "Perform and record a cable drum test?"
             ].map((itemText, idx) => {
               const qKey = `t2q${idx + 1}`;
               return (
                 <tr key={qKey}>
-                  <td className="chk-q">{itemText}</td>
-                  <td className="chk-case yn-cell">
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'correct' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer mr-2" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>Yes</span>
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'incorrect' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>No</span>
+                  <td style={{ border: '1px solid #555', padding: '6px' }}>{itemText}</td>
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>
+                      {grades[qKey] === 'correct' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
-                  <td className="chk-comment">
-                    <input
-                      type="text"
-                      className="w-full bg-transparent border-b border-dashed border-gray-300 focus:border-blue-500 outline-none px-1 text-xs text-slate-800"
-                      value={grades[`${qKey}_cmt`] || ''}
-                      onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                    />
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>
+                      {grades[qKey] === 'incorrect' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
                 </tr>
               );
@@ -2324,39 +2172,27 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '3px' }}>Comments/Feedback to Participant</p>
-
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '5px' }}>
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Comments/Feedback to Participant</div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <strong>Student Declaration:</strong> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top' }}>
+                <span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('student_signature', 'submission')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {answers.student_signature_url || submission.signature_url ? (
-                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign Here</span>
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('student_signature', 'submission')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {(answers.student_signature_url || submission.signature_url) && (
+                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />
                     )}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
-                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
-                  />
-                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
-                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                   </span>
                 </div>
               </td>
@@ -2364,169 +2200,194 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div style={{ border: '1px solid #555', padding: '5px 8px', minHeight: '28px', fontSize: '9pt', marginBottom: '5px' }}>
-          <strong>Assessor's Feedback:</strong>
-          <textarea
-            className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 text-xs mt-1"
-            value={taskResults['t2_feedback'] || ''}
-            onChange={(e) => setTaskResults({ ...taskResults, t2_feedback: e.target.value })}
-            placeholder="Enter Assessor Feedback for Task 2..."
-          />
+        <div style={{ border: '1px solid #555', padding: '8px', minHeight: '80px', fontSize: '9.5pt', marginBottom: '6mm' }}>
+          <span style={{ fontWeight: 'bold' }}>Assessor's Feedback:</span>
+          <textarea className="w-full bg-transparent border-none outline-none resize-none h-16 text-slate-800 mt-2" value={taskResults['t2_feedback'] || ''} onChange={(e) => setTaskResults({ ...taskResults, t2_feedback: e.target.value })} />
         </div>
 
-        <div className="result-line">
-          Result:{' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t2'] === 'S' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t2: 'S' })}
-          >S</span>
-          {' '}/ Not Satisfactory (NS){' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t2'] === 'NS' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t2: 'NS' })}
-          >NS</span>
+        <div style={{ textAlign: 'center', fontSize: '14pt', fontWeight: 'bold', marginBottom: '4px' }}>
+          Result: Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t2: 'S' })}>(S){taskResults['t2'] === 'S' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>/Not Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t2: 'NS' })}>(NS){taskResults['t2'] === 'NS' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '5px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '55%', verticalAlign: 'top' }}>
-                <strong>Assessor:</strong> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '45%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('assessor_signature', 'comp')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {compRecord.assessor_signature ? (
-                      <img src={compRecord.assessor_signature} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign</span>
-                    )}
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  </span>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 12 of 18</span>
         </div>
       </div>
+
       {/* ═══════════════════ PAGE 13 – TASK 3 OBSERVATION ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 3</h1>
-        <h2 className="sub-title">Fusion splice</h2>
-        <p style={{ fontSize: '9.5pt', marginBottom: '3px' }}>This assessment task requires candidates to demonstrate a fusion splice. Candidates work in pairs to optimise use of resources. Candidates will need to make sure that they understand the equipment, procedure and safety measures involved so that they undertake this task safely and correctly.</p>
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>The assessor will demonstrate the following tasks then, ask participants to:</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.1 Prepare the fibre</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.2 Cleave the fibre</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.3 Strip away the protective jacket/coating (nylon and/or acrylate coating) from the fibre using appropriate fibre stripping tools</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.4 Clean the bare fibre using lint free wipe tissues and isopropyl alcohol (IPA fluid) – ensuring the fibre is dry before inserting into the splicer.</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.5 Follow the correct cleaving procedure to ensure perpendicular mirror smooth end face cut</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.6 Splice in auto mode to align the core of both fibres automatically</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.7 Splice the fibre</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.8 Check the LCD display for estimated loss acceptance level – industry specification of less than 0.05 dB is an acceptable level</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT3.9 Splice protection</p>
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>Required Documents and Equipment</p>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cable</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Fusion splicer</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cleaning Products</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cleaver</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Heat shrink protectors</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• PPE for working with cable</span></div>
+        <div style={{ textAlign: 'center', marginBottom: '6mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 3 – OBSERVATION</div>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', marginTop: '3mm' }}>Fusion Splice</div>
+        </div>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div style={{ fontSize: '10.5pt', lineHeight: '1.4' }}>
+          <div style={{ marginBottom: '8px' }}>This assessment task requires candidate to demonstrate a fusion splice.</div>
+          <div style={{ marginBottom: '8px' }}>The assessor will demonstrate the appropriate process, then ask candidates to:</div>
+          <div style={{ marginBottom: '8px' }}>AT3.1 position and install cable according to agreed route</div>
+          <div style={{ marginBottom: '8px' }}>AT3.2 Comply with manufacturer's specifications for installation and industry safety standards</div>
+          <div style={{ marginBottom: '4px' }}>AT3.3 prepare and splice optical fibre following the correct procedure:</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0 8px 0', listStyleType: 'disc' }}>
+            <li>Position heat shrink splice protector over one end of the fibre</li>
+            <li>Strip fibre for 20mm using appropriate fibre stripping tools</li>
+            <li>Clean fibre with lint free wipe tissues and isopropyl alcohol(IPA fluid)</li>
+            <li>Ensure fibre is dry before inserting into the splicer</li>
+            <li>Cleave fibre to give a perpendicular mirror smooth end face cut</li>
+            <li>10 to 12 mm for 40 mm splice protectors or 15 to 17 mm 60 mm splice protectors</li>
+            <li>Splice the fibres in auto mode to align fibre cores automatically</li>
+            <li>Check the quality of the cleaved fibre end face (the splicer estimates cleaved angle for both fibre end faces)</li>
+            <li>Check LCD display for shadow, bubble, ballooning, necking across the joint</li>
+          </ul>
+          <div style={{ marginBottom: '8px' }}>AT3.4 Check loss acceptance level is less than 0.05db (re-splice if over)</div>
+          <div style={{ marginBottom: '8px' }}>AT3.5 Place the heat shrink on one end of the fibre and perform splice</div>
+          <div style={{ marginBottom: '8px' }}>AT3.6 Seal the heat shrink protector using splicer heater</div>
+          <div style={{ marginBottom: '8px' }}>AT3.7 Select a suitable testing device and record test results following manufacturer instructions</div>
+
+          <div style={{ fontWeight: 'bold', fontSize: '12pt', marginBottom: '4px' }}>Required Documents and Equipment</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0', listStyleType: 'disc' }}>
+            <li>Cable stripping tool</li>
+            <li>Various samples of cable connectors</li>
+            <li>Tight buffered pigtail connectors</li>
+            <li>Heat shrink splice protectors</li>
+            <li>Lint free wipe tissues and isopropyl alcohol (IPA fluid)</li>
+            <li>PPE for working with cable</li>
+            <li>Fusion splicing equipment</li>
+            <li>Field termination connector</li>
+            <li>High precision fibre cleaver</li>
+            <li>Manufacturer’s guidelines/specifications for all tools and machinery.</li>
+          </ul>
+        </div>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 13 of 18</span>
         </div>
       </div>
+
       {/* ═══════════════════ PAGE 14 – TASK 3 ASSESSOR CHECKLIST ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 3 – ASSESSOR CHECKLIST</h1>
-        <p className="italic-note">This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.</p>
+        <div style={{ textAlign: 'center', marginBottom: '4mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 3 – ASSESSOR CHECKLIST</div>
+        </div>
+
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Record of Performance:</div>
         
-        <table className="chk-table" style={{ marginTop: '10px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10pt', marginBottom: '6mm' }}>
           <thead>
-            <tr><td className="chk-q">Record of Performance: Did the Candidate:</td><td className="chk-case">Satisfactory</td><td className="chk-comment">Comments</td></tr>
+            <tr>
+              <td rowSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '70%', verticalAlign: 'top' }}>Did the Candidate:</td>
+              <td colSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px' }}>Satisfactory</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>Yes</td>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>No</td>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td colSpan={3} style={{ fontWeight: 'bold', padding: '3px 6px', background: '#f5f5f5' }}>
-                Date Observed:
-                <input
-                  type="date"
-                  className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
-                  value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                />
-                <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
+              <td style={{ border: '1px solid #555', padding: '6px', fontWeight: 'bold' }}>Install selected cable following manufacturers specification</td>
+              <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, t3q1: 'correct' })}>
+                  {grades['t3q1'] === 'correct' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                </div>
+              </td>
+              <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, t3q1: 'incorrect' })}>
+                  {grades['t3q1'] === 'incorrect' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', padding: '6px' }}>
+                <div style={{ marginBottom: '4px' }}>Prepare to splice cable using the correct procedure:</div>
+                <ul style={{ paddingLeft: '24px', margin: '0', listStyleType: 'disc' }}>
+                  <li>Position heat shrink splice protector over one end of the fibre</li>
+                  <li>Strip fibre for 20mm using appropriate fibre stripping tools</li>
+                  <li>Clean fibre with lint free wipe tissues and isopropyl alcohol(IPA fluid)</li>
+                  <li>Ensure fibre is dry before inserting into the splicer</li>
+                  <li>Cleave fibre to give a perpendicular mirror smooth end face cut</li>
+                  <li>10 to 12 mm for 40 mm splice protectors or 15 to 17 mm 60 mm splice protectors</li>
+                  <li>Splice the fibres in auto mode to align fibre cores automatically</li>
+                  <li>Check the quality of the cleaved fibre end face (the splicer estimates cleaved angle for both fibre end faces)</li>
+                  <li>Check LCD display for shadow, bubble, ballooning, necking across the joint</li>
+                </ul>
+              </td>
+              <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, t3q2: 'correct' })}>
+                  {grades['t3q2'] === 'correct' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                </div>
+              </td>
+              <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, t3q2: 'incorrect' })}>
+                  {grades['t3q2'] === 'incorrect' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                </div>
               </td>
             </tr>
             {[
-              "Perform the splicing in line with safety/OHS considerations?",
+              "Check loss acceptance level is less than 0.05db",
+              "Repeat the splice procedure if the loss level is above 0.05db",
+              "Place the heat shrink on one end of the fibre and perform splice",
+              "Seal the heat shrink protector using splicer heater",
+              "Perform the fusion splice in line with regulatory requirements?",
+              "Perform the fusion splice in line with safety/OHS considerations?",
               "Select the appropriate tools and safety equipment for the task?",
-              "Appropriately prepare the work area to minimise risk (disposable cable waste containers, tape, PPE, etc.)",
-              "Prepare the fibre (Step 1-4)?",
-              "Cleave the fibre (Step 5)?",
-              "Insert/align the fibres into the fusion splicer appropriately?",
-              "Protect the fibre joint correctly?",
-              "Follow correct procedures for dealing with laser related risks (Do not look directly into active fibre ends)?",
-              "Analyse the LCD display for splice errors/acceptable loss estimation? (<0.05dB)?",
-              "Complete the splicing successfully?"
+              "Appropriately prepare the work area to minimise risk (disposable cable waste containers, tape, PPE, etc.)"
             ].map((itemText, idx) => {
-              const qKey = `t3q${idx + 1}`;
+              const qKey = `t3q${idx + 3}`;
               return (
                 <tr key={qKey}>
-                  <td className="chk-q">{itemText}</td>
-                  <td className="chk-case yn-cell">
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'correct' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer mr-2" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>Yes</span>
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'incorrect' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>No</span>
+                  <td style={{ border: '1px solid #555', padding: '6px' }}>{itemText}</td>
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>
+                      {grades[qKey] === 'correct' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
-                  <td className="chk-comment">
-                    <input
-                      type="text"
-                      className="w-full bg-transparent border-b border-dashed border-gray-300 focus:border-blue-500 outline-none px-1 text-xs text-slate-800"
-                      value={grades[`${qKey}_cmt`] || ''}
-                      onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                    />
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>
+                      {grades[qKey] === 'incorrect' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
                 </tr>
               );
@@ -2534,39 +2395,27 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '3px' }}>Comments/Feedback to Participant</p>
-
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '5px' }}>
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Comments/Feedback to Participant</div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <strong>Student Declaration:</strong> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top' }}>
+                <span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('student_signature', 'submission')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {answers.student_signature_url || submission.signature_url ? (
-                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign Here</span>
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('student_signature', 'submission')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {(answers.student_signature_url || submission.signature_url) && (
+                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />
                     )}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
-                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
-                  />
-                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
-                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                   </span>
                 </div>
               </td>
@@ -2574,167 +2423,153 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div style={{ border: '1px solid #555', padding: '5px 8px', minHeight: '28px', fontSize: '9pt', marginBottom: '5px' }}>
-          <strong>Assessor's Feedback:</strong>
-          <textarea
-            className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 text-xs mt-1"
-            value={taskResults['t3_feedback'] || ''}
-            onChange={(e) => setTaskResults({ ...taskResults, t3_feedback: e.target.value })}
-            placeholder="Enter Assessor Feedback for Task 3..."
-          />
+        <div style={{ border: '1px solid #555', padding: '8px', minHeight: '80px', fontSize: '9.5pt', marginBottom: '6mm' }}>
+          <span style={{ fontWeight: 'bold' }}>Assessor's Feedback:</span>
+          <textarea className="w-full bg-transparent border-none outline-none resize-none h-16 text-slate-800 mt-2" value={taskResults['t3_feedback'] || ''} onChange={(e) => setTaskResults({ ...taskResults, t3_feedback: e.target.value })} />
         </div>
 
-        <div className="result-line">
-          Result:{' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t3'] === 'S' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t3: 'S' })}
-          >S</span>
-          {' '}/ Not Satisfactory (NS){' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t3'] === 'NS' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t3: 'NS' })}
-          >NS</span>
+        <div style={{ textAlign: 'center', fontSize: '14pt', fontWeight: 'bold', marginBottom: '4px' }}>
+          Result: Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t3: 'S' })}>(S){taskResults['t3'] === 'S' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>/Not Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t3: 'NS' })}>(NS){taskResults['t3'] === 'NS' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '5px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '55%', verticalAlign: 'top' }}>
-                <strong>Assessor:</strong> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '45%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('assessor_signature', 'comp')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {compRecord.assessor_signature ? (
-                      <img src={compRecord.assessor_signature} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign</span>
-                    )}
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  </span>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 14 of 18</span>
         </div>
       </div>
+
       {/* ═══════════════════ PAGE 15 – TASK 4 OBSERVATION ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 4</h1>
-        <h2 className="sub-title">Mechanical splice</h2>
-        <p style={{ fontSize: '9.5pt', marginBottom: '3px' }}>This assessment task requires candidates to demonstrate an 'in-line' mechanical splice. Candidates work in Paris to optimise use of resources. Candidates will need to make sure that they understand the equipment, procedure and safety measures involved so that they undertake this task safely and correctly.</p>
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>The assessor will demonstrate the following tasks then, ask participants to:</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.1 Prepare the fibre</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.2 Cleave the fibre</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.3 Strip away the protective jacket/coating (nylon and/or acrylate coating) from the fibre using appropriate fibre stripping tools</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.4 Clean the bare fibre using lint free wipe tissues and isopropyl alcohol (IPA fluid) – ensuring the fibre is dry before inserting into the splicer.</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.5 Follow the correct cleaving procedure to ensure perpendicular mirror smooth end face cut. However the cleaved fibre length must be adhered to as per the manufacture's specifications.</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.6 Insert/align fibres into the mechanical splice</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.7 Lock or crimp the fibres into position</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT4.8 Complete the splicing.</p>
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>Required Documents and Equipment</p>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cable</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Mechanical Splice</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cleaning Products</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cleaver</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Mechanical splice assembly tools (If required by the manufacture)</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• PPE for working with cable</span></div>
+        <div style={{ textAlign: 'center', marginBottom: '6mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 4</div>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', marginTop: '3mm' }}>Mechanical Splice</div>
+        </div>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div style={{ fontSize: '10.5pt', lineHeight: '1.4' }}>
+          <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>This assessment task requires candidates to:</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0 8px 0', listStyleType: 'disc' }}>
+            <li>Demonstrate an 'in-line' mechanical splice.</li>
+          </ul>
+          <div style={{ marginBottom: '8px' }}>Candidates will need to make sure that they understand the equipment, procedure and safety measures involved so that they undertake this task safely and correctly.</div>
+          <div style={{ marginBottom: '8px' }}>Assessors will demonstrate this process then, ask the students to:</div>
+          <div style={{ marginBottom: '8px' }}>AT4.1Strip fibre for 20mm using appropriate fibre stripping tools</div>
+          <div style={{ marginBottom: '8px' }}>AT4.2clean fibre with lint free wipe tissues and isopropyl alcohol (IPA fluid</div>
+          <div style={{ marginBottom: '8px' }}>AT4.3Ensure fibre is dry before inserting into the slicer</div>
+          <div style={{ marginBottom: '4px' }}>AT4.4Cleave fibre to give a perpendicular mirror smooth end face cut:</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0 8px 0', listStyleType: 'disc' }}>
+            <li>10 to 12 mm for 40 mm splice protectors or 15 to 17 mm 60 mm splice protectors</li>
+            <li>Cleaved fibre length must be adhered to as per the manufacture's specifications</li>
+          </ul>
+          <div style={{ marginBottom: '8px' }}>AT4.5Check the quality of the cleaved fibre end face</div>
+          <div style={{ marginBottom: '8px' }}>AT4.6Insert fibres into the mechanical splice</div>
+          <div style={{ marginBottom: '8px' }}>AT4.7Lock or crimp the fibres into positions</div>
+          <div style={{ marginBottom: '8px' }}>AT4.8apply specific fibre waste procedures to control fibre hazards</div>
+          <div style={{ marginBottom: '8px' }}>AT4.8Update records for site and notify client of completion of work.</div>
+
+          <div style={{ fontWeight: 'bold', fontSize: '12pt', marginBottom: '4px' }}>Required Documents and Equipment</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0', listStyleType: 'disc' }}>
+            <li>Cable stripping tool</li>
+            <li>Cable connectors pigtail connectors</li>
+            <li>Heat shrink splice protectors</li>
+            <li>Lint free wipe tissues and isopropyl alcohol(IPA fluid)</li>
+            <li>PPE for working with cable</li>
+            <li>In-line mechanical splicing product set</li>
+            <li>Field termination connectors</li>
+            <li>High precision fibre cleaver</li>
+            <li>Manufacturer’s guidelines/specifications for all tools and machinery.</li>
+          </ul>
+        </div>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 15 of 18</span>
         </div>
       </div>
       {/* ═══════════════════ PAGE 16 – TASK 4 ASSESSOR CHECKLIST ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 4 – ASSESSOR CHECKLIST</h1>
-        <p className="italic-note">This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.</p>
+        <div style={{ textAlign: 'center', marginBottom: '4mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 4 – ASSESSOR CHECKLIST</div>
+        </div>
+
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Record of Performance:</div>
         
-        <table className="chk-table" style={{ marginTop: '10px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10pt', marginBottom: '6mm' }}>
           <thead>
-            <tr><td className="chk-q">Record of Performance: Did the Candidate:</td><td className="chk-case">Satisfactory</td><td className="chk-comment">Comments</td></tr>
+            <tr>
+              <td rowSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '70%', verticalAlign: 'top' }}>Did the Candidate:</td>
+              <td colSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px' }}>Satisfactory</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>Yes</td>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>No</td>
+            </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colSpan={3} style={{ fontWeight: 'bold', padding: '3px 6px', background: '#f5f5f5' }}>
-                Date Observed:
-                <input
-                  type="date"
-                  className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
-                  value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                />
-                <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
-              </td>
-            </tr>
             {[
-              "Perform the splicing in line with safety/OHS considerations?",
+              "Perform the fusion splice in line with regulatory requirements?",
+              "Perform the fusion splice in line with safety/OHS considerations?",
               "Select the appropriate tools and safety equipment for the task?",
               "Appropriately prepare the work area to minimise risk (disposable cable waste containers, tape, PPE, etc.)",
-              "Prepare the fibre?",
-              "Cleave the fibre? The cleaved fibre length must be adhered to as per the manufacture's specifications.",
-              "Insert/align the fibres into the mechanical splice?",
-              "Lock or crimp the fibres into position?",
-              "Follow correct procedures for dealing with laser related risks (Do not look directly into active fibre ends)?",
-              "Complete the splicing successfully?"
+              "Cleave fibre to the correct length?",
+              "Use the correct settings on the mechanical splicer?",
+              "Correctly position the cleaved fibre in the splicer?",
+              "Use the correct action for crimping the joint?",
+              "Clean up the work area and remove all waste in a safe manner?"
             ].map((itemText, idx) => {
               const qKey = `t4q${idx + 1}`;
               return (
                 <tr key={qKey}>
-                  <td className="chk-q">{itemText}</td>
-                  <td className="chk-case yn-cell">
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'correct' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer mr-2" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>Yes</span>
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'incorrect' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>No</span>
+                  <td style={{ border: '1px solid #555', padding: '6px' }}>{itemText}</td>
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>
+                      {grades[qKey] === 'correct' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
-                  <td className="chk-comment">
-                    <input
-                      type="text"
-                      className="w-full bg-transparent border-b border-dashed border-gray-300 focus:border-blue-500 outline-none px-1 text-xs text-slate-800"
-                      value={grades[`${qKey}_cmt`] || ''}
-                      onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                    />
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>
+                      {grades[qKey] === 'incorrect' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
                 </tr>
               );
@@ -2742,39 +2577,27 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '3px' }}>Comments/Feedback to Participant</p>
-
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '5px' }}>
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Comments/Feedback to Participant</div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <strong>Student Declaration:</strong> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top' }}>
+                <span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('student_signature', 'submission')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {answers.student_signature_url || submission.signature_url ? (
-                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign Here</span>
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('student_signature', 'submission')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {(answers.student_signature_url || submission.signature_url) && (
+                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />
                     )}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
-                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
-                  />
-                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
-                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                   </span>
                 </div>
               </td>
@@ -2782,138 +2605,132 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div style={{ border: '1px solid #555', padding: '5px 8px', minHeight: '28px', fontSize: '9pt', marginBottom: '5px' }}>
-          <strong>Assessor's Feedback:</strong>
-          <textarea
-            className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 text-xs mt-1"
-            value={taskResults['t4_feedback'] || ''}
-            onChange={(e) => setTaskResults({ ...taskResults, t4_feedback: e.target.value })}
-            placeholder="Enter Assessor Feedback for Task 4..."
-          />
+        <div style={{ border: '1px solid #555', padding: '8px', minHeight: '80px', fontSize: '9.5pt', marginBottom: '6mm' }}>
+          <span style={{ fontWeight: 'bold' }}>Assessor's Feedback:</span>
+          <textarea className="w-full bg-transparent border-none outline-none resize-none h-16 text-slate-800 mt-2" value={taskResults['t4_feedback'] || ''} onChange={(e) => setTaskResults({ ...taskResults, t4_feedback: e.target.value })} />
         </div>
 
-        <div className="result-line">
-          Result:{' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t4'] === 'S' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t4: 'S' })}
-          >S</span>
-          {' '}/ Not Satisfactory (NS){' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t4'] === 'NS' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t4: 'NS' })}
-          >NS</span>
+        <div style={{ textAlign: 'center', fontSize: '14pt', fontWeight: 'bold', marginBottom: '4px' }}>
+          Result: Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t4: 'S' })}>(S){taskResults['t4'] === 'S' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>/Not Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t4: 'NS' })}>(NS){taskResults['t4'] === 'NS' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '5px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '55%', verticalAlign: 'top' }}>
-                <strong>Assessor:</strong> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '45%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('assessor_signature', 'comp')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {compRecord.assessor_signature ? (
-                      <img src={compRecord.assessor_signature} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign</span>
-                    )}
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  </span>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 16 of 18</span>
         </div>
       </div>
+
       {/* ═══════════════════ PAGE 17 – TASK 5 OBSERVATION ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 5</h1>
-        <h2 className="sub-title">Insertion Loss Measurements</h2>
-        <p style={{ fontSize: '9.5pt', marginBottom: '3px' }}>This assessment task requires candidates to: Undertake testing to make an insertion loss measurement. Candidates work in Paris to optimise use of resources. Candidates will need to make sure that they understand the equipment, procedure and safety measures involved so that they undertake this task safely and correctly.</p>
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>The assessor will demonstrate the following tasks then, ask participants to:</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT5.1 construct a fibre link using 500m fibre length (spools).</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT5.2 Ensure the link has:</p>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• An APC connector</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• PC connector</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• A fusion splice(which can be easily identified and measured with an OTDR)</span></div>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT5.3 Calculate the pass/fail maximum loss cleaved fibre length must be adhered to as per the manufacture's specifications for the fibre link</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT5.4 Test, measure and record the insertion loss of the link at 1310nm and 1550nm using either the one-way or two-way insertion loss measurement techniques</p>
-        <p style={{ fontSize: '9.5pt', marginBottom: '2px' }}>AT5.5 Compare the pass/fail insertion loss and measured results.</p>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>Optional task: use an OTDR to measure the insertion loss all events that interconnect all the spools of fibre and verify the results of candidates.</p>
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '9.5pt', marginTop: '4px', marginBottom: '2px' }}>Required Documents and Equipment</p>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Spools of fibre optic cable</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Connectors:</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• An APC connector</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Pc connector</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• A fusion spile</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• LED light sources</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Power meters</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Optical time –domain reflect meter (ODTR)</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• PPE for working with cable</span></div>
-        <div style={{ display: 'flex', fontSize: '9.5pt', marginBottom: '2px', paddingLeft: '10px' }}><span>• Cable system with identifiable fault.</span></div>
+        <div style={{ textAlign: 'center', marginBottom: '6mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 5</div>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', marginTop: '3mm' }}>Insertion Loss Measurements</div>
+        </div>
 
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        <div style={{ fontSize: '10.5pt', lineHeight: '1.4' }}>
+          <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>This assessment task requires candidates to:</div>
+          <div style={{ marginBottom: '8px' }}>Undertake testing to make an insertion loss measurement.</div>
+          <div style={{ marginBottom: '8px' }}>Candidates work in Paris to optimise use of resources.</div>
+          <div style={{ marginBottom: '8px' }}>Candidates will need to make sure that they understand the equipment, procedure and safety measures involved so that they undertake this task safely and correctly.</div>
+          <div style={{ marginBottom: '8px' }}>The assessor will demonstrate the following tasks then, ask participants to:</div>
+          <div style={{ marginBottom: '8px' }}>AT5.1construct a fibre link using 500m fibre length (spools).</div>
+          <div style={{ marginBottom: '4px' }}>AT5.2 Ensure the link has:</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0 8px 0', listStyleType: 'disc' }}>
+            <li>An APC connector</li>
+            <li>PC connector</li>
+            <li>A fusion splice(which can be easily identified and measured with an OTDR)</li>
+          </ul>
+          <div style={{ marginBottom: '8px' }}>AT5.3 Calculate the pass/fail maximum loss cleaved fibre length must be adhered to as per the manufacture's specifications for the fibre link</div>
+          <div style={{ marginBottom: '8px' }}>AT5.4 Test, measure and record the insertion loss of the link at 1310nm and 1550nm using either the one-way or two-way insertion loss measurement techniques</div>
+          <div style={{ marginBottom: '8px' }}>AT5.5Compare the pass/fail insertion loss and measured results.</div>
+          <div style={{ marginBottom: '8px' }}>Optional task: use an OTDR to measure the insertion loss all events that interconnect all the spools of fibre and verify the results of candidates.</div>
+
+          <div style={{ fontWeight: 'bold', fontSize: '12pt', marginBottom: '4px' }}>Required Documents and Equipment</div>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0', listStyleType: 'disc' }}>
+            <li>Spools of fibre optic cable</li>
+            <li>Connectors:</li>
+          </ul>
+          <ul style={{ paddingLeft: '48px', margin: '2px 0 8px 0', listStyleType: 'circle' }}>
+            <li>An APC connector</li>
+            <li>Pc connector</li>
+            <li>A fusion spile</li>
+          </ul>
+          <ul style={{ paddingLeft: '24px', margin: '2px 0', listStyleType: 'disc' }}>
+            <li>LED light sources</li>
+            <li>Power meters</li>
+            <li>Optical time –domain reflect meter (ODTR)</li>
+            <li>PPE for working with cable</li>
+            <li>Cable system with identifiable fault.</li>
+          </ul>
+        </div>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 17 of 18</span>
         </div>
       </div>
+
       {/* ═══════════════════ PAGE 18 – TASK 5 ASSESSOR CHECKLIST ═══════════════════ */}
       <div className="page">
-        <div className="inner-header">
-          <div className="top-row">
-            <div><span className="underline-bold">Assessment book</span><br /><span className="underline-bold">ICTCBL322 Install, test and terminate optical fiber cable on customer premises</span></div>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+          <div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>Assessment Booklet</div>
+            <div style={{ fontSize: '10.5pt', fontWeight: 'bold', textDecoration: 'underline' }}>ICTCBL322 Install, test and terminate optical fiber cable on customer premises</div>
           </div>
+          <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', objectFit: 'contain' }} />
         </div>
 
-        <h1 className="section-title">ASSESSMENT TASK 5 – ASSESSOR CHECKLIST</h1>
-        <p className="italic-note">This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.</p>
+        <div style={{ textAlign: 'center', marginBottom: '4mm' }}>
+          <div style={{ fontSize: '14pt', fontWeight: 'bold', textTransform: 'uppercase' }}>ASSESSMENT TASK 5 – ASSESSOR CHECKLIST</div>
+        </div>
+
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Record of Performance:</div>
         
-        <table className="chk-table" style={{ marginTop: '10px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10pt', marginBottom: '6mm' }}>
           <thead>
-            <tr><td className="chk-q">Record of Performance: Did the Candidate:</td><td className="chk-case">Satisfactory</td><td className="chk-comment">Comments</td></tr>
+            <tr>
+              <td rowSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '70%', verticalAlign: 'top' }}>Did the Candidate:</td>
+              <td colSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px' }}>Satisfactory</td>
+            </tr>
+            <tr>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>Yes</td>
+              <td style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', width: '15%' }}>No</td>
+            </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colSpan={3} style={{ fontWeight: 'bold', padding: '3px 6px', background: '#f5f5f5' }}>
-                Date Observed:
-                <input
-                  type="date"
-                  className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
-                  value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                />
-                <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
-              </td>
-            </tr>
             {[
               "Perform the testing in line with safety/OHS considerations?",
               "Select the appropriate tools and safety equipment for the task?",
@@ -2928,26 +2745,16 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
               const qKey = `t5q${idx + 1}`;
               return (
                 <tr key={qKey}>
-                  <td className="chk-q">{itemText}</td>
-                  <td className="chk-case yn-cell">
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'correct' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer mr-2" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>Yes</span>
-                    <span
-                      className={`cb cursor-pointer ${grades[qKey] === 'incorrect' ? 'checked' : ''}`}
-                      onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}
-                    ></span>
-                    <span className="cb-label cursor-pointer" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>No</span>
+                  <td style={{ border: '1px solid #555', padding: '6px' }}>{itemText}</td>
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'correct' })}>
+                      {grades[qKey] === 'correct' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
-                  <td className="chk-comment">
-                    <input
-                      type="text"
-                      className="w-full bg-transparent border-b border-dashed border-gray-300 focus:border-blue-500 outline-none px-1 text-xs text-slate-800"
-                      value={grades[`${qKey}_cmt`] || ''}
-                      onChange={(e) => setGrades({ ...grades, [`${qKey}_cmt`]: e.target.value })}
-                    />
+                  <td style={{ border: '1px solid #555', padding: '0', textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div className="flex items-center justify-center cursor-pointer h-full w-full min-h-[30px]" onClick={() => setGrades({ ...grades, [qKey]: 'incorrect' })}>
+                      {grades[qKey] === 'incorrect' && <span style={{ color: 'red', fontSize: '24px', fontWeight: 'bold', lineHeight: '1' }}>✓</span>}
+                    </div>
                   </td>
                 </tr>
               );
@@ -2955,39 +2762,27 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div className="spacer-sm"></div>
-        <p style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '3px' }}>Comments/Feedback to Participant</p>
-
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '5px' }}>
+        <div style={{ fontSize: '12pt', fontWeight: 'bold', marginBottom: '4px' }}>Comments/Feedback to Participant</div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '6mm', fontSize: '9.5pt' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <strong>Student Declaration:</strong> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top' }}>
+                <span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('student_signature', 'submission')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {answers.student_signature_url || submission.signature_url ? (
-                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign Here</span>
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('student_signature', 'submission')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {(answers.student_signature_url || submission.signature_url) && (
+                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />
                     )}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
-                    onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })}
-                  />
-                  <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
-                    {formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                   </span>
                 </div>
               </td>
@@ -2995,69 +2790,57 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
           </tbody>
         </table>
 
-        <div style={{ border: '1px solid #555', padding: '5px 8px', minHeight: '28px', fontSize: '9pt', marginBottom: '5px' }}>
-          <strong>Assessor's Feedback:</strong>
-          <textarea
-            className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 text-xs mt-1"
-            value={taskResults['t5_feedback'] || ''}
-            onChange={(e) => setTaskResults({ ...taskResults, t5_feedback: e.target.value })}
-            placeholder="Enter Assessor Feedback for Task 5..."
-          />
+        <div style={{ border: '1px solid #555', padding: '8px', minHeight: '80px', fontSize: '9.5pt', marginBottom: '6mm' }}>
+          <span style={{ fontWeight: 'bold' }}>Assessor's Feedback:</span>
+          <textarea className="w-full bg-transparent border-none outline-none resize-none h-16 text-slate-800 mt-2" value={taskResults['t5_feedback'] || ''} onChange={(e) => setTaskResults({ ...taskResults, t5_feedback: e.target.value })} />
         </div>
 
-        <div className="result-line">
-          Result:{' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t5'] === 'S' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t5: 'S' })}
-          >S</span>
-          {' '}/ Not Satisfactory (NS){' '}
-          <span
-            className={`result-circle cursor-pointer ${taskResults['t5'] === 'NS' ? 'active' : ''}`}
-            onClick={() => setTaskResults({ ...taskResults, t5: 'NS' })}
-          >NS</span>
+        <div style={{ textAlign: 'center', fontSize: '14pt', fontWeight: 'bold', marginBottom: '4px' }}>
+          Result: Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t5: 'S' })}>(S){taskResults['t5'] === 'S' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>/Not Satisfactory <span className="cursor-pointer relative inline-block mx-1" onClick={() => setTaskResults({ ...taskResults, t5: 'NS' })}>(NS){taskResults['t5'] === 'NS' && <span style={{ position: 'absolute', top: '-2px', left: '-2px', right: '-2px', bottom: '-2px', border: '2px solid red', borderRadius: '50%' }}></span>}</span>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '5px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9.5pt', marginBottom: '8mm' }}>
           <tbody>
             <tr>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '55%', verticalAlign: 'top' }}>
-                <strong>Assessor:</strong> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
+              <td style={{ border: '1px solid #555', padding: '8px', width: '60%', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
               </td>
-              <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '45%', verticalAlign: 'top' }}>
-                <div className="flex items-center gap-2">
-                  Signature:
-                  <div
-                    onClick={() => openSigModal('assessor_signature', 'comp')}
-                    className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
-                  >
-                    {compRecord.assessor_signature ? (
-                      <img src={compRecord.assessor_signature} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
-                    ) : (
-                      <span className="text-[10px] text-slate-400 italic">Sign</span>
-                    )}
+              <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top', background: '#f5f5f5' }}>
+                <div className="flex items-center mb-4">
+                  <span>Signature:</span>
+                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="mt-1">
-                  Date:
-                  <input
-                    type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
-                    value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
-                  />
-                  <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                <div className="flex items-center">
+                  <span>Date:</span>
+                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
+                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
+                  </span>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
 
-        <div style={{ textAlign: 'center', marginTop: '5mm' }}>
-          <span style={{ fontSize: '14pt', fontWeight: 'bold', fontStyle: 'italic', letterSpacing: '1px' }}>END OF ASSESSMENT</span>
+        <div style={{ textAlign: 'center', marginBottom: '4mm' }}>
+          <span style={{ fontSize: '18pt', fontWeight: 'bold', textTransform: 'uppercase' }}>END OF ASSESSMENT</span>
         </div>
-        <div className="page-footer">
-          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565| V3.4/25</span>
+        
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ fontSize: '10.5pt', lineHeight: '1.4', maxWidth: '800px' }}>
+            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>Before you hand in your assessment, make sure that you:</div>
+            <ol style={{ paddingLeft: '24px', margin: '0' }}>
+              <li>Re-check your answers and make sure you are happy with your responses.</li>
+              <li>Have written your Name, Student ID, on the first page and signed the student declaration</li>
+              <li>If you are submitting this assessment as a separate attachment, please attached an Assessment Submission Sheet available from the Student Administration or the ACTA intranet.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div className="page-footer" style={{ borderTop: 'none', paddingTop: '4mm', marginTop: 'auto', display: 'flex', justifyContent: 'space-between', fontSize: '8pt' }}>
+          <span>ACTA College RTO 40954 | 15/3 Lancaster Street Ingleburn NSW 2565 | V3.4/25</span>
           <span>Page 18 of 18</span>
         </div>
       </div>
