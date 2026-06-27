@@ -409,6 +409,7 @@ const GradingPortal: React.FC = () => {
       newCompRecord['outcome_final_result'] = 'C';
     }
 
+    newCompRecord.final_result = 'C';
     setGrades(newGrades);
     setTaskResults(newTaskResults);
     setCompRecord(newCompRecord);
