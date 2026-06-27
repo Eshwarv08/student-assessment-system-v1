@@ -304,6 +304,7 @@ const GradingPortal: React.FC = () => {
         if (isComponentBased) {
           // Component-based assessments use compRecord keys directly
           newCompRecord[`${taskKey}_result`] = 'S';
+          newCompRecord[`${taskKey}_result_page2`] = 'S';
 
           questionsArray.forEach((q: any) => {
             newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
@@ -328,6 +329,13 @@ const GradingPortal: React.FC = () => {
           obsItems.forEach((_: string, idx: number) => {
             newCompRecord[`${taskKey}_obs_${idx}`] = 'yes';
           });
+
+          // Universal safety loop for custom Q5/Q7/Q8 hardcoded keys up to 30 items
+          for(let idx = 0; idx < 30; idx++) {
+            newCompRecord[`${taskKey}_case1_${idx}`] = 'Yes';
+            newCompRecord[`${taskKey}_case2_${idx}`] = 'Yes';
+            newCompRecord[`${taskKey}_obs_ch_${idx}`] = true;
+          }
         } else {
           // 2. Legacy assessments (Q1-Q3) use grades for Oral / checklist items
           const oralQuestions: string[] = (taskData as any).checklistItems || (taskData as any).oral || (taskData as any).items || [];
