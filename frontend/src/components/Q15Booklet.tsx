@@ -50,10 +50,14 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
   const saveSignature = () => {
     if (sigPadRef.current && !sigPadRef.current.isEmpty()) {
       const dataUrl = sigPadRef.current.toDataURL();
-      if (sigModal?.field === 'student_signature') {
-        setAnswers({ ...answers, student_signature_url: dataUrl });
+      if (sigModal?.field === 'student_signature' || sigModal?.field === 'learner_dec_sig' || sigModal?.field === 'outcome_student_ack_sig') {
+        setAnswers({ ...answers, [sigModal.field]: dataUrl, student_signature_url: dataUrl });
       } else {
-        setCompRecord({ ...compRecord, [sigModal!.field]: dataUrl });
+        const updates: any = { [sigModal!.field]: dataUrl };
+        if (sigModal!.field.includes('assessor_sig')) {
+          updates.assessor_signature = dataUrl;
+        }
+        setCompRecord({ ...compRecord, ...updates });
       }
       closeSigModal();
     }
@@ -136,7 +140,9 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                 </div>
               </td>
               <td className="p-2 text-center align-middle">
-                {compRecord[`${prefix}_assessor_sig`] ? <img src={compRecord[`${prefix}_assessor_sig`]} className="max-h-[35px] max-w-[80px] object-contain inline-block" /> : <div className="text-[10px] text-slate-400 italic no-print cursor-pointer w-full h-full min-h-[30px] flex items-center justify-center" onClick={() => !isStudent && openSigModal(`${prefix}_assessor_sig`, 'comp')}>{isStudent ? '' : 'Click to sign'}</div>}
+                <div onClick={() => !isStudent && openSigModal(`${prefix}_assessor_sig`, 'comp')} className="w-full h-full min-h-[30px] flex items-center justify-center cursor-pointer">
+                  {(compRecord.assessor_signature || compRecord[`${prefix}_assessor_sig`]) ? <img src={compRecord.assessor_signature || compRecord[`${prefix}_assessor_sig`]} className="max-h-[35px] max-w-[80px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                </div>
               </td>
             </tr>
           </tbody>
@@ -471,7 +477,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
               <td className="border border-black p-2 font-medium">Assessor signature</td>
               <td colSpan={3} className="border border-black p-2 text-center align-middle">
                 <div onClick={() => !isStudent && openSigModal('ka1_assessor_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                  {compRecord['ka1_assessor_sig'] ? <img src={compRecord['ka1_assessor_sig']} className="max-h-[30px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                  {(compRecord.assessor_signature || compRecord['ka1_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['ka1_assessor_sig']} className="max-h-[30px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
                 </div>
               </td>
             </tr>
@@ -614,70 +620,9 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                 </td>
               </tr>
             ))}
+              {renderAttemptsSignature('pa1_att1')}
           </tbody>
         </table>
-        <div className="mb-4 break-inside-avoid">
-          <table className="w-full border-collapse border border-black text-[8.5pt]">
-            <thead>
-              <tr>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">Initial Attempt<br />Circle S or NYS</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">Initial Attempt<br />Date</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">1st Reattempt<br />S or NYS<br />Date</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">2nd Reattempt<br />S or NYS<br />& Date</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">Assessors<br />Initials</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-black p-2 text-center font-bold relative min-h-[40px]">
-                  <div className="flex justify-center items-center gap-1">
-                    <span className={`cursor-pointer px-1 relative ${compRecord['pa1_att1_s'] === 'S' ? 'text-black' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_s': 'S' })}>
-                      S
-                      {compRecord['pa1_att1_s'] === 'S' && <div className="absolute inset-0 border-[1.5px] border-red-600 rounded-full scale-125"></div>}
-                    </span>
-                    <span>/</span>
-                    <span className={`cursor-pointer px-1 relative ${compRecord['pa1_att1_s'] === 'NYS' ? 'text-black' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_s': 'NYS' })}>
-                      NYS
-                      {compRecord['pa1_att1_s'] === 'NYS' && <div className="absolute inset-0 border-[1.5px] border-red-600 rounded-full scale-[1.15]"></div>}
-                    </span>
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle font-bold text-[10pt]">
-                  <div className="flex justify-center items-center gap-4">
-                    <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att1_date_d'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_date_d': e.target.value })} readOnly={isStudent} placeholder="" />
-                    <span>/</span>
-                    <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att1_date_m'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_date_m': e.target.value })} readOnly={isStudent} placeholder="" />
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle font-bold text-[10pt]">
-                  <div className="flex flex-col items-center">
-                    <span>S/NYS</span>
-                    <div className="flex justify-center items-center gap-4 mt-1">
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att1_re1_d'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_re1_d': e.target.value })} readOnly={isStudent} placeholder="" />
-                      <span>/</span>
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att1_re1_m'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_re1_m': e.target.value })} readOnly={isStudent} placeholder="" />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle font-bold text-[10pt]">
-                  <div className="flex flex-col items-center">
-                    <span>S/NYS</span>
-                    <div className="flex justify-center items-center gap-4 mt-1">
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att1_re2_d'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_re2_d': e.target.value })} readOnly={isStudent} placeholder="" />
-                      <span>/</span>
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att1_re2_m'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att1_re2_m': e.target.value })} readOnly={isStudent} placeholder="" />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle">
-                  <div onClick={() => !isStudent && openSigModal('pa1_att1_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                    {compRecord['pa1_att1_sig'] ? <img src={compRecord['pa1_att1_sig']} className="max-h-[30px] max-w-[80px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
         <div className="mb-2 break-inside-avoid mt-6">
           <h3 className="font-medium text-[10.5pt] mb-2 text-black">Performance Evidence Mapping</h3>
         </div>
@@ -754,70 +699,9 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                 </td>
               </tr>
             ))}
+              {renderAttemptsSignature('pa1_att2')}
           </tbody>
         </table>
-        <div className="mb-4 break-inside-avoid">
-          <table className="w-full border-collapse border border-black text-[8.5pt]">
-            <thead>
-              <tr>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">Initial Attempt<br />Circle S or NYS</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">Initial Attempt<br />Date</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">1st Reattempt<br />S or NYS<br />Date</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">2nd Reattempt<br />S or NYS<br />& Date</th>
-                <th className="border border-black bg-[#d9d9d9] p-2 text-center font-bold">Assessors<br />Initials</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-black p-2 text-center font-bold relative min-h-[40px]">
-                  <div className="flex justify-center items-center gap-1">
-                    <span className={`cursor-pointer px-1 relative ${compRecord['pa1_att2_s'] === 'S' ? 'text-black' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_s': 'S' })}>
-                      S
-                      {compRecord['pa1_att2_s'] === 'S' && <div className="absolute inset-0 border-[1.5px] border-red-600 rounded-full scale-125"></div>}
-                    </span>
-                    <span>/</span>
-                    <span className={`cursor-pointer px-1 relative ${compRecord['pa1_att2_s'] === 'NYS' ? 'text-black' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_s': 'NYS' })}>
-                      NYS
-                      {compRecord['pa1_att2_s'] === 'NYS' && <div className="absolute inset-0 border-[1.5px] border-red-600 rounded-full scale-[1.15]"></div>}
-                    </span>
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle font-bold text-[10pt]">
-                  <div className="flex justify-center items-center gap-4">
-                    <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att2_date_d'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_date_d': e.target.value })} readOnly={isStudent} placeholder="" />
-                    <span>/</span>
-                    <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att2_date_m'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_date_m': e.target.value })} readOnly={isStudent} placeholder="" />
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle font-bold text-[10pt]">
-                  <div className="flex flex-col items-center">
-                    <span>S/NYS</span>
-                    <div className="flex justify-center items-center gap-4 mt-1">
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att2_re1_d'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_re1_d': e.target.value })} readOnly={isStudent} placeholder="" />
-                      <span>/</span>
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att2_re1_m'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_re1_m': e.target.value })} readOnly={isStudent} placeholder="" />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle font-bold text-[10pt]">
-                  <div className="flex flex-col items-center">
-                    <span>S/NYS</span>
-                    <div className="flex justify-center items-center gap-4 mt-1">
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att2_re2_d'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_re2_d': e.target.value })} readOnly={isStudent} placeholder="" />
-                      <span>/</span>
-                      <input type="text" className="w-[20px] bg-transparent text-center focus:outline-none placeholder-black font-bold" value={compRecord['pa1_att2_re2_m'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_att2_re2_m': e.target.value })} readOnly={isStudent} placeholder="" />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-black p-2 text-center align-middle">
-                  <div onClick={() => !isStudent && openSigModal('pa1_att2_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                    {compRecord['pa1_att2_sig'] ? <img src={compRecord['pa1_att2_sig']} className="max-h-[30px] max-w-[80px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
 
         <PageFooter n={4} />
       </div>
@@ -903,7 +787,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
               <td className="border border-black p-2 font-medium">Assessor signature</td>
               <td colSpan={3} className="border border-black p-2 text-center align-middle">
                 <div onClick={() => !isStudent && openSigModal('pa1_assessor_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                  {compRecord['pa1_assessor_sig'] ? <img src={compRecord['pa1_assessor_sig']} className="max-h-[30px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                  {(compRecord.assessor_signature || compRecord['pa1_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa1_assessor_sig']} className="max-h-[30px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
                 </div>
               </td>
             </tr>
@@ -4608,7 +4492,7 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor signature</td>
                 <td colSpan={3} className="border border-black p-2 text-center align-middle">
                   <div onClick={() => !isStudent && openSigModal('pa2_assessor_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                    {compRecord['pa2_assessor_sig'] ? <img src={compRecord['pa2_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                    {(compRecord.assessor_signature || compRecord['pa2_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa2_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
                 </td>
               </tr>
@@ -4898,7 +4782,7 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor signature</td>
                 <td colSpan={3} className="border border-black p-2 text-center align-middle">
                   <div onClick={() => !isStudent && openSigModal('pa3_assessor_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                    {compRecord['pa3_assessor_sig'] ? <img src={compRecord['pa3_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                    {(compRecord.assessor_signature || compRecord['pa3_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa3_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
                 </td>
               </tr>
@@ -5005,7 +4889,7 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor signature</td>
                 <td colSpan={3} className="border border-black p-2 text-center align-middle">
                   <div onClick={() => !isStudent && openSigModal('pa4_assessor_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                    {compRecord['pa4_assessor_sig'] ? <img src={compRecord['pa4_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                    {(compRecord.assessor_signature || compRecord['pa4_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa4_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
                 </td>
               </tr>
@@ -5425,7 +5309,7 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor signature</td>
                 <td colSpan={3} className="border border-black p-2 text-center align-middle">
                   <div onClick={() => !isStudent && openSigModal('pa6_assessor_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                    {compRecord['pa6_assessor_sig'] ? <img src={compRecord['pa6_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                    {(compRecord.assessor_signature || compRecord['pa6_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa6_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
                 </td>
               </tr>
@@ -5640,7 +5524,7 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor signature</td>
                 <td colSpan={3} className="border border-black p-2 text-center align-middle">
                   <div onClick={() => !isStudent && openSigModal('pa7_assessor_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer flex items-center justify-center">
-                    {compRecord['pa7_assessor_sig'] ? <img src={compRecord['pa7_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
+                    {(compRecord.assessor_signature || compRecord['pa7_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa7_assessor_sig']} className="max-h-[40px] max-w-[120px] object-contain inline-block" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
                 </td>
               </tr>
@@ -5698,8 +5582,8 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 w-1/2 align-top">By signing this document, I acknowledge that I have received all the stated deliverables at the agreed to quality levels</td>
               </tr>
               <tr>
-                <td className="border border-black p-2 w-1/2 align-top h-[80px]">Project Manager Name and Signature:<br /><input type="text" className="w-full bg-transparent focus:outline-none mb-1 mt-1" value={compRecord['pa7_pm_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_pm_name': e.target.value })} readOnly={isStudent} placeholder="Name" /><div onClick={() => !isStudent && openSigModal('pa7_pm_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer">{compRecord['pa7_pm_sig'] ? <img src={compRecord['pa7_pm_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td>
-                <td className="border border-black p-2 w-1/2 align-top h-[80px]">Customer Name and Signature:<br /><input type="text" className="w-full bg-transparent focus:outline-none mb-1 mt-1" value={compRecord['pa7_cust_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cust_name': e.target.value })} readOnly={isStudent} placeholder="Name" /><div onClick={() => !isStudent && openSigModal('pa7_cust_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer">{compRecord['pa7_cust_sig'] ? <img src={compRecord['pa7_cust_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td>
+                <td className="border border-black p-2 w-1/2 align-top h-[80px]">Project Manager Name and Signature:<br /><input type="text" className="w-full bg-transparent focus:outline-none mb-1 mt-1" value={compRecord['pa7_pm_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_pm_name': e.target.value })} readOnly={isStudent} placeholder="Name" /><div onClick={() => !isStudent && openSigModal('pa7_pm_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer">{(compRecord.assessor_signature || compRecord['pa7_pm_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa7_pm_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td>
+                <td className="border border-black p-2 w-1/2 align-top h-[80px]">Customer Name and Signature:<br /><input type="text" className="w-full bg-transparent focus:outline-none mb-1 mt-1" value={compRecord['pa7_cust_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cust_name': e.target.value })} readOnly={isStudent} placeholder="Name" /><div onClick={() => !isStudent && openSigModal('pa7_cust_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer">{(compRecord.assessor_signature || compRecord['pa7_cust_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa7_cust_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td>
               </tr>
               <tr>
                 <td className="border border-black p-2 w-1/2">Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord['pa7_pm_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_pm_date': e.target.value })} readOnly={isStudent} /></td>
@@ -5779,34 +5663,34 @@ Recycling plants will granulate and then separate the metal from the____________
               <tr>
                 <td colSpan={2} className="border border-black p-2 align-top"><span className="font-bold">Learner Declaration:</span><br />I certify that the attached material is my original work. I consent to my assessment being checked, electronically or otherwise, for plagiarism, collusion, and use of model answers, correct referencing or any other form of misrepresentation. I have not submitted this assessment for any other course or unit.</td>
                 <td colSpan={2} className="border border-black p-2 align-top">
-                  <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Signature:</span><div onClick={() => !isStudent && openSigModal('learner_dec_sig', 'comp')} className="w-full border-b border-black min-h-[20px] cursor-pointer inline-flex items-center justify-center">{compRecord['learner_dec_sig'] ? <img src={compRecord['learner_dec_sig']} className="max-h-[25px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></div>
-                  <div className="flex items-center"><span className="font-bold w-[80px]">Date:</span><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['learner_dec_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'learner_dec_date': e.target.value })} readOnly={isStudent} /></div>
+                  <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Signature:</span><div onClick={() => !isStudent && openSigModal('learner_dec_sig', 'comp')} className="w-full border-b border-black min-h-[20px] cursor-pointer inline-flex items-center justify-center">{(compRecord.assessor_signature || compRecord['learner_dec_sig']) ? <img src={compRecord.assessor_signature || compRecord['learner_dec_sig']} className="max-h-[25px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">Click to sign</span>}</div></div>
+                  <div className="flex items-center"><span className="font-bold w-[80px]">Date:</span><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['learner_dec_date'] || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'learner_dec_date': e.target.value })} readOnly={isStudent} /></div>
                 </td>
               </tr>
               <tr><td colSpan={4} className="border border-black p-2 align-top"><span className="font-bold">Assessor Instructions:</span><br />Mark each assessment task as either Satisfactory (S) or Not Yet Satisfactory (NYS) and the complete the appropriate date. Tick the box appropriate to the assessment judgment, indicate if verbal feed was given and add written feedback as required for learners. Read and agree to the assessor declaration, sign and date this cover sheet, and if applicable record the result on the Institute's LMS and hand the completed SAP to student administration or the training manager.</td></tr>
               <tr><td colSpan={2} className="border border-black p-2 text-center font-bold">Assessment Task</td><td className="border border-black p-2 text-center font-bold">Circle S or<br />NYS</td><td className="border border-black p-2 text-center font-bold">Date</td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_pat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_pat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Knowledge Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_kat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_kat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_kat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 2</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_pat2_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_pat2_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat2_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 3</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_pat3_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_pat3_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat3_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 4</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_pat4_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_pat4_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat4_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 5</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_pat5_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_pat5_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat5_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 6</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_pat6_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_pat6_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat6_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 7</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className="cursor-pointer font-bold {compRecord['outcome_pat7_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'S' ? '' : 'S' })}>S</div><div className="cursor-pointer font-bold {compRecord['outcome_pat7_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat7_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Knowledge Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_kat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_kat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_kat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 2</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat2_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat2_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat2_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 3</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat3_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat3_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat3_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 4</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat4_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat4_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat4_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 5</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat5_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat5_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat5_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 6</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat6_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat6_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat6_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 7</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat7_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat7_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat7_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_date': e.target.value })} readOnly={isStudent} /></td></tr>
               <tr><td colSpan={2} className="border border-black p-2"><span className="font-bold">Final Result</span><span className="ml-8">(Please check box)</span></td><td colSpan={2} className="border border-black p-2"><div className="flex justify-between items-center w-full"><div className="flex items-center gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_final_result': compRecord['outcome_final_result'] === 'NYC' ? '' : 'NYC' })}><span>Not Yet Competent</span><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_final_result'] === 'NYC' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div></div><div className="flex items-center gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_final_result': compRecord['outcome_final_result'] === 'C' ? '' : 'C' })}><span>Competent</span><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_final_result'] === 'C' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div></div></div></td></tr>
               <tr><td colSpan={1} className="border border-black p-2 font-bold align-top">Assessor Feedback</td><td colSpan={3} className="border border-black p-2"><div className="flex items-center gap-2 mb-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_verbal_feedback_provided': compRecord['outcome_verbal_feedback_provided'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_verbal_feedback_provided'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span className="font-bold">Verbal feedback Provided –</span></div><div className="ml-6 italic text-sm">Additional feedback (if required)</div><textarea className="w-full h-[40px] resize-none bg-transparent focus:outline-none mt-2" value={compRecord['outcome_assessor_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_comments': e.target.value })} readOnly={isStudent} /></td></tr>
               <tr>
                 <td colSpan={2} className="border border-black p-2 align-top"><span className="font-bold">Assessor:</span><br />I declare that I have conducted a fair, valid, reliable and flexible judgement of this assessment in accordance to the Principles of Assessment and the Rules of Evidence as outlined in the Standards for RTOS 2015.<br />I have provided appropriate feedback. I also declare that I have undertaken appropriate assessment integrity checks:<br /><ul className="list-disc pl-8"><li>Check for plagiarism</li><li>Check for Copying/Collusion/Authenticity (learner's own work)</li><li>Cheating or use of model answers</li></ul></td>
                 <td colSpan={2} className="border border-black p-2 align-top">
                   <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Assessor<br />Name :</span><input type="text" className="w-full border-b border-black bg-transparent focus:outline-none ml-2" value={compRecord['outcome_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_name': e.target.value })} readOnly={isStudent} /></div>
-                  <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Assessor<br />Signature:</span><div onClick={() => !isStudent && openSigModal('outcome_assessor_sig', 'comp')} className="w-full border-b border-black min-h-[30px] cursor-pointer inline-flex items-center justify-center ml-2">{compRecord['outcome_assessor_sig'] ? <img src={compRecord['outcome_assessor_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></div>
+                  <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Assessor<br />Signature:</span><div onClick={() => !isStudent && openSigModal('outcome_assessor_sig', 'comp')} className="w-full border-b border-black min-h-[30px] cursor-pointer inline-flex items-center justify-center ml-2">{(compRecord.assessor_signature || compRecord['outcome_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['outcome_assessor_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></div>
                   <div className="flex items-center"><span className="font-bold w-[80px]">Date:</span><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none ml-2" value={compRecord['outcome_assessor_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_date': e.target.value })} readOnly={isStudent} /></div>
                 </td>
               </tr>
               <tr>
                 <td colSpan={2} className="border border-black p-2 align-top">I acknowledge that I have been advised of the assessment outcome. If the outcome was NYC, I have also received feedback on reassessment</td>
                 <td colSpan={2} className="border border-black p-2 align-top">
-                  <div className="flex items-center"><span className="font-bold w-[80px]">Student<br />Signature:</span><div onClick={() => !isStudent && openSigModal('outcome_student_ack_sig', 'comp')} className="w-full border-b border-black min-h-[30px] cursor-pointer inline-flex items-center justify-center ml-2">{compRecord['outcome_student_ack_sig'] ? <img src={compRecord['outcome_student_ack_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></div>
+                  <div className="flex items-center"><span className="font-bold w-[80px]">Student<br />Signature:</span><div onClick={() => openSigModal('outcome_student_ack_sig', 'comp')} className="w-full border-b border-black min-h-[30px] cursor-pointer inline-flex items-center justify-center ml-2">{(answers['outcome_student_ack_sig'] || compRecord['outcome_student_ack_sig']) ? <img src={answers['outcome_student_ack_sig'] || compRecord['outcome_student_ack_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">Click to sign</span>}</div></div>
                 </td>
               </tr>
             </tbody>

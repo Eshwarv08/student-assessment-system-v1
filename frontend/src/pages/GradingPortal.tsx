@@ -392,6 +392,23 @@ const GradingPortal: React.FC = () => {
         });
       });
 
+    if (isQuestion15) {
+      const q15PCPE = ["pa1_pc_249_1_1", "pa1_pc_249_1_2", "pa1_pc_249_1_3", "pa1_pc_249_1_4", "pa1_pc_249_1_5", "pa1_pc_249_1_6", "pa1_pc_249_5_3", "pa1_pc_249_5_4", "pa1_pc_253_1_1", "pa1_pc_253_1_2", "pa1_pc_253_1_3", "pa1_pc_253_1_4", "pa1_pc_253_2_1", "pa1_pc_253_4_1", "pa1_pc_253_4_2", "pa1_pc_253_4_5", "pa1_pc_329_1_1", "pa1_pc_329_1_2", "pa1_pc_329_1_3", "pa1_pc_329_1_4", "pa1_pc_329_1_6", "pa1_pc_329_1_7", "pa1_pc_329_1_8", "pa1_pc_329_notify", "pa1_pc_329_reinstate", "pa1_pc_334_1_1", "pa1_pc_334_1_2", "pa1_pc_334_1_3", "pa1_pc_334_1_4", "pa1_pc_334_1_5", "pa1_pc_334_1_6", "pa1_pc_334_1_7", "pa1_pc_334_3_5", "pa1_pe_249_pe1", "pa1_pe_249_pe2", "pa1_pe_249_pe8", "pa1_pe_253_pe1", "pa1_pe_253_pe7", "pa1_pe_329_pe4", "pa1_pe_329_pe5", "pa1_pe_329_pe6", "pa1_pe_329_pe7", "pa1_pe_334_pe1", "pa1_pe_334_pe2", "pa2_pc_1_1", "pa2_pc_1_10", "pa2_pc_1_11", "pa2_pc_1_12", "pa2_pc_1_2", "pa2_pc_1_3", "pa2_pc_1_4", "pa2_pc_1_5", "pa2_pc_1_6", "pa2_pc_1_7", "pa2_pc_1_8", "pa2_pc_1_9", "pa2_pc_2_1", "pa2_pc_2_2", "pa2_pc_3_1", "pa2_pc_3_2", "pa2_pc_3_7", "pa2_pc_5_3", "pa2_pc_5_4", "pa2_pe_pe1", "pa2_pe_pe2", "pa2_pe_pe4", "pa2_pe_pe5", "pa2_pe_pe6", "pa2_pe_pe7", "pa3_pc_1_1", "pa3_pc_1_10", "pa3_pc_1_2", "pa3_pc_1_3", "pa3_pc_1_4", "pa3_pc_1_5", "pa3_pc_1_6", "pa3_pc_1_7", "pa3_pc_1_8", "pa3_pc_2_1", "pa3_pc_2_2", "pa3_pc_2_5", "pa3_pc_2_7", "pa3_pc_3_1", "pa3_pc_3_2", "pa3_pc_3_2_2", "pa3_pc_3_3", "pa3_pc_3_4", "pa3_pc_3_5", "pa3_pc_3_6", "pa3_pc_3_7", "pa3_pc_4_1", "pa3_pc_4_2", "pa3_pc_4_3", "pa3_pc_4_4", "pa3_pc_4_5", "pa3_pc_4_6", "pa3_pe_pe1", "pa3_pe_pe2", "pa3_pe_pe3", "pa3_pe_pe4", "pa3_pe_pe5", "pa3_pe_pe6", "pa3_pe_pe7", "pa3_pe_pe8", "pa4_pc_1_1", "pa4_pc_1_2", "pa4_pc_1_3", "pa4_pc_1_4", "pa4_pc_1_5", "pa4_pc_1_6", "pa4_pc_1_7", "pa4_pc_2_1", "pa4_pc_2_2", "pa4_pc_2_3", "pa4_pc_2_4", "pa4_pc_2_5", "pa4_pc_3_1", "pa4_pc_3_3", "pa4_pc_3_4", "pa4_pc_3_5", "pa5_pc_1_1", "pa5_pc_1_2", "pa5_pc_1_3", "pa5_pc_1_4", "pa5_pc_1_5", "pa5_pc_1_6", "pa5_pc_2_1", "pa5_pc_2_2", "pa5_pc_2_3", "pa5_pc_2_4", "pa5_pc_2_5", "pa5_pc_2_7", "pa5_pc_2_8", "pa5_pc_2_9", "pa5_pe_pe1", "pa5_pe_pe2", "pa5_pe_pe3", "pa5_pe_pe4", "pa5_pe_pe5", "pa5_pe_pe6", "pa7_253_pc_1_1", "pa7_253_pc_1_2", "pa7_253_pc_1_3", "pa7_253_pc_1_4", "pa7_253_pc_2_1", "pa7_253_pc_2_2", "pa7_253_pc_2_3", "pa7_253_pc_2_4", "pa7_253_pc_2_5", "pa7_253_pc_2_6", "pa7_253_pc_3_1", "pa7_253_pc_3_2", "pa7_253_pc_4_1", "pa7_253_pc_4_2", "pa7_253_pc_4_5", "pa7_253_pe_pe1", "pa7_253_pe_pe2", "pa7_253_pe_pe3", "pa7_253_pe_pe4", "pa7_253_pe_pe5", "pa7_253_pe_pe6", "pa7_253_pe_pe7", "pa7_pc_1_2", "pa7_pc_1_3", "pa7_pc_1_4", "pa7_pc_1_5", "pa7_pc_1_6", "pa7_pc_1_7", "pa7_pc_2_1", "pa7_pc_3_1", "pa7_pc_3_2", "pa7_pc_3_3", "pa7_pc_3_4", "pa7_pc_3_5", "pa7_pe_pe1", "pa7_pe_pe2", "pa7_pe_pe3"];
+      q15PCPE.forEach(k => newCompRecord[k] = 'Completed');
+
+      const prefixes = ['pa1_att1', 'pa1_att2', 'pa2', 'pa3', 'pa4', 'pa5', 'pa7', 'pa7_253'];
+      prefixes.forEach(p => {
+        newCompRecord[`${p}_attempt_initial`] = 'S';
+        newCompRecord[`${p}_attempt_1st`] = 'S';
+        newCompRecord[`${p}_attempt_2nd`] = 'S';
+      });
+
+      ['kat1', 'pat1', 'pat2', 'pat3', 'pat4', 'pat5', 'pat6', 'pat7'].forEach(t => {
+        newCompRecord[`outcome_${t}_result`] = 'S';
+      });
+      newCompRecord['outcome_final_result'] = 'C';
+    }
+
     setGrades(newGrades);
     setTaskResults(newTaskResults);
     setCompRecord(newCompRecord);
@@ -4364,14 +4381,13 @@ const GradingPortal: React.FC = () => {
                   alert('CRITICAL: Assessor Signature and Date must be completed before downloading the final report.');
                   return;
                 }
-                saveMutation.mutate();
-                setTimeout(() => handlePrint(), 500);
+                handleDownload();
               }}
-              disabled={saveMutation.isPending}
-              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50"
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl font-bold text-[10px] sm:text-xs transition-all shadow-lg shadow-blue-900/20 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />}
-              <span className="whitespace-nowrap">Download</span>
+              {isDownloading ? <Loader2 className="animate-spin" size={14} /> : (saveMutation.isPending ? <Loader2 className="animate-spin" size={14} /> : <Printer size={14} />)}
+              <span className="whitespace-nowrap">{isDownloading ? 'Downloading...' : 'Download'}</span>
             </button>
           </div>
         </div>
@@ -5593,14 +5609,13 @@ const GradingPortal: React.FC = () => {
                   alert('CRITICAL: Assessor Name, Signature, and Date must be completed before downloading the final report.');
                   return;
                 }
-                saveMutation.mutate()
-                setTimeout(() => handlePrint(), 500)
+                handleDownload();
               }}
-              disabled={saveMutation.isPending}
-              className="flex items-center gap-3 bg-[#1e3a8a] hover:bg-[#1e40af] text-white px-10 py-4 rounded-xl font-bold text-xl transition-all shadow-xl shadow-blue-900/20 active:scale-95 disabled:opacity-50"
+              disabled={saveMutation.isPending || isDownloading}
+              className={`flex items-center gap-3 bg-[#1e3a8a] hover:bg-[#1e40af] text-white px-10 py-4 rounded-xl font-bold text-xl transition-all shadow-xl shadow-blue-900/20 active:scale-95 disabled:opacity-50 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {saveMutation.isPending ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
-              SUBMIT & DOWNLOAD PDF
+              {(saveMutation.isPending || isDownloading) ? <Loader2 size={24} className="animate-spin" /> : <Save size={24} />}
+              {isDownloading ? 'DOWNLOADING...' : (saveMutation.isPending ? 'SAVING...' : 'SUBMIT & DOWNLOAD PDF')}
             </button>
           </div>
         </div>
