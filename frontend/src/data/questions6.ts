@@ -73,7 +73,6 @@ export const assessmentQuestions = {
         "parts": [
           {
             "name": "t1q3_a",
-            "text": "Signal A:",
             "image": "/assets/question-6/q3a.png",
             "options": [
               { "value": "dc", "text": "DC Voltage" },
@@ -82,7 +81,6 @@ export const assessmentQuestions = {
           },
           {
             "name": "t1q3_b",
-            "text": "Signal B:",
             "image": "/assets/question-6/q3b.png",
             "options": [
               { "value": "dc", "text": "DC Voltage" },
@@ -104,8 +102,13 @@ export const assessmentQuestions = {
       },
       {
         "id": 5,
-        "text": "What are the unit of measurement and symbols of? Voltage, Current, Resistor",
-        "type": "text"
+        "text": "What are the unit of measurement and symbols of?",
+        "type": "checkbox",
+        "options": [
+          { "value": "voltage", "text": "Voltage" },
+          { "value": "current", "text": "Current" },
+          { "value": "resistor", "text": "Resistor" }
+        ]
       },
       {
         "id": 6,
@@ -232,7 +235,13 @@ export const assessmentQuestions = {
         "id": 17,
         "text": "Two resistors of 4Ω and 8Ω are connected in parallel across a 12 volt supply. Calculate the current through each resistor, total current, total resistance.",
         "image": "/assets/question-6/q17.png",
-        "type": "text"
+        "type": "text_inputs",
+        "textInputs": [
+          { "name": "t1q17_i1", "placeholder": "", "label": "I1=" },
+          { "name": "t1q17_i2", "placeholder": "", "label": "I2=" },
+          { "name": "t1q17_itotal", "placeholder": "", "label": "Itotal:" },
+          { "name": "t1q17_r", "placeholder": "", "label": "R=" }
+        ]
       },
       {
         "id": 18,
@@ -288,7 +297,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 23,
-        "text": "What could cause a short circuit in a pair of telephone cable? Insulation breakdown can cause a short circuit",
+        "text": "What could cause a short circuit in a pair of telephone cable?\n\nTrue or false?\nInsulation breakdown can cause a short circuit",
         "type": "radio",
         "options": [
           { "type": "radio", "value": "true", "text": "True" },
@@ -297,7 +306,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 24,
-        "text": "What testing device will identify cable pairs in a multicore cable? Is a pair identifier the suitable testing device to identify cable pairs in a multicore cable?",
+        "text": "What testing device will identify cable pairs in a multicore cable?\n\nTrue or False?\nIs a pair identifier the suitable testing device to identify cable pairs in a multicore cable?",
         "type": "radio",
         "options": [
           { "type": "radio", "value": "true", "text": "True" },
@@ -306,7 +315,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 25,
-        "text": "According to Ohms law, in a closed electrical circuit the value of the voltage across the circuit = value of the Total _______ pass through the circuit x value of the total circuit_________",
+        "text": "According to Ohms law, in a closed electrical circuit the value of the voltage across the circuit = value of the\nTotal _______ pass through the circuit x value of the total circuit_________",
         "type": "radio",
         "options": [
           { "type": "radio", "value": "a", "text": "Current and resistance" },
@@ -316,7 +325,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 26,
-        "text": "Capacitance between two parallel conductors depends on the ____ and the ______between the conductors",
+        "text": "Capacitance between two parallel conductors depends on the ____ and the ______between the\nconductors",
         "type": "radio",
         "options": [
           { "type": "radio", "value": "a", "text": "Current and resistance" },
@@ -326,7 +335,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 27,
-        "text": "What is an electromagnetic interference? Choose the best definition:",
+        "text": "What is an electromagnetic interference?\n\nChoose the best definition:",
         "type": "radio",
         "options": [
           { "type": "radio", "value": "a", "text": "Electromagnetic Interference, EMI is the interference caused by one electrical or electronic device to another by the electromagnetic fields set up by its operation." },
@@ -335,7 +344,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 28,
-        "text": "What is Modulation in telecommunication? Choose the best definition:",
+        "text": "What is Modulation in telecommunication?\n\nChoose the best definition:",
         "type": "radio",
         "options": [
           { "type": "radio", "value": "a", "text": "Modulation in the process by which a carrier wave is altered in such a way that it is able to carry information on it." },
@@ -344,7 +353,7 @@ export const assessmentQuestions = {
       },
       {
         "id": 29,
-        "text": "What is the use of a RCD? RCDs are electrical safety devices designed to immediately switch off the supply of electricity when electricity leaking to earth is detected at harmful levels.",
+        "text": "What is the use of a RCD\n\nTrue or False?\nRCDs are electrical safety devices designed to immediately switch off the supply of electricity when electricity leaking to earth is detected at harmful levels. They offer high levels of personal protection from electric shock.",
         "type": "radio",
         "options": [
           { "type": "radio", "value": "true", "text": "True" },

@@ -101,10 +101,15 @@ const GradingPortal: React.FC = () => {
       // Always merge with safe defaults field-by-field to prevent render crashes.
       const saved = submission.comp_record || {}
       setCompRecord({
+        ...saved,
         assessor_name: saved.assessor_name || '',
         assessment_site: saved.assessment_site || '',
         assessment_date: saved.assessment_date || new Date().toISOString().split('T')[0],
         evidence: saved.evidence || { valid: false, sufficient: false, current: false, authentic: false },
+        evidence_valid: saved.evidence_valid || saved.evidence?.valid || false,
+        evidence_sufficient: saved.evidence_sufficient || saved.evidence?.sufficient || false,
+        evidence_current: saved.evidence_current || saved.evidence?.current || false,
+        evidence_authentic: saved.evidence_authentic || saved.evidence?.authentic || false,
         tasks: saved.tasks || { t1: false, t2: false, t3: false, t4: false, t5: false, t6: false },
         attempts: (Array.isArray(saved.attempts) && saved.attempts.length >= 3)
           ? saved.attempts
@@ -267,6 +272,10 @@ const GradingPortal: React.FC = () => {
     const newCompRecord: any = {
       ...compRecord,
       evidence: { valid: true, sufficient: true, current: true, authentic: true },
+      evidence_valid: true,
+      evidence_sufficient: true,
+      evidence_current: true,
+      evidence_authentic: true,
       tasks: { ...compRecord.tasks }
     };
 
