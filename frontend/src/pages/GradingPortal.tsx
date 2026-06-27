@@ -300,7 +300,7 @@ const GradingPortal: React.FC = () => {
         });
 
         const isComponentBased = isQuestion4 || isQuestion5 || isQuestion6 || isQuestion7 || isQuestion8 || isQuestion9 || isQuestion10 || isQuestion11 || isQuestion12 || isQuestion13 || isQuestion14 || isQuestion15;
-        
+
         if (isComponentBased) {
           // Component-based assessments use compRecord keys directly
           newCompRecord[`${taskKey}_result`] = 'S';
@@ -308,17 +308,17 @@ const GradingPortal: React.FC = () => {
           questionsArray.forEach((q: any) => {
             newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
           });
-          
-          const oralItems: string[] = (taskData as any).oral || [];
+
+          const oralItems: string[] = (taskData as any).oral || (taskData as any).checklistItems || [];
           oralItems.forEach((_: string, idx: number) => {
             newCompRecord[`${taskKey}_oral_${idx}`] = 'yes';
           });
-          
+
           const perfItems: string[] = (taskData as any).performance || [];
           perfItems.forEach((_: string, idx: number) => {
             newCompRecord[`${taskKey}_perf_${idx}`] = 'yes';
           });
-          
+
           const chkItems: string[] = (taskData as any).checklistItems || [];
           chkItems.forEach((_: string, idx: number) => {
             newCompRecord[`${taskKey}_chk_${idx}`] = 'yes';
@@ -350,7 +350,7 @@ const GradingPortal: React.FC = () => {
           const obsKey = `t${tNum}obs${idx}`;
           newGrades[obsKey] = true;
         });
-        
+
 
         // 5. Assessor table sections (observation tables)
         const allSections = [

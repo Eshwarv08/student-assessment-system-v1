@@ -4,19 +4,32 @@ import { CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
 import { assessmentQuestions } from '../data/questions13';
 
 const InnerHeader = () => (
-  <div className="inner-header">
-    <div className="top-row">
-      <div>
-        <span className="underline-bold">Assessment book</span><br />
-        <span className="underline-bold">{assessmentQuestions.metadata.code} {assessmentQuestions.metadata.course}</span>
-      </div>
-      <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4mm' }}>
+    <div style={{ fontSize: '8pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', width: '35%', lineHeight: '1.2', paddingTop: '8px' }}>
+      {assessmentQuestions.metadata.code}<br />
+      {assessmentQuestions.metadata.course}
     </div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30%' }}>
+      <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ height: '55px', width: 'auto', objectFit: 'contain', marginBottom: '2px' }} />
+      <div style={{ color: '#8b0000', fontSize: '5pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif' }}>
+        RTO NO: 40954
+      </div>
+    </div>
+    <div style={{ width: '35%' }}></div>
   </div>
 );
 
 const PageFooter = ({ n }: { n: number }) => (
-  <div className="page-footer"><span></span><span>Page {n} of 14</span></div>
+  <div style={{ marginTop: 'auto', paddingTop: '4mm', display: 'flex', justifyContent: 'space-between', fontSize: '8pt', fontFamily: '"Times New Roman", Times, serif', color: '#555' }}>
+    <span>ACTA College RTO 40954 | 32 Terminus Street| Liverpool Sydney NSW 2170 | V3.0</span>
+    <span>Page {n} of 14</span>
+  </div>
+);
+
+const BlueHeader = ({ text }: { text: string }) => (
+  <div style={{ background: '#89b4e6', padding: '4px 8px', fontWeight: 'bold', fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', marginBottom: '12px', marginTop: '16px', color: '#000' }}>
+    {text}
+  </div>
 );
 
 interface Q13BookletProps {
@@ -340,34 +353,55 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
     </div>
   );
 
-  const ChecklistHead = () => (
+  const ChecklistHead = ({ title, subtitle, extraSubRow }: { title: string, subtitle?: string, extraSubRow?: string }) => (
     <thead>
       <tr>
-        <th rowSpan={2} className="border-[1.5px] border-black bg-[#999] text-left px-3 py-2 text-black font-bold">Did the Candidate:</th>
-        <th colSpan={2} className="border-[1.5px] border-black bg-[#999] text-center px-3 py-2 text-black font-bold">Satisfactory</th>
+        <th rowSpan={subtitle ? 1 : 2} className="border-[1px] border-black bg-[#a6a6a6] text-left px-2 py-1 text-black font-bold font-serif leading-tight">
+          {title}
+        </th>
+        <th colSpan={2} className="border-[1px] border-black bg-[#a6a6a6] text-left px-2 py-1 text-black font-bold font-serif leading-tight">Satisfactory</th>
+        <th rowSpan={2} className="border-[1px] border-black bg-[#a6a6a6] text-left px-2 py-1 text-black font-bold font-serif leading-tight">Comments</th>
       </tr>
       <tr>
-        <th className="border-[1.5px] border-black bg-[#aaa] text-center px-3 py-1.5 text-black font-bold w-[12%]">Yes</th>
-        <th className="border-[1.5px] border-black bg-[#aaa] text-center px-3 py-1.5 text-black font-bold w-[12%]">No</th>
+        {subtitle ? (
+          <th className="border-[1px] border-black bg-[#a6a6a6] text-left px-2 py-1 text-black font-bold font-serif leading-tight">{subtitle}</th>
+        ) : null}
+        <th className="border-[1px] border-black bg-[#a6a6a6] text-left px-2 py-1 text-black font-bold font-serif leading-tight">Yes</th>
+        <th className="border-[1px] border-black bg-[#a6a6a6] text-left px-2 py-1 text-black font-bold font-serif leading-tight">No</th>
       </tr>
+      {extraSubRow && (
+        <tr>
+          <td colSpan={4} className="border-[1px] border-black bg-white text-left px-2 py-1 text-black font-bold font-serif leading-tight">{extraSubRow}</td>
+        </tr>
+      )}
     </thead>
+  );
+
+  const TableColGroup = () => (
+    <colgroup>
+      <col style={{ width: '55%' }} />
+      <col style={{ width: '7.5%' }} />
+      <col style={{ width: '7.5%' }} />
+      <col style={{ width: '30%' }} />
+    </colgroup>
   );
 
   const renderOralRows = (taskKey: string, oralItems: string[]) => (
     <>
-      <tr>
-        <td className="border-[1.5px] border-black bg-[#e0e0e0] italic px-3 py-1.5 text-[8.5pt]" colSpan={3}>
-          *See assessment task details for specific oral questions
-        </td>
-      </tr>
       {oralItems.map((item: string, idx: number) => (
         <tr key={`oral-${idx}`}>
-          <td className="border-[1.5px] border-black px-3 py-2">{item}</td>
-          <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_oral_${idx}`]: 'yes' })}>
+          <td className="border-[1px] border-black px-2 py-1 font-serif text-[9.5pt] leading-snug">{item}</td>
+          <td className="border-[1px] border-black px-2 py-1 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_oral_${idx}`]: 'yes' })}>
             {compRecord[`${taskKey}_oral_${idx}`] === 'yes' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
           </td>
-          <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_oral_${idx}`]: 'no' })}>
+          <td className="border-[1px] border-black px-2 py-1 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_oral_${idx}`]: 'no' })}>
             {compRecord[`${taskKey}_oral_${idx}`] === 'no' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
+          </td>
+          <td className="border-[1px] border-black p-0">
+            <textarea className="w-full h-full min-h-[28px] resize-none outline-none p-1 bg-transparent font-serif text-[9.5pt]" 
+              value={compRecord[`${taskKey}_oral_${idx}_comment`] || ''}
+              onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_oral_${idx}_comment`]: e.target.value }) }}
+              readOnly={isStudent} />
           </td>
         </tr>
       ))}
@@ -376,49 +410,22 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
 
   const renderPerfRows = (taskKey: string, items: string[], startIdx: number, endIdx: number) => (
     <>
-      {startIdx === 0 && (
-        <tr>
-          <td colSpan={3} className="border-[1.5px] border-black bg-[#e0e0e0] font-bold px-3 py-2 text-black">
-            Evidence of Performance: Did The Candidate Satisfactorily:
-          </td>
-        </tr>
-      )}
       {items.slice(startIdx, endIdx).map((item: string, i: number) => {
         const idx = startIdx + i;
         return (
           <tr key={`perf-${idx}`}>
-            <td className="border-[1.5px] border-black px-3 py-2">{item}</td>
-            <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_perf_${idx}`]: 'yes' })}>
+            <td className="border-[1px] border-black px-2 py-1 font-serif text-[9.5pt] leading-snug">{item}</td>
+            <td className="border-[1px] border-black px-2 py-1 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_perf_${idx}`]: 'yes' })}>
               {compRecord[`${taskKey}_perf_${idx}`] === 'yes' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
             </td>
-            <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_perf_${idx}`]: 'no' })}>
+            <td className="border-[1px] border-black px-2 py-1 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_perf_${idx}`]: 'no' })}>
               {compRecord[`${taskKey}_perf_${idx}`] === 'no' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
             </td>
-          </tr>
-        );
-      })}
-    </>
-  );
-
-  const renderChkRows = (taskKey: string, items: string[], startIdx: number, endIdx: number) => (
-    <>
-      {startIdx === 0 && (
-        <tr>
-          <td colSpan={3} className="border-[1.5px] border-black bg-[#e0e0e0] font-bold px-3 py-2 text-black">
-            Evidence of Performance: Did The Candidate Satisfactorily:
-          </td>
-        </tr>
-      )}
-      {items.slice(startIdx, endIdx).map((item: string, i: number) => {
-        const idx = startIdx + i;
-        return (
-          <tr key={`chk-${idx}`}>
-            <td className="border-[1.5px] border-black px-3 py-2">{item}</td>
-            <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_chk_${idx}`]: 'yes' })}>
-              {compRecord[`${taskKey}_chk_${idx}`] === 'yes' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
-            </td>
-            <td className="border-[1.5px] border-black px-3 py-2 cursor-pointer hover:bg-gray-50 text-center" onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_chk_${idx}`]: 'no' })}>
-              {compRecord[`${taskKey}_chk_${idx}`] === 'no' ? <span className="text-red-600 font-bold text-lg leading-none">✓</span> : ''}
+            <td className="border-[1px] border-black p-0">
+              <textarea className="w-full h-full min-h-[28px] resize-none outline-none p-1 bg-transparent font-serif text-[9.5pt]" 
+                value={compRecord[`${taskKey}_perf_${idx}_comment`] || ''}
+                onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_perf_${idx}_comment`]: e.target.value }) }}
+                readOnly={isStudent} />
             </td>
           </tr>
         );
@@ -456,12 +463,35 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
                 placeholder="(No response)"
               />
             )}
-            {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tIdx: number) => (
-              <div key={tIdx} className="mb-4 border border-gray-200 p-2">
-                {ti.image && <img src={ti.image} className="max-w-[200px] mb-2" alt="Diagram" />}
-                <input type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({...answers, [ti.name]: e.target.value})} />
-              </div>
-            ))}
+            {q.type === 'text_inputs' && (
+              <>
+                <div className="grid grid-cols-3 gap-0 border-t-[1px] border-l-[1px] border-black my-4">
+                  {q.textInputs?.map((ti: any, tIdx: number) => (
+                    <div key={tIdx} className="border-b-[1px] border-r-[1px] border-black p-2 flex flex-col items-center justify-center min-h-[160px] bg-white">
+                      {ti.image && (
+                        <div className="flex-1 flex items-center justify-center w-full p-2">
+                          <img src={ti.image} className="max-w-full max-h-[110px] object-contain" alt={ti.placeholder || "Diagram"} />
+                        </div>
+                      )}
+                      <div className="font-bold text-[11pt] text-black font-serif text-center mt-2">{ti.placeholder}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-x-8 gap-y-4 px-4 mb-4">
+                  {q.textInputs?.map((ti: any, tIdx: number) => (
+                    <div key={`input-${tIdx}`} className="flex items-end gap-2 w-full">
+                      <span className="font-bold font-serif text-[11pt]">{ti.placeholder}.</span>
+                      <input 
+                        type="text" 
+                        className="border-b-[1.5px] border-black flex-1 outline-none bg-transparent font-serif text-[10pt]" 
+                        value={answers[ti.name] || ''} 
+                        onChange={(e) => setAnswers({...answers, [ti.name]: e.target.value})} 
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -518,173 +548,195 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
 
       {/* PAGE 1: Cover */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
-        <div style={{ border: '3.5px solid #1a5fa8', padding: '4px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ border: '1.2px solid #1a5fa8', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-            <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ width: '300px', height: '300px', objectFit: 'contain', marginBottom: '5mm', marginTop: '5mm' }} />
-            <div style={{ fontSize: '44pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
-            <div style={{ background: '#1a5fa8', height: '11px', width: '100%', margin: '5mm 0' }}></div>
-            <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', color: '#000', marginBottom: '5mm', marginTop: '5mm', letterSpacing: '0.6px' }}>{assessmentQuestions.metadata.code}</div>
-            <div style={{ fontSize: '21pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm' }}>{assessmentQuestions.metadata.course}</div>
-            <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
-                Student Name: <span style={{ display: 'inline-block', borderBottom: '1.8px solid #000', width: '110mm', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
+        <div style={{ border: '1px solid #89b4e6', padding: '2px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <div style={{ border: '3px solid #89b4e6', padding: '1px', width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ border: '1px solid #89b4e6', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+              <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '220px', height: 'auto', objectFit: 'contain', marginBottom: '3mm', marginTop: '15mm' }} />
+              <div style={{ color: '#8b0000', fontSize: '11pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', marginBottom: '35mm' }}>
+                RTO NO: 40954
               </div>
-              <div style={{ textAlign: 'center', fontSize: '11pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '18mm' }}>ACTA College Pty. Ltd</div>
+
+              <div style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '8mm', lineHeight: '1.2' }}>
+                Assessor’s Marking<br />Guide
+              </div>
+
+              <div style={{ background: '#89b4e6', height: '14px', width: '100%', margin: '8mm 0 15mm 0' }}></div>
+
+              <div style={{ fontSize: '24pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm' }}>
+                {assessmentQuestions.metadata.code}
+              </div>
+              
+              <div style={{ fontSize: '21pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '35mm' }}>
+                {assessmentQuestions.metadata.course}
+              </div>
+
+              <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
+                  Student Name: <span style={{ display: 'inline-block', borderBottom: '1.8px solid #000', width: '110mm', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
+                </div>
+                <div style={{ textAlign: 'center', fontSize: '11pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '18mm' }}>ACTA College Pty. Ltd</div>
+              </div>
             </div>
           </div>
         </div>
-        <PageFooter n={1} />
       </div>
 
-      {/* PAGE 2: Assessor's Marking Guide Instructions (Prior to Conducting / Conducting the Assessment / Reasonable Adjustment / Making the Decision) */}
+      {/* PAGE 2: Assessor's Marking Guide Instructions */}
       <div className="page">
         <InnerHeader />
-        <h1 className="section-title text-center text-blue-900 font-bold my-4">MARKING GUIDE</h1>
-        
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">{admin.markingGuide[0].label}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.markingGuide[0].content}</p>
-        </div>
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">{admin.markingGuide[1].label}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.markingGuide[1].content}</p>
-        </div>
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">Reasonable Adjustment</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.reasonableAdjustment}</p>
-        </div>
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">{admin.markingGuide[2].label}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.markingGuide[2].content.split('\n\n')[0] || admin.markingGuide[2].content}</p>
-        </div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #000', fontSize: '9.5pt', fontFamily: '"Times New Roman", Times, serif' }}>
+          <thead>
+            <tr>
+              <th colSpan={2} style={{ background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontSize: '14pt', textAlign: 'center', fontFamily: '"Times New Roman", Times, serif' }}>
+                Assessor’s Marking Guide Instructions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'center', verticalAlign: 'middle' }}>Prior to<br/>Conducting the<br/>Assessment</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{admin.markingGuide[0].content}</td>
+            </tr>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'left' }}>Conducting the<br/>assessment</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{admin.markingGuide[1].content}</td>
+            </tr>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'left' }}>Reasonable<br/>adjustment</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>
+                To meet the needs of all learners’ adjustments can be made to the way assessments are conducted but not to the requirements of the assessment. The purpose of these adjustments is to enhance fairness and flexibility so that the specific needs of students can be met.<br/><br/>
+                Examples of reasonable adjustments:<br/>
+                <ul style={{ listStyleType: 'disc', paddingLeft: '20px', margin: '4px 0' }}>
+                  <li>Educational support</li>
+                  <li>presenting questions orally for students with literacy issues</li>
+                  <li>presenting work instructions in diagrammatic or pictorial form instead of words and sentences</li>
+                  <li>Extra time to complete a course or assessment</li>
+                </ul>
+                ACTA College will take meaningful, transparent and reasonable steps to consult, consider and implement reasonable adjustments for students with disability and learning difficulties.
+              </td>
+            </tr>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'left' }}>Making the<br/>decision</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{admin.markingGuide[2].content}</td>
+            </tr>
+          </tbody>
+        </table>
         <PageFooter n={2} />
       </div>
 
-      {/* PAGE 3: Making the Decision (continued) / After the Assessment / Assessors Intervention / Assessors Value Judgement / Competency Decision / Assessment Tasks Overview */}
+      {/* PAGE 3 */}
       <div className="page">
         <InnerHeader />
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">{admin.markingGuide[3].label}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.markingGuide[3].content}</p>
-        </div>
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">{admin.markingGuide[4].label}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.markingGuide[4].content}</p>
-        </div>
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">{admin.markingGuide[5].label}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.markingGuide[5].content}</p>
-        </div>
-        <div className="mb-4">
-          <h3 className="font-bold text-sm mb-1">{admin.markingGuide[6].label}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.markingGuide[6].content}</p>
-        </div>
-        
-        <h1 className="section-title text-center text-blue-900 font-bold mt-6 mb-4">{admin.tasksOverview.title}</h1>
-        <p className="whitespace-pre-wrap text-sm mb-2">{admin.tasksOverview.intro}</p>
-        <ul className="list-disc pl-5 mb-4 text-sm">
-          {admin.tasksOverview.elements.map((el: string, idx: number) => <li key={idx}>{el}</li>)}
-        </ul>
+        <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #000', fontSize: '9.5pt', fontFamily: '"Times New Roman", Times, serif' }}>
+          <tbody>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'left' }}>After the<br/>assessment</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{admin.markingGuide[3].content}</td>
+            </tr>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'left' }}>Assessors<br/>Intervention</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{admin.markingGuide[4].content}</td>
+            </tr>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'left' }}>Assessors Value<br/>Judgement</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{admin.markingGuide[5].content}</td>
+            </tr>
+            <tr>
+              <td style={{ width: '25%', background: '#d9d9d9', border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'left' }}>Competency<br/>Decision</td>
+              <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{admin.markingGuide[6].content}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <BlueHeader text={admin.tasksOverview.title} />
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif mb-4">{admin.tasksOverview.intro}</p>
+        <p className="text-[9.5pt] font-serif mb-2">Elements of Competency:</p>
+        <ol className="list-decimal pl-8 text-[9.5pt] font-serif mb-4">
+          <li>{admin.tasksOverview.elements[0]}</li>
+          <li>{admin.tasksOverview.elements[1]}</li>
+        </ol>
         <PageFooter n={3} />
       </div>
 
-      {/* PAGE 4: Assessment Tasks Overview (continued) / Recording an Assessment / Assessment of Competency */}
+      {/* PAGE 4 */}
       <div className="page">
         <InnerHeader />
-        <p className="whitespace-pre-wrap text-sm mb-2 mt-4">{admin.tasksOverview.evidenceIntro}</p>
-        <ul className="list-disc pl-5 mb-4 text-sm">
+        <ol className="list-decimal pl-8 text-[9.5pt] font-serif mb-4" start={3}>
+          <li>{admin.tasksOverview.elements[2]}</li>
+          <li>{admin.tasksOverview.elements[3]}</li>
+        </ol>
+        
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif mb-2 mt-4">{admin.tasksOverview.evidenceIntro}</p>
+        <ul className="list-disc pl-8 text-[9.5pt] font-serif mb-4" style={{ listStyleType: 'disc' }}>
           {admin.tasksOverview.evidenceItems.map((el: string, idx: number) => <li key={idx}>{el}</li>)}
         </ul>
-        <p className="whitespace-pre-wrap text-sm mb-4">{admin.tasksOverview.summary}</p>
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '8px' }}>
+        
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif font-bold mb-4">{admin.tasksOverview.summary}</p>
+        
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '16px', fontSize: '9.5pt', fontFamily: '"Times New Roman", Times, serif' }}>
           <tbody>
             {admin.tasksOverview.tasks.map((task: any, idx: number) => (
               <tr key={idx}>
-                <td style={{ border: '1px solid #555', padding: '4px', fontWeight: 'bold', width: '25%' }}>{task.id}<br />({task.type})</td>
-                <td style={{ border: '1px solid #555', padding: '4px', whiteSpace: 'pre-wrap' }}>{task.text}</td>
+                <td style={{ border: '1px solid #000', background: '#d9d9d9', padding: '6px', fontWeight: 'bold', width: '20%' }}>{task.id}</td>
+                <td style={{ border: '1px solid #000', padding: '6px', width: '20%' }}>{task.type}</td>
+                <td style={{ border: '1px solid #000', padding: '6px', whiteSpace: 'pre-wrap' }}>{task.text}</td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        <div className="mb-4 mt-6">
-          <h3 className="font-bold text-sm mb-1">{admin.recordingAssessment.title}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.recordingAssessment.content}</p>
-        </div>
-        <div className="mb-4 mt-6">
-          <h3 className="font-bold text-sm mb-1">{admin.competencyAssessment.title}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.competencyAssessment.content}</p>
-          <ul className="list-disc pl-5 mb-4 text-sm mt-2">
-            {admin.competencyAssessment.criteria.map((c: string, idx: number) => <li key={idx}>{c}</li>)}
-          </ul>
-        </div>
+        <BlueHeader text={admin.recordingAssessment.title} />
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif mb-4">{admin.recordingAssessment.content}</p>
+
+        <BlueHeader text={admin.competencyAssessment.title} />
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif mb-2">{admin.competencyAssessment.content}</p>
+        <ul className="list-disc pl-8 text-[9.5pt] font-serif" style={{ listStyleType: 'circle' }}>
+          {admin.competencyAssessment.criteria.map((c: string, idx: number) => (
+            <li key={idx}><span className="font-bold">{c}</span></li>
+          ))}
+        </ul>
         <PageFooter n={4} />
       </div>
 
-      {/* PAGE 5: Assessment of Competency (continued) / Assessor Feedback / Cover Sheet for Submission of Work */}
+      {/* PAGE 5 */}
       <div className="page">
         <InnerHeader />
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '8px', marginTop: '16px' }}>
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif mb-4">The Assessor will be required to enter a result for each participant on the Assessment of Competency Record using the following codes;</p>
+        <table style={{ borderCollapse: 'collapse', marginBottom: '16px', fontSize: '9.5pt', fontFamily: '"Times New Roman", Times, serif', marginLeft: '16px' }}>
           <tbody>
             {admin.competencyAssessment.codes.map((c: any, idx: number) => (
               <tr key={idx}>
-                <td style={{ border: '1px solid #555', padding: '4px', fontWeight: 'bold', width: '20%' }}>{c.code}</td>
-                <td style={{ border: '1px solid #555', padding: '4px' }}>{c.text}</td>
+                <td style={{ padding: '2px 8px', fontWeight: 'bold', width: '80px' }}>{c.code}</td>
+                <td style={{ padding: '2px 8px', fontWeight: 'bold' }}>-</td>
+                <td style={{ padding: '2px 8px', fontWeight: 'bold' }}>{c.text}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <p className="whitespace-pre-wrap text-sm mb-6">{admin.competencyAssessment.footer}</p>
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif mb-6">{admin.competencyAssessment.footer}</p>
 
-        <div className="mb-6">
-          <h3 className="font-bold text-sm mb-1">{admin.assessorFeedback.title}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.assessorFeedback.content}</p>
-        </div>
+        <BlueHeader text={admin.assessorFeedback.title} />
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif mb-6">{admin.assessorFeedback.content}</p>
 
-        <div className="mb-6">
-          <h3 className="font-bold text-sm mb-1">{admin.coverSheet.title}</h3>
-          <p className="whitespace-pre-wrap text-sm">{admin.coverSheet.content}</p>
-        </div>
+        <BlueHeader text={admin.coverSheet.title} />
+        <p className="whitespace-pre-wrap text-[9.5pt] font-serif font-bold mb-6">{admin.coverSheet.content}</p>
 
-        {/* Since "Assessment Competency Record" doesn't have a specific page mentioned in blueprint, and page 5 implies it wraps up the admin section, let's include the table here. */}
-        <div className="mt-8">
-          <h1 className="section-title text-center font-bold mb-4">ASSESSMENT COMPETENCY RECORD</h1>
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '5px' }}>
-            <tbody>
-              <tr>
-                <th style={{ border: '1px solid #555', padding: '4px', textAlign: 'left', background: '#f0f0f0' }}>Please attach the following documentation to this form</th>
-                <th style={{ border: '1px solid #555', padding: '4px', width: '15%', background: '#f0f0f0' }}>Result</th>
-                <th style={{ border: '1px solid #555', padding: '4px', width: '25%', background: '#f0f0f0' }}>FINAL RESULT:</th>
-              </tr>
-              <tr><td className="font-bold">Assessment Task 1</td><td className="text-center">S / NS</td>
-                <td rowSpan={4} style={{ verticalAlign: 'middle' }}>
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                     <label><input type="checkbox" disabled /> Competent (C)</label>
-                     <label><input type="checkbox" disabled /> Not Competent (NC)</label>
-                   </div>
-                </td>
-              </tr>
-              <tr><td className="font-bold">Assessment Task 2</td><td className="text-center">S / NS</td></tr>
-              <tr><td className="font-bold">Assessment Task 3</td><td className="text-center">S / NS</td></tr>
-              <tr><td className="font-bold">Assessment Task 4</td><td className="text-center">S / NS</td></tr>
-            </tbody>
-          </table>
-        </div>
+
         <PageFooter n={5} />
       </div>
 
-      {/* PAGE 6: Assessment Task 1 — Observation / Student Instructions / Required Documents */}
+      {/* PAGE 6 */}
       <div className="page">
         <InnerHeader />
-        <h1 className="section-title">{task1.observationTitle}</h1>
-        {task1.observationSubtitle && <h2 className="sub-title mb-4">{task1.observationSubtitle}</h2>}
+        <h1 className="text-center font-bold font-serif mb-2 uppercase" style={{ fontSize: '13pt', marginTop: '12px' }}>{task1.title}</h1>
+        {task1.observationSubtitle && <h2 className="text-center font-bold font-serif mb-4" style={{ fontSize: '12pt' }}>{task1.observationSubtitle}</h2>}
         {task1.sections.map((section: any, sIdx: number) => (
           <div key={sIdx} className="mb-4">
-            {section.title && <h3 className="font-bold mb-2">{section.title}</h3>}
-            {section.type === 'text' && <p className="whitespace-pre-wrap">{section.content}</p>}
+            {section.title && <h3 className="font-bold font-serif text-[10pt] mb-2">{section.title}</h3>}
+            {section.type === 'text' && <p className="whitespace-pre-wrap font-serif text-[9.5pt]">{section.content}</p>}
             {section.type === 'image' && (
               <div className="flex justify-center my-4">
-                <img src={section.src} alt={section.title} className="max-w-full border border-gray-300" style={{ maxHeight: '300px' }} />
+                <img src={section.src} alt={section.title} className="max-w-full" style={{ maxHeight: '250px' }} />
               </div>
             )}
           </div>
@@ -695,13 +747,21 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
       {/* PAGE 7: Assessment Task 1 — Instructions for Assessor / Assessor Checklist / Oral Assessment Questions */}
       <div className="page">
         <InnerHeader />
-        <h2 className="sub-title" style={{ marginBottom: '4px' }}>{task1.checklistTitle}</h2>
-        <p className="whitespace-pre-wrap text-[9pt] mb-2">{task1.checklistIntro}</p>
-        <p className="whitespace-pre-wrap text-[9pt] italic mb-4">{task1.assessorInstructions}</p>
         
-        <div className="font-bold text-sm mb-2">{task1.checklistLabel}</div>
-        <table className="w-full border-collapse border-[1.5px] border-black text-[9pt]">
-          <ChecklistHead />
+        <div className="font-bold font-serif text-[10.5pt] mb-2 mt-4">Instructions for assessor:</div>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-2">Distribute a floor plan with the entry point and wall socket locations marked – possibly a unique plan for each participant. Ask candidates to complete the task listed below.</p>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-6">Role play the customer for the purpose of confirming the cable plan.</p>
+
+        <h1 className="text-center font-bold font-serif mb-4 text-[14pt]">ASSESSMENT TASK 1 – ASSESSOR CHECKLIST</h1>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] italic mb-4">This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.</p>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-4">The observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.</p>
+        <h3 className="font-bold font-serif text-[10.5pt] mb-2">Assessor Instructions:</h3>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-4">The assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.</p>
+        
+        <h3 className="font-bold font-serif text-[12pt] mb-2 mt-4">Oral assessment:</h3>
+        <table className="w-full border-collapse border-[1px] border-black text-[9.5pt] table-fixed">
+          <TableColGroup />
+          <ChecklistHead title="Oral assessment questions" subtitle="Note any additional questions you use during the assessment" />
           <tbody>
             {renderOralRows('task1', task1.checklistItems)}
           </tbody>
@@ -709,113 +769,185 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
         <PageFooter n={7} />
       </div>
 
-      {/* PAGE 8: Assessment Task 1 — Record of Performance / Assessment Task 2 — Observation / Student Steps / Required Documents */}
+      {/* PAGE 8: Assessment Task 1 — Record of Performance / Assessment Task 2 — Observation */}
       <div className="page">
         <InnerHeader />
-        <h2 className="sub-title" style={{ marginBottom: '6px' }}>{task1.checklistTitle} (continued)</h2>
-        <div className="font-bold text-sm mb-2 mt-4">{task1.performanceHeader}</div>
-        <table className="w-full border-collapse border-[1.5px] border-black text-[9pt] mb-8">
-          <ChecklistHead />
+        
+        <h3 className="font-bold font-serif text-[12pt] mb-2 mt-4">Record of performance:</h3>
+        <table className="w-full border-collapse border-[1px] border-black text-[9.5pt] mb-8 table-fixed">
+          <TableColGroup />
+          <ChecklistHead title="Did the candidate:" />
           <tbody>
             {renderPerfRows('task1', task1.performance, 0, task1.performance.length)}
           </tbody>
         </table>
 
-        {renderDeclarations('task1')}
+        <div className="text-center font-bold font-serif uppercase mb-2" style={{ fontSize: '12pt', marginTop: '16px', lineHeight: '1.2' }}>
+          ASSESSMENT TASK 2- OBSERVATION (PC-1.1,1.4-<br/>1.6,3.1,3.3,3.4,4.1,4.2,4.3)
+        </div>
+        <h2 className="text-center font-bold font-serif mb-6" style={{ fontSize: '11.5pt' }}>Terminate structured cable using a 110 block</h2>
+        
+        <p className="font-serif text-[9.5pt] mb-1">Install a 110 block using structured cable termination techniques. Perform the following tasks and demonstrate their completion to the assessor visually with oral explanation.</p>
+        <p className="font-serif text-[9.5pt] mb-1">AT 2.1 strip and prepare structured cable suitable for the customer requirements.</p>
+        <p className="font-serif text-[9.5pt] mb-1">AT 2.2 maintain twist ratio when preparing and terminating cable</p>
+        <p className="font-serif text-[9.5pt] mb-1">AT 2.3 use cable and termination hardware suitable for purpose</p>
+        <p className="font-serif text-[9.5pt] mb-6">AT 2.4 explain the role of earthing the system in a structured cable system. Earthing to be performed only by licensed electrician.</p>
 
-        <h1 className="section-title mt-4">{task2.observationTitle}</h1>
-        {task2.observationSubtitle && <h2 className="sub-title mb-4">{task2.observationSubtitle}</h2>}
-        {task2.sections.map((section: any, sIdx: number) => (
-          <div key={sIdx} className="mb-4">
-            {section.title && <h3 className="font-bold mb-2">{section.title}</h3>}
-            {section.type === 'text' && <p className="whitespace-pre-wrap">{section.content}</p>}
-          </div>
-        ))}
+        <h3 className="font-bold font-serif text-[9.5pt] mb-2">Required documents and equipment:</h3>
+        <ul className="list-disc pl-8 font-serif text-[9.5pt] mb-4">
+          <li className="mb-1">A workpolace typical of customer premises cabling worksite – a house, small office, factory- where cabling routes can be identified</li>
+          <li className="mb-1">A wall surface</li>
+          <li className="mb-1">A 110 block and suitable fixing hardware</li>
+        </ul>
         <PageFooter n={8} />
       </div>
 
       {/* PAGE 9: Assessment Task 2 — Instructions for Assessor / Assessor Checklist / Oral Assessment / Record of Performance (start) */}
       <div className="page">
         <InnerHeader />
-        <h2 className="sub-title mt-6" style={{ marginBottom: '4px' }}>{task2.checklistTitle}</h2>
-        <p className="whitespace-pre-wrap text-[9pt] mb-2">{task2.checklistIntro}</p>
-        <p className="whitespace-pre-wrap text-[9pt] italic mb-4">{task2.assessorInstructions}</p>
         
-        <div className="font-bold text-sm mb-2">{task2.checklistLabel}</div>
-        <table className="w-full border-collapse border-[1.5px] border-black text-[9pt] mb-4">
-          <ChecklistHead />
+        <ul className="list-disc pl-8 font-serif text-[9.5pt] mb-6 mt-4">
+          <li className="mb-1">Cable stock – cat 5 is suitable for most tasks in this course</li>
+          <li className="mb-1">Cable fixing resources – cable ties, catenary wire, cable clips</li>
+          <li className="mb-1">Common hand tools</li>
+        </ul>
+
+        <h3 className="font-bold font-serif text-[9.5pt] mb-2">Instructions for assessor:</h3>
+        <ul className="list-disc pl-8 font-serif text-[9.5pt] mb-6">
+          <li className="mb-1">Prepare work station with cable stock, installation tools and access to a real or simulated cavity wall and roof space</li>
+          <li className="mb-1">Instruct the candidate to install a 110 block</li>
+          <li className="mb-1">Mark an entry point and a location for a 110 block on cabinet, wall or wall cavity</li>
+          <li className="mb-1">Ask participants to recommend a cable type to suit this job</li>
+          <li className="mb-1">Ask students to supervise each other to ensure regulations or observed</li>
+        </ul>
+
+        <h1 className="text-center font-bold font-serif mb-4 text-[14pt]">ASSESSMENT TASK 2 – ASSESSOR CHECKLIST</h1>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] italic mb-4">This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.</p>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-4">The observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.</p>
+        <h3 className="font-bold font-serif text-[10.5pt] mb-2">Assessor Instructions:</h3>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-4">The assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.</p>
+
+        <h3 className="font-bold font-serif text-[12pt] mb-2 mt-4">Oral assessment</h3>
+        <table className="w-full border-collapse border-[1px] border-black text-[9.5pt] mb-6 table-fixed">
+          <TableColGroup />
+          <ChecklistHead title="Oral assessment questions" subtitle="Note any additional questions you use during the assessment" extraSubRow="Termination questions" />
           <tbody>
             {renderOralRows('task2', task2.checklistItems)}
           </tbody>
         </table>
-        
-        <div className="font-bold text-sm mb-2">{task2.performanceHeader}</div>
-        <table className="w-full border-collapse border-[1.5px] border-black text-[9pt] mb-6">
-          <ChecklistHead />
+
+        <h3 className="font-bold font-serif text-[12pt] mb-2 mt-4">Record of performance:</h3>
+        <table className="w-full border-collapse border-[1px] border-black text-[9.5pt] table-fixed">
+          <TableColGroup />
+          <ChecklistHead title="Did the candidate install termination hardware with:" />
           <tbody>
-            {renderPerfRows('task2', task2.performance, 0, 3)}
+            {renderPerfRows('task2', task2.performance, 0, 2)}
           </tbody>
         </table>
         <PageFooter n={9} />
       </div>
 
-      {/* PAGE 10: Assessment Task 2 — Record of Performance (continued) / Assessment Task 3 — Observation / Required Documents / Instructions for Assessor / Assessor Checklist */}
+      {/* PAGE 10: Assessment Task 2 — Record of Performance (continued) / Assessment Task 3 — Observation */}
       <div className="page">
         <InnerHeader />
-        <h2 className="sub-title" style={{ marginBottom: '6px' }}>{task2.checklistTitle} (continued)</h2>
-        <table className="w-full border-collapse border-[1.5px] border-black text-[9pt] mb-6">
-          <ChecklistHead />
+        
+        <table className="w-full border-collapse border-[1px] border-black text-[9.5pt] mb-8 mt-4 table-fixed">
+          <TableColGroup />
           <tbody>
-            {renderPerfRows('task2', task2.performance, 3, task2.performance.length)}
+            {renderPerfRows('task2', task2.performance, 2, task2.performance.length)}
           </tbody>
         </table>
 
-        {renderDeclarations('task2')}
+        <h1 className="text-center font-bold font-serif mb-1 uppercase" style={{ fontSize: '13pt', marginTop: '16px' }}>{task3.title}</h1>
+        {task3.observationSubtitle && <h2 className="text-center font-bold font-serif mb-4" style={{ fontSize: '12pt' }}>{task3.observationSubtitle}</h2>}
+        {task3.sections.map((section: any, sIdx: number) => {
+          if (section.title === 'Required documents and equipment:') {
+            return (
+              <div key={sIdx} className="mb-4">
+                <h3 className="font-bold font-serif text-[10.5pt] mb-2">{section.title}</h3>
+                <ul className="list-disc pl-8 font-serif text-[9.5pt] mb-4">
+                  {section.content.split('\n').map((bullet: string, bIdx: number) => 
+                    bullet.trim() ? <li key={bIdx}>{bullet.replace('•', '').trim()}</li> : null
+                  )}
+                </ul>
+              </div>
+            );
+          }
+          if (section.title === 'Student Instructions:') {
+            return (
+               <div key={sIdx} className="mb-4">
+                  <p className="whitespace-pre-wrap font-serif text-[9.5pt]">{section.content}</p>
+               </div>
+            );
+          }
+          return (
+            <div key={sIdx} className="mb-4">
+              {section.title && <h3 className="font-bold font-serif text-[10.5pt] mb-2">{section.title}</h3>}
+              {section.type === 'text' && <p className="whitespace-pre-wrap font-serif text-[9.5pt]">{section.content}</p>}
+            </div>
+          );
+        })}
 
-        <h1 className="section-title mt-4">{task3.observationTitle}</h1>
-        {task3.observationSubtitle && <h2 className="sub-title mb-4">{task3.observationSubtitle}</h2>}
-        {task3.sections.map((section: any, sIdx: number) => (
-          <div key={sIdx} className="mb-4">
-            {section.title && <h3 className="font-bold mb-2">{section.title}</h3>}
-            {section.type === 'text' && <p className="whitespace-pre-wrap">{section.content}</p>}
-          </div>
-        ))}
-        
-        <h2 className="sub-title mt-6" style={{ marginBottom: '4px' }}>{task3.checklistTitle}</h2>
-        <p className="whitespace-pre-wrap text-[9pt] mb-2">{task3.checklistIntro}</p>
-        <p className="whitespace-pre-wrap text-[9pt] italic mb-4">{task3.assessorInstructions}</p>
+        <h3 className="font-bold font-serif text-[10.5pt] mb-2">Instructions for assessor :</h3>
+        <ul className="list-disc pl-8 font-serif text-[9.5pt] mb-6">
+          <li>Prepare work station with broadband patch cable and tester</li>
+          <li>Ensure that there is at least one measurable fault on the cable system</li>
+          <li>Direct participant to perform a full range of certification tests</li>
+          <li>Review results and discuss the reading indicating a fault</li>
+          <li>Direct participant to rectify fault and produce a certification report.</li>
+        </ul>
+
+        <h1 className="text-center font-bold font-serif mb-4 text-[14pt]">ASSESSMENT TASK 3 – ASSESSOR CHECKLIST</h1>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] italic mb-4">This checklist is to be used when assessing the students in the associated task. This checklist is to be completed for each student. Please refer to separate mapping document for specific details relating to alignment of this task to the unit requirements.</p>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-4">The observation checklist provided below shows you the tasks your assessor plans to assess. To prepare for this assessment, you should familiarise yourself with this check list to ensure full understanding of the requirements and to give you the best possibility of success.</p>
+        <h3 className="font-bold font-serif text-[10.5pt] mb-2">Assessor Instructions:</h3>
+        <p className="whitespace-pre-wrap font-serif text-[9.5pt] mb-4">The assessor will use verbal and observation methods during this assessment regularly asking the student to explain his/her interpretation of processes, information and task as well as to observe the student carryout the tasks. The assessor will use the observation checklist below to ensure all required tasks are carried out successfully or to provide comment where improvement is required.</p>
         <PageFooter n={10} />
       </div>
 
-      {/* PAGE 11: Assessment Task 3 — Oral Assessment / Record of Performance / Assessment Task 4 — Written Questions and Answers / Student Instructions */}
+      {/* PAGE 11: Assessment Task 3 — Oral Assessment / Record of Performance / Assessment Task 4 */}
       <div className="page">
         <InnerHeader />
-        <div className="font-bold text-sm mb-2">{task3.checklistLabel}</div>
-        <table className="w-full border-collapse border-[1.5px] border-black text-[9pt] mb-4">
-          <ChecklistHead />
+        
+        <h3 className="font-bold font-serif text-[12pt] mb-2 mt-4">Oral assessment:</h3>
+        <table className="w-full border-collapse border-[1px] border-black text-[9.5pt] mb-6 table-fixed">
+          <TableColGroup />
+          <ChecklistHead title="Oral assessment questions" subtitle="Note any additional questions you use during the assessment" extraSubRow="Testing and recording questions" />
           <tbody>
             {renderOralRows('task3', task3.checklistItems)}
           </tbody>
         </table>
 
-        <h2 className="sub-title" style={{ marginBottom: '6px' }}>{task3.checklistTitle} (continued)</h2>
-        <div className="font-bold text-sm mb-2">{task3.performanceHeader}</div>
-        <table className="w-full border-collapse border-[1.5px] border-black text-[9pt] mb-6">
-          <ChecklistHead />
+        <h3 className="font-bold font-serif text-[12pt] mb-2 mt-4">Record of performance:</h3>
+        <table className="w-full border-collapse border-[1px] border-black text-[9.5pt] mb-8 table-fixed">
+          <TableColGroup />
+          <ChecklistHead title="Did the candidate:" />
           <tbody>
             {renderPerfRows('task3', task3.performance, 0, task3.performance.length)}
           </tbody>
         </table>
 
-        {renderDeclarations('task3')}
-
-        <h1 className="section-title mt-8">{task4.title}</h1>
-        {task4.sections.map((section: any, sIdx: number) => (
-          <div key={sIdx} className="mb-4">
-            {section.title && <h3 className="font-bold mb-2">{section.title}</h3>}
-            {section.type === 'text' && <p className="whitespace-pre-wrap">{section.content}</p>}
-          </div>
-        ))}
+        <h1 className="text-center font-bold font-serif mb-4 uppercase" style={{ fontSize: '13pt', marginTop: '16px' }}>{task4.title}</h1>
+        {task4.sections.map((section: any, sIdx: number) => {
+          if (section.title === 'Make sure you:') {
+            return (
+              <div key={sIdx} className="mb-4">
+                <h3 className="font-bold font-serif text-[10pt] mb-2">{section.title}</h3>
+                <ul className="list-disc pl-8 font-serif text-[9.5pt] mb-4">
+                  {section.content.split('\n').map((bullet: string, bIdx: number) => 
+                    bullet.trim() ? <li key={bIdx}>{bullet.replace('•', '').trim()}</li> : null
+                  )}
+                </ul>
+              </div>
+            );
+          }
+          return (
+            <div key={sIdx} className="mb-4">
+              {section.title && <h3 className="font-bold font-serif text-[10.5pt] mb-1">{section.title}</h3>}
+              {section.type === 'text' && <p className="whitespace-pre-wrap font-serif text-[9.5pt]">{section.content}</p>}
+            </div>
+          );
+        })}
         <PageFooter n={11} />
       </div>
 
