@@ -1510,262 +1510,228 @@ const GradingPortal: React.FC = () => {
             </tbody>
           </table>
 
-          {/* Assessor Declaration */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '4px' }}>
+                  {/* Assessor Declaration Block */}
+        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <tbody>
               <tr>
-                <td colSpan={2} style={{ border: '1px solid #555', background: '#f0f0f0', fontWeight: 'bold', padding: '3px 6px', fontSize: '9pt' }}>Assessor Declaration</td>
+                <td colSpan={5} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '5px 8px', fontSize: '9.5pt' }}>Assessor Declaration</td>
               </tr>
               <tr>
-                <td colSpan={2} style={{ border: '1px solid #555', padding: '4px 6px', fontSize: '9pt' }}>In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.</td>
+                <td colSpan={5} style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>In completing this assessment, it is confirmed that the participant has demonstrated all unit outcomes through consistent and repeated application of skills with competent performance.</td>
               </tr>
               <tr>
-                <td style={{ border: '1px solid #555', padding: '4px 6px', fontSize: '9pt', fontWeight: 'bold', width: '38%' }}>Evidence is Confirmed as:</td>
-                <td style={{ border: '1px solid #555', padding: '4px 6px', fontSize: '9pt' }}>
-                  <span
-                    className={`cb cursor-pointer ${compRecord.evidence?.valid ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, valid: !compRecord.evidence?.valid } })}
-                  ></span> Valid &nbsp;&nbsp;
-                  <span
-                    className={`cb cursor-pointer ${compRecord.evidence?.sufficient ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, sufficient: !compRecord.evidence?.sufficient } })}
-                  ></span> Sufficient &nbsp;&nbsp;
-                  <span
-                    className={`cb cursor-pointer ${compRecord.evidence?.current ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, current: !compRecord.evidence?.current } })}
-                  ></span> Current &nbsp;&nbsp;
-                  <span
-                    className={`cb cursor-pointer ${compRecord.evidence?.authentic ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, authentic: !compRecord.evidence?.authentic } })}
-                  ></span> Authentic
+                <td style={{ border: '1px solid #555', background: '#bfbfbf', padding: '5px 8px', fontSize: '9pt', fontWeight: 'bold', width: '40%' }}>Evidence is Confirmed as:</td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center', width: '15%' }}>
+                  <span className={`cb cursor-pointer ${compRecord.evidence?.valid ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, valid: !compRecord.evidence?.valid } })}></span> Valid
+                </td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center', width: '15%' }}>
+                  <span className={`cb cursor-pointer ${compRecord.evidence?.sufficient ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, sufficient: !compRecord.evidence?.sufficient } })}></span> Sufficient
+                </td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center', width: '15%' }}>
+                  <span className={`cb cursor-pointer ${compRecord.evidence?.current ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, current: !compRecord.evidence?.current } })}></span> Current
+                </td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center', width: '15%' }}>
+                  <span className={`cb cursor-pointer ${compRecord.evidence?.authentic ? 'checked' : ''}`} onClick={() => setCompRecord({ ...compRecord, evidence: { ...compRecord.evidence, authentic: !compRecord.evidence?.authentic } })}></span> Authentic
                 </td>
               </tr>
             </tbody>
           </table>
-
-          {/* Attach docs + Final Result */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '4px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', borderTop: 'none' }}>
             <tbody>
               <tr>
-                <td style={{ border: '1px solid #555', padding: '4px 6px', fontWeight: 'bold', fontSize: '9pt', width: '40%' }}>Please attach the following documentation to this form</td>
-                <td style={{ border: '1px solid #555', padding: '4px 6px', fontWeight: 'bold', fontSize: '9pt', width: '22%', textAlign: 'center' }}>Result</td>
-                <td rowSpan={5} style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', verticalAlign: 'top', width: '38%' }}>
-                  <div style={{ fontWeight: 'bold', marginBottom: '3px' }}>FINAL ASSESSMENT RESULT:</div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setFinalResult('C')}>
+                <td colSpan={2} style={{ border: '1px solid #555', borderTop: 'none', padding: '6px 8px', fontWeight: 'bold', fontSize: '9pt', width: '55%' }}>Please attach the following documentation to this form</td>
+                <td style={{ border: '1px solid #555', borderTop: 'none', padding: '6px 8px', fontWeight: 'bold', fontSize: '9pt', width: '20%', textAlign: 'center' }}>Result</td>
+                <td rowSpan={5} style={{ border: '1px solid #555', borderTop: 'none', background: '#bfbfbf', padding: '8px', fontSize: '9.5pt', verticalAlign: 'middle', width: '25%' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '12px', textAlign: 'center' }}>FINAL ASSESSMENT<br/>RESULT:</div>
+                  <div className="checkbox-row cursor-pointer" style={{ marginBottom: '8px', paddingLeft: '8px' }} onClick={() => setFinalResult('C')}>
                     <span className={`cb-sq ${finalResult === 'C' ? 'checked' : ''}`}></span> Competent (C)
                   </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setFinalResult('NC')}>
+                  <div className="checkbox-row cursor-pointer" style={{ paddingLeft: '8px' }} onClick={() => setFinalResult('NC')}>
                     <span className={`cb-sq ${finalResult === 'NC' ? 'checked' : ''}`}></span> Not Competent (NC)
                   </div>
                 </td>
               </tr>
               <tr>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                  Assessment Task 1 &nbsp;
-                  <span
-                    className={`cb cursor-pointer ${compRecord.tasks?.t1 ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}
-                  ></span> Observation 1
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', fontWeight: 'bold', width: '25%' }}>
+                  Assessment Task 1
                 </td>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                  {taskResults['t1'] === 'S' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t1: 'NS' })}>S</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t1: 'S' })}>S</span>
-                  )}
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', width: '30%' }}>
+                  ❑ Observation 1
+                </td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
+                  <span className={taskResults['t1'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t1: taskResults['t1'] === 'S' ? 'NS' : 'S' })}>S</span>
                   {' '}/{' '}
-                  {taskResults['t1'] === 'NS' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t1: 'S' })}>NS</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t1: 'NS' })}>NS</span>
-                  )}
+                  <span className={taskResults['t1'] === 'NS' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t1: taskResults['t1'] === 'NS' ? 'S' : 'NS' })}>NS</span>
                 </td>
               </tr>
               <tr>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                  Assessment Task 2 &nbsp;
-                  <span
-                    className={`cb cursor-pointer ${compRecord.tasks?.t2 ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}
-                  ></span> Observation 2
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', fontWeight: 'bold' }}>
+                  Assessment Task 2
                 </td>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                  {taskResults['t2'] === 'S' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t2: 'NS' })}>S</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t2: 'S' })}>S</span>
-                  )}
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
+                  ❑ Observation 2
+                </td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
+                  <span className={taskResults['t2'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t2: taskResults['t2'] === 'S' ? 'NS' : 'S' })}>S</span>
                   {' '}/{' '}
-                  {taskResults['t2'] === 'NS' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t2: 'S' })}>NS</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t2: 'NS' })}>NS</span>
-                  )}
+                  <span className={taskResults['t2'] === 'NS' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t2: taskResults['t2'] === 'NS' ? 'S' : 'NS' })}>NS</span>
                 </td>
               </tr>
               <tr>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                  Assessment Task 3 &nbsp;
-                  <span
-                    className={`cb cursor-pointer ${compRecord.tasks?.t3 ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}
-                  ></span> Observation 3
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', fontWeight: 'bold' }}>
+                  Assessment Task 3
                 </td>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                  {taskResults['t3'] === 'S' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t3: 'NS' })}>S</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t3: 'S' })}>S</span>
-                  )}
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
+                  ❑ Observation 3
+                </td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
+                  <span className={taskResults['t3'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t3: taskResults['t3'] === 'S' ? 'NS' : 'S' })}>S</span>
                   {' '}/{' '}
-                  {taskResults['t3'] === 'NS' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t3: 'S' })}>NS</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t3: 'NS' })}>NS</span>
-                  )}
+                  <span className={taskResults['t3'] === 'NS' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t3: taskResults['t3'] === 'NS' ? 'S' : 'NS' })}>NS</span>
                 </td>
               </tr>
               <tr>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                  Assessment Task 4 &nbsp;
-                  <span
-                    className={`cb cursor-pointer ${compRecord.tasks?.t4 ? 'checked' : ''}`}
-                    onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}
-                  ></span> Written question and answers
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', fontWeight: 'bold' }}>
+                  Assessment Task 4
                 </td>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt', textAlign: 'center' }}>
-                  {taskResults['t4'] === 'S' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t4: 'NS' })}>S</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t4: 'S' })}>S</span>
-                  )}
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
+                  ❑ Written question and answers
+                </td>
+                <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
+                  <span className={taskResults['t4'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t4: taskResults['t4'] === 'S' ? 'NS' : 'S' })}>S</span>
                   {' '}/{' '}
-                  {taskResults['t4'] === 'NS' ? (
-                    <span className="result-circle-red" onClick={() => setTaskResults({ ...taskResults, t4: 'S' })}>NS</span>
-                  ) : (
-                    <span className="result-inactive" onClick={() => setTaskResults({ ...taskResults, t4: 'NS' })}>NS</span>
-                  )}
+                  <span className={taskResults['t4'] === 'NS' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t4: taskResults['t4'] === 'NS' ? 'S' : 'NS' })}>NS</span>
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
 
-          {/* Attempt table */}
-          <table className="attempt-table" style={{ marginBottom: '5px' }}>
-            <tbody>
-              <tr>
-                <td className="attempt-num" style={{ background: '#e0e0e0', fontWeight: 'bold' }}>Attempt</td>
-                <td className="attempt-date" style={{ background: '#e0e0e0', fontWeight: 'bold' }}>Date</td>
-                <td className="attempt-fb" style={{ background: '#e0e0e0', fontWeight: 'bold' }}>Assessor's Feedback (as Required):</td>
-              </tr>
-              <tr>
-                <td className="attempt-num">1</td>
-                <td className="attempt-date">
-                  <input
-                    type="date"
-                    className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
-                    value={compRecord.attempts?.[0]?.date || ''}
-                    onChange={(e) => {
-                      const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                      if (!att[0]) att[0] = { date: '', feedback: '' };
-                      att[0].date = e.target.value;
-                      setCompRecord({ ...compRecord, attempts: att });
-                    }}
-                  />
-                  <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[0]?.date)}</span>
-                </td>
-                <td className="attempt-fb">
-                  <input
-                    type="text"
-                    className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
-                    value={compRecord.attempts?.[0]?.feedback || ''}
-                    onChange={(e) => {
-                      const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                      if (!att[0]) att[0] = { date: '', feedback: '' };
-                      att[0].feedback = e.target.value;
-                      setCompRecord({ ...compRecord, attempts: att });
-                    }}
-                    placeholder="Provide attempt 1 feedback"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="attempt-num">2</td>
-                <td className="attempt-date">
-                  <input
-                    type="date"
-                    className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
-                    value={compRecord.attempts?.[1]?.date || ''}
-                    onChange={(e) => {
-                      const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                      if (!att[1]) att[1] = { date: '', feedback: '' };
-                      att[1].date = e.target.value;
-                      setCompRecord({ ...compRecord, attempts: att });
-                    }}
-                  />
-                  <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[1]?.date)}</span>
-                </td>
-                <td className="attempt-fb">
-                  <input
-                    type="text"
-                    className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
-                    value={compRecord.attempts?.[1]?.feedback || ''}
-                    onChange={(e) => {
-                      const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                      if (!att[1]) att[1] = { date: '', feedback: '' };
-                      att[1].feedback = e.target.value;
-                      setCompRecord({ ...compRecord, attempts: att });
-                    }}
-                    placeholder="Provide attempt 2 feedback"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="attempt-num">3</td>
-                <td className="attempt-date">
-                  <input
-                    type="date"
-                    className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
-                    value={compRecord.attempts?.[2]?.date || ''}
-                    onChange={(e) => {
-                      const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                      if (!att[2]) att[2] = { date: '', feedback: '' };
-                      att[2].date = e.target.value;
-                      setCompRecord({ ...compRecord, attempts: att });
-                    }}
-                  />
-                  <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[2]?.date)}</span>
-                </td>
-                <td className="attempt-fb">
-                  <input
-                    type="text"
-                    className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
-                    value={compRecord.attempts?.[2]?.feedback || ''}
-                    onChange={(e) => {
-                      const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
-                      if (!att[2]) att[2] = { date: '', feedback: '' };
-                      att[2].feedback = e.target.value;
-                      setCompRecord({ ...compRecord, attempts: att });
-                    }}
-                    placeholder="Provide attempt 3 feedback"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td colSpan={2} style={{ border: '1px solid #555', fontWeight: 'bold', padding: '3px 6px', textAlign: 'center', fontSize: '9pt' }}>Final Feedback:</td>
-                <td style={{ border: '1px solid #555', padding: '3px 6px', fontSize: '9pt' }}>
-                  <textarea
-                    className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 text-xs py-0.5"
-                    value={compRecord.final_feedback || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, final_feedback: e.target.value })}
-                    placeholder="Enter final summary feedback here..."
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        {/* Attempt table */}
+        <table className="attempt-table" style={{ marginBottom: '16px' }}>
+          <tbody>
+            <tr>
+              <td className="attempt-num" style={{ background: '#bfbfbf', fontWeight: 'bold', padding: '6px' }}>Attempt</td>
+              <td className="attempt-date" style={{ background: '#bfbfbf', fontWeight: 'bold', padding: '6px' }}>Date</td>
+              <td className="attempt-fb" style={{ background: '#bfbfbf', fontWeight: 'bold', padding: '6px' }}>Assessor's Feedback (as Required):</td>
+            </tr>
+            <tr>
+              <td className="attempt-num" style={{ padding: '6px' }}>1</td>
+              <td className="attempt-date" style={{ padding: '6px' }}>
+                <input
+                  type="date"
+                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
+                  value={compRecord.attempts?.[0]?.date || ''}
+                  onChange={(e) => {
+                    
+                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                    if (!att[0]) att[0] = { date: '', feedback: '' };
+                    att[0].date = e.target.value;
+                    setCompRecord({ ...compRecord, attempts: att });
+                  }}
+                />
+                <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[0]?.date)}</span>
+              </td>
+              <td className="attempt-fb" style={{ padding: '6px' }}>
+                <input
+                  type="text"
+                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
+                  value={compRecord.attempts?.[0]?.feedback || ''}
+                  onChange={(e) => {
+                    
+                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                    if (!att[0]) att[0] = { date: '', feedback: '' };
+                    att[0].feedback = e.target.value;
+                    setCompRecord({ ...compRecord, attempts: att });
+                  }}
+                  placeholder="Provide attempt 1 feedback"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="attempt-num" style={{ padding: '6px' }}>2</td>
+              <td className="attempt-date" style={{ padding: '6px' }}>
+                <input
+                  type="date"
+                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
+                  value={compRecord.attempts?.[1]?.date || ''}
+                  onChange={(e) => {
+                    
+                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                    if (!att[1]) att[1] = { date: '', feedback: '' };
+                    att[1].date = e.target.value;
+                    setCompRecord({ ...compRecord, attempts: att });
+                  }}
+                />
+                <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[1]?.date)}</span>
+              </td>
+              <td className="attempt-fb" style={{ padding: '6px' }}>
+                <input
+                  type="text"
+                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
+                  value={compRecord.attempts?.[1]?.feedback || ''}
+                  onChange={(e) => {
+                    
+                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                    if (!att[1]) att[1] = { date: '', feedback: '' };
+                    att[1].feedback = e.target.value;
+                    setCompRecord({ ...compRecord, attempts: att });
+                  }}
+                  placeholder="Provide attempt 2 feedback"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td className="attempt-num" style={{ padding: '6px' }}>3</td>
+              <td className="attempt-date" style={{ padding: '6px' }}>
+                <input
+                  type="date"
+                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5 cursor-pointer no-print"
+                  value={compRecord.attempts?.[2]?.date || ''}
+                  onChange={(e) => {
+                    
+                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                    if (!att[2]) att[2] = { date: '', feedback: '' };
+                    att[2].date = e.target.value;
+                    setCompRecord({ ...compRecord, attempts: att });
+                  }}
+                />
+                <span className="hidden print:inline text-xs">{formatDisplayDate(compRecord.attempts?.[2]?.date)}</span>
+              </td>
+              <td className="attempt-fb" style={{ padding: '6px' }}>
+                <input
+                  type="text"
+                  className="w-full bg-transparent border-none outline-none text-slate-800 text-xs py-0.5"
+                  value={compRecord.attempts?.[2]?.feedback || ''}
+                  onChange={(e) => {
+                    
+                    const att = [...(compRecord.attempts || [{ date: '', feedback: '' }, { date: '', feedback: '' }, { date: '', feedback: '' }])];
+                    if (!att[2]) att[2] = { date: '', feedback: '' };
+                    att[2].feedback = e.target.value;
+                    setCompRecord({ ...compRecord, attempts: att });
+                  }}
+                  placeholder="Provide attempt 3 feedback"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={2} style={{ border: '1px solid #555', background: '#bfbfbf', fontWeight: 'bold', padding: '6px', textAlign: 'center', fontSize: '9pt' }}>Final Feedback:</td>
+              <td style={{ border: '1px solid #555', padding: '6px', fontSize: '9pt' }}>
+                <textarea
+                  className="w-full bg-transparent border-none outline-none resize-none h-12 text-slate-800 text-xs py-0.5"
+                  value={compRecord.final_feedback || ''}
+                  onChange={(e) => {
+                    setCompRecord({ ...compRecord, final_feedback: e.target.value });
+                  }}
+                  placeholder="Enter final summary feedback here..."
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-          {/* Declaration */}
+                  {/* Declaration */}
           <div style={{ fontSize: '11pt', fontWeight: 'bold', marginBottom: '3px' }}>Declaration</div>
           <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '8px' }}>
             <tbody>
