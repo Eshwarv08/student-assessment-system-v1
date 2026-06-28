@@ -945,7 +945,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <div className="mb-4"><h3 className="font-bold mb-2 flex items-center">{renderSectionIcon("Student Instructions")}Student Instructions</h3><p className="whitespace-pre-wrap">Choose the correct answer for each of the following questions. Refer to your learner guide where specified. For questions referring to a plan, use the provided image.</p></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>1.</span><span className="whitespace-pre-wrap">1. The NBN (National Broadband Network) at the moment consists entirely of:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>1.</span><span className="whitespace-pre-wrap">The NBN (National Broadband Network) at the moment consists entirely of:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q1': 'a' })}>
@@ -991,7 +991,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>2.</span><span className="whitespace-pre-wrap">2. Identify whether the following statement is true or false: Category 3 copper cable is mainly used for voice applications.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>2.</span><span className="whitespace-pre-wrap">Identify whether the following statement is true or false: Category 3 copper cable is mainly used for voice applications.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q2': 'true' })}>
@@ -1025,7 +1025,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>3.</span><span className="whitespace-pre-wrap">3. The Australian Standard that specifies installation requirements for customer cabling is:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>3.</span><span className="whitespace-pre-wrap">The Australian Standard that specifies installation requirements for customer cabling is:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q3': 'a' })}>
@@ -1071,7 +1071,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>4.</span><span className="whitespace-pre-wrap">4. The Cable Provider Rules in Australia are:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>4.</span><span className="whitespace-pre-wrap">The Cable Provider Rules in Australia are:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q4': 'a' })}>
@@ -1117,7 +1117,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>5.</span><span className="whitespace-pre-wrap">5. To manage health and safety on a worksite there should be:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>5.</span><span className="whitespace-pre-wrap">To manage health and safety on a worksite there should be:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q5': 'a' })}>
@@ -1163,7 +1163,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>6.</span><span className="whitespace-pre-wrap">6. Before work begins, approvals should be obtained from:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>6.</span><span className="whitespace-pre-wrap">Before work begins, approvals should be obtained from:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q6': 'a' })}>
@@ -1214,7 +1214,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>7.</span><span className="whitespace-pre-wrap">7. Typical tools and equipment may include:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>7.</span><span className="whitespace-pre-wrap">Typical tools and equipment may include:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q7': 'a' })}>
@@ -1260,7 +1260,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>8.</span><span className="whitespace-pre-wrap">8. To facilitate easier hauling of cables into conduits, which of the following can be used?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>8.</span><span className="whitespace-pre-wrap">To facilitate easier hauling of cables into conduits, which of the following can be used?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q8': 'a' })}>
@@ -1306,7 +1306,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>9.</span><span className="whitespace-pre-wrap">9. Name one device for cleaning conduits.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>9.</span><span className="whitespace-pre-wrap">Name one device for cleaning conduits.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q9'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q9': e.target.value })} placeholder="(No response)" />
             </div></div>
@@ -1329,7 +1329,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>10.</span><span className="whitespace-pre-wrap">10. How does a winch used for small copper cables differ to one used for optical fibre cables?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>10.</span><span className="whitespace-pre-wrap">How does a winch used for small copper cables differ to one used for optical fibre cables?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q10': 'a' })}>
@@ -1375,7 +1375,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>11.</span><span className="whitespace-pre-wrap">11. Identify whether the following statement is true or false: There is a need to ensure that the cable hauling tension is correct for the cable and that the bend radius is maintained and care is taken to protect the cable sheath during cable installation procedures.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>11.</span><span className="whitespace-pre-wrap">Identify whether the following statement is true or false: There is a need to ensure that the cable hauling tension is correct for the cable and that the bend radius is maintained and care is taken to protect the cable sheath during cable installation procedures.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q11': 'true' })}>
@@ -1414,7 +1414,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>12.</span><span className="whitespace-pre-wrap">12. A multimeter can be used to check copper cables for:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>12.</span><span className="whitespace-pre-wrap">A multimeter can be used to check copper cables for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q12': 'a' })}>
@@ -1460,7 +1460,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>13.</span><span className="whitespace-pre-wrap">13. An induction/tone generator can be used to:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>13.</span><span className="whitespace-pre-wrap">An induction/tone generator can be used to:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q13': 'a' })}>
@@ -1506,7 +1506,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>14.</span><span className="whitespace-pre-wrap">14. Wire map testers can test for:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>14.</span><span className="whitespace-pre-wrap">Wire map testers can test for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q14': 'a' })}>
@@ -1552,7 +1552,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>15.</span><span className="whitespace-pre-wrap">15. Identify whether the following statement is true or false: The need for surge protection on copper cables is determined by the cabling provider.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>15.</span><span className="whitespace-pre-wrap">Identify whether the following statement is true or false: The need for surge protection on copper cables is determined by the cabling provider.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q15': 'true' })}>
@@ -1586,7 +1586,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>16.</span><span className="whitespace-pre-wrap">16. Devices used to connect the feeder to cables are:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>16.</span><span className="whitespace-pre-wrap">Devices used to connect the feeder to cables are:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q16': 'a' })}>
@@ -1632,7 +1632,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>17.</span><span className="whitespace-pre-wrap">17. Sufficient cable length should be left in pits for:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>17.</span><span className="whitespace-pre-wrap">Sufficient cable length should be left in pits for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q17': 'a' })}>
@@ -1683,7 +1683,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>18.</span><span className="whitespace-pre-wrap">18. On completion of the work, it is essential to send a ________ promptly to all parties and get sign off from the ________.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>18.</span><span className="whitespace-pre-wrap">On completion of the work, it is essential to send a ________ promptly to all parties and get sign off from the ________.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q18': 'a' })}>
@@ -1729,7 +1729,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>19.</span><span className="whitespace-pre-wrap">19. Reinstatement of the site is the responsibility of:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>19.</span><span className="whitespace-pre-wrap">Reinstatement of the site is the responsibility of:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q19': 'a' })}>
@@ -1775,7 +1775,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>20.</span><span className="whitespace-pre-wrap">20. Care must be taken when testing optical fibre cables to avoid:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>20.</span><span className="whitespace-pre-wrap">Care must be taken when testing optical fibre cables to avoid:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q20': 'a' })}>
@@ -1821,7 +1821,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>21.</span><span className="whitespace-pre-wrap">21. Is it necessary to support cables in pits and enclosures?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>21.</span><span className="whitespace-pre-wrap">Is it necessary to support cables in pits and enclosures?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q21': 'yes' })}>
@@ -1856,7 +1856,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <div className="mb-6 flex flex-col items-center"><img src="/assets/question-15/task1.png" alt="Plan for Questions 22-25" className="max-w-[400px] max-h-[300px] object-contain border border-gray-300" /><div className="text-center italic text-sm mt-2 text-gray-600">Plan for Questions 22-25</div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>22.</span><span className="whitespace-pre-wrap">22. What is the diameter of duct is installed between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>22.</span><span className="whitespace-pre-wrap">What is the diameter of duct is installed between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q22': 'a' })}>
@@ -1896,7 +1896,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>23.</span><span className="whitespace-pre-wrap">23. What type (size) of pit is installed at the boundary of 156 and 158 Hamilton Rd?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>23.</span><span className="whitespace-pre-wrap">What type (size) of pit is installed at the boundary of 156 and 158 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q23': 'a' })}>
@@ -1936,7 +1936,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>24.</span><span className="whitespace-pre-wrap">24. What kind of infrastructure is installed at the boundary of 150 and 152 Hamilton Rd?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>24.</span><span className="whitespace-pre-wrap">What kind of infrastructure is installed at the boundary of 150 and 152 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q24': 'a' })}>
@@ -1981,7 +1981,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>25.</span><span className="whitespace-pre-wrap">25. What is the length of conduit is required to be installed in between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>25.</span><span className="whitespace-pre-wrap">What is the length of conduit is required to be installed in between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q25': 'a' })}>
@@ -2021,7 +2021,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>26.</span><span className="whitespace-pre-wrap">26. What is the permissible limit of LEL (Lower Explosive Limit) gases in a confined space?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>26.</span><span className="whitespace-pre-wrap">What is the permissible limit of LEL (Lower Explosive Limit) gases in a confined space?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q26': 'a' })}>
@@ -2061,7 +2061,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>27.</span><span className="whitespace-pre-wrap">27. What is the safest limit of oxygen in atmosphere?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>27.</span><span className="whitespace-pre-wrap">What is the safest limit of oxygen in atmosphere?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q27': 'a' })}>
@@ -2101,7 +2101,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>28.</span><span className="whitespace-pre-wrap">28. What is the use of a Mandrel? Mandrels are used to prove the integrity of installed conduit runs. They will also remove small amounts of debris that may be in the conduit. Manufactured from high-strength aluminium alloy tube. Centre rod is plated all-thread steel. Eye on each end.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>28.</span><span className="whitespace-pre-wrap">What is the use of a Mandrel? Mandrels are used to prove the integrity of installed conduit runs. They will also remove small amounts of debris that may be in the conduit. Manufactured from high-strength aluminium alloy tube. Centre rod is plated all-thread steel. Eye on each end.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q28': 'true' })}>
@@ -2135,7 +2135,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>29.</span><span className="whitespace-pre-wrap">29. How many percentage points should a mandrels be from a conduit size? The effective diameter of the mandrel must be 90 percent of the nominal pipe diameter and verified using a proving ring. The mandrel is sized to allow for up to 5% deformation of the installed pipe.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>29.</span><span className="whitespace-pre-wrap">How many percentage points should a mandrels be from a conduit size? The effective diameter of the mandrel must be 90 percent of the nominal pipe diameter and verified using a proving ring. The mandrel is sized to allow for up to 5% deformation of the installed pipe.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q29': 'true' })}>
@@ -2169,7 +2169,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>30.</span><span className="whitespace-pre-wrap">30. How could avoid conduits get overhauled? Use the Mandrill to check the available capacity of the Conduit during rod and roping activity.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>30.</span><span className="whitespace-pre-wrap">How could avoid conduits get overhauled? Use the Mandrill to check the available capacity of the Conduit during rod and roping activity.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q30': 'true' })}>
@@ -2208,7 +2208,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>31.</span><span className="whitespace-pre-wrap">31. What is the purpose of rod and roping? Rod and Roping is when new and existing conduit is proved and feed with rope to assist in the cable hauling on an existing copper and fibre cable for repairs, upgrades and new infrastructure works.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>31.</span><span className="whitespace-pre-wrap">What is the purpose of rod and roping? Rod and Roping is when new and existing conduit is proved and feed with rope to assist in the cable hauling on an existing copper and fibre cable for repairs, upgrades and new infrastructure works.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q31': 'true' })}>
@@ -2242,7 +2242,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>32.</span><span className="whitespace-pre-wrap">32. The Customer Access Network connects end users of the:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>32.</span><span className="whitespace-pre-wrap">The Customer Access Network connects end users of the:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q32': 'a' })}>
@@ -2288,7 +2288,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>33.</span><span className="whitespace-pre-wrap">33. A Customer Private Network provides:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>33.</span><span className="whitespace-pre-wrap">A Customer Private Network provides:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q33': 'a' })}>
@@ -2334,7 +2334,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>34.</span><span className="whitespace-pre-wrap">34. The National Broadband Network (NBN) currently consists entirely of:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>34.</span><span className="whitespace-pre-wrap">The National Broadband Network (NBN) currently consists entirely of:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q34': 'a' })}>
@@ -2380,7 +2380,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>35.</span><span className="whitespace-pre-wrap">35. Is it a requirement to hold a General Construction White Card to work on construction sites?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>35.</span><span className="whitespace-pre-wrap">Is it a requirement to hold a General Construction White Card to work on construction sites?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q35': 'yes' })}>
@@ -2414,7 +2414,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>36.</span><span className="whitespace-pre-wrap">36. The Code of Practise are created to:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>36.</span><span className="whitespace-pre-wrap">The Code of Practise are created to:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q36': 'a' })}>
@@ -2460,7 +2460,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>37.</span><span className="whitespace-pre-wrap">37. The Australian Standard that specifies underground Installation requirements for customer cabling is:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>37.</span><span className="whitespace-pre-wrap">The Australian Standard that specifies underground Installation requirements for customer cabling is:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q37': 'a' })}>
@@ -2506,7 +2506,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>38.</span><span className="whitespace-pre-wrap">38. The Telecommunications Act 1997 is:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>38.</span><span className="whitespace-pre-wrap">The Telecommunications Act 1997 is:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q38': 'a' })}>
@@ -2557,7 +2557,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>39.</span><span className="whitespace-pre-wrap">39. The Cable Provider Rules in Australia are best characterised as?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>39.</span><span className="whitespace-pre-wrap">The Cable Provider Rules in Australia are best characterised as?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q39': 'a' })}>
@@ -2603,7 +2603,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>40.</span><span className="whitespace-pre-wrap">40. A typical street distribution plan might provide information on…</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>40.</span><span className="whitespace-pre-wrap">A typical street distribution plan might provide information on…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q40': 'a' })}>
@@ -2649,7 +2649,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>41.</span><span className="whitespace-pre-wrap">41. Access to a site is usually arranged by the …</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>41.</span><span className="whitespace-pre-wrap">Access to a site is usually arranged by the …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q41': 'a' })}>
@@ -2695,7 +2695,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>42.</span><span className="whitespace-pre-wrap">42. Witches hats are a form of …</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>42.</span><span className="whitespace-pre-wrap">Witches hats are a form of …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q42': 'a' })}>
@@ -2741,7 +2741,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>43.</span><span className="whitespace-pre-wrap">43. One form of barrier that could be used to protect people in manholes is …</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>43.</span><span className="whitespace-pre-wrap">One form of barrier that could be used to protect people in manholes is …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q43': 'a' })}>
@@ -2787,7 +2787,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>44.</span><span className="whitespace-pre-wrap">44. To manage health and safety and inform personnel on a worksite hazards there should be a …</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>44.</span><span className="whitespace-pre-wrap">To manage health and safety and inform personnel on a worksite hazards there should be a …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q44': 'a' })}>
@@ -2833,7 +2833,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>45.</span><span className="whitespace-pre-wrap">45. List one potential hazard that might be encountered when installing underground cable…</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>45.</span><span className="whitespace-pre-wrap">List one potential hazard that might be encountered when installing underground cable…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q45'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q45': e.target.value })} placeholder="(No response)" />
             </div></div>
@@ -2861,7 +2861,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>46.</span><span className="whitespace-pre-wrap">46. Before work begins approvals should be obtained from…</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>46.</span><span className="whitespace-pre-wrap">Before work begins approvals should be obtained from…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q46': 'a' })}>
@@ -2907,7 +2907,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>47.</span><span className="whitespace-pre-wrap">47. Typical tools, plant and equipment may include…</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>47.</span><span className="whitespace-pre-wrap">Typical tools, plant and equipment may include…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q47': 'a' })}>
@@ -2953,7 +2953,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>48.</span><span className="whitespace-pre-wrap">48. Excavation for existing underground enclosures should be conduction with consideration for:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>48.</span><span className="whitespace-pre-wrap">Excavation for existing underground enclosures should be conduction with consideration for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q48': 'a' })}>
@@ -2999,7 +2999,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>49.</span><span className="whitespace-pre-wrap">49. Personal Protective Equipment (PPE) must be worn on site?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>49.</span><span className="whitespace-pre-wrap">Personal Protective Equipment (PPE) must be worn on site?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q49': 'true' })}>
@@ -3033,7 +3033,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>50.</span><span className="whitespace-pre-wrap">50. List two things that may cause constraints on your installation?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>50.</span><span className="whitespace-pre-wrap">List two things that may cause constraints on your installation?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q50'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q50': e.target.value })} placeholder="(No response)" />
             </div></div>
@@ -3056,7 +3056,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>51.</span><span className="whitespace-pre-wrap">51. The installation requirements for underground telecommunications installations are outlined in Plans and Technical Standards.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>51.</span><span className="whitespace-pre-wrap">The installation requirements for underground telecommunications installations are outlined in Plans and Technical Standards.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q51': 'true' })}>
@@ -3090,7 +3090,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>52.</span><span className="whitespace-pre-wrap">52. The maximum recommended number of 20 pair cables in a 50 mm conduit is?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>52.</span><span className="whitespace-pre-wrap">The maximum recommended number of 20 pair cables in a 50 mm conduit is?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q52': '5' })}>
@@ -3141,7 +3141,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>53.</span><span className="whitespace-pre-wrap">53. The only colour conduit for communications cable is?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>53.</span><span className="whitespace-pre-wrap">The only colour conduit for communications cable is?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q53': 'a' })}>
@@ -3187,7 +3187,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>54.</span><span className="whitespace-pre-wrap">54. When installing conduit, conduit bends or couplings care should be taken to ensure:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>54.</span><span className="whitespace-pre-wrap">When installing conduit, conduit bends or couplings care should be taken to ensure:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q54': 'a' })}>
@@ -3233,7 +3233,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>55.</span><span className="whitespace-pre-wrap">55. Telecommunications underground conduit installed in a location other than a public footpath or roadway?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>55.</span><span className="whitespace-pre-wrap">Telecommunications underground conduit installed in a location other than a public footpath or roadway?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q55': 'a' })}>
@@ -3279,7 +3279,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>56.</span><span className="whitespace-pre-wrap">56. To ensure you have selected the correct excavation equipment and plants:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>56.</span><span className="whitespace-pre-wrap">To ensure you have selected the correct excavation equipment and plants:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q56': 'a' })}>
@@ -3325,7 +3325,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>57.</span><span className="whitespace-pre-wrap">57. A multimeter can be used to check copper cables for?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>57.</span><span className="whitespace-pre-wrap">A multimeter can be used to check copper cables for?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q57': 'a' })}>
@@ -3371,7 +3371,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>58.</span><span className="whitespace-pre-wrap">58. An induction /tone generator can be used to?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>58.</span><span className="whitespace-pre-wrap">An induction /tone generator can be used to?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q58': 'a' })}>
@@ -3417,7 +3417,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>59.</span><span className="whitespace-pre-wrap">59. Wire map testers can test for?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>59.</span><span className="whitespace-pre-wrap">Wire map testers can test for?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q59': 'a' })}>
@@ -3463,7 +3463,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>60.</span><span className="whitespace-pre-wrap">60. On completion of installation conduits should be tested for blockages to ensure they are free from impediments to cable hauling:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>60.</span><span className="whitespace-pre-wrap">On completion of installation conduits should be tested for blockages to ensure they are free from impediments to cable hauling:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q60': 'a' })}>
@@ -3514,7 +3514,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>61.</span><span className="whitespace-pre-wrap">61. A (TDR) Time Domain Reflectometer can be used to check copper cables for continuity, Short circuits, open circuit, cable length, and fault location.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>61.</span><span className="whitespace-pre-wrap">A (TDR) Time Domain Reflectometer can be used to check copper cables for continuity, Short circuits, open circuit, cable length, and fault location.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q61': 'true' })}>
@@ -3548,7 +3548,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>62.</span><span className="whitespace-pre-wrap">62. Name two methods for testing Optical Fibre cable?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>62.</span><span className="whitespace-pre-wrap">Name two methods for testing Optical Fibre cable?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <textarea className="w-full border border-gray-300 p-2 min-h-[100px] resize-y" value={answers['t2q62'] || ''} onChange={(e) => setAnswers({ ...answers, 't2q62': e.target.value })} placeholder="(No response)" />
             </div></div>
@@ -3571,7 +3571,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>63.</span><span className="whitespace-pre-wrap">63. An (OTDR) Optical Time Domain Reflectometer sends a pulse of light down the cable to locate insertion loss on optical fibre cables?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>63.</span><span className="whitespace-pre-wrap">An (OTDR) Optical Time Domain Reflectometer sends a pulse of light down the cable to locate insertion loss on optical fibre cables?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q63': 'a' })}>
@@ -3617,7 +3617,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>64.</span><span className="whitespace-pre-wrap">64. Which test setup will give the operator the most information in when testing Optical Fibre cable?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>64.</span><span className="whitespace-pre-wrap">Which test setup will give the operator the most information in when testing Optical Fibre cable?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q64': 'a' })}>
@@ -3663,7 +3663,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>65.</span><span className="whitespace-pre-wrap">65. The types of test equipment and the type of test will be determined by:</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>65.</span><span className="whitespace-pre-wrap">The types of test equipment and the type of test will be determined by:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q65': 'a' })}>
@@ -3709,7 +3709,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>66.</span><span className="whitespace-pre-wrap">66. Conduit ends are sealed to…</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>66.</span><span className="whitespace-pre-wrap">Conduit ends are sealed to…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q66': 'a' })}>
@@ -3755,7 +3755,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>67.</span><span className="whitespace-pre-wrap">67. Conduit should enter a pit or access hole through the long sides.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>67.</span><span className="whitespace-pre-wrap">Conduit should enter a pit or access hole through the long sides.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q67': 'true' })}>
@@ -3794,7 +3794,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
         <CustomTaskHeader />
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>68.</span><span className="whitespace-pre-wrap">68. Wherever practicable, access-holes should be spaced at approximately…</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>68.</span><span className="whitespace-pre-wrap">Wherever practicable, access-holes should be spaced at approximately…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q68': 'a' })}>
@@ -3840,7 +3840,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>69.</span><span className="whitespace-pre-wrap">69. On completion of the work it is essential to send a report promptly to all parties and get sign off from the customer.</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>69.</span><span className="whitespace-pre-wrap">On completion of the work it is essential to send a report promptly to all parties and get sign off from the customer.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q69': 'a' })}>
@@ -3886,7 +3886,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>70.</span><span className="whitespace-pre-wrap">70. Reinstatement of the site is the responsibility of …</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>70.</span><span className="whitespace-pre-wrap">Reinstatement of the site is the responsibility of …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q70': 'a' })}>
@@ -3932,7 +3932,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>71.</span><span className="whitespace-pre-wrap">71. Care must be taken when testing optical fibre cables to avoid …</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>71.</span><span className="whitespace-pre-wrap">Care must be taken when testing optical fibre cables to avoid …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q71': 'a' })}>
@@ -3978,7 +3978,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>72.</span><span className="whitespace-pre-wrap">72. Is it necessary to support cables in pits and enclosures?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>72.</span><span className="whitespace-pre-wrap">Is it necessary to support cables in pits and enclosures?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q72': 'yes' })}>
@@ -4012,7 +4012,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>73.</span><span className="whitespace-pre-wrap">73. To enable future underground enclosure identification at a future date all enclosures must be …</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>73.</span><span className="whitespace-pre-wrap">To enable future underground enclosure identification at a future date all enclosures must be …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q73': 'a' })}>
@@ -4058,7 +4058,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           </div></div>
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>74.</span><span className="whitespace-pre-wrap">74. Backfill of the site should be undertaken to ensure?</span></div>
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>74.</span><span className="whitespace-pre-wrap">Backfill of the site should be undertaken to ensure?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
                 <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q74': 'a' })}>
@@ -4105,7 +4105,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
 
         <div className="mb-6 border-[1.5px] border-black bg-white flex flex-col" style={{ pageBreakInside: 'avoid' }}>
           <div className="p-3 sm:p-4">
-            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>75.</span><span className="whitespace-pre-wrap">75. The most common metals used in cables are ________________ and ________________.
+            <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>75.</span><span className="whitespace-pre-wrap">The most common metals used in cables are ________________ and ________________.
 Recycling plants will granulate and then separate the metal from the________________. Using this process, the plastic is removed and the copper, aluminium or other metals present are separated________________for recycling. These metals are then smelted for reuse in new metal products. Similarly the plastic is melted and extruded for ________________.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
               <div className="mb-2 text-[10.5pt]">
