@@ -780,8 +780,12 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
               <td style={{ border: '1.5px solid black', padding: '4px', width: '40%' }}>Entered into Student Management Database</td>
               <td style={{ border: '1.5px solid black', padding: '4px', width: '60%' }}>
                 <div className="flex items-center gap-4 relative">
-                  <span className="flex items-center gap-2"><div style={{ width: '12px', height: '12px', border: '1px solid black' }}></div> Signature/Initial:</span>
-                  <div onClick={() => openSigModal('admin_signature', 'comp')} className="cursor-pointer inline-flex items-center justify-center w-[100px] min-h-[20px] border-b-[1.5px] border-black" style={{ cursor: isStudent ? 'default' : 'pointer' }}>
+                  <span className="flex items-center gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, admin_entered: !compRecord.admin_entered })}>
+                    <div style={{ width: '12px', height: '12px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      {compRecord.admin_entered && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    </div> Signature/Initial:
+                  </span>
+                  <div onClick={() => !isStudent && openSigModal('admin_signature', 'comp')} className="cursor-pointer inline-flex items-center justify-center w-[100px] min-h-[20px] border-b-[1.5px] border-black" style={{ cursor: isStudent ? 'default' : 'pointer' }}>
                     {compRecord.admin_signature ? (
                       <img src={compRecord.admin_signature} className="max-h-[20px] max-w-[100px] object-contain inline-block" />
                     ) : (

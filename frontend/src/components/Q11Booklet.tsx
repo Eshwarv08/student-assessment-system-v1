@@ -680,7 +680,9 @@ export const Q11Booklet: React.FC<Q11BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '12px 8px', width: '40%' }}>Entered into Student Management Database</td>
               <td style={{ border: '1px solid #000', padding: '12px 8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1px solid #000' }}></div>
+                  <div className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, admin_entered: !compRecord.admin_entered })} style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.admin_entered && <span style={{ color: 'red', fontSize: '16px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div>
                   <span>Signature/Initial</span>
                   <div className="no-print" onClick={() => openSigModal('admin_signature', 'comp')} style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '20px', cursor: 'pointer', position: 'relative', margin: '0 8px' }}>
                     {(compRecord.admin_signature || compRecord.assessor_signature) ? <img src={compRecord.admin_signature || compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : ''}

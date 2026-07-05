@@ -309,6 +309,7 @@ const GradingPortal: React.FC = () => {
           newCompRecord[`${taskKey}_result_page2`] = 'S';
           newCompRecord[`${taskKey}_doc`] = true;
           newCompRecord.admin_entered = true;
+          newCompRecord.entered_db = true;
           newCompRecord.ra_edu = true;
           newCompRecord.ra_oral = true;
           newCompRecord.ra_diagram = true;
@@ -360,7 +361,9 @@ const GradingPortal: React.FC = () => {
             newGrades[qKey] = 'correct';
           });
 
-          // Check Reasonable Adjustment boxes for Q2/Q3
+          // Check Reasonable Adjustment and Admin boxes for Q1/Q2/Q3
+          newCompRecord.entered_db = true;
+          newCompRecord.admin_entered = true;
           newCompRecord.reasonable_adjustment = {
             edu_support: true,
             oral_q: true,
