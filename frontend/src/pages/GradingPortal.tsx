@@ -41,7 +41,7 @@ const GradingPortal: React.FC = () => {
   const [finalResult, setFinalResult] = useState<string>('')
   const [isDownloading, setIsDownloading] = useState(false)
 
-  const [sigModal, setSigModal] = useState<{ open: boolean, field: string, type: 'task' | 'comp' | 'grades' } | null>(null)
+  const [sigModal, setSigModal] = useState<{ open: boolean, field: string, type: 'task' | 'comp' | 'grades' | 'answers' } | null>(null)
   const sigCanvasRef = useRef<HTMLCanvasElement>(null)
   const sigPadRef = useRef<SignaturePad | null>(null)
   const [compRecord, setCompRecord] = useState<any>({
@@ -205,7 +205,7 @@ const GradingPortal: React.FC = () => {
   const sigModalCanvasRef = useRef<HTMLCanvasElement>(null)
   const sigModalContainerRef = useRef<HTMLDivElement>(null)
 
-  const openSigModal = (field: string, type: 'task' | 'comp' | 'grades') => {
+  const openSigModal = (field: string, type: 'task' | 'comp' | 'grades' | 'answers') => {
     setSigModal({ open: true, field, type })
   }
 
@@ -258,6 +258,8 @@ const GradingPortal: React.FC = () => {
       setCompRecord({ ...compRecord, [sigModal.field]: dataUrl })
     } else if (sigModal?.type === 'grades') {
       setGrades({ ...grades, [sigModal.field]: dataUrl })
+    } else if (sigModal?.type === 'answers') {
+      setStudentAnswers({ ...studentAnswers, [sigModal.field]: dataUrl })
     }
     closeSigModal()
   }
@@ -975,7 +977,12 @@ const GradingPortal: React.FC = () => {
                         type="date"
                         style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                         value={compRecord.assessment_date || ''}
-                        onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                        onChange={(e) => setCompRecord({ 
+                          ...compRecord, 
+                          assessment_date: e.target.value,
+                          assessor_sig_date: e.target.value,
+                          db_entry_date: e.target.value
+                        })}
                       />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>
@@ -1518,7 +1525,12 @@ const GradingPortal: React.FC = () => {
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => setCompRecord({ 
+                      ...compRecord, 
+                      assessment_date: e.target.value,
+                      assessor_sig_date: e.target.value,
+                      db_entry_date: e.target.value
+                    })}
                   />
                   <span className="hidden print:inline">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </td>
@@ -1573,7 +1585,9 @@ const GradingPortal: React.FC = () => {
                   Assessment Task 1
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', width: '30%' }}>
-                  ❑ Observation 1
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t1 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Observation 1
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t1'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t1: taskResults['t1'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -1586,7 +1600,9 @@ const GradingPortal: React.FC = () => {
                   Assessment Task 2
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
-                  ❑ Observation 2
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t2 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Observation 2
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t2'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t2: taskResults['t2'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -1599,7 +1615,9 @@ const GradingPortal: React.FC = () => {
                   Assessment Task 3
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
-                  ❑ Observation 3
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t3 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Observation 3
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t3'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t3: taskResults['t3'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -1612,7 +1630,9 @@ const GradingPortal: React.FC = () => {
                   Assessment Task 4
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
-                  ❑ Written question and answers
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t4 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Written question and answers
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t4'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => setTaskResults({ ...taskResults, t4: taskResults['t4'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -1775,7 +1795,12 @@ const GradingPortal: React.FC = () => {
                       type="date"
                       className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1"
                       value={compRecord.assessor_sig_date || ''}
-                      onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })}
+                      onChange={(e) => setCompRecord({ 
+                        ...compRecord, 
+                        assessor_sig_date: e.target.value,
+                        assessment_date: e.target.value,
+                        db_entry_date: e.target.value 
+                      })}
                     />
                     <span className="hidden print:inline ml-1 font-bold">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
                   </div>
@@ -1788,18 +1813,27 @@ const GradingPortal: React.FC = () => {
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', verticalAlign: 'top' }}>
                   <div className="flex items-center gap-2">
                     Signature:
-                    <div className="sig-visual inline-flex items-center justify-center min-h-[30px] border-b border-black px-2">
-                      {submission.signature_url ? (
-                        <img src={submission.signature_url} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
+                    <div 
+                      className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[30px] border-b border-black px-2 hover:bg-blue-50/50"
+                      onClick={() => openSigModal('student_signature_url', 'answers')}
+                    >
+                      {studentAnswers.student_signature_url || submission.signature_url ? (
+                        <img src={studentAnswers.student_signature_url || submission.signature_url} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
                       ) : (
-                        <span className="text-[10px] text-slate-400 italic">—</span>
+                        <span className="text-[10px] text-slate-400 italic">Sign Here</span>
                       )}
                     </div>
                   </div>
                   <div className="mt-2">
                     Date:
-                    <span className="border-b border-dashed border-gray-400 inline-block min-w-[80px] text-center ml-1">
-                      {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                      value={studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                      onChange={(e) => setStudentAnswers({ ...studentAnswers, 'st-date': e.target.value })}
+                    />
+                    <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                      {formatDisplayDate(studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                     </span>
                   </div>
                 </td>
@@ -1850,10 +1884,15 @@ const GradingPortal: React.FC = () => {
                   <input
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent text-xs ml-1 cursor-pointer w-24"
-                    value={compRecord.db_entry_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, db_entry_date: e.target.value })}
+                    value={compRecord.db_entry_date || compRecord.assessor_sig_date || ''}
+                    onChange={(e) => setCompRecord({ 
+                      ...compRecord, 
+                      db_entry_date: e.target.value,
+                      assessor_sig_date: e.target.value,
+                      assessment_date: e.target.value
+                    })}
                   />
-                  <span className="hidden print:inline ml-1">{formatDisplayDate(compRecord.db_entry_date)}</span>
+                  <span className="hidden print:inline ml-1">{formatDisplayDate(compRecord.db_entry_date || compRecord.assessor_sig_date)}</span>
                 </td>
               </tr>
             </tbody>
@@ -2176,7 +2215,12 @@ const GradingPortal: React.FC = () => {
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => setCompRecord({ 
+                      ...compRecord, 
+                      assessment_date: e.target.value,
+                      assessor_sig_date: e.target.value,
+                      db_entry_date: e.target.value
+                    })}
                   />
                   <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </td>
@@ -2293,18 +2337,27 @@ const GradingPortal: React.FC = () => {
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
                   <div className="flex items-center gap-2">
                     Signature:
-                    <div className="sig-visual inline-flex items-center justify-center min-h-[26px] border-b border-black px-2">
-                      {submission.signature_url ? (
-                        <img src={submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
+                    <div 
+                      className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
+                      onClick={() => openSigModal('student_signature_url', 'answers')}
+                    >
+                      {studentAnswers.student_signature_url || submission.signature_url ? (
+                        <img src={studentAnswers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
                       ) : (
-                        <span className="text-[10px] text-slate-400 italic">—</span>
+                        <span className="text-[10px] text-slate-400 italic">Sign Here</span>
                       )}
                     </div>
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                      {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                      value={studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                      onChange={(e) => setStudentAnswers({ ...studentAnswers, 'st-date': e.target.value })}
+                    />
+                    <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                      {formatDisplayDate(studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                     </span>
                   </div>
                 </td>
@@ -2357,7 +2410,18 @@ const GradingPortal: React.FC = () => {
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1"
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value
+                      })}
+                    />
+                    <span className="hidden print:inline font-bold ml-1">{formatDisplayDate(compRecord.assessment_date)}</span>
                   </div>
                 </td>
               </tr>
@@ -2510,7 +2574,12 @@ const GradingPortal: React.FC = () => {
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => setCompRecord({ 
+                      ...compRecord, 
+                      assessment_date: e.target.value,
+                      assessor_sig_date: e.target.value,
+                      db_entry_date: e.target.value
+                    })}
                   />
                   <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </td>
@@ -2630,18 +2699,27 @@ const GradingPortal: React.FC = () => {
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
                   <div className="flex items-center gap-2">
                     Signature:
-                    <div className="sig-visual inline-flex items-center justify-center min-h-[26px] border-b border-black px-2">
-                      {submission.signature_url ? (
-                        <img src={submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
+                    <div 
+                      className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
+                      onClick={() => openSigModal('student_signature_url', 'answers')}
+                    >
+                      {studentAnswers.student_signature_url || submission.signature_url ? (
+                        <img src={studentAnswers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
                       ) : (
-                        <span className="text-[10px] text-slate-400 italic">—</span>
+                        <span className="text-[10px] text-slate-400 italic">Sign Here</span>
                       )}
                     </div>
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                      {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                      value={studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                      onChange={(e) => setStudentAnswers({ ...studentAnswers, 'st-date': e.target.value })}
+                    />
+                    <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                      {formatDisplayDate(studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                     </span>
                   </div>
                 </td>
@@ -2694,7 +2772,18 @@ const GradingPortal: React.FC = () => {
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1"
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value
+                      })}
+                    />
+                    <span className="hidden print:inline font-bold ml-1">{formatDisplayDate(compRecord.assessment_date)}</span>
                   </div>
                 </td>
               </tr>
@@ -2793,7 +2882,12 @@ const GradingPortal: React.FC = () => {
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => setCompRecord({ 
+                      ...compRecord, 
+                      assessment_date: e.target.value,
+                      assessor_sig_date: e.target.value,
+                      db_entry_date: e.target.value
+                    })}
                   />
                   <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </td>
@@ -2913,18 +3007,27 @@ const GradingPortal: React.FC = () => {
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
                   <div className="flex items-center gap-2">
                     Signature:
-                    <div className="sig-visual inline-flex items-center justify-center min-h-[26px] border-b border-black px-2">
-                      {submission.signature_url ? (
-                        <img src={submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
+                    <div 
+                      className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
+                      onClick={() => openSigModal('student_signature_url', 'answers')}
+                    >
+                      {studentAnswers.student_signature_url || submission.signature_url ? (
+                        <img src={studentAnswers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
                       ) : (
-                        <span className="text-[10px] text-slate-400 italic">—</span>
+                        <span className="text-[10px] text-slate-400 italic">Sign Here</span>
                       )}
                     </div>
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                      {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/_________'}
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                      value={studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                      onChange={(e) => setStudentAnswers({ ...studentAnswers, 'st-date': e.target.value })}
+                    />
+                    <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                      {formatDisplayDate(studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                     </span>
                   </div>
                 </td>
@@ -2977,7 +3080,18 @@ const GradingPortal: React.FC = () => {
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1"
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value
+                      })}
+                    />
+                    <span className="hidden print:inline font-bold ml-1">{formatDisplayDate(compRecord.assessment_date)}</span>
                   </div>
                 </td>
               </tr>
@@ -3497,18 +3611,27 @@ const GradingPortal: React.FC = () => {
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
                   <div className="flex items-center gap-2">
                     Signature:
-                    <div className="sig-visual inline-flex items-center justify-center min-h-[26px] border-b border-black px-2">
-                      {submission.signature_url ? (
-                        <img src={submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
+                    <div 
+                      className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[26px] border-b border-black px-2 hover:bg-blue-50/50"
+                      onClick={() => openSigModal('student_signature_url', 'answers')}
+                    >
+                      {studentAnswers.student_signature_url || submission.signature_url ? (
+                        <img src={studentAnswers.student_signature_url || submission.signature_url} className="max-h-[22px] max-w-[100px] object-contain inline-block" />
                       ) : (
-                        <span className="text-[10px] text-slate-400 italic">—</span>
+                        <span className="text-[10px] text-slate-400 italic">Sign Here</span>
                       )}
                     </div>
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="border-b border-dashed border-gray-400 inline-block min-w-[100px] text-center ml-1">
-                      {submission.submitted_at ? formatDisplayDate(submission.submitted_at.split('T')[0]) : '_____/_____/________'}
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                      value={studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
+                      onChange={(e) => setStudentAnswers({ ...studentAnswers, 'st-date': e.target.value })}
+                    />
+                    <span className="hidden print:inline border-b border-dashed border-gray-400 min-w-[100px] text-center ml-1">
+                      {formatDisplayDate(studentAnswers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}
                     </span>
                   </div>
                 </td>
@@ -3561,7 +3684,18 @@ const GradingPortal: React.FC = () => {
                   </div>
                   <div className="mt-1">
                     Date:
-                    <span className="underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
+                    <input
+                      type="date"
+                      className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1"
+                      value={compRecord.assessment_date || ''}
+                      onChange={(e) => setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value
+                      })}
+                    />
+                    <span className="hidden print:inline font-bold ml-1">{formatDisplayDate(compRecord.assessment_date)}</span>
                   </div>
                 </td>
               </tr>
@@ -4666,7 +4800,7 @@ const GradingPortal: React.FC = () => {
                 <tr>
                   <td className="label-col" style={{ backgroundColor: '#c0c0c0' }}>Assessment Date</td>
                   <td>
-                    <input type="date" className="no-print" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                    <input type="date" className="no-print" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value, assessor_sig_date: e.target.value, db_entry_date: e.target.value })} />
                     <span className="hidden print:inline">{formatDisplayDate(compRecord.assessment_date)}</span>
                   </td>
                 </tr>
@@ -4808,7 +4942,7 @@ const GradingPortal: React.FC = () => {
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       Date: &nbsp;
-                      <input type="date" className="no-print" style={{ width: 'auto', borderBottom: '1px dotted #555' }} value={compRecord.assessor_sig_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })} />
+                      <input type="date" className="no-print" style={{ width: 'auto', borderBottom: '1px dotted #555' }} value={compRecord.assessor_sig_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value, assessment_date: e.target.value, db_entry_date: e.target.value })} />
                       <span className="hidden print:inline" style={{ borderBottom: '1px dotted #555', minWidth: '80px', display: 'inline-block' }}>{formatDisplayDate(compRecord.assessor_sig_date)}</span>
                     </div>
                   </td>
@@ -4873,7 +5007,12 @@ const GradingPortal: React.FC = () => {
                               className="no-print"
                               style={{ width: '120px', border: 'none', background: 'transparent', outline: 'none', fontFamily: "'Times New Roman', serif", fontSize: '9pt', borderBottom: '1px dotted #555' }}
                               value={compRecord.assessment_date || ''}
-                              onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                              onChange={(e) => setCompRecord({ 
+                                ...compRecord, 
+                                assessment_date: e.target.value,
+                                assessor_sig_date: e.target.value,
+                                db_entry_date: e.target.value
+                              })}
                             />
                             <span className="hidden print:inline-block" style={{ borderBottom: '1px dotted #555', minWidth: '80px' }}>{formatDisplayDate(compRecord.assessment_date)}</span>
                           </div>
@@ -5483,7 +5622,12 @@ const GradingPortal: React.FC = () => {
                               type="date"
                               className="w-full p-2 bg-white rounded-lg border border-slate-200 outline-none text-sm font-bold no-print"
                               value={compRecord.assessment_date}
-                              onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                              onChange={(e) => setCompRecord({ 
+                                ...compRecord, 
+                                assessment_date: e.target.value,
+                                assessor_sig_date: e.target.value,
+                                db_entry_date: e.target.value
+                              })}
                             />
                           </div>
 

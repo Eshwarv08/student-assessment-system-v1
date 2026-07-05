@@ -507,8 +507,10 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
             <tr>
               <td style={{ border: '1.5px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 1</td>
               <td colSpan={2} style={{ border: '1.5px solid #000', padding: '6px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1.5px solid #000', background: '#fff' }}></div> Observation
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1.5px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t1 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div> Observation
                 </div>
               </td>
               <td style={{ border: '1.5px solid #000', padding: '6px 8px', textAlign: 'center' }}>
@@ -526,8 +528,10 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
             <tr>
               <td style={{ border: '1.5px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 2</td>
               <td colSpan={2} style={{ border: '1.5px solid #000', padding: '6px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1.5px solid #000', background: '#fff' }}></div> Observation
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1.5px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t2 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div> Observation
                 </div>
               </td>
               <td style={{ border: '1.5px solid #000', padding: '6px 8px', textAlign: 'center' }}>
@@ -545,8 +549,10 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
             <tr>
               <td style={{ border: '1.5px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 3</td>
               <td colSpan={2} style={{ border: '1.5px solid #000', padding: '6px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1.5px solid #000', background: '#fff' }}></div> Questions and Answers
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1.5px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t3 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div> Questions and Answers
                 </div>
               </td>
               <td style={{ border: '1.5px solid #000', padding: '6px 8px', textAlign: 'center' }}>

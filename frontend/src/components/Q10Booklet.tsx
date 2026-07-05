@@ -873,8 +873,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td colSpan={1} style={{ border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 1</td>
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000', background: '#fff' }}></div> Case Study
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t1 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div> Case Study
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>
@@ -892,8 +894,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td colSpan={1} style={{ border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 2</td>
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000', background: '#fff' }}></div> Knowledge Evidence
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t2 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div> Knowledge Evidence
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>
@@ -911,8 +915,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td colSpan={1} style={{ border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 3</td>
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000', background: '#fff' }}></div> Written Q & A
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t3 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div> Written Q & A
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>
@@ -930,8 +936,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td colSpan={1} style={{ border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 4</td>
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000', background: '#fff' }}></div> Additional worksheet of activities and questions
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t4 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div> Additional worksheet of activities and questions
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>

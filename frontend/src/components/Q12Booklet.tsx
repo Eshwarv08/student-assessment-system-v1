@@ -546,8 +546,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ border: '1px solid #000', padding: '4px 8px', fontWeight: 'bold', width: '25%' }}>Assessment Task 1</td>
               <td style={{ border: '1px solid #000', padding: '4px 8px', width: '30%' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000' }}></div>
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t1 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div>
                   Observation
                 </div>
               </td>
@@ -564,8 +566,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ border: '1px solid #000', padding: '4px 8px', fontWeight: 'bold' }}>Assessment Task 2</td>
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000' }}></div>
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t2 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div>
                   Observation
                 </div>
               </td>
@@ -582,8 +586,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ border: '1px solid #000', padding: '4px 8px', fontWeight: 'bold' }}>Assessment Task 3</td>
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000' }}></div>
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t3 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div>
                   Observation
                 </div>
               </td>
@@ -600,8 +606,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ border: '1px solid #000', padding: '4px 8px', fontWeight: 'bold' }}>Assessment Task 4</td>
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <div style={{ width: '12px', height: '12px', border: '1px solid #000' }}></div>
+                <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {compRecord.tasks?.t4 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  </div>
                   Questions and Answers
                 </div>
               </td>

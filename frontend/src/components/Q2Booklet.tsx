@@ -588,7 +588,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   type="date"
                   className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer"
                   value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  onChange={(e) => { 
+                    if (!isStudent) {
+                      setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value 
+                      });
+                    }
+                  }}
+                  readOnly={isStudent}
                 />
                 <span className="hidden print:inline">{formatDisplayDate(compRecord.assessment_date)}</span>
               </td>
@@ -643,7 +653,9 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   Assessment Task 1
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', width: '30%' }}>
-                  ❑ Observation 1
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t1 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Observation 1
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t1'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => !isStudent && setTaskResults({ ...taskResults, t1: taskResults['t1'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -656,7 +668,9 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   Assessment Task 2
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
-                  ❑ Observation 2
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t2 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Observation 2
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t2'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => !isStudent && setTaskResults({ ...taskResults, t2: taskResults['t2'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -669,7 +683,9 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   Assessment Task 3
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
-                  ❑ Observation 3
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t3 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Observation 3
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t3'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => !isStudent && setTaskResults({ ...taskResults, t3: taskResults['t3'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -682,7 +698,9 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   Assessment Task 4
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt' }}>
-                  ❑ Written question and answers
+                  <div className="checkbox-row" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}>
+                    <span className={`cb-sq ${compRecord.tasks?.t4 ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span> Written question and answers
+                  </div>
                 </td>
                 <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '9pt', textAlign: 'center' }}>
                   <span className={taskResults['t4'] === 'S' ? 'result-circle-red' : 'result-inactive'} onClick={() => !isStudent && setTaskResults({ ...taskResults, t4: taskResults['t4'] === 'S' ? 'NS' : 'S' })}>S</span>
@@ -845,7 +863,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1"
                     value={compRecord.assessor_sig_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })}
+                    onChange={(e) => { 
+                      if (!isStudent) {
+                        setCompRecord({ 
+                          ...compRecord, 
+                          assessor_sig_date: e.target.value,
+                          assessment_date: e.target.value,
+                          db_entry_date: e.target.value
+                        });
+                      }
+                    }}
+                    readOnly={isStudent}
                   />
                   <span className="hidden print:inline ml-1 font-bold">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
                 </div>
@@ -929,10 +957,20 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 <input
                   type="date"
                   className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent text-xs ml-1 cursor-pointer w-24"
-                  value={compRecord.db_entry_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, db_entry_date: e.target.value })}
+                  value={compRecord.db_entry_date || compRecord.assessor_sig_date || ''}
+                  onChange={(e) => { 
+                    if (!isStudent) {
+                      setCompRecord({ 
+                        ...compRecord, 
+                        db_entry_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        assessment_date: e.target.value
+                      });
+                    }
+                  }}
+                  readOnly={isStudent}
                 />
-                <span className="hidden print:inline ml-1">{formatDisplayDate(compRecord.db_entry_date)}</span>
+                <span className="hidden print:inline ml-1">{formatDisplayDate(compRecord.db_entry_date || compRecord.assessor_sig_date)}</span>
               </td>
             </tr>
           </tbody>
@@ -1255,7 +1293,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   type="date"
                   className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
                   value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  onChange={(e) => { 
+                    if (!isStudent) {
+                      setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value 
+                      });
+                    }
+                  }}
+                  readOnly={isStudent}
                 />
                 <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
               </td>
@@ -1449,7 +1497,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => { 
+                      if (!isStudent) {
+                        setCompRecord({ 
+                          ...compRecord, 
+                          assessment_date: e.target.value,
+                          assessor_sig_date: e.target.value,
+                          db_entry_date: e.target.value 
+                        });
+                      }
+                    }}
+                  readOnly={isStudent}
                   />
                   <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
@@ -1604,7 +1662,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   type="date"
                   className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
                   value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  onChange={(e) => { 
+                    if (!isStudent) {
+                      setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value 
+                      });
+                    }
+                  }}
+                  readOnly={isStudent}
                 />
                 <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
               </td>
@@ -1801,7 +1869,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => { 
+                      if (!isStudent) {
+                        setCompRecord({ 
+                          ...compRecord, 
+                          assessment_date: e.target.value,
+                          assessor_sig_date: e.target.value,
+                          db_entry_date: e.target.value 
+                        });
+                      }
+                    }}
+                  readOnly={isStudent}
                   />
                   <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
@@ -1902,7 +1980,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   type="date"
                   className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-2 font-bold"
                   value={compRecord.assessment_date || ''}
-                  onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                  onChange={(e) => { 
+                    if (!isStudent) {
+                      setCompRecord({ 
+                        ...compRecord, 
+                        assessment_date: e.target.value,
+                        assessor_sig_date: e.target.value,
+                        db_entry_date: e.target.value 
+                      });
+                    }
+                  }}
+                  readOnly={isStudent}
                 />
                 <span className="hidden print:inline font-bold ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
               </td>
@@ -2099,7 +2187,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => { 
+                      if (!isStudent) {
+                        setCompRecord({ 
+                          ...compRecord, 
+                          assessment_date: e.target.value,
+                          assessor_sig_date: e.target.value,
+                          db_entry_date: e.target.value 
+                        });
+                      }
+                    }}
+                  readOnly={isStudent}
                   />
                   <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
@@ -2698,7 +2796,17 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={compRecord.assessment_date || ''}
-                    onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    onChange={(e) => { 
+                      if (!isStudent) {
+                        setCompRecord({ 
+                          ...compRecord, 
+                          assessment_date: e.target.value,
+                          assessor_sig_date: e.target.value,
+                          db_entry_date: e.target.value 
+                        });
+                      }
+                    }}
+                  readOnly={isStudent}
                   />
                   <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
