@@ -62,6 +62,19 @@ const AssessmentForm: React.FC = () => {
     }
   }, [answers, token, searchParams]);
 
+  useEffect(() => {
+    const stId = searchParams.get('st-id');
+    if (stId && token && submitted) {
+      api.getSubmissionStatus(stId).then((status) => {
+        if (status && status.completedTokens && !status.completedTokens.includes(token)) {
+          setSubmitted(false);
+          const suffix = `${token}_${stId}`;
+          localStorage.removeItem(`assessment_submitted_${suffix}`);
+        }
+      }).catch(console.error);
+    }
+  }, [searchParams, token, submitted]);
+
   const [showErrors, setShowErrors] = useState(false)
   const [isDownloading, setIsDownloading] = useState(false)
 
@@ -394,7 +407,8 @@ const AssessmentForm: React.FC = () => {
         const stId = searchParams.get('st-id');
         const suffix = stId ? `${token}_${stId}` : token;
         localStorage.setItem(`assessment_submitted_${suffix}`, 'true');
-        // We keep the answers in localStorage so the student can still download the PDF after refreshing
+        // Clear answers from localStorage after successful submission
+        localStorage.removeItem(`assessment_answers_${suffix}`);
       }
     } catch (err: any) {
       alert(err.message || 'Error submitting assessment')
