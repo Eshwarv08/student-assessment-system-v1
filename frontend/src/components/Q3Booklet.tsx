@@ -593,7 +593,7 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
             <tr>
               <td style={{ background: '#bfbfbf', fontWeight: 'bold', border: '1px solid #555', padding: '6px' }}>Assessment Date</td>
               <td style={{ border: '1px solid #555', padding: '6px' }}>
-                <input type="date" className="no-print w-full bg-transparent border-none outline-none font-bold text-slate-800 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
+                <input type="date" className={`no-print w-full bg-transparent border-none outline-none font-bold text-slate-800 ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`} value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} readOnly={isStudent} />
                 <span className="hidden print:inline font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
               </td>
             </tr>
@@ -678,7 +678,7 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                 <td style={{ border: '1px solid #555', padding: '8px 6px' }}>
                   <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, [task.id]: !compRecord.tasks?.[task.id] } })}>
                     <div className="w-[12px] h-[12px] border-[1px] border-black bg-white relative flex justify-center items-center shrink-0">
-                      {compRecord.tasks?.[task.id] && <span className="text-black font-bold text-sm absolute -top-[2px]">✓</span>}
+                      {compRecord.tasks?.[task.id] && <span className="text-red-600 font-bold text-sm absolute -top-[2px]">✓</span>}
                     </div> <span>{task.type}</span>
                   </div>
                 </td>
@@ -746,8 +746,8 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="flex items-center gap-2">
                   Date:
-                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1" value={compRecord.assessor_sig_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessor_sig_date: e.target.value })} />
-                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px]">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
+                  <input type="date" className={`no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 flex-1 ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`} value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} readOnly={isStudent} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px]">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -801,15 +801,15 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                 <div className="flex items-center gap-2">
                   <div className="flex items-center justify-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, entered_db: !compRecord.entered_db })}>
                     <div className="w-[12px] h-[12px] border-[1px] border-black bg-white relative flex justify-center items-center">
-                      {compRecord.entered_db && <span className="text-black font-bold text-sm absolute -top-[2px]">✓</span>}
+                      {compRecord.entered_db && <span className="text-red-600 font-bold text-sm absolute -top-[2px]">✓</span>}
                     </div> Signature/Initial
                   </div>
                   <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[20px] border-b border-black px-2 flex-1 relative mx-1">
                     {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[100px] object-contain inline-block absolute bottom-0" />}
                   </div>
                   Date:
-                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer w-28 ml-1" value={compRecord.db_entry_date || ''} onChange={(e) => setCompRecord({ ...compRecord, db_entry_date: e.target.value })} />
-                  <span className="hidden print:inline border-b border-black w-28 text-center ml-1">{formatDisplayDate(compRecord.db_entry_date)}</span>
+                  <input type="date" className={`no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 w-28 ml-1 ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`} value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} readOnly={isStudent} />
+                  <span className="hidden print:inline border-b border-black w-28 text-center ml-1">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -994,27 +994,27 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
               <td style={{ border: '1px solid #555', padding: '6px', verticalAlign: 'top', lineHeight: '1.5' }}>
                 <div className="flex items-center gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, edu_support: !compRecord.reasonable_adjustment?.edu_support } })}>
                   <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0">
-                    {compRecord.reasonable_adjustment?.edu_support && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                    {compRecord.reasonable_adjustment?.edu_support && <span className="text-red-600 font-bold text-lg absolute -top-[3.5px]">✓</span>}
                   </div> <span>Educational and bilingual support</span>
                 </div>
                 <div className="flex items-center gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, oral_q: !compRecord.reasonable_adjustment?.oral_q } })}>
                   <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0">
-                    {compRecord.reasonable_adjustment?.oral_q && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                    {compRecord.reasonable_adjustment?.oral_q && <span className="text-red-600 font-bold text-lg absolute -top-[3.5px]">✓</span>}
                   </div> <span>Presenting questions orally</span>
                 </div>
                 <div className="flex items-start gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, diagram_instructions: !compRecord.reasonable_adjustment?.diagram_instructions } })}>
                   <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0 mt-[2px]">
-                    {compRecord.reasonable_adjustment?.diagram_instructions && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                    {compRecord.reasonable_adjustment?.diagram_instructions && <span className="text-red-600 font-bold text-lg absolute -top-[3.5px]">✓</span>}
                   </div> <span>Presenting work instructions in diagrammatic or pictorial form instead of words and sentences</span>
                 </div>
                 <div className="flex items-start gap-2 mb-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, extra_time: !compRecord.reasonable_adjustment?.extra_time } })}>
                   <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0 mt-[2px]">
-                    {compRecord.reasonable_adjustment?.extra_time && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                    {compRecord.reasonable_adjustment?.extra_time && <span className="text-red-600 font-bold text-lg absolute -top-[3.5px]">✓</span>}
                   </div> <span>Extra time to complete a course or assessment</span>
                 </div>
                 <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, others: !compRecord.reasonable_adjustment?.others } })}>
                   <div className="w-[14px] h-[14px] border-[1.5px] border-black bg-white relative flex justify-center items-center shrink-0">
-                    {compRecord.reasonable_adjustment?.others && <span className="text-black font-bold text-lg absolute -top-[3.5px]">✓</span>}
+                    {compRecord.reasonable_adjustment?.others && <span className="text-red-600 font-bold text-lg absolute -top-[3.5px]">✓</span>}
                   </div> <span>Others:</span>
                 </div>
               </td>
@@ -2018,9 +2018,10 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                   Date:
                   <input
                     type="date"
-                    className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
+                    className={`no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 text-xs ml-1 font-bold ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`}
                     value={compRecord.assessment_date || ''}
                     onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })}
+                    readOnly={isStudent}
                   />
                   <span className="hidden print:inline underline ml-1 font-bold">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
@@ -2188,12 +2189,10 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                     )}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
-                  </span>
+                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
             </tr>
@@ -2222,12 +2221,10 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                     {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
-                  </span>
+                  <input type="date" className={`no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 flex-1 ml-2 font-bold text-xs ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`} value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} readOnly={isStudent} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -2411,12 +2408,10 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                     )}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
-                  </span>
+                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
             </tr>
@@ -2445,12 +2440,10 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                     {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
-                  </span>
+                  <input type="date" className={`no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 flex-1 ml-2 font-bold text-xs ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`} value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} readOnly={isStudent} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -2593,12 +2586,10 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                     )}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
-                  </span>
+                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
             </tr>
@@ -2627,12 +2618,10 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                     {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
-                  </span>
+                  <input type="date" className={`no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 flex-1 ml-2 font-bold text-xs ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`} value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} readOnly={isStudent} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
@@ -2770,20 +2759,18 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                 <span style={{ fontWeight: 'bold' }}>Student Declaration:</span> I declare that the work submitted is my own, and has not been copied or plagiarized from any person or source.
               </td>
               <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top' }}>
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-4 mt-2">
                   <span>Signature:</span>
-                  <div onClick={() => openSigModal('student_signature', 'submission')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
+                  <div onClick={() => openSigModal('student_signature', 'submission')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 min-h-[30px]">
                     {(answers.student_signature_url || submission.signature_url) && (
-                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />
+                      <img src={answers.student_signature_url || submission.signature_url} className="max-h-[26px] max-w-[150px] object-contain inline-block mix-blend-multiply" />
                     )}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
-                  </span>
+                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
             </tr>
@@ -2806,18 +2793,16 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                 <span style={{ fontWeight: 'bold' }}>Assessor:</span> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
               </td>
               <td style={{ border: '1px solid #555', padding: '8px', verticalAlign: 'top', background: '#f5f5f5' }}>
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-4 mt-2">
                   <span>Signature:</span>
-                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 relative min-h-[20px]">
-                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[30px] max-w-[150px] object-contain absolute bottom-0" />}
+                  <div onClick={() => openSigModal('assessor_signature', 'comp')} className="sig-visual cursor-pointer inline-flex items-center justify-center border-b border-black flex-1 ml-2 min-h-[30px]">
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} className="max-h-[26px] max-w-[150px] object-contain inline-block mix-blend-multiply" />}
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <span className="flex-1 border-b border-black ml-2 inline-block relative min-h-[20px]">
-                    <input type="date" className="no-print absolute inset-0 w-full opacity-0 cursor-pointer" value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} />
-                    <span className="absolute bottom-1 left-0 right-0 text-center">{formatDisplayDate(compRecord.assessment_date)}</span>
-                  </span>
+                  <input type="date" className={`no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 flex-1 ml-2 font-bold text-xs ${isStudent ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`} value={compRecord.assessment_date || ''} onChange={(e) => setCompRecord({ ...compRecord, assessment_date: e.target.value })} readOnly={isStudent} />
+                  <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(compRecord.assessment_date)}</span>
                 </div>
               </td>
             </tr>
