@@ -598,8 +598,18 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                             )}
                           </div>
                         </div>
-                        <div className="mt-2">
-                          Date: <span className="font-bold border-b border-dashed border-gray-400 inline-block min-w-[80px] text-center ml-1">{formatDisplayDate(compRecord.assessor_sig_date)}</span>
+                        <div className="mt-2 flex items-center gap-2">
+                          <span>Date:</span>
+                          <span className="no-print border-b border-dashed border-gray-400 inline-block min-w-[120px]">
+                            <input
+                              type="date"
+                              style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'bold', textAlign: 'center', cursor: isStudent ? 'default' : 'pointer' }}
+                              value={compRecord.assessment_date || ''}
+                              onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                              readOnly={isStudent}
+                            />
+                          </span>
+                          <span className="hidden print:inline-block font-bold border-b border-dashed border-gray-400 min-w-[120px] text-center ml-1">{formatDisplayDate(compRecord.assessment_date || '')}</span>
                         </div>
                       </td>
                     </tr>
@@ -622,7 +632,18 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                             )}
                           </div>
                         </div>
-                        <div className="mt-2">Date: <span className="font-bold">{formatDisplayDate(submitDate || '')}</span></div>
+                        <div className="mt-2 flex items-center gap-2">
+                          <span>Date:</span>
+                          <span className="no-print">
+                            <input
+                              type="date"
+                              style={{ outline: 'none', border: 'none', background: 'transparent', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'bold', cursor: 'pointer' }}
+                              value={answers.student_sig_date || submitDate || ''}
+                              onChange={(e) => setAnswers({ ...answers, student_sig_date: e.target.value })}
+                            />
+                          </span>
+                          <span className="hidden print:inline-block font-bold">{formatDisplayDate(answers.student_sig_date || submitDate || '')}</span>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -646,8 +667,36 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                       <td style={{ border: '1.5px solid #000', padding: '6px', width: '30%' }}>Entered into Student Management Database</td>
                       <td style={{ border: '1.5px solid #000', padding: '6px' }}>
                         <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 border border-black bg-white flex items-center justify-center"></div>
-                          Signature/Initial ________________ Date: ________________
+                          <div
+                            className="w-4 h-4 border border-black bg-white flex items-center justify-center cursor-pointer"
+                            onClick={() => !isStudent && setCompRecord({ ...compRecord, admin_entered: !compRecord.admin_entered })}
+                          >
+                            {compRecord.admin_entered && <span className="text-red-600 font-bold leading-none -mt-1 text-[14px]">✓</span>}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span>Signature/Initial:</span>
+                            <div
+                              className="sig-visual cursor-pointer inline-flex items-center justify-center min-w-[100px] border-b border-black hover:bg-blue-50/50 relative"
+                              onClick={() => openSigModal('assessor_signature', 'comp')}
+                            >
+                              {compRecord.assessor_signature ? (
+                                <img src={compRecord.assessor_signature} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
+                              ) : (
+                                <span className="text-[10px] text-slate-400 italic px-2">Sign Here</span>
+                              )}
+                            </div>
+                            <span className="ml-2">Date:</span>
+                            <span className="no-print border-b border-black inline-block min-w-[100px]">
+                              <input
+                                type="date"
+                                style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: 'inherit', fontSize: 'inherit', cursor: isStudent ? 'default' : 'pointer' }}
+                                value={compRecord.assessment_date || ''}
+                                onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
+                                readOnly={isStudent}
+                              />
+                            </span>
+                            <span className="hidden print:inline-block border-b border-black min-w-[100px] text-center">{formatDisplayDate(compRecord.assessment_date || '')}</span>
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -731,11 +780,36 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                     </tr>
                     <tr>
                       <td style={{ border: '1.5px solid #000', padding: '8px', lineHeight: '1.6' }}>
-                        <div className="flex gap-2"><div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1"></div> Educational and bilingual support</div>
-                        <div className="flex gap-2"><div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1"></div> Presenting questions orally</div>
-                        <div className="flex gap-2"><div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1"></div> Presenting work instructions in diagrammatic or pictorial form instead of words and sentences</div>
-                        <div className="flex gap-2"><div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1"></div> Extra time to complete a course or assessment</div>
-                        <div className="flex gap-2"><div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1"></div> Others:</div>
+                        <div className="flex gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_edu: !compRecord.ra_edu })}>
+                          <div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1 flex items-center justify-center">
+                            {compRecord.ra_edu && <span className="text-red-600 font-bold leading-none -mt-1 text-[14px]">✓</span>}
+                          </div> 
+                          Educational and bilingual support
+                        </div>
+                        <div className="flex gap-2 cursor-pointer mt-1" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_oral: !compRecord.ra_oral })}>
+                          <div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1 flex items-center justify-center">
+                            {compRecord.ra_oral && <span className="text-red-600 font-bold leading-none -mt-1 text-[14px]">✓</span>}
+                          </div> 
+                          Presenting questions orally
+                        </div>
+                        <div className="flex gap-2 cursor-pointer mt-1" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_diagram: !compRecord.ra_diagram })}>
+                          <div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1 flex items-center justify-center">
+                            {compRecord.ra_diagram && <span className="text-red-600 font-bold leading-none -mt-1 text-[14px]">✓</span>}
+                          </div> 
+                          Presenting work instructions in diagrammatic or pictorial form instead of words and sentences
+                        </div>
+                        <div className="flex gap-2 cursor-pointer mt-1" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_extra: !compRecord.ra_extra })}>
+                          <div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1 flex items-center justify-center">
+                            {compRecord.ra_extra && <span className="text-red-600 font-bold leading-none -mt-1 text-[14px]">✓</span>}
+                          </div> 
+                          Extra time to complete a course or assessment
+                        </div>
+                        <div className="flex gap-2 cursor-pointer mt-1" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_other: !compRecord.ra_other })}>
+                          <div className="w-4 h-4 border-[1.5px] border-black shrink-0 mt-1 flex items-center justify-center">
+                            {compRecord.ra_other && <span className="text-red-600 font-bold leading-none -mt-1 text-[14px]">✓</span>}
+                          </div> 
+                          Others:
+                        </div>
                       </td>
                       <td style={{ border: '1.5px solid #000', padding: '6px' }}></td>
                       <td style={{ border: '1.5px solid #000', padding: '6px' }}></td>
@@ -895,16 +969,20 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                             const ansKey = opt.name || `t${taskKey!.replace('task', '')}q${q.id}`;
                             const isChecked = answers[ansKey] === opt.value;
                             return (
-                              <div key={oIdx} className="mb-2 text-[10.5pt]">
-                                <span 
-                                  className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" 
+                              <div key={oIdx} className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                                <input 
+                                  type="radio" 
+                                  name={ansKey}
+                                  checked={isChecked} 
+                                  onChange={() => setAnswers({ ...answers, [ansKey]: opt.value })} 
+                                  className="mt-0.5 cursor-pointer"
+                                />
+                                <label 
+                                  className="cursor-pointer hover:bg-gray-50" 
                                   onClick={() => setAnswers({ ...answers, [ansKey]: opt.value })}
                                 >
                                   {opt.text}
-                                  {isChecked && (
-                                    <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>
-                                  )}
-                                </span>
+                                </label>
                               </div>
                             );
                           })}
@@ -1130,8 +1208,16 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                             <span>Date:</span>
-                            <span style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
-                              {formatDisplayDate(submitDate || '')}
+                            <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                              <input
+                                type="date"
+                                style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', fontWeight: 'bold', cursor: 'pointer' }}
+                                value={answers.student_sig_date || submitDate || ''}
+                                onChange={(e) => setAnswers({ ...answers, student_sig_date: e.target.value })}
+                              />
+                            </span>
+                            <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
+                              {formatDisplayDate(answers.student_sig_date || submitDate || '')}
                             </span>
                           </div>
                         </div>

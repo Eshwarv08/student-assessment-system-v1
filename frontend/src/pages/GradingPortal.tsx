@@ -299,12 +299,19 @@ const GradingPortal: React.FC = () => {
           newGrades[qKey] = 'correct';
         });
 
-        const isComponentBased = isQuestion4 || isQuestion5 || isQuestion6 || isQuestion7 || isQuestion8 || isQuestion9 || isQuestion10 || isQuestion11 || isQuestion12 || isQuestion13 || isQuestion14 || isQuestion15;
+        const isComponentBased = isQuestion1 || isQuestion4 || isQuestion5 || isQuestion6 || isQuestion7 || isQuestion8 || isQuestion9 || isQuestion10 || isQuestion11 || isQuestion12 || isQuestion13 || isQuestion14 || isQuestion15;
 
         if (isComponentBased) {
           // Component-based assessments use compRecord keys directly
           newCompRecord[`${taskKey}_result`] = 'S';
           newCompRecord[`${taskKey}_result_page2`] = 'S';
+          newCompRecord[`${taskKey}_doc`] = true;
+          newCompRecord.admin_entered = true;
+          newCompRecord.ra_edu = true;
+          newCompRecord.ra_oral = true;
+          newCompRecord.ra_diagram = true;
+          newCompRecord.ra_extra = true;
+          newCompRecord.ra_other = true;
 
           questionsArray.forEach((q: any) => {
             newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
