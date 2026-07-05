@@ -315,6 +315,14 @@ const GradingPortal: React.FC = () => {
           newCompRecord.ra_diagram = true;
           newCompRecord.ra_extra = true;
           newCompRecord.ra_other = true;
+          
+          // Assessment Competency Record checkmarks
+          newCompRecord.evidence_valid = 'yes';
+          newCompRecord.evidence_sufficient = 'yes';
+          newCompRecord.evidence_current = 'yes';
+          newCompRecord.evidence_authentic = 'yes';
+          newCompRecord.final_assessment_result = 'C';
+          newCompRecord[`${taskKey}_doc_attached`] = 'yes';
 
           questionsArray.forEach((q: any) => {
             newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
@@ -340,11 +348,12 @@ const GradingPortal: React.FC = () => {
             newCompRecord[`${taskKey}_obs_${idx}`] = 'yes';
           });
 
-          // Universal safety loop for custom Q5/Q7/Q8 hardcoded keys up to 30 items
+          // Universal safety loop for custom Q4/Q5/Q7/Q8 hardcoded keys up to 30 items
           for(let idx = 0; idx < 30; idx++) {
             newCompRecord[`${taskKey}_case1_${idx}`] = 'Yes';
             newCompRecord[`${taskKey}_case2_${idx}`] = 'Yes';
             newCompRecord[`${taskKey}_obs_ch_${idx}`] = true;
+            newCompRecord[`${taskKey}_perf_${idx}`] = 'yes';
           }
         } else {
           // 2. Legacy assessments (Q1-Q3) use grades for Oral / checklist items

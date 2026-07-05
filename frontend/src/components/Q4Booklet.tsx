@@ -196,7 +196,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print flex-1" style={{ borderBottom: '1.5px solid black', minHeight: '18px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', fontWeight: 'bold', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', fontWeight: 'bold', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }} className={isStudent ? 'pointer-events-none' : ''}
                       value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
                   </span>
                   <span className="hidden print:block font-bold flex-1" style={{ borderBottom: '1.5px solid black', minHeight: '18px', paddingLeft: '4px', fontSize: '10pt' }}>
@@ -755,10 +755,10 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                   Date:
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '18px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                      value={compRecord.assessor_sig_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessor_sig_date: e.target.value }) }} readOnly={isStudent} />
+                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} className={isStudent ? 'pointer-events-none' : ''} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', flex: 1, height: '16px' }}>
-                    {formatDisplayDate(compRecord.assessor_sig_date)}
+                    {formatDisplayDate(compRecord.assessment_date)}
                   </span>
                 </div>
               </td>
@@ -785,9 +785,9 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                       {compRecord.admin_entered && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div> Signature/Initial:
                   </span>
-                  <div onClick={() => !isStudent && openSigModal('admin_signature', 'comp')} className="cursor-pointer inline-flex items-center justify-center w-[100px] min-h-[20px] border-b-[1.5px] border-black" style={{ cursor: isStudent ? 'default' : 'pointer' }}>
-                    {compRecord.admin_signature ? (
-                      <img src={compRecord.admin_signature} className="max-h-[20px] max-w-[100px] object-contain inline-block" />
+                  <div onClick={() => !isStudent && openSigModal('assessor_signature', 'comp')} className="cursor-pointer inline-flex items-center justify-center w-[100px] min-h-[20px] border-b-[1.5px] border-black" style={{ cursor: isStudent ? 'default' : 'pointer' }}>
+                    {compRecord.assessor_signature ? (
+                      <img src={compRecord.assessor_signature} className="max-h-[20px] max-w-[100px] object-contain inline-block mix-blend-multiply" />
                     ) : (
                       <span className="text-[10px] text-slate-400 italic">Sign Here</span>
                     )}
@@ -795,11 +795,11 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                   <div className="flex items-center gap-1">
                     Date:
                     <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '110px', display: 'inline-block', height: '18px', position: 'relative' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                        value={compRecord.admin_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, admin_date: e.target.value }) }} readOnly={isStudent} />
+                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }} className={isStudent ? 'pointer-events-none' : ''}
+                        value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
                     </span>
                     <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '110px', height: '16px' }}>
-                      {formatDisplayDate(compRecord.admin_date)}
+                      {formatDisplayDate(compRecord.assessment_date)}
                     </span>
                   </div>
                 </div>
@@ -1204,10 +1204,10 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                      value={compRecord.task1_assessor_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, task1_assessor_date: e.target.value }) }} readOnly={isStudent} />
+                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>
-                    {formatDisplayDate(compRecord.task1_assessor_date)}
+                    {formatDisplayDate(compRecord.assessment_date)}
                   </span>
                 </div>
               </td>
@@ -1473,10 +1473,10 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                      value={compRecord.task2_assessor_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, task2_assessor_date: e.target.value }) }} readOnly={isStudent} />
+                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>
-                    {formatDisplayDate(compRecord.task2_assessor_date)}
+                    {formatDisplayDate(compRecord.assessment_date)}
                   </span>
                 </div>
               </td>
@@ -1719,10 +1719,10 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                      value={compRecord.task3_assessor_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, task3_assessor_date: e.target.value }) }} readOnly={isStudent} />
+                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>
-                    {formatDisplayDate(compRecord.task3_assessor_date)}
+                    {formatDisplayDate(compRecord.assessment_date)}
                   </span>
                 </div>
               </td>
@@ -1934,10 +1934,10 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                      value={compRecord.task4_assessor_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, task4_assessor_date: e.target.value }) }} readOnly={isStudent} />
+                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>
-                    {formatDisplayDate(compRecord.task4_assessor_date)}
+                    {formatDisplayDate(compRecord.assessment_date)}
                   </span>
                 </div>
               </td>
