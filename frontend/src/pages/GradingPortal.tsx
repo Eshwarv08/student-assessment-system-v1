@@ -311,10 +311,14 @@ const GradingPortal: React.FC = () => {
           newCompRecord.admin_entered = true;
           newCompRecord.entered_db = true;
           newCompRecord.ra_edu = true;
+          newCompRecord.ra_educational = true;
           newCompRecord.ra_oral = true;
           newCompRecord.ra_diagram = true;
+          newCompRecord.ra_diagrammatic = true;
           newCompRecord.ra_extra = true;
+          newCompRecord.ra_extratime = true;
           newCompRecord.ra_other = true;
+          newCompRecord.ra_others = true;
           
           // Assessment Competency Record checkmarks
           newCompRecord.evidence_valid = 'yes';
@@ -322,7 +326,14 @@ const GradingPortal: React.FC = () => {
           newCompRecord.evidence_current = 'yes';
           newCompRecord.evidence_authentic = 'yes';
           newCompRecord.final_assessment_result = 'C';
+          newCompRecord.final_result = 'C';
           newCompRecord[`${taskKey}_doc_attached`] = 'yes';
+          
+          for (let i = 1; i <= 5; i++) {
+            newCompRecord[`task${i}_result`] = 'S';
+            newCompRecord[`doc_task${i}`] = true;
+            newCompRecord[`task${i}_doc_attached`] = 'yes';
+          }
 
           questionsArray.forEach((q: any) => {
             newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
