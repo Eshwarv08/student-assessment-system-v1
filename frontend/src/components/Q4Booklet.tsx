@@ -884,15 +884,51 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
             <tr>
               <td style={{ border: '1.5px solid black', padding: '6px', height: '120px', verticalAlign: 'top' }}>
                 <div className="flex flex-col gap-1 text-[8.5pt]">
-                  <div className="flex items-start gap-2"><div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, boxShadow: '2px 2px 0px 0px rgba(0,0,0,0.5)' }}></div> Educational and bilingual support</div>
-                  <div className="flex items-start gap-2"><div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, boxShadow: '2px 2px 0px 0px rgba(0,0,0,0.5)' }}></div> Presenting questions orally</div>
-                  <div className="flex items-start gap-2"><div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, boxShadow: '2px 2px 0px 0px rgba(0,0,0,0.5)' }}></div> <span>Presenting work instructions in<br />diagrammatic or pictorial form<br />instead of words and sentences</span></div>
-                  <div className="flex items-start gap-2"><div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, boxShadow: '2px 2px 0px 0px rgba(0,0,0,0.5)' }}></div> <span>Extra time to complete a course or<br />assessment</span></div>
-                  <div className="flex items-start gap-2"><div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, boxShadow: '2px 2px 0px 0px rgba(0,0,0,0.5)' }}></div> Others:</div>
+                  <div className="flex items-start gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_edu: !compRecord.ra_edu })}>
+                    <div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, position: 'relative' }}>
+                      {compRecord.ra_edu && <span style={{ position: 'absolute', top: '-6px', left: '-1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div> Educational and bilingual support
+                  </div>
+                  <div className="flex items-start gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_oral: !compRecord.ra_oral })}>
+                    <div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, position: 'relative' }}>
+                      {compRecord.ra_oral && <span style={{ position: 'absolute', top: '-6px', left: '-1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div> Presenting questions orally
+                  </div>
+                  <div className="flex items-start gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_diagram: !compRecord.ra_diagram })}>
+                    <div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, position: 'relative' }}>
+                      {compRecord.ra_diagram && <span style={{ position: 'absolute', top: '-6px', left: '-1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div> <span>Presenting work instructions in<br />diagrammatic or pictorial form<br />instead of words and sentences</span>
+                  </div>
+                  <div className="flex items-start gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_extra: !compRecord.ra_extra })}>
+                    <div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, position: 'relative' }}>
+                      {compRecord.ra_extra && <span style={{ position: 'absolute', top: '-6px', left: '-1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div> <span>Extra time to complete a course or<br />assessment</span>
+                  </div>
+                  <div className="flex items-start gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_other: !compRecord.ra_other })}>
+                    <div style={{ width: '12px', height: '12px', border: '1px solid black', marginTop: '2px', flexShrink: 0, position: 'relative' }}>
+                      {compRecord.ra_other && <span style={{ position: 'absolute', top: '-6px', left: '-1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div> Others:
+                  </div>
                 </div>
               </td>
-              <td style={{ border: '1.5px solid black', padding: '6px' }}></td>
-              <td style={{ border: '1.5px solid black', padding: '6px' }}></td>
+              <td style={{ border: '1.5px solid black', padding: '0' }}>
+                <textarea
+                  className="w-full h-full min-h-[120px] bg-transparent border-none outline-none resize-none text-[8.5pt] p-2"
+                  value={compRecord.ra_reason || ''}
+                  onChange={(e) => !isStudent && setCompRecord({ ...compRecord, ra_reason: e.target.value })}
+                  placeholder="Reason for adjustment..."
+                  readOnly={isStudent}
+                />
+              </td>
+              <td style={{ border: '1.5px solid black', padding: '0' }}>
+                <textarea
+                  className="w-full h-full min-h-[120px] bg-transparent border-none outline-none resize-none text-[8.5pt] p-2"
+                  value={compRecord.ra_outcome || ''}
+                  onChange={(e) => !isStudent && setCompRecord({ ...compRecord, ra_outcome: e.target.value })}
+                  placeholder="Outcome details..."
+                  readOnly={isStudent}
+                />
+              </td>
             </tr>
           </tbody>
         </table>

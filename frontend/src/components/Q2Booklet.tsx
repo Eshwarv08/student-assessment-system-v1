@@ -1143,21 +1143,36 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             </thead>
             <tbody>
               <tr>
-                <td style={{ verticalAlign: 'top' }}>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, edu_support: !compRecord.reasonable_adjustment?.edu_support } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.edu_support ? 'checked' : ''}`}></span> Educational and bilingual support
+                <td style={{ verticalAlign: 'top', padding: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, edu_support: !compRecord.reasonable_adjustment?.edu_support } })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                      {compRecord.reasonable_adjustment?.edu_support && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <span style={{ fontSize: '9pt' }}>Educational and bilingual support</span>
                   </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, oral_q: !compRecord.reasonable_adjustment?.oral_q } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.oral_q ? 'checked' : ''}`}></span> Presenting questions orally
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, oral_q: !compRecord.reasonable_adjustment?.oral_q } })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                      {compRecord.reasonable_adjustment?.oral_q && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <span style={{ fontSize: '9pt' }}>Presenting questions orally</span>
                   </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, diagram_instructions: !compRecord.reasonable_adjustment?.diagram_instructions } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.diagram_instructions ? 'checked' : ''}`}></span> Presenting work instructions in diagrammatic form
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, diagram_instructions: !compRecord.reasonable_adjustment?.diagram_instructions } })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                      {compRecord.reasonable_adjustment?.diagram_instructions && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <span style={{ fontSize: '9pt' }}>Presenting work instructions in diagrammatic form</span>
                   </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, extra_time: !compRecord.reasonable_adjustment?.extra_time } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.extra_time ? 'checked' : ''}`}></span> Extra time to complete
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, extra_time: !compRecord.reasonable_adjustment?.extra_time } })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                      {compRecord.reasonable_adjustment?.extra_time && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <span style={{ fontSize: '9pt' }}>Extra time to complete</span>
                   </div>
-                  <div className="checkbox-row cursor-pointer" onClick={() => setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, others: !compRecord.reasonable_adjustment?.others } })}>
-                    <span className={`cb-sq ${compRecord.reasonable_adjustment?.others ? 'checked' : ''}`}></span> Others:
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, reasonable_adjustment: { ...compRecord.reasonable_adjustment, others: !compRecord.reasonable_adjustment?.others } })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+                      {compRecord.reasonable_adjustment?.others && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    </div>
+                    <span style={{ fontSize: '9pt' }}>Others:</span>
                   </div>
                 </td>
                 <td>

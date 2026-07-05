@@ -749,15 +749,15 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
               <td style={{ border: '1px solid #000', padding: '8px 12px', verticalAlign: 'top' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {[
-                    { key: 'adj_bilingual', label: 'Educational and bilingual support' },
-                    { key: 'adj_oral', label: 'Presenting questions orally' },
-                    { key: 'adj_pictorial', label: 'Presenting work instructions in diagrammatic or pictorial form instead of words and sentences' },
-                    { key: 'adj_time', label: 'Extra time to complete a course or assessment' },
-                    { key: 'adj_others', label: 'Others:' }
+                    { key: 'ra_edu', label: 'Educational and bilingual support' },
+                    { key: 'ra_oral', label: 'Presenting questions orally' },
+                    { key: 'ra_diagram', label: 'Presenting work instructions in diagrammatic or pictorial form instead of words and sentences' },
+                    { key: 'ra_extra', label: 'Extra time to complete a course or assessment' },
+                    { key: 'ra_other', label: 'Others:' }
                   ].map(opt => (
                     <div key={opt.key} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                      <div className={isStudent ? '' : 'cursor-pointer hover:bg-gray-50'} onClick={() => !isStudent && setCompRecord({ ...compRecord, [opt.key]: !compRecord[opt.key] })} style={{ width: '12px', height: '12px', border: '1px solid #000', flexShrink: 0, marginTop: '2px', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff', boxShadow: 'inset 0 0 2px rgba(0,0,0,0.5)' }}>
-                        {compRecord[opt.key] && <span style={{ color: 'black', fontSize: '10px', fontWeight: 'bold', lineHeight: 1 }}>■</span>}
+                      <div className={isStudent ? '' : 'cursor-pointer hover:bg-gray-50'} onClick={() => !isStudent && setCompRecord({ ...compRecord, [opt.key]: !compRecord[opt.key] })} style={{ width: '12px', height: '12px', border: '1px solid #000', flexShrink: 0, marginTop: '2px', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff', position: 'relative' }}>
+                        {compRecord[opt.key] && <span style={{ position: 'absolute', top: '-6px', left: '-1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
                       </div>
                       <span style={{ lineHeight: '1.2' }}>{opt.label}</span>
                     </div>

@@ -359,6 +359,16 @@ const GradingPortal: React.FC = () => {
             const qKey = `t${tNum}pq${i + oralQuestions.length + 1}`;
             newGrades[qKey] = 'correct';
           });
+
+          // Check Reasonable Adjustment boxes for Q2/Q3
+          newCompRecord.reasonable_adjustment = {
+            edu_support: true,
+            oral_q: true,
+            diagram_instructions: true,
+            extra_time: true,
+            others: true,
+            reason: newCompRecord.reasonable_adjustment?.reason || ''
+          };
         }
 
         // 4. Observation items (checkbox-based)
