@@ -59,6 +59,8 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
       const dataUrl = sigPadRef.current.toDataURL();
       if (sigModal?.field === 'student_signature') {
         setAnswers({ ...answers, student_signature_url: dataUrl });
+      } else if (sigModal?.field === 'assessor_signature' || sigModal?.field === 'admin_signature') {
+        setCompRecord({ ...compRecord, assessor_signature: dataUrl, admin_signature: dataUrl });
       } else {
         setCompRecord({ ...compRecord, [sigModal!.field]: dataUrl });
       }

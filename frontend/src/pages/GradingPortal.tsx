@@ -313,10 +313,12 @@ const GradingPortal: React.FC = () => {
           newCompRecord.ra_edu = true;
           newCompRecord.ra_educational = true;
           newCompRecord.ra_oral = true;
+          newCompRecord.ra_orally = true;
           newCompRecord.ra_diagram = true;
           newCompRecord.ra_diagrammatic = true;
           newCompRecord.ra_extra = true;
           newCompRecord.ra_extratime = true;
+          newCompRecord.ra_extra_time = true;
           newCompRecord.ra_other = true;
           newCompRecord.ra_others = true;
           
@@ -327,10 +329,10 @@ const GradingPortal: React.FC = () => {
           newCompRecord.adj_others = true;
           
           // Assessment Competency Record checkmarks
-          newCompRecord.evidence_valid = 'yes';
-          newCompRecord.evidence_sufficient = 'yes';
-          newCompRecord.evidence_current = 'yes';
-          newCompRecord.evidence_authentic = 'yes';
+          newCompRecord.evidence_valid = true;
+          newCompRecord.evidence_sufficient = true;
+          newCompRecord.evidence_current = true;
+          newCompRecord.evidence_authentic = true;
           newCompRecord.final_assessment_result = 'C';
           newCompRecord.final_result = 'C';
           newCompRecord[`${taskKey}_doc_attached`] = 'yes';
@@ -344,6 +346,8 @@ const GradingPortal: React.FC = () => {
 
           questionsArray.forEach((q: any) => {
             newCompRecord[`${taskKey}_q${q.id}_result`] = 'S';
+            newCompRecord[`${taskKey}_q_${q.id}`] = true;
+            newCompRecord[`${taskKey}_q_${q.id}_result`] = 'S';
           });
 
           const oralItems: string[] = (taskData as any).oral || (taskData as any).checklistItems || [];

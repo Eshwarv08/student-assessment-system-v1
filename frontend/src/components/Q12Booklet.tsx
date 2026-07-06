@@ -65,6 +65,8 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
       const dataUrl = sigPadRef.current.toDataURL();
       if (sigModal?.field === 'student_signature') {
         setAnswers({ ...answers, student_signature_url: dataUrl });
+      } else if (sigModal?.field === 'assessor_signature' || sigModal?.field === 'admin_signature') {
+        setCompRecord({ ...compRecord, assessor_signature: dataUrl, admin_signature: dataUrl });
       } else {
         setCompRecord({ ...compRecord, [sigModal!.field]: dataUrl });
       }
@@ -129,7 +131,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={compRecord.student_decl_date || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} 
-                      onChange={(e) => setCompRecord({ ...compRecord, student_decl_date: e.target.value })} 
+                      onChange={(e) => setCompRecord({ ...compRecord, student_decl_date: e.target.value, student_sig_date_override: e.target.value, task2_student_sig_date_override: e.target.value, task3_student_sig_date_override: e.target.value, task4_student_sig_date_override: e.target.value })} 
                       max={new Date().toISOString().split('T')[0]} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.student_decl_date || submitDate || new Date().toISOString().split('T')[0])}</span>
@@ -182,8 +184,8 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                      value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                      value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value, assessor_sig_date_page2: e.target.value, admin_sig_date: e.target.value, task1_date_observed: e.target.value, task2_date_observed: e.target.value, task3_date_observed: e.target.value })}   max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}</span>
                 </div>
@@ -254,9 +256,6 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
         <td style={{ border: '1.5px solid #000', padding: 0 }}>
           <div style={{ borderBottom: '1.5px solid #000', padding: '6px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontWeight: 'bold', fontSize: '10.5pt' }}>
             <span style={{ whiteSpace: 'pre-wrap' }}>{q.id}.  {headerText}</span>
-            <div style={{ position: 'relative', cursor: isStudent ? 'default' : 'pointer', minWidth: '30px', minHeight: '20px' }} onClick={() => !isStudent && setCompRecord({...compRecord, [`${taskKey}_q_${q.id}`]: !compRecord[`${taskKey}_q_${q.id}`] })}>
-               {compRecord[`${taskKey}_q_${q.id}`] && <span style={{ position: 'absolute', right: '0', top: '-12px', color: 'red', fontSize: '30px', fontWeight: 'bold' }}>✓</span>}
-            </div>
           </div>
           <div style={{ padding: '8px 12px', minHeight: '80px', fontSize: '10.5pt', display: 'flex', flexDirection: 'column' }}>
             {subText && <div style={{ fontWeight: 'bold', marginBottom: '8px', whiteSpace: 'pre-wrap' }}>{subText}</div>}
@@ -470,7 +469,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ background: '#d9d9d9', border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold' }}>Assessment Date</td>
               <td style={{ border: '1px solid #000', padding: '0' }}>
-                <input type="date" className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px 8px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                <input type="date" className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px 8px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value, assessor_sig_date_page2: e.target.value, admin_sig_date: e.target.value, task1_date_observed: e.target.value, task2_date_observed: e.target.value, task3_date_observed: e.target.value })}   max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                 <div className="hidden print:block" style={{ padding: '6px 8px', minHeight: '30px' }}>{formatDisplayDate(compRecord.assessment_date || new Date().toISOString().split('T')[0])}</div>
               </td>
             </tr>
@@ -548,7 +547,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px', width: '30%' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t1 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t1 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Observation
                 </div>
@@ -568,7 +567,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t2 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t2 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Observation
                 </div>
@@ -588,7 +587,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t3 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t3 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Observation
                 </div>
@@ -608,7 +607,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t4 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t4 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Questions and Answers
                 </div>
@@ -639,7 +638,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
               <tr key={attempt}>
                 <td style={{ border: '1px solid #000', padding: '6px', textAlign: 'center', fontWeight: 'bold' }}>{attempt}</td>
                 <td style={{ border: '1px solid #000', padding: '0', verticalAlign: 'top' }}>
-                  <input type="date" className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord[`attempt_${attempt}_date`] || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                  <input type="date" className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord[`attempt_${attempt}_date`] || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: e.target.value })}   max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                   <div className="hidden print:block text-center p-1.5">{formatDisplayDate(compRecord[`attempt_${attempt}_date`] || new Date().toISOString().split('T')[0])}</div>
                 </td>
                 <td style={{ border: '1px solid #000', padding: '0', verticalAlign: 'top' }}>
@@ -680,7 +679,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                        value={compRecord.student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                        value={compRecord.student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_decl_date: e.target.value, student_sig_date_override: e.target.value, task2_student_sig_date_override: e.target.value, task3_student_sig_date_override: e.target.value, task4_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.student_sig_date_override || submitDate || new Date().toISOString().split('T')[0])}</span>
                   </div>
@@ -705,8 +704,8 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                        value={compRecord.assessor_sig_date_page2 || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_sig_date_page2: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                        value={compRecord.assessor_sig_date_page2 || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value, assessor_sig_date_page2: e.target.value, admin_sig_date: e.target.value, task1_date_observed: e.target.value, task2_date_observed: e.target.value, task3_date_observed: e.target.value })}   max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.assessor_sig_date_page2 || new Date().toISOString().split('T')[0])}</span>
                   </div>
@@ -745,7 +744,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1px solid #000', width: '100px', display: 'inline-block', height: '20px', position: 'relative', margin: '0 8px' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: 0 }}
-                      value={compRecord.admin_sig_date || compRecord.assessor_sig_date_page2 || compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, admin_sig_date: e.target.value })}  max={new Date().toISOString().split('T')[0]} />
+                      value={compRecord.admin_sig_date || compRecord.assessor_sig_date_page2 || compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value, assessor_sig_date_page2: e.target.value, admin_sig_date: e.target.value, task1_date_observed: e.target.value, task2_date_observed: e.target.value, task3_date_observed: e.target.value })}  max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '100px', height: '20px', margin: '0 8px' }}>{formatDisplayDate(compRecord.admin_sig_date || compRecord.assessor_sig_date_page2 || compRecord.assessment_date || new Date().toISOString().split('T')[0])}</span>
                 </div>
@@ -907,7 +906,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ background: '#d9d9d9', border: '1px solid #888', padding: '8px', fontWeight: 'bold' }}>Date Observed:</td>
               <td style={{ border: '1px solid #888', padding: '0', background: '#fff' }}>
-                <input type="date" className="no-print" style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', outline: 'none', padding: '4px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.task1_date_observed || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({...compRecord, task1_date_observed: e.target.value})}   max={new Date().toISOString().split('T')[0]} />
+                <input type="date" className="no-print" style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', outline: 'none', padding: '4px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.task1_date_observed || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({...compRecord, assessment_date: e.target.value, assessor_sig_date_page2: e.target.value, admin_sig_date: e.target.value, task1_date_observed: e.target.value, task2_date_observed: e.target.value, task3_date_observed: e.target.value})}   max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                 <div className="hidden print:block p-1 text-center font-bold">{formatDisplayDate(compRecord.task1_date_observed || new Date().toISOString().split('T')[0])}</div>
               </td>
               <td style={{ border: '1px solid #888', padding: '0', background: '#fff' }}></td>
@@ -992,7 +991,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1.5px solid #888', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                        value={compRecord.student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                        value={compRecord.student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_decl_date: e.target.value, student_sig_date_override: e.target.value, task2_student_sig_date_override: e.target.value, task3_student_sig_date_override: e.target.value, task4_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.student_sig_date_override || submitDate || new Date().toISOString().split('T')[0])}</span>
                   </div>
@@ -1063,7 +1062,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ background: '#d9d9d9', border: '1px solid #888', padding: '8px', fontWeight: 'bold' }}>Date Observed:</td>
               <td style={{ border: '1px solid #888', padding: '0', background: '#fff' }}>
-                <input type="date" className="no-print" style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', outline: 'none', padding: '4px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.task2_date_observed || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({...compRecord, task2_date_observed: e.target.value})}   max={new Date().toISOString().split('T')[0]} />
+                <input type="date" className="no-print" style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', outline: 'none', padding: '4px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.task2_date_observed || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({...compRecord, assessment_date: e.target.value, assessor_sig_date_page2: e.target.value, admin_sig_date: e.target.value, task1_date_observed: e.target.value, task2_date_observed: e.target.value, task3_date_observed: e.target.value})}   max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                 <div className="hidden print:block p-1 text-center font-bold">{formatDisplayDate(compRecord.task2_date_observed || new Date().toISOString().split('T')[0])}</div>
               </td>
               <td style={{ border: '1px solid #888', padding: '0', background: '#fff' }}></td>
@@ -1148,7 +1147,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1.5px solid #888', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                        value={compRecord.task2_student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, task2_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                        value={compRecord.task2_student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_decl_date: e.target.value, student_sig_date_override: e.target.value, task2_student_sig_date_override: e.target.value, task3_student_sig_date_override: e.target.value, task4_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.task2_student_sig_date_override || submitDate || new Date().toISOString().split('T')[0])}</span>
                   </div>
@@ -1224,7 +1223,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ background: '#d9d9d9', border: '1px solid #888', padding: '8px', fontWeight: 'bold' }}>Date Observed:</td>
               <td style={{ border: '1px solid #888', padding: '0', background: '#fff' }}>
-                <input type="date" className="no-print" style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', outline: 'none', padding: '4px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.task3_date_observed || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({...compRecord, task3_date_observed: e.target.value})}   max={new Date().toISOString().split('T')[0]} />
+                <input type="date" className="no-print" style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', outline: 'none', padding: '4px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.task3_date_observed || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({...compRecord, assessment_date: e.target.value, assessor_sig_date_page2: e.target.value, admin_sig_date: e.target.value, task1_date_observed: e.target.value, task2_date_observed: e.target.value, task3_date_observed: e.target.value})}   max={new Date().toISOString().split('T')[0]}  disabled={isStudent} />
                 <div className="hidden print:block p-1 text-center font-bold">{formatDisplayDate(compRecord.task3_date_observed || new Date().toISOString().split('T')[0])}</div>
               </td>
               <td style={{ border: '1px solid #888', padding: '0', background: '#fff' }}></td>
@@ -1309,7 +1308,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1.5px solid #888', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                        value={compRecord.task3_student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, task3_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                        value={compRecord.task3_student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_decl_date: e.target.value, student_sig_date_override: e.target.value, task2_student_sig_date_override: e.target.value, task3_student_sig_date_override: e.target.value, task4_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.task3_student_sig_date_override || submitDate || new Date().toISOString().split('T')[0])}</span>
                   </div>
@@ -1386,7 +1385,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1.5px solid #888', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                        value={compRecord.task4_student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, task4_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                        value={compRecord.task4_student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_decl_date: e.target.value, student_sig_date_override: e.target.value, task2_student_sig_date_override: e.target.value, task3_student_sig_date_override: e.target.value, task4_student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.task4_student_sig_date_override || submitDate || new Date().toISOString().split('T')[0])}</span>
                   </div>

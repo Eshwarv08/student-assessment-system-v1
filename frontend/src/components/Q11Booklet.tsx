@@ -60,6 +60,8 @@ export const Q11Booklet: React.FC<Q11BookletProps> = ({ answers, setAnswers, onS
       const dataUrl = sigPadRef.current.toDataURL();
       if (sigModal?.field === 'student_signature') {
         setAnswers({ ...answers, student_signature_url: dataUrl });
+      } else if (sigModal?.field === 'assessor_signature' || sigModal?.field === 'admin_signature') {
+        setCompRecord({ ...compRecord, assessor_signature: dataUrl, admin_signature: dataUrl });
       } else {
         setCompRecord({ ...compRecord, [sigModal!.field]: dataUrl });
       }
@@ -267,9 +269,6 @@ export const Q11Booklet: React.FC<Q11BookletProps> = ({ answers, setAnswers, onS
         <td style={{ border: '1.5px solid #000', padding: 0 }}>
           <div style={{ borderBottom: '1.5px solid #000', padding: '6px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontWeight: 'bold', fontSize: '10.5pt' }}>
             <span style={{ whiteSpace: 'pre-wrap' }}>{q.id}.  {headerText}</span>
-            <div style={{ position: 'relative', cursor: isStudent ? 'default' : 'pointer', minWidth: '30px', minHeight: '20px' }} onClick={() => !isStudent && setCompRecord({...compRecord, [`${taskKey}_q_${q.id}`]: !compRecord[`${taskKey}_q_${q.id}`] })}>
-               {compRecord[`${taskKey}_q_${q.id}`] && <span style={{ position: 'absolute', right: '0', top: '-12px', color: 'red', fontSize: '30px', fontWeight: 'bold' }}>✓</span>}
-            </div>
           </div>
           <div style={{ padding: '8px 12px', minHeight: '80px', fontSize: '10.5pt', display: 'flex', flexDirection: 'column' }}>
             {subText && <div style={{ fontWeight: 'bold', marginBottom: '8px', whiteSpace: 'pre-wrap' }}>{subText}</div>}
