@@ -333,6 +333,7 @@ const GradingPortal: React.FC = () => {
             newCompRecord[`task${i}_result`] = 'S';
             newCompRecord[`doc_task${i}`] = true;
             newCompRecord[`task${i}_doc_attached`] = 'yes';
+            newCompRecord[`task${i}_attached`] = true;
           }
 
           questionsArray.forEach((q: any) => {
