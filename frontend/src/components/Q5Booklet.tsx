@@ -128,7 +128,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '30px', paddingLeft: '4px' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'pointer' : 'default' }} className={!isStudent ? 'pointer-events-none' : ''}
-                      value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => { if (isStudent) setAnswers({ ...answers, student_date: e.target.value }) }} readOnly={!isStudent} />
+                      value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '30px', paddingLeft: '4px', fontWeight: 'bold' }}>
                     {formatDisplayDate(answers.student_date || submitDate || '')}
@@ -706,7 +706,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                   <span>Date: </span>
                   <span className="no-print" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
-                      value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => { if (!isStudent) setAnswers({ ...answers, student_date: e.target.value }) }} readOnly={isStudent} />
+                      value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
                     {formatDisplayDate(answers.student_date || submitDate || '')}
@@ -1140,7 +1140,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
-                        value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => { if (!isStudent) setAnswers({ ...answers, student_date: e.target.value }) }} readOnly={isStudent} />
+                        value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
                       {formatDisplayDate(answers.student_date || submitDate || '')}
@@ -1282,7 +1282,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
-                        value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => { if (!isStudent) setAnswers({ ...answers, student_date: e.target.value }) }} readOnly={isStudent} />
+                        value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
                       {formatDisplayDate(answers.student_date || submitDate || '')}

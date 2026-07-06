@@ -118,10 +118,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Signature:</span>
                   <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}>
-                    {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                    {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                   </div>
                   <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
-                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -173,10 +173,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Signature:</span>
                   <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
-                    {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
+                    {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
                   <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
-                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -670,10 +670,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
                     <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '20px', cursor: 'pointer', position: 'relative' }}>
-                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', position: 'relative' }}>
-                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -696,10 +696,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
                     <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '20px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
-                      {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
+                      {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', position: 'relative' }}>
-                      {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -737,10 +737,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   </div>
                   <span>Signature/Initial</span>
                   <div className="no-print" onClick={() => openSigModal('admin_signature', 'comp')} style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '20px', cursor: 'pointer', position: 'relative', margin: '0 8px' }}>
-                    {(compRecord.admin_signature || compRecord.assessor_signature) ? <img src={compRecord.admin_signature || compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : ''}
+                    {(compRecord.admin_signature || compRecord.assessor_signature) ? <img src={compRecord.admin_signature || compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : ''}
                   </div>
                   <div className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '120px', height: '20px', position: 'relative', margin: '0 8px' }}>
-                    {(compRecord.admin_signature || compRecord.assessor_signature) && <img src={compRecord.admin_signature || compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                    {(compRecord.admin_signature || compRecord.assessor_signature) && <img src={compRecord.admin_signature || compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1px solid #000', width: '100px', display: 'inline-block', height: '20px', position: 'relative', margin: '0 8px' }}>
@@ -982,10 +982,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
                     <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1.5px solid #888', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}>
-                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', position: 'relative' }}>
-                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -1138,10 +1138,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
                     <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1.5px solid #888', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}>
-                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', position: 'relative' }}>
-                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -1299,10 +1299,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
                     <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1.5px solid #888', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}>
-                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', position: 'relative' }}>
-                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -1376,10 +1376,10 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Signature:</span>
                     <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1.5px solid #888', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}>
-                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                      {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1.5px solid #888', flex: 1, height: '20px', position: 'relative' }}>
-                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>

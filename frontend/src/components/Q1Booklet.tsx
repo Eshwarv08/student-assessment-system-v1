@@ -584,32 +584,24 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                         <strong>Assessor:</strong> I declare that I have conducted a fair, valid, reliable and flexible assessment with this student, and I have provided appropriate feedback.
                       </td>
                       <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', width: '50%', verticalAlign: 'top' }}>
-                        <div className="flex items-center gap-2">
-                          Signature:
-                          <div
-                            onClick={() => openSigModal('assessor_signature', 'comp')}
-                            className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[30px] border-b border-black px-2 hover:bg-blue-50/50"
-                            style={{ flex: 1, cursor: isStudent ? 'default' : 'pointer' }}
-                          >
-                            {compRecord.assessor_signature ? (
-                              <img src={compRecord.assessor_signature} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
-                            ) : (
-                              <span className="text-[10px] text-slate-400 italic">Sign Here</span>
-                            )}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>Signature:</span>
+                            <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '20px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
+                              {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
+                            </div>
+                            <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', position: 'relative' }}>
+                              {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
+                            </div>
                           </div>
-                        </div>
-                        <div className="mt-2 flex items-center gap-2">
-                          <span>Date:</span>
-                          <span className="no-print border-b border-dashed border-gray-400 inline-block min-w-[120px]">
-                            <input
-                              type="date"
-                              style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'bold', textAlign: 'center', cursor: isStudent ? 'default' : 'pointer' }}
-                              value={compRecord.assessment_date || ''}
-                              onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }}
-                              readOnly={isStudent}
-                            />
-                          </span>
-                          <span className="hidden print:inline-block font-bold border-b border-dashed border-gray-400 min-w-[120px] text-center ml-1">{formatDisplayDate(compRecord.assessment_date || '')}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>Date:</span>
+                            <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
+                              <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                                value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} disabled={isStudent} />
+                            </span>
+                            <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.assessment_date || '')}</span>
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -618,31 +610,24 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                         <strong>Student:</strong> I declare that I accept the assessment competency outcome and consider the feedback of my assessor positively. I also declare that the work submitted is my own, and has not been copied or plagiarised from any person or source.
                       </td>
                       <td style={{ border: '1px solid #555', padding: '5px 8px', fontSize: '8.5pt', verticalAlign: 'top' }}>
-                        <div className="flex items-center gap-2">
-                          Signature:
-                          <div
-                            onClick={() => openSigModal('student_signature', 'comp')}
-                            className="sig-visual cursor-pointer inline-flex items-center justify-center min-h-[30px] border-b border-black px-2 hover:bg-blue-50/50"
-                            style={{ flex: 1 }}
-                          >
-                            {answers.student_signature_url ? (
-                              <img src={answers.student_signature_url} className="max-h-[25px] max-w-[100px] object-contain inline-block" />
-                            ) : (
-                              <span className="text-[10px] text-slate-400 italic">Sign Here</span>
-                            )}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>Signature:</span>
+                            <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '20px', cursor: 'pointer', position: 'relative' }}>
+                              {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                            </div>
+                            <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', position: 'relative' }}>
+                              {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
+                            </div>
                           </div>
-                        </div>
-                        <div className="mt-2 flex items-center gap-2">
-                          <span>Date:</span>
-                          <span className="no-print">
-                            <input
-                              type="date"
-                              style={{ outline: 'none', border: 'none', background: 'transparent', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'bold', cursor: 'pointer' }}
-                              value={answers.student_sig_date || submitDate || ''}
-                              onChange={(e) => setAnswers({ ...answers, student_sig_date: e.target.value })}
-                            />
-                          </span>
-                          <span className="hidden print:inline-block font-bold">{formatDisplayDate(answers.student_sig_date || submitDate || '')}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>Date:</span>
+                            <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
+                              <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                                value={answers.student_date || submitDate || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
+                            </span>
+                            <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers.student_date || submitDate || '')}</span>
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -1195,14 +1180,14 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                               style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
                             >
                               {answers.student_signature_url ? (
-                                <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                                <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                               ) : (
                                 <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>
                               )}
                             </div>
                             <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
                               {answers.student_signature_url && (
-                                <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                                <img src={answers.student_signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                               )}
                             </div>
                           </div>
@@ -1212,12 +1197,12 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                               <input
                                 type="date"
                                 style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', fontWeight: 'bold', cursor: 'pointer' }}
-                                value={answers.student_sig_date || submitDate || ''}
-                                onChange={(e) => setAnswers({ ...answers, student_sig_date: e.target.value })}
+                                value={answers.student_date || submitDate || ''}
+                                onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })}
                               />
                             </span>
                             <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>
-                              {formatDisplayDate(answers.student_sig_date || submitDate || '')}
+                              {formatDisplayDate(answers.student_date || submitDate || '')}
                             </span>
                           </div>
                         </div>
@@ -1282,14 +1267,14 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                               style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}
                             >
                               {compRecord.assessor_signature ? (
-                                <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                                <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                               ) : (
                                 <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>
                               )}
                             </div>
                             <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
                               {compRecord.assessor_signature && (
-                                <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                                <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                               )}
                             </div>
                           </div>

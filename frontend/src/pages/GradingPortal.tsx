@@ -921,14 +921,14 @@ const GradingPortal: React.FC = () => {
                       style={{ borderBottom: '1px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
                     >
                       {(compRecord.student_signature || submission.signature_url) ? (
-                        <img src={compRecord.student_signature || submission.signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                        <img src={compRecord.student_signature || submission.signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                       ) : (
                         <span style={{ fontSize: '9px', color: '#888' }}>Click to sign</span>
                       )}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', position: 'relative' }}>
                       {(compRecord.student_signature || submission.signature_url) && (
-                        <img src={compRecord.student_signature || submission.signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                        <img src={compRecord.student_signature || submission.signature_url} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                       )}
                     </div>
                   </div>
@@ -999,14 +999,14 @@ const GradingPortal: React.FC = () => {
                       style={{ borderBottom: '1px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}
                     >
                       {compRecord.assessor_signature ? (
-                        <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                        <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                       ) : (
                         <span style={{ fontSize: '9px', color: '#888' }}>Click to sign</span>
                       )}
                     </div>
                     <div className="hidden print:block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', position: 'relative' }}>
                       {compRecord.assessor_signature && (
-                        <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />
+                        <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '20px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />
                       )}
                     </div>
                   </div>
