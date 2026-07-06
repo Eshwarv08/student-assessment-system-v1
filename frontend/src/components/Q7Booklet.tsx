@@ -104,20 +104,20 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Signature:</span>
-                  <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}>
-                    {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                  <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '30px', cursor: 'pointer', position: 'relative' }}>
+                    {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                   </div>
-                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
-                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '30px', position: 'relative' }}>
+                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <div className="no-print" style={{ flex: 1, borderBottom: '1.5px solid black', height: '20px' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                      value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => { if (!isStudent) setAnswers({ ...answers, student_date: e.target.value }) }} readOnly={isStudent} />
+                  <div className="no-print" style={{ flex: 1, borderBottom: '1.5px solid black', height: '30px' }}>
+                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                      value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => { setAnswers({ ...answers, student_date: e.target.value }) }} />
                   </div>
-                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>{formatDisplayDate(answers.student_date || submitDate || '')}</span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '30px', paddingLeft: '4px', fontWeight: 'bold' }}>{formatDisplayDate(answers.student_date || submitDate || '')}</span>
                 </div>
               </div>
             </td>
@@ -151,20 +151,20 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Signature:</span>
-                  <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
-                    {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
+                  <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1.5px solid black', flex: 1, minHeight: '30px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
+                    {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
-                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', position: 'relative' }}>
-                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                  <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '30px', position: 'relative' }}>
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
+                  <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '30px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
                       value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
                   </span>
-                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}</span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '30px', paddingLeft: '4px' }}>{compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}</span>
                 </div>
               </div>
             </td>
@@ -668,11 +668,11 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
               <td style={{ border: '1px solid #000', padding: '8px 10px', width: '40%', verticalAlign: 'top' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '12px' }}>
                   <span>Signature: </span>
-                  <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '20px', marginLeft: '4px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
-                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                  <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '30px', marginLeft: '4px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
-                  <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', marginLeft: '4px', position: 'relative' }}>
-                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                  <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '30px', marginLeft: '4px', position: 'relative' }}>
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '12px' }}>
@@ -687,11 +687,11 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                   <span>Date: </span>
-                  <span className="no-print" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '20px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
+                  <span className="no-print" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
-                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
+                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value, admin_date: e.target.value }) }} readOnly={isStudent} />
                   </span>
-                  <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '20px', marginLeft: '4px', textAlign: 'center' }}>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
                     {formatDisplayDate(compRecord.assessment_date)}
                   </span>
                 </div>
@@ -704,20 +704,20 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
               <td style={{ border: '1px solid #000', padding: '8px 10px', verticalAlign: 'top' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '20px' }}>
                   <span>Signature: </span>
-                  <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '20px', marginLeft: '4px', cursor: 'pointer', position: 'relative' }}>
-                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                  <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '30px', marginLeft: '4px', cursor: 'pointer', position: 'relative' }}>
+                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
-                  <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', marginLeft: '4px', position: 'relative' }}>
-                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                  <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '30px', marginLeft: '4px', position: 'relative' }}>
+                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ maxHeight: '30px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                   <span>Date: </span>
-                  <div className="no-print" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '20px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
-                      value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => { if (!isStudent) setAnswers({ ...answers, student_date: e.target.value }) }} readOnly={isStudent} />
+                  <div className="no-print" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
+                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: 'pointer' }}
+                      value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => { setAnswers({ ...answers, student_date: e.target.value }) }} />
                   </div>
-                  <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '20px', marginLeft: '4px', textAlign: 'center' }}>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
                     {formatDisplayDate(answers.student_date || submitDate || '')}
                   </span>
                 </div>
@@ -740,11 +740,13 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
             <tr>
               <td style={{ border: '1px solid #000', padding: '4px 6px', width: '25%', fontWeight: 'bold' }}>Entered into Student Management Database</td>
               <td style={{ border: '1px solid #000', padding: '4px 6px' }}>
-                <span style={{ cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, admin_entered: !compRecord.admin_entered })}>
-                  <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1px solid #000', marginRight: '4px', position: 'relative' }}>{compRecord.admin_entered && <span style={{ color: 'red', position: 'absolute', top: '-6px', left: '-1px', fontWeight: 'bold' }}>✓</span>}</span>
-                </span>
-                Signature/Initial <span className="no-print" style={{ borderBottom: '1px solid #000', display: 'inline-block', width: '80px', margin: '0 10px' }}><input type="text" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent' }} value={compRecord.admin_initials || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, admin_initials: e.target.value })} readOnly={isStudent} /></span><span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '80px', margin: '0 10px', textAlign: 'center' }}>{compRecord.admin_initials || ''}</span>
-                Date: <span className="no-print" style={{ borderBottom: '1px solid #000', display: 'inline-block', width: '100px' }}><input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent' }} value={compRecord.admin_date || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, admin_date: e.target.value })} readOnly={isStudent} /></span><span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '100px', textAlign: 'center' }}>{formatDisplayDate(compRecord.admin_date)}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', position: 'relative', cursor: 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, admin_entered: !compRecord.admin_entered })}>
+                    {compRecord.admin_entered && <span style={{ position: 'absolute', top: '-5px', left: '1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                  </div>
+                  <span>Signature/Initial <div className="inline-block relative cursor-pointer" style={{ borderBottom: '1px solid #000', width: '60px', marginLeft: '4px', minHeight: '24px' }} onClick={() => openSigModal('assessor_signature', 'comp')}>{compRecord.assessor_signature ? <img src={compRecord.assessor_signature} style={{ maxHeight: '24px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : (compRecord.admin_signature && <img src={compRecord.admin_signature} style={{ maxHeight: '24px', position: 'absolute', bottom: '0' }} />)}</div></span>
+                  <span style={{ marginLeft: 'auto' }}>Date: <input type="date" style={{ borderBottom: '1px solid #000', width: '100px', outline: 'none', background: 'transparent', cursor: isStudent ? 'default' : 'pointer' }} value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, admin_date: e.target.value, assessment_date: e.target.value }) }} readOnly={isStudent} /></span>
+                </div>
               </td>
             </tr>
             <tr><td style={{ border: '1px solid #000', padding: '4px 6px', fontWeight: 'bold' }}>Unit Code/Name</td><td style={{ border: '1px solid #000', padding: '4px 6px' }}>{admin.unitCodeName}</td></tr>
@@ -867,22 +869,40 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
             </tr>
             <tr>
               <td style={{ border: '1px solid #000', padding: '6px', verticalAlign: 'top' }}>
-                {[
-                  { id: 'ra_edu', label: 'Educational and bilingual support' },
-                  { id: 'ra_oral', label: 'Presenting questions orally' },
-                  { id: 'ra_diagram', label: 'Presenting work instructions in diagrammatic or pictorial form instead of words and sentences' },
-                  { id: 'ra_time', label: 'Extra time to complete a course or assessment' },
-                  { id: 'ra_other', label: 'Others:' }
-                ].map((item) => (
-                  <div key={item.id} style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '6px' }}>
-                    <span style={{ cursor: isStudent ? 'default' : 'pointer', marginTop: '2px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, [item.id]: !compRecord[item.id] })}>
-                      <span style={{ display: 'inline-block', width: '12px', height: '12px', border: '1px solid #000', marginRight: '6px', position: 'relative' }}>
-                        {compRecord[item.id] && <span style={{ color: 'red', position: 'absolute', top: '-6px', left: '-1px', fontWeight: 'bold' }}>✓</span>}
-                      </span>
-                    </span>
-                    <span style={{ flex: 1, lineHeight: '1.2' }}>{item.label}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_edu: !compRecord.ra_edu })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', position: 'relative', flexShrink: 0 }}>
+                      {compRecord.ra_edu && <span style={{ position: 'absolute', top: '-5px', left: '1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                    Educational and bilingual support
                   </div>
-                ))}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_oral: !compRecord.ra_oral })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', position: 'relative', flexShrink: 0 }}>
+                      {compRecord.ra_oral && <span style={{ position: 'absolute', top: '-5px', left: '1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                    Presenting questions orally
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_diagram: !compRecord.ra_diagram })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', position: 'relative', flexShrink: 0, marginTop: '2px' }}>
+                      {compRecord.ra_diagram && <span style={{ position: 'absolute', top: '-5px', left: '1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                    <span style={{ lineHeight: 1.2 }}>Presenting work instructions in diagrammatic or<br />pictorial form instead of words and sentences</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, ra_extra: !compRecord.ra_extra })}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', position: 'relative', flexShrink: 0, marginTop: '2px' }}>
+                      {compRecord.ra_extra && <span style={{ position: 'absolute', top: '-5px', left: '1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                    <span style={{ lineHeight: 1.2 }}>Extra time to complete a course or assessment</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }} onClick={(e) => { if (e.target instanceof HTMLInputElement) return; !isStudent && setCompRecord({ ...compRecord, ra_other: !compRecord.ra_other }) }}>
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', position: 'relative', flexShrink: 0 }}>
+                      {compRecord.ra_other && <span style={{ position: 'absolute', top: '-5px', left: '1px', color: 'red', fontSize: '14px', fontWeight: 'bold' }}>✓</span>}
+                    </div>
+                    Others:
+                    <input type="text" className="no-print" style={{ borderBottom: '1px solid #000', background: 'transparent', outline: 'none', borderTop: 'none', borderLeft: 'none', borderRight: 'none', marginLeft: '6px', width: '100px', flex: 1, cursor: isStudent ? 'default' : 'text' }} value={compRecord.ra_others_text || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, ra_others_text: e.target.value })} readOnly={isStudent} />
+                    <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', marginLeft: '6px', flex: 1 }}>{compRecord.ra_others_text}</span>
+                  </div>
+                </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '0', verticalAlign: 'top' }}>
                 <textarea className="w-full h-full min-h-[140px] bg-transparent border-none outline-none resize-none text-slate-800 p-2" value={compRecord.ra_reason || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, ra_reason: e.target.value })} readOnly={isStudent} />

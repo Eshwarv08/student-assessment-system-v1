@@ -135,8 +135,8 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <input type="date" className="no-print" value={toDateInputValue(compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || ''))} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_student_date`]: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ flex: 1, border: 'none', borderBottom: '1px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit' }} />
-                  <div className="hidden print:block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || ''))}</div>
+                  <input type="date" className="no-print" value={toDateInputValue(answers[`${taskKey}_student_date`] !== undefined ? answers[`${taskKey}_student_date`] : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, [`${taskKey}_student_date`]: formatDisplayDate(e.target.value) })} style={{ flex: 1, border: 'none', borderBottom: '1px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer' }} />
+                  <div className="hidden print:block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers[`${taskKey}_student_date`] !== undefined ? answers[`${taskKey}_student_date`] : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))}</div>
                 </div>
               </div>
             </td>
