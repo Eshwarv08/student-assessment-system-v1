@@ -320,6 +320,12 @@ const GradingPortal: React.FC = () => {
           newCompRecord.ra_other = true;
           newCompRecord.ra_others = true;
           
+          newCompRecord.adj_educational = true;
+          newCompRecord.adj_presenting_orally = true;
+          newCompRecord.adj_diagrammatic = true;
+          newCompRecord.adj_extra_time = true;
+          newCompRecord.adj_others = true;
+          
           // Assessment Competency Record checkmarks
           newCompRecord.evidence_valid = 'yes';
           newCompRecord.evidence_sufficient = 'yes';
