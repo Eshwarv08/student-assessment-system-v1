@@ -117,7 +117,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                 </div>
               </td>
               <td className="border-r border-black p-2 text-center align-middle font-bold text-lg relative">
-                <input type="date" className="absolute inset-0 w-full h-full bg-transparent text-center focus:outline-none text-[11px] font-normal px-2" value={compRecord[`${prefix}_attempt_initial_date`] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`${prefix}_attempt_initial_date`]: e.target.value })} readOnly={isStudent} />
+                <input type="date" className="absolute inset-0 w-full h-full bg-transparent text-center focus:outline-none text-[11px] font-normal px-2" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
               </td>
               <td className="border-r border-black p-2 text-center align-middle font-bold relative">
                 <div className="flex flex-col items-center justify-center h-full gap-1">
@@ -126,7 +126,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                     <span>/</span>
                     <span className={`cursor-pointer ${compRecord[`${prefix}_attempt_1st`] === 'NYS' ? 'border-[1.5px] border-red-600 rounded-full px-1 h-5 flex items-center justify-center' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${prefix}_attempt_1st`]: 'NYS' })}>NYS</span>
                   </div>
-                  <input type="date" className="w-full bg-transparent text-center focus:outline-none text-[10px] font-normal" value={compRecord[`${prefix}_attempt_1st_date`] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`${prefix}_attempt_1st_date`]: e.target.value })} readOnly={isStudent} />
+                  <input type="date" className="w-full bg-transparent text-center focus:outline-none text-[10px] font-normal" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
                 </div>
               </td>
               <td className="border-r border-black p-2 text-center align-middle font-bold relative">
@@ -136,7 +136,7 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
                     <span>/</span>
                     <span className={`cursor-pointer ${compRecord[`${prefix}_attempt_2nd`] === 'NYS' ? 'border-[1.5px] border-red-600 rounded-full px-1 h-5 flex items-center justify-center' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${prefix}_attempt_2nd`]: 'NYS' })}>NYS</span>
                   </div>
-                  <input type="date" className="w-full bg-transparent text-center focus:outline-none text-[10px] font-normal" value={compRecord[`${prefix}_attempt_2nd_date`] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`${prefix}_attempt_2nd_date`]: e.target.value })} readOnly={isStudent} />
+                  <input type="date" className="w-full bg-transparent text-center focus:outline-none text-[10px] font-normal" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
                 </div>
               </td>
               <td className="p-2 text-center align-middle">
@@ -484,13 +484,13 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td className="border border-black p-2 font-medium">Assessor name</td>
               <td colSpan={3} className="border border-black p-2 text-center align-middle">
-                <input type="text" className="w-full bg-transparent text-center focus:outline-none" value={compRecord['ka1_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_assessor_name': e.target.value })} readOnly={isStudent} />
+                <input type="text" className="w-full bg-transparent text-center focus:outline-none" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} />
               </td>
             </tr>
             <tr>
               <td className="border border-black p-2 font-medium">Date</td>
               <td colSpan={3} className="border border-black p-2 text-center align-middle">
-                <input type="date" className="w-full bg-transparent text-center focus:outline-none" value={compRecord['ka1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'ka1_date': e.target.value })} readOnly={isStudent} />
+                <input type="date" className="w-full bg-transparent text-center focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
               </td>
             </tr>
           </tbody>
@@ -794,13 +794,13 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td className="border border-black p-2 font-medium">Assessor name</td>
               <td colSpan={3} className="border border-black p-2 text-center align-middle">
-                <input type="text" className="w-full bg-transparent text-center focus:outline-none" value={compRecord['pa1_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_assessor_name': e.target.value })} readOnly={isStudent} />
+                <input type="text" className="w-full bg-transparent text-center focus:outline-none" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} />
               </td>
             </tr>
             <tr>
               <td className="border border-black p-2 font-medium">Date</td>
               <td colSpan={3} className="border border-black p-2 text-center align-middle">
-                <input type="date" className="w-full bg-transparent text-center focus:outline-none" value={compRecord['pa1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa1_date': e.target.value })} readOnly={isStudent} />
+                <input type="date" className="w-full bg-transparent text-center focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
               </td>
             </tr>
           </tbody>
@@ -947,29 +947,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>1.</span><span className="whitespace-pre-wrap">The NBN (National Broadband Network) at the moment consists entirely of:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q1': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q1" checked={answers['t2q1'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q1': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q1': 'a' })}>
                   a) Copper cable
-                  {answers['t2q1'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q1': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q1" checked={answers['t2q1'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q1': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q1': 'b' })}>
                   b) Cat 7 cabling
-                  {answers['t2q1'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q1': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q1" checked={answers['t2q1'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q1': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q1': 'c' })}>
                   c) Optical Fibre
-                  {answers['t2q1'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q1': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q1" checked={answers['t2q1'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q1': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q1': 'd' })}>
                   d) Coaxial cable
-                  {answers['t2q1'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -993,17 +993,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>2.</span><span className="whitespace-pre-wrap">Identify whether the following statement is true or false: Category 3 copper cable is mainly used for voice applications.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q2': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q2" checked={answers['t2q2'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q2': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q2': 'true' })}>
                   a) True
-                  {answers['t2q2'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q2': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q2" checked={answers['t2q2'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q2': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q2': 'false' })}>
                   b) False
-                  {answers['t2q2'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1027,29 +1027,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>3.</span><span className="whitespace-pre-wrap">The Australian Standard that specifies installation requirements for customer cabling is:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q3': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q3" checked={answers['t2q3'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q3': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q3': 'a' })}>
                   a) AUSTRALIAN STANDARD AS/NZ 3000:2007
-                  {answers['t2q3'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q3': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q3" checked={answers['t2q3'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q3': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q3': 'b' })}>
                   b) | 017153a07 | TELSTRA’S LEAD-IN TRENCHING REQUIREMENTS.
-                  {answers['t2q3'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q3': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q3" checked={answers['t2q3'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q3': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q3': 'c' })}>
                   c) AUSTRALIAN STANDARD AS/CA S008:2010
-                  {answers['t2q3'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q3': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q3" checked={answers['t2q3'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q3': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q3': 'd' })}>
                   d) AUSTRALIAN STANDARD AS/CA S009:2013
-                  {answers['t2q3'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1073,29 +1073,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>4.</span><span className="whitespace-pre-wrap">The Cable Provider Rules in Australia are:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q4': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q4" checked={answers['t2q4'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q4': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q4': 'a' })}>
                   a) An industry-run registration scheme designed to promote self-regulation
-                  {answers['t2q4'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q4': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q4" checked={answers['t2q4'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q4': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q4': 'b' })}>
                   b) A government run registration scheme designed to promote government regulation
-                  {answers['t2q4'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q4': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q4" checked={answers['t2q4'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q4': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q4': 'c' })}>
                   c) A scheme in industry that is no longer used because of self-regulation
-                  {answers['t2q4'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q4': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q4" checked={answers['t2q4'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q4': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q4': 'd' })}>
                   d) All of the above
-                  {answers['t2q4'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1119,29 +1119,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>5.</span><span className="whitespace-pre-wrap">To manage health and safety on a worksite there should be:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q5': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q5" checked={answers['t2q5'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q5': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q5': 'a' })}>
                   a) Hazard management plan
-                  {answers['t2q5'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q5': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q5" checked={answers['t2q5'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q5': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q5': 'b' })}>
                   b) Free hard hats
-                  {answers['t2q5'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q5': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q5" checked={answers['t2q5'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q5': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q5': 'c' })}>
                   c) Weather management plan
-                  {answers['t2q5'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q5': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q5" checked={answers['t2q5'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q5': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q5': 'd' })}>
                   d) None of the above
-                  {answers['t2q5'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1165,29 +1165,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>6.</span><span className="whitespace-pre-wrap">Before work begins, approvals should be obtained from:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q6': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q6" checked={answers['t2q6'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q6': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q6': 'a' })}>
                   a) Likelihood that nothing will go wrong so don’t bother
-                  {answers['t2q6'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q6': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q6" checked={answers['t2q6'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q6': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q6': 'b' })}>
                   b) No approvals are required
-                  {answers['t2q6'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q6': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q6" checked={answers['t2q6'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q6': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q6': 'c' })}>
                   c) Authorities and asset owners
-                  {answers['t2q6'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q6': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q6" checked={answers['t2q6'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q6': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q6': 'd' })}>
                   d) None of the above
-                  {answers['t2q6'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1216,29 +1216,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>7.</span><span className="whitespace-pre-wrap">Typical tools and equipment may include:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q7': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q7" checked={answers['t2q7'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q7': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q7': 'a' })}>
                   a) Shovels
-                  {answers['t2q7'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q7': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q7" checked={answers['t2q7'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q7': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q7': 'b' })}>
                   b) Trenching equipment
-                  {answers['t2q7'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q7': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q7" checked={answers['t2q7'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q7': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q7': 'c' })}>
                   c) Jointing equipment
-                  {answers['t2q7'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q7': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q7" checked={answers['t2q7'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q7': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q7': 'd' })}>
                   d) All of the above
-                  {answers['t2q7'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1262,29 +1262,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>8.</span><span className="whitespace-pre-wrap">To facilitate easier hauling of cables into conduits, which of the following can be used?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q8': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q8" checked={answers['t2q8'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q8': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q8': 'a' })}>
                   a) Lubrication of the cable and ducts
-                  {answers['t2q8'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q8': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q8" checked={answers['t2q8'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q8': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q8': 'b' })}>
                   b) The use of cable guides
-                  {answers['t2q8'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q8': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q8" checked={answers['t2q8'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q8': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q8': 'c' })}>
                   c) The use of conduit guides
-                  {answers['t2q8'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q8': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q8" checked={answers['t2q8'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q8': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q8': 'd' })}>
                   d) All of the above
-                  {answers['t2q8'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1331,29 +1331,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>10.</span><span className="whitespace-pre-wrap">How does a winch used for small copper cables differ to one used for optical fibre cables?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q10': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q10" checked={answers['t2q10'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q10': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q10': 'a' })}>
                   a) They are the same
-                  {answers['t2q10'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q10': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q10" checked={answers['t2q10'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q10': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q10': 'b' })}>
                   b) Smaller hauling wheel
-                  {answers['t2q10'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q10': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q10" checked={answers['t2q10'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q10': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q10': 'c' })}>
                   c) Larger hauling wheel
-                  {answers['t2q10'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q10': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q10" checked={answers['t2q10'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q10': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q10': 'd' })}>
                   d) All of the above
-                  {answers['t2q10'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1377,17 +1377,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>11.</span><span className="whitespace-pre-wrap">Identify whether the following statement is true or false: There is a need to ensure that the cable hauling tension is correct for the cable and that the bend radius is maintained and care is taken to protect the cable sheath during cable installation procedures.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q11': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q11" checked={answers['t2q11'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q11': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q11': 'true' })}>
                   a) True
-                  {answers['t2q11'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q11': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q11" checked={answers['t2q11'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q11': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q11': 'false' })}>
                   b) False
-                  {answers['t2q11'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1416,29 +1416,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>12.</span><span className="whitespace-pre-wrap">A multimeter can be used to check copper cables for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q12': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q12" checked={answers['t2q12'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q12': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q12': 'a' })}>
                   a) Continuity
-                  {answers['t2q12'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q12': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q12" checked={answers['t2q12'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q12': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q12': 'b' })}>
                   b) Short circuits
-                  {answers['t2q12'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q12': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q12" checked={answers['t2q12'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q12': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q12': 'c' })}>
                   c) Loop resistance
-                  {answers['t2q12'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q12': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q12" checked={answers['t2q12'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q12': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q12': 'd' })}>
                   d) All of the above
-                  {answers['t2q12'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1462,29 +1462,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>13.</span><span className="whitespace-pre-wrap">An induction/tone generator can be used to:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q13': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q13" checked={answers['t2q13'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q13': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q13': 'a' })}>
                   a) Measuring cable pair loop resistance
-                  {answers['t2q13'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q13': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q13" checked={answers['t2q13'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q13': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q13': 'b' })}>
                   b) Identifying pairs within cables
-                  {answers['t2q13'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q13': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q13" checked={answers['t2q13'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q13': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q13': 'c' })}>
                   c) Identify open circuits
-                  {answers['t2q13'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q13': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q13" checked={answers['t2q13'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q13': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q13': 'd' })}>
                   d) None of the above
-                  {answers['t2q13'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1508,29 +1508,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>14.</span><span className="whitespace-pre-wrap">Wire map testers can test for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q14': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q14" checked={answers['t2q14'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q14': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q14': 'a' })}>
                   a) Open circuit
-                  {answers['t2q14'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q14': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q14" checked={answers['t2q14'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q14': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q14': 'b' })}>
                   b) Short circuit
-                  {answers['t2q14'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q14': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q14" checked={answers['t2q14'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q14': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q14': 'c' })}>
                   c) Reversed or split pairs
-                  {answers['t2q14'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q14': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q14" checked={answers['t2q14'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q14': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q14': 'd' })}>
                   d) All of the above
-                  {answers['t2q14'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1554,17 +1554,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>15.</span><span className="whitespace-pre-wrap">Identify whether the following statement is true or false: The need for surge protection on copper cables is determined by the cabling provider.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q15': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q15" checked={answers['t2q15'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q15': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q15': 'true' })}>
                   a) True
-                  {answers['t2q15'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q15': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q15" checked={answers['t2q15'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q15': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q15': 'false' })}>
                   b) False
-                  {answers['t2q15'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1588,29 +1588,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>16.</span><span className="whitespace-pre-wrap">Devices used to connect the feeder to cables are:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q16': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q16" checked={answers['t2q16'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q16': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q16': 'a' })}>
                   a) Cables are never hauled this way
-                  {answers['t2q16'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q16': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q16" checked={answers['t2q16'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q16': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q16': 'b' })}>
                   b) Hauling Eye & cable grip
-                  {answers['t2q16'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q16': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q16" checked={answers['t2q16'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q16': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q16': 'c' })}>
                   c) Screw on cable cap or glue on cap
-                  {answers['t2q16'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q16': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q16" checked={answers['t2q16'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q16': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q16': 'd' })}>
                   d) None of the above
-                  {answers['t2q16'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1634,29 +1634,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>17.</span><span className="whitespace-pre-wrap">Sufficient cable length should be left in pits for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q17': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q17" checked={answers['t2q17'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q17': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q17': 'a' })}>
                   a) Cables are left as short as possible
-                  {answers['t2q17'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q17': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q17" checked={answers['t2q17'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q17': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q17': 'b' })}>
                   b) Hauling
-                  {answers['t2q17'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q17': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q17" checked={answers['t2q17'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q17': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q17': 'c' })}>
                   c) Jointing
-                  {answers['t2q17'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q17': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q17" checked={answers['t2q17'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q17': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q17': 'd' })}>
                   d) None of the above
-                  {answers['t2q17'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1685,29 +1685,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>18.</span><span className="whitespace-pre-wrap">On completion of the work, it is essential to send a ________ promptly to all parties and get sign off from the ________.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q18': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q18" checked={answers['t2q18'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q18': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q18': 'a' })}>
                   a) Gift, ACMA
-                  {answers['t2q18'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q18': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q18" checked={answers['t2q18'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q18': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q18': 'b' })}>
                   b) Report, customer
-                  {answers['t2q18'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q18': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q18" checked={answers['t2q18'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q18': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q18': 'c' })}>
                   c) On completion nothing more is done
-                  {answers['t2q18'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q18': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q18" checked={answers['t2q18'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q18': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q18': 'd' })}>
                   d) None of the above
-                  {answers['t2q18'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1731,29 +1731,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>19.</span><span className="whitespace-pre-wrap">Reinstatement of the site is the responsibility of:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q19': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q19" checked={answers['t2q19'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q19': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q19': 'a' })}>
                   a) ACMA
-                  {answers['t2q19'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q19': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q19" checked={answers['t2q19'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q19': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q19': 'b' })}>
                   b) Customer
-                  {answers['t2q19'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q19': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q19" checked={answers['t2q19'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q19': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q19': 'c' })}>
                   c) Contractor
-                  {answers['t2q19'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q19': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q19" checked={answers['t2q19'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q19': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q19': 'd' })}>
                   d) All of the above
-                  {answers['t2q19'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1777,29 +1777,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>20.</span><span className="whitespace-pre-wrap">Care must be taken when testing optical fibre cables to avoid:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q20': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q20" checked={answers['t2q20'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q20': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q20': 'a' })}>
                   a) Foot damage due to the high weight of the fibres
-                  {answers['t2q20'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q20': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q20" checked={answers['t2q20'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q20': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q20': 'b' })}>
                   b) Eye damage due to the laser light in the fibres
-                  {answers['t2q20'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q20': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q20" checked={answers['t2q20'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q20': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q20': 'c' })}>
                   c) Optical fibre is not dangerous
-                  {answers['t2q20'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q20': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q20" checked={answers['t2q20'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q20': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q20': 'd' })}>
                   d) All of the above
-                  {answers['t2q20'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1823,17 +1823,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>21.</span><span className="whitespace-pre-wrap">Is it necessary to support cables in pits and enclosures?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q21': 'yes' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q21" checked={answers['t2q21'] === 'yes'} onChange={() => setAnswers({ ...answers, 't2q21': 'yes' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q21': 'yes' })}>
                   a) Yes
-                  {answers['t2q21'] === 'yes' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q21': 'no' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q21" checked={answers['t2q21'] === 'no'} onChange={() => setAnswers({ ...answers, 't2q21': 'no' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q21': 'no' })}>
                   b) No
-                  {answers['t2q21'] === 'no' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1858,23 +1858,23 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>22.</span><span className="whitespace-pre-wrap">What is the diameter of duct is installed between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q22': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q22" checked={answers['t2q22'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q22': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q22': 'a' })}>
                   a) 100mm
-                  {answers['t2q22'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q22': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q22" checked={answers['t2q22'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q22': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q22': 'b' })}>
                   b) 50mm
-                  {answers['t2q22'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q22': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q22" checked={answers['t2q22'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q22': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q22': 'c' })}>
                   c) 60mm
-                  {answers['t2q22'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1898,23 +1898,23 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>23.</span><span className="whitespace-pre-wrap">What type (size) of pit is installed at the boundary of 156 and 158 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q23': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q23" checked={answers['t2q23'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q23': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q23': 'a' })}>
                   a) P4
-                  {answers['t2q23'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q23': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q23" checked={answers['t2q23'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q23': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q23': 'b' })}>
                   b) P5
-                  {answers['t2q23'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q23': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q23" checked={answers['t2q23'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q23': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q23': 'c' })}>
                   c) P6
-                  {answers['t2q23'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1938,23 +1938,23 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>24.</span><span className="whitespace-pre-wrap">What kind of infrastructure is installed at the boundary of 150 and 152 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q24': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q24" checked={answers['t2q24'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q24': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q24': 'a' })}>
                   a) Manhole
-                  {answers['t2q24'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q24': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q24" checked={answers['t2q24'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q24': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q24': 'b' })}>
                   b) Rope
-                  {answers['t2q24'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q24': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q24" checked={answers['t2q24'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q24': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q24': 'c' })}>
                   c) Conduit
-                  {answers['t2q24'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -1983,23 +1983,23 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>25.</span><span className="whitespace-pre-wrap">What is the length of conduit is required to be installed in between boundary of 156 and 158 and boundary of 158 and 160 Hamilton Rd?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q25': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q25" checked={answers['t2q25'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q25': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q25': 'a' })}>
                   a) 26M
-                  {answers['t2q25'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q25': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q25" checked={answers['t2q25'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q25': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q25': 'b' })}>
                   b) 30M
-                  {answers['t2q25'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q25': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q25" checked={answers['t2q25'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q25': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q25': 'c' })}>
                   c) 22M
-                  {answers['t2q25'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2023,23 +2023,23 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>26.</span><span className="whitespace-pre-wrap">What is the permissible limit of LEL (Lower Explosive Limit) gases in a confined space?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q26': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q26" checked={answers['t2q26'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q26': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q26': 'a' })}>
                   a) 10% of the volume
-                  {answers['t2q26'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q26': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q26" checked={answers['t2q26'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q26': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q26': 'b' })}>
                   b) 5% of the volume
-                  {answers['t2q26'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q26': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q26" checked={answers['t2q26'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q26': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q26': 'c' })}>
                   c) 8% of the volume
-                  {answers['t2q26'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2063,23 +2063,23 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>27.</span><span className="whitespace-pre-wrap">What is the safest limit of oxygen in atmosphere?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q27': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q27" checked={answers['t2q27'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q27': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q27': 'a' })}>
                   a) 19.5% to 23%
-                  {answers['t2q27'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q27': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q27" checked={answers['t2q27'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q27': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q27': 'b' })}>
                   b) 23% to 27%
-                  {answers['t2q27'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q27': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q27" checked={answers['t2q27'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q27': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q27': 'c' })}>
                   c) 15% to 19.5%
-                  {answers['t2q27'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2103,17 +2103,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>28.</span><span className="whitespace-pre-wrap">What is the use of a Mandrel? Mandrels are used to prove the integrity of installed conduit runs. They will also remove small amounts of debris that may be in the conduit. Manufactured from high-strength aluminium alloy tube. Centre rod is plated all-thread steel. Eye on each end.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q28': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q28" checked={answers['t2q28'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q28': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q28': 'true' })}>
                   a) True
-                  {answers['t2q28'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q28': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q28" checked={answers['t2q28'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q28': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q28': 'false' })}>
                   b) False
-                  {answers['t2q28'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2137,17 +2137,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>29.</span><span className="whitespace-pre-wrap">How many percentage points should a mandrels be from a conduit size? The effective diameter of the mandrel must be 90 percent of the nominal pipe diameter and verified using a proving ring. The mandrel is sized to allow for up to 5% deformation of the installed pipe.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q29': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q29" checked={answers['t2q29'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q29': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q29': 'true' })}>
                   a) True
-                  {answers['t2q29'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q29': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q29" checked={answers['t2q29'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q29': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q29': 'false' })}>
                   b) False
-                  {answers['t2q29'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2171,17 +2171,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>30.</span><span className="whitespace-pre-wrap">How could avoid conduits get overhauled? Use the Mandrill to check the available capacity of the Conduit during rod and roping activity.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q30': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q30" checked={answers['t2q30'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q30': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q30': 'true' })}>
                   a) True
-                  {answers['t2q30'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q30': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q30" checked={answers['t2q30'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q30': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q30': 'false' })}>
                   b) False
-                  {answers['t2q30'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2210,17 +2210,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>31.</span><span className="whitespace-pre-wrap">What is the purpose of rod and roping? Rod and Roping is when new and existing conduit is proved and feed with rope to assist in the cable hauling on an existing copper and fibre cable for repairs, upgrades and new infrastructure works.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q31': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q31" checked={answers['t2q31'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q31': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q31': 'true' })}>
                   a) True
-                  {answers['t2q31'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q31': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q31" checked={answers['t2q31'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q31': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q31': 'false' })}>
                   b) False
-                  {answers['t2q31'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2244,29 +2244,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>32.</span><span className="whitespace-pre-wrap">The Customer Access Network connects end users of the:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q32': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q32" checked={answers['t2q32'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q32': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q32': 'a' })}>
                   a) Network boundary
-                  {answers['t2q32'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q32': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q32" checked={answers['t2q32'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q32': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q32': 'b' })}>
                   b) Telecommunications network
-                  {answers['t2q32'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q32': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q32" checked={answers['t2q32'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q32': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q32': 'c' })}>
                   c) Property entry point
-                  {answers['t2q32'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q32': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q32" checked={answers['t2q32'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q32': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q32': 'd' })}>
                   d) None of the above
-                  {answers['t2q32'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2290,29 +2290,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>33.</span><span className="whitespace-pre-wrap">A Customer Private Network provides:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q33': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q33" checked={answers['t2q33'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q33': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q33': 'a' })}>
                   a) An external telecommunications network that forms part of the global telecommunications network
-                  {answers['t2q33'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q33': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q33" checked={answers['t2q33'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q33': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q33': 'b' })}>
                   b) A standalone internal telecommunications network that does not providing access to the global telecommunications network
-                  {answers['t2q33'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q33': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q33" checked={answers['t2q33'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q33': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q33': 'c' })}>
                   c) An internal telecommunications network as well as providing access to the global telecommunications network
-                  {answers['t2q33'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q33': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q33" checked={answers['t2q33'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q33': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q33': 'd' })}>
                   d) All of the above
-                  {answers['t2q33'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2336,29 +2336,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>34.</span><span className="whitespace-pre-wrap">The National Broadband Network (NBN) currently consists entirely of:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q34': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q34" checked={answers['t2q34'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q34': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q34': 'a' })}>
                   a) Copper cable
-                  {answers['t2q34'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q34': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q34" checked={answers['t2q34'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q34': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q34': 'b' })}>
                   b) Cat 7 cabling
-                  {answers['t2q34'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q34': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q34" checked={answers['t2q34'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q34': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q34': 'c' })}>
                   c) Optical Fibre
-                  {answers['t2q34'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q34': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q34" checked={answers['t2q34'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q34': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q34': 'd' })}>
                   d) Coaxial cable
-                  {answers['t2q34'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2382,17 +2382,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>35.</span><span className="whitespace-pre-wrap">Is it a requirement to hold a General Construction White Card to work on construction sites?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q35': 'yes' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q35" checked={answers['t2q35'] === 'yes'} onChange={() => setAnswers({ ...answers, 't2q35': 'yes' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q35': 'yes' })}>
                   a) Yes
-                  {answers['t2q35'] === 'yes' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q35': 'no' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q35" checked={answers['t2q35'] === 'no'} onChange={() => setAnswers({ ...answers, 't2q35': 'no' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q35': 'no' })}>
                   b) No
-                  {answers['t2q35'] === 'no' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2416,29 +2416,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>36.</span><span className="whitespace-pre-wrap">The Code of Practise are created to:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q36': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q36" checked={answers['t2q36'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q36': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q36': 'a' })}>
                   a) Ensure worst practice outcomes & promote negative behaviour changes in the industry
-                  {answers['t2q36'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q36': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q36" checked={answers['t2q36'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q36': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q36': 'b' })}>
                   b) Provide guidelines for fair dealing between organisations and their customers
-                  {answers['t2q36'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q36': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q36" checked={answers['t2q36'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q36': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q36': 'c' })}>
                   c) Provide guidelines for fair dealing between organisations
-                  {answers['t2q36'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q36': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q36" checked={answers['t2q36'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q36': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q36': 'd' })}>
                   d) All of the above
-                  {answers['t2q36'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2462,29 +2462,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>37.</span><span className="whitespace-pre-wrap">The Australian Standard that specifies underground Installation requirements for customer cabling is:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q37': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q37" checked={answers['t2q37'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q37': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q37': 'a' })}>
                   a) AUSTRALIAN STANDARD AS/NZ 3000:2007
-                  {answers['t2q37'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q37': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q37" checked={answers['t2q37'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q37': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q37': 'b' })}>
                   b) | 017153a07 | TELSTRA’S LEAD-IN TRENCHING REQUIREMENTS.
-                  {answers['t2q37'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q37': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q37" checked={answers['t2q37'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q37': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q37': 'c' })}>
                   c) AUSTRALIAN STANDARD AS/CA S008:2010
-                  {answers['t2q37'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q37': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q37" checked={answers['t2q37'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q37': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q37': 'd' })}>
                   d) AUSTRALIAN STANDARD AS/CA S009:2013
-                  {answers['t2q37'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2508,29 +2508,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>38.</span><span className="whitespace-pre-wrap">The Telecommunications Act 1997 is:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q38': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q38" checked={answers['t2q38'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q38': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q38': 'a' })}>
                   a) An industry body
-                  {answers['t2q38'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q38': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q38" checked={answers['t2q38'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q38': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q38': 'b' })}>
                   b) Legislated law
-                  {answers['t2q38'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q38': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q38" checked={answers['t2q38'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q38': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q38': 'c' })}>
                   c) A voluntary standard
-                  {answers['t2q38'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q38': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q38" checked={answers['t2q38'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q38': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q38': 'd' })}>
                   d) All of the above
-                  {answers['t2q38'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2559,29 +2559,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>39.</span><span className="whitespace-pre-wrap">The Cable Provider Rules in Australia are best characterised as?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q39': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q39" checked={answers['t2q39'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q39': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q39': 'a' })}>
                   a) An industry-run registration scheme designed to promote self-regulation
-                  {answers['t2q39'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q39': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q39" checked={answers['t2q39'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q39': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q39': 'b' })}>
                   b) A government run registration scheme designed to promote government regulation
-                  {answers['t2q39'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q39': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q39" checked={answers['t2q39'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q39': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q39': 'c' })}>
                   c) A scheme in industry that is no longer used because of self-regulation
-                  {answers['t2q39'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q39': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q39" checked={answers['t2q39'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q39': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q39': 'd' })}>
                   d) All of the above
-                  {answers['t2q39'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2605,29 +2605,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>40.</span><span className="whitespace-pre-wrap">A typical street distribution plan might provide information on…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q40': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q40" checked={answers['t2q40'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q40': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q40': 'a' })}>
                   a) The location of conduit runs
-                  {answers['t2q40'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q40': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q40" checked={answers['t2q40'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q40': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q40': 'b' })}>
                   b) The location of electricity pedestals
-                  {answers['t2q40'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q40': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q40" checked={answers['t2q40'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q40': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q40': 'c' })}>
                   c) The location of pits
-                  {answers['t2q40'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q40': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q40" checked={answers['t2q40'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q40': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q40': 'd' })}>
                   d) All of the above
-                  {answers['t2q40'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2651,29 +2651,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>41.</span><span className="whitespace-pre-wrap">Access to a site is usually arranged by the …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q41': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q41" checked={answers['t2q41'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q41': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q41': 'a' })}>
                   a) ACMA
-                  {answers['t2q41'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q41': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q41" checked={answers['t2q41'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q41': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q41': 'b' })}>
                   b) Site supervisor or Site Manager
-                  {answers['t2q41'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q41': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q41" checked={answers['t2q41'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q41': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q41': 'c' })}>
                   c) No need for access permission for cablers
-                  {answers['t2q41'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q41': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q41" checked={answers['t2q41'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q41': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q41': 'd' })}>
                   d) None of the above
-                  {answers['t2q41'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2697,29 +2697,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>42.</span><span className="whitespace-pre-wrap">Witches hats are a form of …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q42': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q42" checked={answers['t2q42'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q42': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q42': 'a' })}>
                   a) They are never used anymore
-                  {answers['t2q42'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q42': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q42" checked={answers['t2q42'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q42': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q42': 'b' })}>
                   b) Flashing strobe light
-                  {answers['t2q42'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q42': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q42" checked={answers['t2q42'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q42': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q42': 'c' })}>
                   c) Children’s toy
-                  {answers['t2q42'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q42': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q42" checked={answers['t2q42'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q42': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q42': 'd' })}>
                   d) Protective barrier
-                  {answers['t2q42'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2743,29 +2743,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>43.</span><span className="whitespace-pre-wrap">One form of barrier that could be used to protect people in manholes is …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q43': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q43" checked={answers['t2q43'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q43': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q43': 'a' })}>
                   a) Hard hats
-                  {answers['t2q43'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q43': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q43" checked={answers['t2q43'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q43': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q43': 'b' })}>
                   b) Guard rails
-                  {answers['t2q43'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q43': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q43" checked={answers['t2q43'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q43': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q43': 'c' })}>
                   c) Safety glasses
-                  {answers['t2q43'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q43': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q43" checked={answers['t2q43'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q43': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q43': 'd' })}>
                   d) Orange
-                  {answers['t2q43'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2789,29 +2789,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>44.</span><span className="whitespace-pre-wrap">To manage health and safety and inform personnel on a worksite hazards there should be a …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q44': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q44" checked={answers['t2q44'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q44': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q44': 'a' })}>
                   a) Hazard management plan
-                  {answers['t2q44'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q44': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q44" checked={answers['t2q44'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q44': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q44': 'b' })}>
                   b) Free hard hats
-                  {answers['t2q44'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q44': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q44" checked={answers['t2q44'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q44': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q44': 'c' })}>
                   c) Weather management plan
-                  {answers['t2q44'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q44': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q44" checked={answers['t2q44'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q44': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q44': 'd' })}>
                   d) None of the above
-                  {answers['t2q44'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2863,29 +2863,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>46.</span><span className="whitespace-pre-wrap">Before work begins approvals should be obtained from…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q46': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q46" checked={answers['t2q46'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q46': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q46': 'a' })}>
                   a) Likelihood that nothing will go wrong so don’t bother
-                  {answers['t2q46'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q46': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q46" checked={answers['t2q46'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q46': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q46': 'b' })}>
                   b) No approvals are required
-                  {answers['t2q46'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q46': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q46" checked={answers['t2q46'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q46': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q46': 'c' })}>
                   c) Authorities and asset owners
-                  {answers['t2q46'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q46': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q46" checked={answers['t2q46'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q46': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q46': 'd' })}>
                   d) None of the above
-                  {answers['t2q46'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2909,29 +2909,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>47.</span><span className="whitespace-pre-wrap">Typical tools, plant and equipment may include…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q47': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q47" checked={answers['t2q47'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q47': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q47': 'a' })}>
                   a) Shovels
-                  {answers['t2q47'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q47': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q47" checked={answers['t2q47'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q47': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q47': 'b' })}>
                   b) Trenching equipment
-                  {answers['t2q47'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q47': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q47" checked={answers['t2q47'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q47': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q47': 'c' })}>
                   c) Jointing equipment
-                  {answers['t2q47'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q47': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q47" checked={answers['t2q47'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q47': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q47': 'd' })}>
                   d) All of the above
-                  {answers['t2q47'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -2955,29 +2955,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>48.</span><span className="whitespace-pre-wrap">Excavation for existing underground enclosures should be conduction with consideration for:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q48': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q48" checked={answers['t2q48'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q48': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q48': 'a' })}>
                   a) Trench width kept to a minimum
-                  {answers['t2q48'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q48': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q48" checked={answers['t2q48'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q48': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q48': 'b' })}>
                   b) Adequate clearances for ease of access
-                  {answers['t2q48'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q48': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q48" checked={answers['t2q48'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q48': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q48': 'c' })}>
                   c) Shoring of trenches as required
-                  {answers['t2q48'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q48': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q48" checked={answers['t2q48'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q48': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q48': 'd' })}>
                   d) All of the above
-                  {answers['t2q48'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3001,17 +3001,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>49.</span><span className="whitespace-pre-wrap">Personal Protective Equipment (PPE) must be worn on site?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q49': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q49" checked={answers['t2q49'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q49': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q49': 'true' })}>
                   a) True
-                  {answers['t2q49'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q49': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q49" checked={answers['t2q49'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q49': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q49': 'false' })}>
                   b) False
-                  {answers['t2q49'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3058,17 +3058,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>51.</span><span className="whitespace-pre-wrap">The installation requirements for underground telecommunications installations are outlined in Plans and Technical Standards.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q51': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q51" checked={answers['t2q51'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q51': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q51': 'true' })}>
                   a) True
-                  {answers['t2q51'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q51': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q51" checked={answers['t2q51'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q51': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q51': 'false' })}>
                   b) False
-                  {answers['t2q51'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3092,29 +3092,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>52.</span><span className="whitespace-pre-wrap">The maximum recommended number of 20 pair cables in a 50 mm conduit is?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q52': '5' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q52" checked={answers['t2q52'] === '5'} onChange={() => setAnswers({ ...answers, 't2q52': '5' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q52': '5' })}>
                   5
-                  {answers['t2q52'] === '5' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q52': '4' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q52" checked={answers['t2q52'] === '4'} onChange={() => setAnswers({ ...answers, 't2q52': '4' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q52': '4' })}>
                   4
-                  {answers['t2q52'] === '4' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q52': '3' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q52" checked={answers['t2q52'] === '3'} onChange={() => setAnswers({ ...answers, 't2q52': '3' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q52': '3' })}>
                   3
-                  {answers['t2q52'] === '3' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q52': '2' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q52" checked={answers['t2q52'] === '2'} onChange={() => setAnswers({ ...answers, 't2q52': '2' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q52': '2' })}>
                   2
-                  {answers['t2q52'] === '2' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3143,29 +3143,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>53.</span><span className="whitespace-pre-wrap">The only colour conduit for communications cable is?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q53': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q53" checked={answers['t2q53'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q53': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q53': 'a' })}>
                   a) Green
-                  {answers['t2q53'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q53': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q53" checked={answers['t2q53'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q53': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q53': 'b' })}>
                   b) Orange
-                  {answers['t2q53'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q53': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q53" checked={answers['t2q53'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q53': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q53': 'c' })}>
                   c) White
-                  {answers['t2q53'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q53': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q53" checked={answers['t2q53'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q53': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q53': 'd' })}>
                   d) Yellow
-                  {answers['t2q53'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3189,29 +3189,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>54.</span><span className="whitespace-pre-wrap">When installing conduit, conduit bends or couplings care should be taken to ensure:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q54': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q54" checked={answers['t2q54'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q54': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q54': 'a' })}>
                   a) Free of external marks on the outside of the conduit and that the conduit ends must be of a green or blue in colour
-                  {answers['t2q54'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q54': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q54" checked={answers['t2q54'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q54': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q54': 'b' })}>
                   b) Free of snag points by cutting the end of the conduit at a right angle to the axis of the conduit and removing all burrs and sharp edges using a file or scraper
-                  {answers['t2q54'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q54': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q54" checked={answers['t2q54'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q54': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q54': 'c' })}>
                   c) Conduit is self-installing and doesn’t require any additional work
-                  {answers['t2q54'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q54': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q54" checked={answers['t2q54'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q54': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q54': 'd' })}>
                   d) All of the above
-                  {answers['t2q54'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3235,29 +3235,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>55.</span><span className="whitespace-pre-wrap">Telecommunications underground conduit installed in a location other than a public footpath or roadway?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q55': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q55" checked={answers['t2q55'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q55': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q55': 'a' })}>
                   a) No special conditions required
-                  {answers['t2q55'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q55': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q55" checked={answers['t2q55'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q55': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q55': 'b' })}>
                   b) Enclosed in a red conduit for easy identification
-                  {answers['t2q55'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q55': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q55" checked={answers['t2q55'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q55': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q55': 'c' })}>
                   c) Enclosed in a compliant conduit
-                  {answers['t2q55'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q55': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q55" checked={answers['t2q55'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q55': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q55': 'd' })}>
                   d) All of the above
-                  {answers['t2q55'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3281,29 +3281,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>56.</span><span className="whitespace-pre-wrap">To ensure you have selected the correct excavation equipment and plants:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q56': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q56" checked={answers['t2q56'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q56': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q56': 'a' })}>
                   a) You will need to check the task requirements, specifications and goals
-                  {answers['t2q56'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q56': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q56" checked={answers['t2q56'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q56': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q56': 'b' })}>
                   b) You will need to check the weather, time and goals
-                  {answers['t2q56'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q56': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q56" checked={answers['t2q56'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q56': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q56': 'c' })}>
                   c) You will need to check the user guides for the work, who is on site and goals
-                  {answers['t2q56'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q56': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q56" checked={answers['t2q56'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q56': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q56': 'd' })}>
                   d) None of the above
-                  {answers['t2q56'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3327,29 +3327,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>57.</span><span className="whitespace-pre-wrap">A multimeter can be used to check copper cables for?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q57': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q57" checked={answers['t2q57'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q57': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q57': 'a' })}>
                   a) Continuity
-                  {answers['t2q57'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q57': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q57" checked={answers['t2q57'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q57': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q57': 'b' })}>
                   b) Short circuits
-                  {answers['t2q57'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q57': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q57" checked={answers['t2q57'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q57': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q57': 'c' })}>
                   c) Loop resistance
-                  {answers['t2q57'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q57': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q57" checked={answers['t2q57'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q57': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q57': 'd' })}>
                   d) All of the above
-                  {answers['t2q57'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3373,29 +3373,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>58.</span><span className="whitespace-pre-wrap">An induction /tone generator can be used to?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q58': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q58" checked={answers['t2q58'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q58': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q58': 'a' })}>
                   a) Measuring cable pair loop resistance
-                  {answers['t2q58'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q58': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q58" checked={answers['t2q58'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q58': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q58': 'b' })}>
                   b) Identifying pairs within cables
-                  {answers['t2q58'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q58': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q58" checked={answers['t2q58'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q58': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q58': 'c' })}>
                   c) Identify open circuits
-                  {answers['t2q58'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q58': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q58" checked={answers['t2q58'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q58': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q58': 'd' })}>
                   d) None of the above
-                  {answers['t2q58'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3419,29 +3419,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>59.</span><span className="whitespace-pre-wrap">Wire map testers can test for?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q59': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q59" checked={answers['t2q59'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q59': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q59': 'a' })}>
                   a) Open circuit
-                  {answers['t2q59'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q59': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q59" checked={answers['t2q59'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q59': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q59': 'b' })}>
                   b) Short circuit
-                  {answers['t2q59'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q59': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q59" checked={answers['t2q59'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q59': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q59': 'c' })}>
                   c) Reversed or split pairs
-                  {answers['t2q59'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q59': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q59" checked={answers['t2q59'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q59': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q59': 'd' })}>
                   d) All of the above
-                  {answers['t2q59'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3465,29 +3465,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>60.</span><span className="whitespace-pre-wrap">On completion of installation conduits should be tested for blockages to ensure they are free from impediments to cable hauling:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q60': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q60" checked={answers['t2q60'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q60': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q60': 'a' })}>
                   a) Sures edges
-                  {answers['t2q60'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q60': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q60" checked={answers['t2q60'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q60': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q60': 'b' })}>
                   b) Blockages
-                  {answers['t2q60'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q60': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q60" checked={answers['t2q60'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q60': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q60': 'c' })}>
                   c) Kinks
-                  {answers['t2q60'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q60': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q60" checked={answers['t2q60'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q60': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q60': 'd' })}>
                   d) All of the above
-                  {answers['t2q60'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3516,17 +3516,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>61.</span><span className="whitespace-pre-wrap">A (TDR) Time Domain Reflectometer can be used to check copper cables for continuity, Short circuits, open circuit, cable length, and fault location.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q61': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q61" checked={answers['t2q61'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q61': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q61': 'true' })}>
                   a) True
-                  {answers['t2q61'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q61': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q61" checked={answers['t2q61'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q61': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q61': 'false' })}>
                   b) False
-                  {answers['t2q61'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3573,29 +3573,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>63.</span><span className="whitespace-pre-wrap">An (OTDR) Optical Time Domain Reflectometer sends a pulse of light down the cable to locate insertion loss on optical fibre cables?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q63': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q63" checked={answers['t2q63'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q63': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q63': 'a' })}>
                   a) Voltage
-                  {answers['t2q63'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q63': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q63" checked={answers['t2q63'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q63': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q63': 'b' })}>
                   b) Light
-                  {answers['t2q63'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q63': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q63" checked={answers['t2q63'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q63': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q63': 'c' })}>
                   c) High frequency
-                  {answers['t2q63'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q63': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q63" checked={answers['t2q63'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q63': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q63': 'd' })}>
                   d) None of the above
-                  {answers['t2q63'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3619,29 +3619,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>64.</span><span className="whitespace-pre-wrap">Which test setup will give the operator the most information in when testing Optical Fibre cable?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q64': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q64" checked={answers['t2q64'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q64': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q64': 'a' })}>
                   a) Light Source/Power Meter method
-                  {answers['t2q64'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q64': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q64" checked={answers['t2q64'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q64': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q64': 'b' })}>
                   b) OTDR
-                  {answers['t2q64'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q64': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q64" checked={answers['t2q64'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q64': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q64': 'c' })}>
                   c) Both the same
-                  {answers['t2q64'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q64': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q64" checked={answers['t2q64'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q64': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q64': 'd' })}>
                   d) All of the above
-                  {answers['t2q64'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3665,29 +3665,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>65.</span><span className="whitespace-pre-wrap">The types of test equipment and the type of test will be determined by:</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q65': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q65" checked={answers['t2q65'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q65': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q65': 'a' })}>
                   a) Test results
-                  {answers['t2q65'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q65': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q65" checked={answers['t2q65'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q65': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q65': 'b' })}>
                   b) The design parameters
-                  {answers['t2q65'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q65': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q65" checked={answers['t2q65'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q65': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q65': 'c' })}>
                   c) What day the tests are done on
-                  {answers['t2q65'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q65': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q65" checked={answers['t2q65'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q65': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q65': 'd' })}>
                   d) False
-                  {answers['t2q65'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3711,29 +3711,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>66.</span><span className="whitespace-pre-wrap">Conduit ends are sealed to…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q66': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q66" checked={answers['t2q66'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q66': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q66': 'a' })}>
                   a) Prevent the ingress of dirt and water
-                  {answers['t2q66'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q66': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q66" checked={answers['t2q66'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q66': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q66': 'b' })}>
                   b) To make it easier to haul through ducts
-                  {answers['t2q66'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q66': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q66" checked={answers['t2q66'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q66': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q66': 'c' })}>
                   c) The sealing makes jointing easier
-                  {answers['t2q66'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q66': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q66" checked={answers['t2q66'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q66': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q66': 'd' })}>
                   d) None of the above
-                  {answers['t2q66'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3757,17 +3757,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>67.</span><span className="whitespace-pre-wrap">Conduit should enter a pit or access hole through the long sides.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q67': 'true' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q67" checked={answers['t2q67'] === 'true'} onChange={() => setAnswers({ ...answers, 't2q67': 'true' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q67': 'true' })}>
                   a) True
-                  {answers['t2q67'] === 'true' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q67': 'false' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q67" checked={answers['t2q67'] === 'false'} onChange={() => setAnswers({ ...answers, 't2q67': 'false' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q67': 'false' })}>
                   b) False
-                  {answers['t2q67'] === 'false' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3796,29 +3796,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>68.</span><span className="whitespace-pre-wrap">Wherever practicable, access-holes should be spaced at approximately…</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q68': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q68" checked={answers['t2q68'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q68': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q68': 'a' })}>
                   a) 230 m intervals
-                  {answers['t2q68'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q68': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q68" checked={answers['t2q68'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q68': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q68': 'b' })}>
                   b) 320 m intervals
-                  {answers['t2q68'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q68': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q68" checked={answers['t2q68'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q68': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q68': 'c' })}>
                   c) 330 m intervals
-                  {answers['t2q68'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q68': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q68" checked={answers['t2q68'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q68': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q68': 'd' })}>
                   d) None of the above
-                  {answers['t2q68'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3842,29 +3842,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>69.</span><span className="whitespace-pre-wrap">On completion of the work it is essential to send a report promptly to all parties and get sign off from the customer.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q69': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q69" checked={answers['t2q69'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q69': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q69': 'a' })}>
                   a) Gift, ACMA
-                  {answers['t2q69'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q69': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q69" checked={answers['t2q69'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q69': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q69': 'b' })}>
                   b) Report, customer
-                  {answers['t2q69'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q69': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q69" checked={answers['t2q69'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q69': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q69': 'c' })}>
                   c) On completion, appropriate personnel of job
-                  {answers['t2q69'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q69': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q69" checked={answers['t2q69'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q69': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q69': 'd' })}>
                   d) None of the above
-                  {answers['t2q69'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3888,29 +3888,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>70.</span><span className="whitespace-pre-wrap">Reinstatement of the site is the responsibility of …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q70': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q70" checked={answers['t2q70'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q70': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q70': 'a' })}>
                   a) ACMA
-                  {answers['t2q70'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q70': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q70" checked={answers['t2q70'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q70': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q70': 'b' })}>
                   b) Customer
-                  {answers['t2q70'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q70': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q70" checked={answers['t2q70'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q70': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q70': 'c' })}>
                   c) Contractor
-                  {answers['t2q70'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q70': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q70" checked={answers['t2q70'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q70': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q70': 'd' })}>
                   d) All of the above
-                  {answers['t2q70'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3934,29 +3934,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>71.</span><span className="whitespace-pre-wrap">Care must be taken when testing optical fibre cables to avoid …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q71': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q71" checked={answers['t2q71'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q71': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q71': 'a' })}>
                   a) Foot damage due to the high weight of the fibres
-                  {answers['t2q71'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q71': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q71" checked={answers['t2q71'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q71': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q71': 'b' })}>
                   b) Eye damage due to the laser light in the fibres
-                  {answers['t2q71'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q71': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q71" checked={answers['t2q71'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q71': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q71': 'c' })}>
                   c) Optical fibre is not dangerous
-                  {answers['t2q71'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q71': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q71" checked={answers['t2q71'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q71': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q71': 'd' })}>
                   d) All of the above
-                  {answers['t2q71'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -3980,17 +3980,17 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>72.</span><span className="whitespace-pre-wrap">Is it necessary to support cables in pits and enclosures?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q72': 'yes' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q72" checked={answers['t2q72'] === 'yes'} onChange={() => setAnswers({ ...answers, 't2q72': 'yes' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q72': 'yes' })}>
                   a) Yes
-                  {answers['t2q72'] === 'yes' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q72': 'no' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q72" checked={answers['t2q72'] === 'no'} onChange={() => setAnswers({ ...answers, 't2q72': 'no' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q72': 'no' })}>
                   b) No
-                  {answers['t2q72'] === 'no' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -4014,29 +4014,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>73.</span><span className="whitespace-pre-wrap">To enable future underground enclosure identification at a future date all enclosures must be …</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q73': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q73" checked={answers['t2q73'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q73': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q73': 'a' })}>
                   a) Marked legibly
-                  {answers['t2q73'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q73': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q73" checked={answers['t2q73'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q73': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q73': 'b' })}>
                   b) Coloured red or green
-                  {answers['t2q73'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q73': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q73" checked={answers['t2q73'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q73': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q73': 'c' })}>
                   c) Cables don’t need to be marked
-                  {answers['t2q73'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q73': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q73" checked={answers['t2q73'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q73': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q73': 'd' })}>
                   d) None of the above
-                  {answers['t2q73'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -4060,29 +4060,29 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
           <div className="p-3 sm:p-4">
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>74.</span><span className="whitespace-pre-wrap">Backfill of the site should be undertaken to ensure?</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q74': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q74" checked={answers['t2q74'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q74': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q74': 'a' })}>
                   a) the finished surface level does not settle beyond that acceptable to the contractor
-                  {answers['t2q74'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q74': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q74" checked={answers['t2q74'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q74': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q74': 'b' })}>
                   b) the finished surface level does not settle beyond that acceptable to the local authority or the carrier
-                  {answers['t2q74'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q74': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q74" checked={answers['t2q74'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q74': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q74': 'c' })}>
                   c) the finished surface level does not settle beyond that acceptable to the ACMA
-                  {answers['t2q74'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q74': 'd' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q74" checked={answers['t2q74'] === 'd'} onChange={() => setAnswers({ ...answers, 't2q74': 'd' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q74': 'd' })}>
                   d) the finished surface level is the responsibility of the local authority or the carrier
-                  {answers['t2q74'] === 'd' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -4108,23 +4108,23 @@ export const Q15Booklet: React.FC<Q15BookletProps> = ({ answers, setAnswers, onS
             <div className="flex gap-2 font-bold mb-3 text-[10pt]"><span>75.</span><span className="whitespace-pre-wrap">The most common metals used in cables are ________________ and ________________.
 Recycling plants will granulate and then separate the metal from the________________. Using this process, the plastic is removed and the copper, aluminium or other metals present are separated________________for recycling. These metals are then smelted for reuse in new metal products. Similarly the plastic is melted and extruded for ________________.</span></div>
             <div className="pl-0 sm:pl-6 mt-2">
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q75': 'a' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q75" checked={answers['t2q75'] === 'a'} onChange={() => setAnswers({ ...answers, 't2q75': 'a' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q75': 'a' })}>
                   a) Plastic, Rubber, Cables, Magnetically, Destruction
-                  {answers['t2q75'] === 'a' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q75': 'b' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q75" checked={answers['t2q75'] === 'b'} onChange={() => setAnswers({ ...answers, 't2q75': 'b' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q75': 'b' })}>
                   b) copper, aluminium, insulation, magnetically, reuse
-                  {answers['t2q75'] === 'b' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
-              <div className="mb-2 text-[10.5pt]">
-                <span className="cursor-pointer hover:bg-gray-50 relative inline-block pr-6" onClick={() => setAnswers({ ...answers, 't2q75': 'c' })}>
+              <div className="flex gap-2 mb-2 items-center text-[10.5pt]">
+                <input type="radio" name="t2q75" checked={answers['t2q75'] === 'c'} onChange={() => setAnswers({ ...answers, 't2q75': 'c' })} className="mt-0.5 cursor-pointer" />
+                <label className="cursor-pointer hover:bg-gray-50" onClick={() => setAnswers({ ...answers, 't2q75': 'c' })}>
                   c) Lead, Bronze, Insulation, magnetically, destruction
-                  {answers['t2q75'] === 'c' && <span className="absolute right-0 -top-1 text-red-600 font-bold text-2xl leading-none z-10 pointer-events-none">✓</span>}
-                </span>
+                </label>
               </div>
             </div></div>
           <div className="flex border-t-[1.5px] border-black font-bold text-[9pt] sm:text-[9.5pt] mt-auto">
@@ -4499,13 +4499,13 @@ Recycling plants will granulate and then separate the metal from the____________
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor name</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa2_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_assessor_name': e.target.value })} readOnly={isStudent} />
+                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} />
                 </td>
               </tr>
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Date</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa2_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa2_date': e.target.value })} readOnly={isStudent} />
+                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
                 </td>
               </tr>
             </tbody>
@@ -4789,13 +4789,13 @@ Recycling plants will granulate and then separate the metal from the____________
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor name</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa3_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_assessor_name': e.target.value })} readOnly={isStudent} />
+                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} />
                 </td>
               </tr>
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Date</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa3_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa3_date': e.target.value })} readOnly={isStudent} />
+                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
                 </td>
               </tr>
             </tbody>
@@ -4896,13 +4896,13 @@ Recycling plants will granulate and then separate the metal from the____________
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor name</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa4_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_assessor_name': e.target.value })} readOnly={isStudent} />
+                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} />
                 </td>
               </tr>
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Date</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa4_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa4_date': e.target.value })} readOnly={isStudent} />
+                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
                 </td>
               </tr>
             </tbody>
@@ -5316,13 +5316,13 @@ Recycling plants will granulate and then separate the metal from the____________
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor name</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa6_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_assessor_name': e.target.value })} readOnly={isStudent} />
+                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} />
                 </td>
               </tr>
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Date</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa6_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa6_date': e.target.value })} readOnly={isStudent} />
+                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
                 </td>
               </tr>
             </tbody>
@@ -5531,13 +5531,13 @@ Recycling plants will granulate and then separate the metal from the____________
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Assessor name</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa7_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_assessor_name': e.target.value })} readOnly={isStudent} />
+                  <input type="text" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} />
                 </td>
               </tr>
               <tr>
                 <td className="border border-black p-2 font-bold text-[9.5pt]">Date</td>
                 <td colSpan={3} className="border border-black p-2 text-left align-middle">
-                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord['pa7_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_date': e.target.value })} readOnly={isStudent} />
+                  <input type="date" className="w-full bg-transparent pl-2 focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} />
                 </td>
               </tr>
             </tbody>
@@ -5561,8 +5561,8 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 w-1/2">Project Manager:<br /><input type="text" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord['pa7_project_manager'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_project_manager': e.target.value })} readOnly={isStudent} /></td>
               </tr>
               <tr>
-                <td className="border border-black p-2 w-1/2">Start Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord['pa7_start_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_start_date': e.target.value })} readOnly={isStudent} /></td>
-                <td className="border border-black p-2 w-1/2">Completion Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord['pa7_completion_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_completion_date': e.target.value })} readOnly={isStudent} /></td>
+                <td className="border border-black p-2 w-1/2">Start Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td>
+                <td className="border border-black p-2 w-1/2">Completion Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td>
               </tr>
               <tr>
                 <td className="border border-black p-2 w-1/2">Project Duration:<br /><input type="text" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord['pa7_project_duration'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_project_duration': e.target.value })} readOnly={isStudent} /></td>
@@ -5586,8 +5586,8 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td className="border border-black p-2 w-1/2 align-top h-[80px]">Customer Name and Signature:<br /><input type="text" className="w-full bg-transparent focus:outline-none mb-1 mt-1" value={compRecord['pa7_cust_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cust_name': e.target.value })} readOnly={isStudent} placeholder="Name" /><div onClick={() => !isStudent && openSigModal('pa7_cust_sig', 'comp')} className="w-full min-h-[30px] cursor-pointer">{(compRecord.assessor_signature || compRecord['pa7_cust_sig']) ? <img src={compRecord.assessor_signature || compRecord['pa7_cust_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></td>
               </tr>
               <tr>
-                <td className="border border-black p-2 w-1/2">Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord['pa7_pm_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_pm_date': e.target.value })} readOnly={isStudent} /></td>
-                <td className="border border-black p-2 w-1/2">Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord['pa7_cust_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'pa7_cust_date': e.target.value })} readOnly={isStudent} /></td>
+                <td className="border border-black p-2 w-1/2">Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td>
+                <td className="border border-black p-2 w-1/2">Date:<br /><input type="date" className="w-full bg-transparent focus:outline-none mt-1" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td>
               </tr>
             </tbody>
           </table>
@@ -5664,27 +5664,27 @@ Recycling plants will granulate and then separate the metal from the____________
                 <td colSpan={2} className="border border-black p-2 align-top"><span className="font-bold">Learner Declaration:</span><br />I certify that the attached material is my original work. I consent to my assessment being checked, electronically or otherwise, for plagiarism, collusion, and use of model answers, correct referencing or any other form of misrepresentation. I have not submitted this assessment for any other course or unit.</td>
                 <td colSpan={2} className="border border-black p-2 align-top">
                   <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Signature:</span><div onClick={() => !isStudent && openSigModal('learner_dec_sig', 'comp')} className="w-full border-b border-black min-h-[20px] cursor-pointer inline-flex items-center justify-center">{(compRecord.assessor_signature || compRecord['learner_dec_sig']) ? <img src={compRecord.assessor_signature || compRecord['learner_dec_sig']} className="max-h-[25px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">Click to sign</span>}</div></div>
-                  <div className="flex items-center"><span className="font-bold w-[80px]">Date:</span><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['learner_dec_date'] || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'learner_dec_date': e.target.value })} readOnly={isStudent} /></div>
+                  <div className="flex items-center"><span className="font-bold w-[80px]">Date:</span><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={answers['student_decl_date'] || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'student_decl_date': e.target.value })} disabled={!isStudent} /></div>
                 </td>
               </tr>
               <tr><td colSpan={4} className="border border-black p-2 align-top"><span className="font-bold">Assessor Instructions:</span><br />Mark each assessment task as either Satisfactory (S) or Not Yet Satisfactory (NYS) and the complete the appropriate date. Tick the box appropriate to the assessment judgment, indicate if verbal feed was given and add written feedback as required for learners. Read and agree to the assessor declaration, sign and date this cover sheet, and if applicable record the result on the Institute's LMS and hand the completed SAP to student administration or the training manager.</td></tr>
               <tr><td colSpan={2} className="border border-black p-2 text-center font-bold">Assessment Task</td><td className="border border-black p-2 text-center font-bold">Circle S or<br />NYS</td><td className="border border-black p-2 text-center font-bold">Date</td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Knowledge Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_kat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_kat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_kat1_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 2</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat2_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat2_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat2_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 3</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat3_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat3_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat3_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 4</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat4_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat4_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat4_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 5</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat5_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat5_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat5_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 6</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat6_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat6_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat6_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_date': e.target.value })} readOnly={isStudent} /></td></tr>
-              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 7</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat7_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat7_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord['outcome_pat7_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_date': e.target.value })} readOnly={isStudent} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat1_result': compRecord['outcome_pat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Knowledge Assessment Task 1</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_kat1_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_kat1_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_kat1_result': compRecord['outcome_kat1_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 2</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat2_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat2_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat2_result': compRecord['outcome_pat2_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 3</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat3_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat3_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat3_result': compRecord['outcome_pat3_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 4</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat4_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat4_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat4_result': compRecord['outcome_pat4_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 5</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat5_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat5_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat5_result': compRecord['outcome_pat5_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 6</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat6_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat6_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat6_result': compRecord['outcome_pat6_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
+              <tr><td colSpan={2} className="border border-black p-2">Practical Assessment Task 7</td><td className="border border-black p-2 text-center"><div className="flex gap-2 justify-center items-center"><div className={`cursor-pointer font-bold ${compRecord['outcome_pat7_result'] === 'S' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'S' ? '' : 'S' })}>S</div><div className={`cursor-pointer font-bold ${compRecord['outcome_pat7_result'] === 'NYS' ? 'text-red-600 border border-red-600 rounded-full px-1' : ''}`} onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_pat7_result': compRecord['outcome_pat7_result'] === 'NYS' ? '' : 'NYS' })}>NYS</div></div></td><td className="border border-black p-2 text-center"><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></td></tr>
               <tr><td colSpan={2} className="border border-black p-2"><span className="font-bold">Final Result</span><span className="ml-8">(Please check box)</span></td><td colSpan={2} className="border border-black p-2"><div className="flex justify-between items-center w-full"><div className="flex items-center gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_final_result': compRecord['outcome_final_result'] === 'NYC' ? '' : 'NYC' })}><span>Not Yet Competent</span><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_final_result'] === 'NYC' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div></div><div className="flex items-center gap-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_final_result': compRecord['outcome_final_result'] === 'C' ? '' : 'C' })}><span>Competent</span><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_final_result'] === 'C' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div></div></div></td></tr>
               <tr><td colSpan={1} className="border border-black p-2 font-bold align-top">Assessor Feedback</td><td colSpan={3} className="border border-black p-2"><div className="flex items-center gap-2 mb-2 cursor-pointer" onClick={() => !isStudent && setCompRecord({ ...compRecord, 'outcome_verbal_feedback_provided': compRecord['outcome_verbal_feedback_provided'] === 'Yes' ? '' : 'Yes' })}><div className="w-4 h-4 border border-black rounded-sm flex items-center justify-center bg-white">{compRecord['outcome_verbal_feedback_provided'] === 'Yes' && <span className="text-red-600 font-bold text-lg leading-none">✓</span>}</div><span className="font-bold">Verbal feedback Provided –</span></div><div className="ml-6 italic text-sm">Additional feedback (if required)</div><textarea className="w-full h-[40px] resize-none bg-transparent focus:outline-none mt-2" value={compRecord['outcome_assessor_comments'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_comments': e.target.value })} readOnly={isStudent} /></td></tr>
               <tr>
                 <td colSpan={2} className="border border-black p-2 align-top"><span className="font-bold">Assessor:</span><br />I declare that I have conducted a fair, valid, reliable and flexible judgement of this assessment in accordance to the Principles of Assessment and the Rules of Evidence as outlined in the Standards for RTOS 2015.<br />I have provided appropriate feedback. I also declare that I have undertaken appropriate assessment integrity checks:<br /><ul className="list-disc pl-8"><li>Check for plagiarism</li><li>Check for Copying/Collusion/Authenticity (learner's own work)</li><li>Cheating or use of model answers</li></ul></td>
                 <td colSpan={2} className="border border-black p-2 align-top">
-                  <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Assessor<br />Name :</span><input type="text" className="w-full border-b border-black bg-transparent focus:outline-none ml-2" value={compRecord['outcome_assessor_name'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_name': e.target.value })} readOnly={isStudent} /></div>
+                  <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Assessor<br />Name :</span><input type="text" className="w-full border-b border-black bg-transparent focus:outline-none ml-2" value={compRecord.assessor_name || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_name: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'text' }} /></div>
                   <div className="flex items-center mb-4"><span className="font-bold w-[80px]">Assessor<br />Signature:</span><div onClick={() => !isStudent && openSigModal('outcome_assessor_sig', 'comp')} className="w-full border-b border-black min-h-[30px] cursor-pointer inline-flex items-center justify-center ml-2">{(compRecord.assessor_signature || compRecord['outcome_assessor_sig']) ? <img src={compRecord.assessor_signature || compRecord['outcome_assessor_sig']} className="max-h-[30px] max-w-[100px] object-contain" /> : <span className="text-[10px] text-slate-400 italic no-print">{isStudent ? '' : 'Click to sign'}</span>}</div></div>
-                  <div className="flex items-center"><span className="font-bold w-[80px]">Date:</span><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none ml-2" value={compRecord['outcome_assessor_date'] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, 'outcome_assessor_date': e.target.value })} readOnly={isStudent} /></div>
+                  <div className="flex items-center"><span className="font-bold w-[80px]">Date:</span><input type="date" className="w-full border-b border-black bg-transparent focus:outline-none ml-2" value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ cursor: isStudent ? 'default' : 'pointer' }} /></div>
                 </td>
               </tr>
               <tr>
