@@ -136,7 +136,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: formatDisplayDate(e.target.value) })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', fontWeight: 'bold' }} />
+                  <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', fontWeight: 'bold' }} />
                   <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))}</div>
                 </div>
               </div>
@@ -450,7 +450,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
             <tr>
               <td style={{ border: '1.5px solid #000', padding: '6px 8px', fontWeight: 'bold', background: '#c0c0c0' }}>Assessment Date</td>
               <td style={{ border: '1.5px solid #000', padding: '0' }}>
-                <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '100%', padding: '6px 8px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit' }} />
+                <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ width: '100%', padding: '6px 8px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit' }} />
                 <div className="hidden print:block" style={{ padding: '6px 8px' }}>{formatDisplayDate(compRecord.assessment_date)}</div>
               </td>
             </tr>
@@ -582,7 +582,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
               <tr key={attempt}>
                 <td style={{ border: '1.5px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'center' }}>{attempt}</td>
                 <td style={{ border: '1.5px solid #000', padding: '0', verticalAlign: 'middle' }}>
-                  <input type="date" className="no-print" value={toDateInputValue(compRecord[`attempt_${attempt}_date`] || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '100%', padding: '6px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', textAlign: 'center' }} />
+                  <input type="date" className="no-print" value={toDateInputValue(compRecord[`attempt_${attempt}_date`] || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: e.target.value })} disabled={isStudent} style={{ width: '100%', padding: '6px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', textAlign: 'center' }} />
                   <div className="hidden print:block text-center">{formatDisplayDate(compRecord[`attempt_${attempt}_date`] || '')}</div>
                 </td>
                 <td style={{ border: '1.5px solid #000', padding: '0' }}>
@@ -621,7 +621,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: formatDisplayDate(e.target.value) })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
                     <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))}</div>
                   </div>
                 </div>
@@ -644,7 +644,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
+                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
                     <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#cc0000] font-bold text-center min-h-[20px]">{formatDisplayDate(compRecord.assessment_date || '')}</div>
                   </div>
                 </div>
@@ -679,7 +679,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                     {compRecord.assessor_signature && <img src={compRecord.assessor_signature} style={{ height: '25px', position: 'absolute', left: '10px', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                   <span style={{ marginRight: '8px' }}>Date:</span>
-                  <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #000', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
+                  <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #000', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
                   <div className="hidden print:block text-[#cc0000] font-bold border-b border-[#000] w-[120px] text-center">{formatDisplayDate(compRecord.assessment_date || '')}</div>
                 </div>
               </td>
@@ -903,7 +903,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
           <tbody>
             <tr>
               <td style={{ border: '1px solid #000', padding: '6px', fontWeight: 'bold' }}>
-                Date Observed: <input type="date" className="no-print" value={toDateInputValue(compRecord.task1_date_obs || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, task1_date_obs: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '120px', border: 'none', outline: 'none', background: 'transparent', color: '#cc0000', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'normal' }} />
+                Date Observed: <input type="date" className="no-print" value={toDateInputValue(compRecord.task1_date_obs || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, task1_date_obs: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', outline: 'none', background: 'transparent', color: '#cc0000', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'normal' }} />
                 <span className="hidden print:inline-block text-[#cc0000] ml-2 font-normal">{formatDisplayDate(compRecord.task1_date_obs || '')}</span>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px' }}></td>
@@ -1014,7 +1014,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task1 !== undefined ? compRecord.student_sig_date_task1 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: formatDisplayDate(e.target.value) })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task1 !== undefined ? compRecord.student_sig_date_task1 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
                     <div className="hidden print:block border-b border-[#888] w-[120px] text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task1 !== undefined ? compRecord.student_sig_date_task1 : (submitDate || '')))}</div>
                   </div>
                 </div>
@@ -1049,7 +1049,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
+                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
                     <div className="hidden print:block border-b border-[#888] w-[120px] text-[#cc0000] font-bold text-center min-h-[20px]">{formatDisplayDate(compRecord.assessment_date || '')}</div>
                   </div>
                 </div>
@@ -1156,7 +1156,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
           <tbody>
             <tr>
               <td style={{ border: '1.5px solid #888', padding: '6px', fontWeight: 'bold' }}>
-                Date Observed: <input type="date" className="no-print" value={toDateInputValue(compRecord.task2_date_obs || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, task2_date_obs: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '120px', border: 'none', outline: 'none', background: 'transparent', color: '#cc0000', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'normal' }} />
+                Date Observed: <input type="date" className="no-print" value={toDateInputValue(compRecord.task2_date_obs || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, task2_date_obs: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', outline: 'none', background: 'transparent', color: '#cc0000', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'normal' }} />
                 <span className="hidden print:inline-block text-[#cc0000] ml-2 font-normal">{formatDisplayDate(compRecord.task2_date_obs || '')}</span>
               </td>
               <td style={{ border: '1.5px solid #888', padding: '6px' }}></td>
@@ -1270,7 +1270,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task2 !== undefined ? compRecord.student_sig_date_task2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: formatDisplayDate(e.target.value) })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task2 !== undefined ? compRecord.student_sig_date_task2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
                     <div className="hidden print:block border-b border-[#888] w-[120px] text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task2 !== undefined ? compRecord.student_sig_date_task2 : (submitDate || '')))}</div>
                   </div>
                 </div>
@@ -1305,7 +1305,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
+                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
                     <div className="hidden print:block border-b border-[#888] w-[120px] text-[#cc0000] font-bold text-center min-h-[20px]">{formatDisplayDate(compRecord.assessment_date || '')}</div>
                   </div>
                 </div>
@@ -1369,7 +1369,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: formatDisplayDate(e.target.value) })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
+                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
                     <div className="hidden print:block border-b border-[#888] w-[120px] text-[#cc0000] font-bold text-center min-h-[20px]">{formatDisplayDate(compRecord.assessment_date || '')}</div>
                   </div>
                 </div>
