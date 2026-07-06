@@ -101,6 +101,17 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
     }
   };
 
+  const toDateInputValue = (d: string) => {
+    if (!d) return '';
+    try {
+      const dt = new Date(d);
+      if (isNaN(dt.getTime())) return '';
+      return dt.toISOString().split('T')[0];
+    } catch {
+      return '';
+    }
+  };
+
   const renderTask3Q = (q: any, taskKey: string) => {
     const qKey = `t${taskKey.replace('task', '')}q${q.id}`;
     return (
@@ -125,10 +136,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
                 <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
                   <div className="no-print" style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', backgroundColor: '#fff' }} onClick={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })}>
-                    {answers[opt.name || qKey] === opt.value && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {answers[opt.name || qKey] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                    {answers[opt.name || qKey] === opt.value && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {answers[opt.name || qKey] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   <label>{opt.text}</label>
                 </div>
@@ -143,10 +154,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       if (!checked) newArr.push(opt.value); else newArr = newArr.filter((v: any) => v !== opt.value);
                       setAnswers({ ...answers, [qKey]: newArr });
                     }}>
-                      {checked && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {checked && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {checked && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {checked && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label>{opt.text}</label>
                   </div>
@@ -166,10 +177,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                   {part.options?.map((opt: any, oIdx: number) => (
                     <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '4px', alignItems: 'center' }}>
                       <div className="no-print" style={{ width: '14px', height: '14px', border: '1.5px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', backgroundColor: '#fff' }} onClick={() => setAnswers({ ...answers, [part.name]: opt.value })}>
-                        {answers[part.name] === opt.value && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                        {answers[part.name] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                       </div>
                       <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1.5px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                        {answers[part.name] === opt.value && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                        {answers[part.name] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                       </div>
                       <label>{opt.text}</label>
                     </div>
@@ -269,10 +280,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                     setAnswers({ ...answers, [qKey]: opt.value });
                   }
                 }}>
-                  {checked && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  {checked && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                 </div>
                 <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: isTrueFalse ? '2px solid #000' : '1.5px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                  {checked && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                  {checked && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                 </div>
                 <label style={{ fontWeight: isTrueFalse ? 'bold' : 'normal' }}>{opt.text}</label>
               </div>
@@ -285,10 +296,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               {part.options?.map((opt: any, oIdx: number) => (
                 <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '4px', alignItems: 'center' }}>
                   <div className="no-print" style={{ width: '14px', height: '14px', border: '1.5px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', backgroundColor: '#fff' }} onClick={() => setAnswers({ ...answers, [part.name]: opt.value })}>
-                    {answers[part.name] === opt.value && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {answers[part.name] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1.5px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                    {answers[part.name] === opt.value && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {answers[part.name] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   <label>{opt.text}</label>
                 </div>
@@ -349,15 +360,16 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Signature:</span>
                   <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '24px', cursor: 'pointer', position: 'relative' }}>
-                    {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                    {answers.student_signature_url ? <img src={answers.student_signature_url} alt="Sig" style={{ height: '25px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? 'Click to sign' : ''}</span>}
                   </div>
                   <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', position: 'relative' }}>
-                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                    {answers.student_signature_url && <img src={answers.student_signature_url} alt="Sig" style={{ height: '25px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <span style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>{formatDisplayDate(submitDate || '')}</span>
+                  <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1px solid #000', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', fontWeight: 'bold' }} />
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))}</span>
                 </div>
               </div>
             </td>
@@ -378,12 +390,12 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
       </div>
       <div style={{ textAlign: 'center', marginBottom: '16px', fontWeight: 'bold', fontSize: '12pt' }}>
         Result:{' '}
-        <span className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`} onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_result`]: 'S' }) }} style={{ padding: '4px' }}>
-          Satisfactory (S){compRecord[`${taskKey}_result`] === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>}
+        <span className={`inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`} onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_result`]: 'S' }) }} style={{ padding: '4px' }}>
+          Satisfactory (<span className="relative inline-block">S{compRecord[`${taskKey}_result`] === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}</span>)
         </span>
         <span style={{ margin: '0 8px' }}>/</span>
-        <span className={`relative inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`} onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_result`]: 'NS' }) }} style={{ padding: '4px' }}>
-          Not Satisfactory (NS){compRecord[`${taskKey}_result`] === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '110%', height: '140%', pointerEvents: 'none' }}></span>}
+        <span className={`inline-block mx-2 ${isStudent ? '' : 'cursor-pointer'}`} onClick={() => { if (!isStudent) setCompRecord({ ...compRecord, [`${taskKey}_result`]: 'NS' }) }} style={{ padding: '4px' }}>
+          Not Satisfactory (<span className="relative inline-block">NS{compRecord[`${taskKey}_result`] === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}</span>)
         </span>
       </div>
       <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #000' }}>
@@ -397,17 +409,17 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Signature:</span>
                   <div className="no-print" onClick={() => openSigModal('assessor_signature', 'comp')} style={{ borderBottom: '1px solid #000', flex: 1, minHeight: '24px', cursor: isStudent ? 'default' : 'pointer', position: 'relative' }}>
-                    {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
+                    {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '25px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '9px', color: '#888' }}>{isStudent ? '' : 'Click to sign'}</span>}
                   </div>
                   <div className="hidden print:block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', position: 'relative' }}>
-                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '35px', position: 'absolute', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} alt="Sig" style={{ height: '25px', position: 'absolute', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
-                      value={compRecord.assessment_date || ''} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} readOnly={isStudent} />
+                      value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => { if (!isStudent) setCompRecord({ ...compRecord, assessment_date: e.target.value }) }} disabled={isStudent} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{compRecord.assessment_date ? formatDisplayDate(compRecord.assessment_date) : ''}</span>
                 </div>
@@ -444,10 +456,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
         <tr key={`chk-${idx}`} style={{ fontFamily: '"Times New Roman", Times, serif' }}>
           <td style={{ border: '1px solid #000', padding: '6px', fontSize: '9.5pt' }}>{item}</td>
           <td style={{ border: '1px solid #000', padding: '6px', textAlign: 'center', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_chk_${idx}`]: 'yes' })}>
-            {compRecord[`${taskKey}_chk_${idx}`] === 'yes' ? <span style={{ color: 'red', fontWeight: 'bold', fontSize: '14pt', lineHeight: 1 }}>✓</span> : ''}
+            {compRecord[`${taskKey}_chk_${idx}`] === 'yes' ? <span style={{ color: '#cc0000', fontWeight: 'bold', fontSize: '14pt', lineHeight: 1 }}>✓</span> : ''}
           </td>
           <td style={{ border: '1px solid #000', padding: '6px', textAlign: 'center', cursor: isStudent ? 'default' : 'pointer' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_chk_${idx}`]: 'no' })}>
-            {compRecord[`${taskKey}_chk_${idx}`] === 'no' ? <span style={{ color: 'red', fontWeight: 'bold', fontSize: '14pt', lineHeight: 1 }}>✓</span> : ''}
+            {compRecord[`${taskKey}_chk_${idx}`] === 'no' ? <span style={{ color: '#cc0000', fontWeight: 'bold', fontSize: '14pt', lineHeight: 1 }}>✓</span> : ''}
           </td>
           <td style={{ border: '1px solid #000', padding: '6px' }}>
             <textarea className="no-print" style={{ width: '100%', minHeight: '30px', border: 'none', background: 'transparent', outline: 'none', resize: 'vertical', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord[`${taskKey}_chk_comm_${idx}`] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`${taskKey}_chk_comm_${idx}`]: e.target.value })} disabled={isStudent} />
@@ -481,10 +493,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
                   <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
                     <div className="no-print" style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', backgroundColor: '#fff' }} onClick={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })}>
-                      {answers[opt.name || qKey] === opt.value && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {answers[opt.name || qKey] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {answers[opt.name || qKey] === opt.value && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {answers[opt.name || qKey] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label>{opt.text}</label>
                   </div>
@@ -499,10 +511,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                         if (!checked) newArr.push(opt.value); else newArr = newArr.filter((v: any) => v !== opt.value);
                         setAnswers({ ...answers, [qKey]: newArr });
                       }}>
-                        {checked && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                        {checked && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                       </div>
                       <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                        {checked && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                        {checked && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                       </div>
                       <label>{opt.text}</label>
                     </div>
@@ -522,10 +534,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                     {part.options?.map((opt: any, oIdx: number) => (
                       <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '4px', alignItems: 'center' }}>
                         <div className="no-print" style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', backgroundColor: '#fff' }} onClick={() => setAnswers({ ...answers, [part.name]: opt.value })}>
-                          {answers[part.name] === opt.value && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                          {answers[part.name] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                         </div>
                         <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                          {answers[part.name] === opt.value && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                          {answers[part.name] === opt.value && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                         </div>
                         <label>{opt.text}</label>
                       </div>
@@ -546,7 +558,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px', fontWeight: 'bold' }}>
                           Date:<br />
-                          <input type="date" className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_date || ''} onChange={(e) => setAnswers({ ...answers, t1q5_date: e.target.value })} />
+                          <input type="date" className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={toDateInputValue(answers.t1q5_date || '')} onChange={(e) => setAnswers({ ...answers, t1q5_date: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_date}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px', fontWeight: 'bold' }}>
@@ -815,8 +827,8 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold', background: '#c0c0c0' }}>Assessment Date/s</td>
               <td style={{ border: '1px solid #000', padding: '0' }}>
-                <input type="date" className="no-print" value={compRecord.assessment_date_page2 || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date_page2: e.target.value })} disabled={isStudent} style={{ width: '100%', padding: '6px 8px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit' }} />
-                <div className="hidden print:block" style={{ padding: '6px 8px' }}>{formatDisplayDate(compRecord.assessment_date_page2 || '')}</div>
+                <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ width: '100%', padding: '6px 8px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit' }} />
+                <div className="hidden print:block" style={{ padding: '6px 8px' }}>{formatDisplayDate(compRecord.assessment_date || '')}</div>
               </td>
             </tr>
           </tbody>
@@ -836,22 +848,22 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               <td colSpan={2} style={{ background: '#c0c0c0', border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold', width: '40%' }}>Evidence is Confirmed as:</td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', width: '15%' }}>
                 <div className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, evidence_valid: !compRecord.evidence_valid })} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_valid && <span style={{ color: 'red', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Valid
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_valid && <span style={{ color: '#cc0000', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Valid
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', width: '15%' }}>
                 <div className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, evidence_sufficient: !compRecord.evidence_sufficient })} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_sufficient && <span style={{ color: 'red', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Sufficient
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_sufficient && <span style={{ color: '#cc0000', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Sufficient
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', width: '15%' }}>
                 <div className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, evidence_current: !compRecord.evidence_current })} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_current && <span style={{ color: 'red', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Current
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_current && <span style={{ color: '#cc0000', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Current
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', width: '15%' }}>
                 <div className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, evidence_authentic: !compRecord.evidence_authentic })} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_authentic && <span style={{ color: 'red', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Authentic
+                  <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.evidence_authentic && <span style={{ color: '#cc0000', fontSize: '18px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Authentic
                 </div>
               </td>
             </tr>
@@ -862,10 +874,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ fontWeight: 'bold', marginBottom: '16px', fontSize: '10.5pt' }}>FINAL ASSESSMENT<br />RESULT:</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start', paddingLeft: '10%' }}>
                   <div className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, final_result: 'C' })} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
-                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.final_result === 'C' && <span style={{ color: 'red', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Competent (C)
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.final_result === 'C' && <span style={{ color: '#cc0000', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Competent (C)
                   </div>
                   <div className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, final_result: 'NC' })} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
-                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.final_result === 'NC' && <span style={{ color: 'red', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Not Competent (NC)
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>{compRecord.final_result === 'NC' && <span style={{ color: '#cc0000', fontSize: '20px', fontWeight: 'bold', position: 'absolute', top: '-6px', left: '2px' }}>✓</span>}</div> Not Competent (NC)
                   </div>
                 </div>
               </td>
@@ -875,18 +887,18 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t1 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t1 && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div> Case Study
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task1_result_page2: 'S' })} style={{ position: 'relative', display: 'inline-block', width: '20px', height: '20px', lineHeight: '20px' }}>
-                    S{compRecord.task1_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
+                    S{compRecord.task1_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                   /
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task1_result_page2: 'NS' })} style={{ position: 'relative', display: 'inline-block', width: '24px', height: '20px', lineHeight: '20px' }}>
-                    NS{compRecord.task1_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
+                    NS{compRecord.task1_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                 </div>
               </td>
@@ -896,18 +908,18 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t2 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t2 && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div> Knowledge Evidence
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task2_result_page2: 'S' })} style={{ position: 'relative', display: 'inline-block', width: '20px', height: '20px', lineHeight: '20px' }}>
-                    S{compRecord.task2_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
+                    S{compRecord.task2_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                   /
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task2_result_page2: 'NS' })} style={{ position: 'relative', display: 'inline-block', width: '24px', height: '20px', lineHeight: '20px' }}>
-                    NS{compRecord.task2_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
+                    NS{compRecord.task2_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                 </div>
               </td>
@@ -917,18 +929,18 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t3 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t3 && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div> Written Q & A
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task3_result_page2: 'S' })} style={{ position: 'relative', display: 'inline-block', width: '20px', height: '20px', lineHeight: '20px' }}>
-                    S{compRecord.task3_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
+                    S{compRecord.task3_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                   /
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task3_result_page2: 'NS' })} style={{ position: 'relative', display: 'inline-block', width: '24px', height: '20px', lineHeight: '20px' }}>
-                    NS{compRecord.task3_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
+                    NS{compRecord.task3_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                 </div>
               </td>
@@ -938,18 +950,18 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               <td colSpan={3} style={{ border: '1px solid #000', padding: '6px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t4 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t4 && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div> Additional worksheet of activities and questions
                 </div>
               </td>
               <td style={{ border: '1px solid #000', padding: '6px 8px', textAlign: 'center' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task4_result_page2: 'S' })} style={{ position: 'relative', display: 'inline-block', width: '20px', height: '20px', lineHeight: '20px' }}>
-                    S{compRecord.task4_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
+                    S{compRecord.task4_result_page2 === 'S' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '24px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                   /
                   <span className={isStudent ? '' : 'cursor-pointer'} onClick={() => !isStudent && setCompRecord({ ...compRecord, task4_result_page2: 'NS' })} style={{ position: 'relative', display: 'inline-block', width: '24px', height: '20px', lineHeight: '20px' }}>
-                    NS{compRecord.task4_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid red', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
+                    NS{compRecord.task4_result_page2 === 'NS' && <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', border: '2px solid #cc0000', borderRadius: '50%', width: '32px', height: '24px', pointerEvents: 'none' }}></span>}
                   </span>
                 </div>
               </td>
@@ -968,7 +980,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               <tr key={attempt}>
                 <td style={{ border: '1px solid #000', padding: '6px', fontWeight: 'bold', textAlign: 'center' }}>{attempt}</td>
                 <td style={{ border: '1px solid #000', padding: '0', verticalAlign: 'middle' }}>
-                  <input type="date" className="no-print" value={compRecord[`attempt_${attempt}_date`] || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: e.target.value })} disabled={isStudent} style={{ width: '100%', padding: '6px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', textAlign: 'center' }} />
+                  <input type="date" className="no-print" value={toDateInputValue(compRecord[`attempt_${attempt}_date`] || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: e.target.value })} disabled={isStudent} style={{ width: '100%', padding: '6px', border: 'none', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', textAlign: 'center' }} />
                   <div className="hidden print:block text-center">{formatDisplayDate(compRecord[`attempt_${attempt}_date`] || '')}</div>
                 </td>
                 <td style={{ border: '1px solid #000', padding: '0' }}>
@@ -999,16 +1011,16 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span style={{ marginRight: '8px', minWidth: '60px' }}>Signature:</span>
                     <div className="no-print" onClick={() => !isStudent && openSigModal('assessor_signature', 'comp')} style={{ flex: 1, borderBottom: '1.5px solid #888', minHeight: '24px', position: 'relative', cursor: isStudent ? 'default' : 'pointer' }}>
-                      {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} style={{ height: '35px', position: 'absolute', left: '20px', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '10px', color: '#aaa', position: 'absolute', bottom: '2px', left: '4px' }}>{isStudent ? '' : 'Click to sign'}</span>}
+                      {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} style={{ height: '25px', position: 'absolute', left: '20px', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '10px', color: '#aaa', position: 'absolute', bottom: '2px', left: '4px' }}>{isStudent ? '' : 'Click to sign'}</span>}
                     </div>
                     <div className="hidden print:block" style={{ flex: 1, borderBottom: '1.5px solid #888', height: '24px', position: 'relative' }}>
-                      {compRecord.assessor_signature && <img src={compRecord.assessor_signature} style={{ height: '35px', position: 'absolute', left: '20px', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {compRecord.assessor_signature && <img src={compRecord.assessor_signature} style={{ height: '25px', position: 'absolute', left: '20px', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={compRecord.assessor_sig_date_page2 || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_sig_date_page2: e.target.value })} disabled={isStudent} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
-                    <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#cc0000] font-bold text-center min-h-[20px]">{formatDisplayDate(compRecord.assessor_sig_date_page2 || '')}</div>
+                    <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
+                    <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#cc0000] font-bold text-center min-h-[20px]">{formatDisplayDate(compRecord.assessment_date || '')}</div>
                   </div>
                 </div>
               </td>
@@ -1022,16 +1034,16 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span style={{ marginRight: '8px', minWidth: '60px' }}>Signature:</span>
                     <div className="no-print" onClick={() => openSigModal('student_signature', 'comp')} style={{ flex: 1, borderBottom: '1.5px solid #888', minHeight: '24px', position: 'relative', cursor: 'pointer' }}>
-                      {answers.student_signature_url ? <img src={answers.student_signature_url} style={{ height: '35px', position: 'absolute', left: '20px', bottom: '-4px', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '10px', color: '#aaa', position: 'absolute', bottom: '2px', left: '4px' }}>{isStudent ? 'Click to sign' : ''}</span>}
+                      {answers.student_signature_url ? <img src={answers.student_signature_url} style={{ height: '25px', position: 'absolute', left: '20px', bottom: '0', mixBlendMode: 'multiply' }} /> : <span style={{ fontSize: '10px', color: '#aaa', position: 'absolute', bottom: '2px', left: '4px' }}>{isStudent ? 'Click to sign' : ''}</span>}
                     </div>
                     <div className="hidden print:block" style={{ flex: 1, borderBottom: '1.5px solid #888', height: '24px', position: 'relative' }}>
-                      {answers.student_signature_url && <img src={answers.student_signature_url} style={{ height: '35px', position: 'absolute', left: '20px', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                      {answers.student_signature_url && <img src={answers.student_signature_url} style={{ height: '25px', position: 'absolute', left: '20px', bottom: '0', mixBlendMode: 'multiply' }} />}
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, student_sig_date_page2: e.target.value })} disabled={isStudent} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold' }} />
-                    <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || ''))}</div>
+                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))}</div>
                   </div>
                 </div>
               </td>
@@ -1056,17 +1068,17 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '6px 8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <div className={isStudent ? '' : 'cursor-pointer hover:bg-gray-50'} onClick={() => !isStudent && setCompRecord({ ...compRecord, admin_entered: !compRecord.admin_entered })} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '8px' }}>
-                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff' }}>{compRecord.admin_entered && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}</div> Signature/Initial
+                    <div style={{ width: '14px', height: '14px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#fff' }}>{compRecord.admin_entered && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}</div> Signature/Initial
                   </div>
-                  <div className="no-print" onClick={() => !isStudent && openSigModal('assessor_signature_admin', 'comp')} style={{ width: '150px', borderBottom: '1px solid #000', height: '24px', position: 'relative', cursor: isStudent ? 'default' : 'pointer', margin: '0 8px' }}>
-                    {compRecord.assessor_signature_admin ? <img src={compRecord.assessor_signature_admin} style={{ height: '30px', position: 'absolute', left: '10px', bottom: '-4px', mixBlendMode: 'multiply' }} /> : ''}
+                  <div className="no-print" onClick={() => !isStudent && openSigModal('assessor_signature', 'comp')} style={{ width: '150px', borderBottom: '1px solid #000', height: '24px', position: 'relative', cursor: isStudent ? 'default' : 'pointer', margin: '0 8px' }}>
+                    {compRecord.assessor_signature ? <img src={compRecord.assessor_signature} style={{ height: '25px', position: 'absolute', left: '10px', bottom: '0', mixBlendMode: 'multiply' }} /> : ''}
                   </div>
                   <div className="hidden print:block" style={{ width: '150px', borderBottom: '1px solid #000', height: '24px', position: 'relative', margin: '0 8px' }}>
-                    {compRecord.assessor_signature_admin && <img src={compRecord.assessor_signature_admin} style={{ height: '30px', position: 'absolute', left: '10px', bottom: '-4px', mixBlendMode: 'multiply' }} />}
+                    {compRecord.assessor_signature && <img src={compRecord.assessor_signature} style={{ height: '25px', position: 'absolute', left: '10px', bottom: '0', mixBlendMode: 'multiply' }} />}
                   </div>
                   <span style={{ marginRight: '8px' }}>Date:</span>
-                  <input type="date" className="no-print" value={compRecord.assessor_sig_date_admin || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_sig_date_admin: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #000', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
-                  <div className="hidden print:block text-[#cc0000] font-bold border-b border-[#000] w-[120px] text-center">{formatDisplayDate(compRecord.assessor_sig_date_admin || '')}</div>
+                  <input type="date" className="no-print" value={toDateInputValue(compRecord.assessment_date || '')} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })} disabled={isStudent} style={{ width: '120px', border: 'none', borderBottom: '1px solid #000', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#cc0000', fontWeight: 'bold' }} />
+                  <div className="hidden print:block text-[#cc0000] font-bold border-b border-[#000] w-[120px] text-center">{formatDisplayDate(compRecord.assessment_date || '')}</div>
                 </div>
               </td>
             </tr>
@@ -1126,31 +1138,31 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }}>
                     <div style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={(e) => { if (!isStudent) { e.preventDefault(); setCompRecord({ ...compRecord, adj_educational: !compRecord.adj_educational }); } }}>
-                      {compRecord.adj_educational && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {compRecord.adj_educational && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <span>Educational and bilingual support</span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }}>
                     <div style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={(e) => { if (!isStudent) { e.preventDefault(); setCompRecord({ ...compRecord, adj_presenting_orally: !compRecord.adj_presenting_orally }); } }}>
-                      {compRecord.adj_presenting_orally && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {compRecord.adj_presenting_orally && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <span>Presenting questions orally</span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }}>
                     <div style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={(e) => { if (!isStudent) { e.preventDefault(); setCompRecord({ ...compRecord, adj_diagrammatic: !compRecord.adj_diagrammatic }); } }}>
-                      {compRecord.adj_diagrammatic && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {compRecord.adj_diagrammatic && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <span>Presenting work instructions in diagrammatic or pictorial form instead of words and sentences</span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }}>
                     <div style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={(e) => { if (!isStudent) { e.preventDefault(); setCompRecord({ ...compRecord, adj_extra_time: !compRecord.adj_extra_time }); } }}>
-                      {compRecord.adj_extra_time && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {compRecord.adj_extra_time && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <span>Extra time to complete a course or assessment</span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: isStudent ? 'default' : 'pointer' }}>
                     <div style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={(e) => { if (!isStudent) { e.preventDefault(); setCompRecord({ ...compRecord, adj_others: !compRecord.adj_others }); } }}>
-                      {compRecord.adj_others && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {compRecord.adj_others && <span style={{ color: '#cc0000', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <span>Others: <input type="text" className="no-print" value={compRecord.adj_others_text || ''} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, adj_others_text: e.target.value })} disabled={isStudent} style={{ border: 'none', borderBottom: '1px solid #000', outline: 'none', background: 'transparent' }} /><span className="hidden print:inline-block border-b border-black min-w-[50px]">{compRecord.adj_others_text}</span></span>
                   </label>
@@ -1298,10 +1310,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 {['Minor', 'Major', 'Death'].map((opt) => (
                   <div key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                     <div className="no-print" style={{ width: '12px', height: '12px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', backgroundColor: '#fff' }} onClick={() => setAnswers({ ...answers, t2q2_safety_risk: opt.toLowerCase() })}>
-                      {answers.t2q2_safety_risk === opt.toLowerCase() && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {answers.t2q2_safety_risk === opt.toLowerCase() && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '12px', height: '12px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {answers.t2q2_safety_risk === opt.toLowerCase() && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {answers.t2q2_safety_risk === opt.toLowerCase() && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label style={{ fontSize: '10pt' }}>{opt}</label>
                   </div>
@@ -1311,10 +1323,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 {['Minor', 'Major', 'Death'].map((opt) => (
                   <div key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                     <div className="no-print" style={{ width: '12px', height: '12px', border: '1px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', backgroundColor: '#fff' }} onClick={() => setAnswers({ ...answers, t2q2_env_risk: opt.toLowerCase() })}>
-                      {answers.t2q2_env_risk === opt.toLowerCase() && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {answers.t2q2_env_risk === opt.toLowerCase() && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '12px', height: '12px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {answers.t2q2_env_risk === opt.toLowerCase() && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {answers.t2q2_env_risk === opt.toLowerCase() && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label style={{ fontSize: '10pt' }}>{opt}</label>
                   </div>
@@ -1331,10 +1343,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       if (arr.includes(opt.toLowerCase())) arr = arr.filter(a => a !== opt.toLowerCase()); else arr.push(opt.toLowerCase());
                       setAnswers({ ...answers, t2q2_safety_controls: arr });
                     }}>
-                      {(answers.t2q2_safety_controls || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_safety_controls || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '12px', height: '12px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {(answers.t2q2_safety_controls || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_safety_controls || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label style={{ fontSize: '10pt' }}>{opt}</label>
                   </div>
@@ -1348,10 +1360,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       if (arr.includes(opt.toLowerCase())) arr = arr.filter(a => a !== opt.toLowerCase()); else arr.push(opt.toLowerCase());
                       setAnswers({ ...answers, t2q2_env_controls: arr });
                     }}>
-                      {(answers.t2q2_env_controls || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_env_controls || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '12px', height: '12px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {(answers.t2q2_env_controls || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_env_controls || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label style={{ fontSize: '10pt' }}>{opt}</label>
                   </div>
@@ -1368,10 +1380,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       if (arr.includes(opt.toLowerCase())) arr = arr.filter(a => a !== opt.toLowerCase()); else arr.push(opt.toLowerCase());
                       setAnswers({ ...answers, t2q2_safety_leg: arr });
                     }}>
-                      {(answers.t2q2_safety_leg || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_safety_leg || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '12px', height: '12px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {(answers.t2q2_safety_leg || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_safety_leg || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label style={{ fontSize: '10pt' }}>{opt}</label>
                   </div>
@@ -1385,10 +1397,10 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       if (arr.includes(opt.toLowerCase())) arr = arr.filter(a => a !== opt.toLowerCase()); else arr.push(opt.toLowerCase());
                       setAnswers({ ...answers, t2q2_env_leg: arr });
                     }}>
-                      {(answers.t2q2_env_leg || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_env_leg || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <div className="hidden print:flex" style={{ width: '12px', height: '12px', border: '1px solid #000', justifyContent: 'center', alignItems: 'center' }}>
-                      {(answers.t2q2_env_leg || []).includes(opt.toLowerCase()) && <span style={{ color: 'black', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                      {(answers.t2q2_env_leg || []).includes(opt.toLowerCase()) && <span style={{ color: '#cc0000', fontSize: '12px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                     </div>
                     <label style={{ fontSize: '10pt' }}>{opt}</label>
                   </div>
