@@ -198,11 +198,11 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
                     <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                      value={compRecord[`${taskKey}_student_decl_date`] || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} 
-                      onChange={(e) => setCompRecord({ ...compRecord, [`${taskKey}_student_decl_date`]: e.target.value })} 
+                      value={answers.student_decl_date || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} 
+                      onChange={(e) => setAnswers({ ...answers, student_decl_date: e.target.value })} 
                       max={new Date().toISOString().split('T')[0]} />
                   </span>
-                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord[`${taskKey}_student_decl_date`] || submitDate || new Date().toISOString().split('T')[0])}</span>
+                  <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers.student_decl_date || submitDate || new Date().toISOString().split('T')[0])}</span>
                 </div>
               </div>
             </td>
@@ -503,7 +503,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
             <tr>
               <td style={{ background: '#d9d9d9', border: '1px solid #000', padding: '6px 8px', fontWeight: 'bold' }}>Assessment Date/s</td>
               <td style={{ border: '1px solid #000', padding: '0' }}>
-                <input type="date" className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px 8px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                <input type="date" disabled={isStudent} className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px 8px', fontFamily: '"Times New Roman", Times, serif', cursor: isStudent ? 'default' : 'pointer' }} value={compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessment_date: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                 <div className="hidden print:block" style={{ padding: '6px 8px', minHeight: '30px' }}>{formatDisplayDate(compRecord.assessment_date || new Date().toISOString().split('T')[0])}</div>
               </td>
             </tr>
@@ -581,7 +581,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px', width: '30%' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t1: !compRecord.tasks?.t1 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t1 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t1 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Questions and Answers
                 </div>
@@ -601,7 +601,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t2: !compRecord.tasks?.t2 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t2 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t2 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Observation
                 </div>
@@ -621,7 +621,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t3: !compRecord.tasks?.t3 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t3 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t3 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Observation
                 </div>
@@ -641,7 +641,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1px solid #000', padding: '4px 8px' }}>
                 <div className="checkbox-row" style={{ cursor: isStudent ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => !isStudent && setCompRecord({ ...compRecord, tasks: { ...compRecord.tasks, t4: !compRecord.tasks?.t4 } })}>
                   <div style={{ width: '14px', height: '14px', border: '1px solid #000', background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {compRecord.tasks?.t4 && <span style={{ color: 'black', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
+                    {compRecord.tasks?.t4 && <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold', lineHeight: 1 }}>✓</span>}
                   </div>
                   Report
                 </div>
@@ -672,7 +672,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               <tr key={attempt}>
                 <td style={{ border: '1px solid #000', padding: '6px', textAlign: 'center', fontWeight: 'bold' }}>{attempt}</td>
                 <td style={{ border: '1px solid #000', padding: '0', verticalAlign: 'top' }}>
-                  <input type="date" className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px', fontFamily: '"Times New Roman", Times, serif' }} value={compRecord[`attempt_${attempt}_date`] || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                  <input type="date" disabled={isStudent} className="no-print" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', padding: '6px', fontFamily: '"Times New Roman", Times, serif', cursor: isStudent ? 'default' : 'pointer' }} value={compRecord[`attempt_${attempt}_date`] || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, [`attempt_${attempt}_date`]: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                   <div className="hidden print:block text-center p-1.5">{formatDisplayDate(compRecord[`attempt_${attempt}_date`] || new Date().toISOString().split('T')[0])}</div>
                 </td>
                 <td style={{ border: '1px solid #000', padding: '0', verticalAlign: 'top' }}>
@@ -712,7 +712,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                      <input type="date" disabled={isStudent} style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
                         value={compRecord.assessor_sig_date_page2 || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, assessor_sig_date_page2: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.assessor_sig_date_page2 || new Date().toISOString().split('T')[0])}</span>
@@ -739,9 +739,10 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
                       <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
-                        value={compRecord.student_sig_date_override || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} onChange={(e) => setCompRecord({ ...compRecord, student_sig_date_override: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
+                        value={answers.student_decl_date || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} 
+                        onChange={(e) => setAnswers({ ...answers, student_decl_date: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
-                    <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(compRecord.student_sig_date_override || submitDate || new Date().toISOString().split('T')[0])}</span>
+                    <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers.student_decl_date || submitDate || new Date().toISOString().split('T')[0])}</span>
                   </div>
                 </div>
               </td>
@@ -777,7 +778,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                   </div>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1px solid #000', width: '100px', display: 'inline-block', height: '20px', position: 'relative', margin: '0 8px' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: 0 }}
+                    <input type="date" disabled={isStudent} style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
                       value={compRecord.admin_sig_date || compRecord.assessor_sig_date_page2 || compRecord.assessment_date || new Date().toISOString().split('T')[0]} onChange={(e) => !isStudent && setCompRecord({ ...compRecord, admin_sig_date: e.target.value })}  max={new Date().toISOString().split('T')[0]} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '100px', height: '20px', margin: '0 8px' }}>{formatDisplayDate(compRecord.admin_sig_date || compRecord.assessor_sig_date_page2 || compRecord.assessment_date || new Date().toISOString().split('T')[0])}</span>
