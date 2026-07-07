@@ -349,6 +349,60 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
         .q8-booklet-view { background: #fff !important; padding: 0 !important; }
         .q8-booklet-view .page { margin: 0 !important; padding: 12mm 14mm !important; box-shadow: none !important; border: none !important; }
       }
+
+      @media screen and (max-width: 800px) {
+        .q8-booklet-view { padding: 10px; overflow-x: hidden; width: 100%; max-width: 100vw; box-sizing: border-box; }
+        .q8-booklet-view .page {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-height: auto !important;
+          margin: 0 auto 15px auto !important;
+          padding: 10px !important;
+          box-sizing: border-box !important;
+          overflow: hidden;
+        }
+        .q8-booklet-view table {
+          display: block !important;
+          width: 100% !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch;
+        }
+        .q8-booklet-view .flex, .q8-booklet-view div[style*="display: flex"] {
+          flex-wrap: wrap;
+        }
+        .q8-booklet-view .cover-title {
+          font-size: 22pt !important;
+          word-break: break-word !important;
+          hyphens: auto !important;
+        }
+        .q8-booklet-view .cover-subtitle {
+          font-size: 14pt !important;
+          word-break: break-word !important;
+        }
+        .q8-booklet-view img {
+          max-width: 100%;
+          height: auto;
+        }
+        .q8-booklet-view .cover-outer-border { 
+          min-height: auto !important; 
+          padding: 4px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q8-booklet-view .cover-inner-border { 
+          padding: 15px 10px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q8-booklet-view .cover-student-name-container { 
+          padding: 0 !important; 
+          flex-direction: column !important; 
+          align-items: flex-start !important; 
+          width: 100% !important;
+        }
+      }
   `;
 
   return (
@@ -379,18 +433,18 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
       {/* ═══════════════════ PAGE 1 – COVER ═══════════════════ */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
         <div style={{ border: '3.5px solid #1a5fa8', padding: '4px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ border: '1.2px solid #1a5fa8', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+          <div className="cover-inner-border" style={{ border: '1.2px solid #1a5fa8', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
             <img src="/assets/Skilscope.png" alt="Skilscope Logo" style={{ width: '300px', height: '300px', objectFit: 'contain', marginBottom: '5mm', marginTop: '5mm' }} />
-            <div style={{ fontSize: '44pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '44pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
             <div style={{ background: '#1a5fa8', height: '11px', width: '100%', margin: '5mm 0' }}></div>
-            <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', color: '#000', marginBottom: '5mm', marginTop: '5mm', letterSpacing: '0.6px' }}>{assessmentQuestions.metadata.code}</div>
-            <div style={{ fontSize: '21pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm', textAlign: 'center' }}>
+            <div className="cover-subtitle" style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', color: '#000', marginBottom: '5mm', marginTop: '5mm', letterSpacing: '0.6px' }}>{assessmentQuestions.metadata.code}</div>
+            <div className="cover-subtitle" style={{ fontSize: '21pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm', textAlign: 'center' }}>
               Work safely on live optical fibre<br />
               installations (release 1)
             </div>
             <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
-                Student Name: <span style={{ display: 'inline-block', borderBottom: '1.8px solid #000', width: '110mm', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
+              <div className="cover-student-name-container" style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
+                Student Name: <span style={{ display: 'inline-block', borderBottom: '1.8px solid #000', width: '100%', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
               </div>
               <div style={{ textAlign: 'center', fontSize: '11pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '18mm' }}>ACTA College Pty. Ltd</div>
             </div>

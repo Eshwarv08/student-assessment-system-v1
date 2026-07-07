@@ -365,6 +365,60 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
         .q9-booklet-view { background: #fff !important; padding: 0 !important; }
         .q9-booklet-view .page { margin: 0 !important; padding: 12mm 14mm !important; box-shadow: none !important; border: none !important; }
       }
+
+      @media screen and (max-width: 800px) {
+        .q9-booklet-view { padding: 10px; overflow-x: hidden; width: 100%; max-width: 100vw; box-sizing: border-box; }
+        .q9-booklet-view .page {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-height: auto !important;
+          margin: 0 auto 15px auto !important;
+          padding: 10px !important;
+          box-sizing: border-box !important;
+          overflow: hidden;
+        }
+        .q9-booklet-view table {
+          display: block !important;
+          width: 100% !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch;
+        }
+        .q9-booklet-view .flex, .q9-booklet-view div[style*="display: flex"] {
+          flex-wrap: wrap;
+        }
+        .q9-booklet-view .cover-title {
+          font-size: 22pt !important;
+          word-break: break-word !important;
+          hyphens: auto !important;
+        }
+        .q9-booklet-view .cover-subtitle {
+          font-size: 14pt !important;
+          word-break: break-word !important;
+        }
+        .q9-booklet-view img {
+          max-width: 100%;
+          height: auto;
+        }
+        .q9-booklet-view .cover-outer-border { 
+          min-height: auto !important; 
+          padding: 4px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q9-booklet-view .cover-inner-border { 
+          padding: 15px 10px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q9-booklet-view .cover-student-name-container { 
+          padding: 0 !important; 
+          flex-direction: column !important; 
+          align-items: flex-start !important; 
+          width: 100% !important;
+        }
+      }
   `;
 
   return (
@@ -398,9 +452,9 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
           <div style={{ border: '1px solid #00b0f0', width: '100%', flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '240px', height: 'auto', objectFit: 'contain', marginTop: '70px' }} />
             <div style={{ fontSize: '11pt', fontWeight: 'bold', color: '#903030', fontFamily: 'Arial, sans-serif', marginTop: '10px' }}>RTO NO: 40954</div>
-            <div style={{ fontSize: '46pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '20px' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '46pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '20px' }}>Assessment Booklet</div>
             <div style={{ background: '#00b0f0', height: '16px', width: '92%', marginTop: '20px', marginBottom: '30px' }}></div>
-            <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '10px', textAlign: 'center', lineHeight: '1.4' }}>
+            <div className="cover-subtitle" style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '10px', textAlign: 'center', lineHeight: '1.4' }}>
               {assessmentQuestions.metadata.code}<br />
               {assessmentQuestions.metadata.course}<br />
               (Release 1)

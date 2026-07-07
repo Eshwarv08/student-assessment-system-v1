@@ -479,7 +479,61 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
       @media screen and (max-width: 240mm) {
         .q3-booklet-view .page { width: 100% !important; margin: 0 !important; padding: 4mm !important; }
       }
-    `;
+  
+      @media screen and (max-width: 800px) {
+        .q3-booklet-view { padding: 10px; overflow-x: hidden; width: 100%; max-width: 100vw; box-sizing: border-box; }
+        .q3-booklet-view .page {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-height: auto !important;
+          margin: 0 auto 15px auto !important;
+          padding: 10px !important;
+          box-sizing: border-box !important;
+          overflow: hidden;
+        }
+        .q3-booklet-view table {
+          display: block !important;
+          width: 100% !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch;
+        }
+        .q3-booklet-view .flex, .q3-booklet-view div[style*="display: flex"] {
+          flex-wrap: wrap;
+        }
+        .q3-booklet-view .cover-title {
+          font-size: 22pt !important;
+          word-break: break-word !important;
+          hyphens: auto !important;
+        }
+        .q3-booklet-view .cover-subtitle {
+          font-size: 14pt !important;
+          word-break: break-word !important;
+        }
+        .q3-booklet-view img {
+          max-width: 100%;
+          height: auto;
+        }
+        .q3-booklet-view .cover-outer-border { 
+          min-height: auto !important; 
+          padding: 4px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q3-booklet-view .cover-inner-border { 
+          padding: 15px 10px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q3-booklet-view .cover-student-name-container { 
+          padding: 0 !important; 
+          flex-direction: column !important; 
+          align-items: flex-start !important; 
+          width: 100% !important;
+        }
+      }
+  `;
 
   return (
     <div className="q3-booklet-view">
@@ -526,8 +580,8 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
       
 {/* ═══════════════════ PAGE 1 – COVER ═══════════════════ */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
-        <div style={{ border: '3.5px solid #5b9bd5', padding: '4px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div style={{ border: '1.2px solid #5b9bd5', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+        <div className="cover-outer-border" style={{ border: '3.5px solid #5b9bd5', padding: '4px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <div className="cover-inner-border" style={{ border: '1.2px solid #5b9bd5', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
 
             {/* ACTA Logo */}
             <img
@@ -538,16 +592,16 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
 
             <div style={{ fontSize: '12pt', fontWeight: 'bold', color: '#8b0000', marginBottom: '15mm', fontFamily: 'Arial, sans-serif', letterSpacing: '0.3px' }}>RTO NO: 40954</div>
             
-            <div style={{ fontSize: '46pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '46pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '5mm' }}>Assessment Booklet</div>
             <div style={{ background: '#5b9bd5', height: '12px', width: '100%', margin: '4mm 0' }}></div>
-            <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '6mm', marginTop: '6mm' }}>ICTCBL322</div>
-            <div style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm' }}>
+            <div className="cover-subtitle" style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '6mm', marginTop: '6mm' }}>ICTCBL322</div>
+            <div className="cover-subtitle" style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm' }}>
               Install, test and terminate optical<br />fiber cable on customer premises
             </div>
             
             <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column' }}>
               <div style={{ fontSize: '15pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', paddingLeft: '8%' }}>
-                Student Name: <span style={{ display: 'inline-block', borderBottom: '1px solid #000', width: '110mm', fontWeight: 'normal', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left', marginLeft: '6px' }}>{studentName}</span>
+                Student Name: <span style={{ display: 'inline-block', borderBottom: '1px solid #000', width: '100%', fontWeight: 'normal', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left', marginLeft: '6px' }}>{studentName}</span>
               </div>
               <div style={{ textAlign: 'center', fontSize: '10pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '35mm', marginBottom: '10mm' }}>ACTA College Pty. Ltd</div>
             </div>

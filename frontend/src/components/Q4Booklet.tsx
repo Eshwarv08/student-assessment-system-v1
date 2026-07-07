@@ -566,16 +566,16 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
             <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '220px', height: 'auto', objectFit: 'contain', marginTop: '10mm' }} />
             <div style={{ color: '#8b0000', fontWeight: 'bold', fontSize: '12pt', marginTop: '10px', fontFamily: 'Arial, sans-serif' }}>RTO NO: 40954</div>
 
-            <div style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '20mm', marginBottom: '8mm' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '20mm', marginBottom: '8mm' }}>Assessment Booklet</div>
 
             <div style={{ background: '#00b0f0', height: '14px', width: '100%', marginBottom: '15mm' }}></div>
 
-            <div style={{ fontSize: '24pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '10px' }}>ICTCBL320</div>
+            <div className="cover-subtitle" style={{ fontSize: '24pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '10px' }}>ICTCBL320</div>
 
-            <div style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', lineHeight: 1.3 }}>Jumper metallic conductor cable in<br />the access network</div>
+            <div className="cover-subtitle" style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', lineHeight: 1.3 }}>Jumper metallic conductor cable in<br />the access network</div>
 
             <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', width: '85%', marginBottom: '40mm' }}>
+              <div className="cover-student-name-container" style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', width: '85%', marginBottom: '40mm' }}>
                 Student Name: <span style={{ display: 'inline-block', borderBottom: '1.5px solid #000', flex: 1, marginLeft: '8px', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
               </div>
               <div style={{ textAlign: 'center', fontSize: '9pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '10mm' }}>ACTA College Pty. Ltd</div>

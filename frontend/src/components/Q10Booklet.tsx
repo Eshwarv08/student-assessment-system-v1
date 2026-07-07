@@ -740,6 +740,60 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
         .q10-booklet-view { background: #fff !important; padding: 0 !important; }
         .q10-booklet-view .page { margin: 0 !important; padding: 12mm 14mm !important; box-shadow: none !important; border: none !important; }
       }
+
+      @media screen and (max-width: 800px) {
+        .q10-booklet-view { padding: 10px; overflow-x: hidden; width: 100%; max-width: 100vw; box-sizing: border-box; }
+        .q10-booklet-view .page {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-height: auto !important;
+          margin: 0 auto 15px auto !important;
+          padding: 10px !important;
+          box-sizing: border-box !important;
+          overflow: hidden;
+        }
+        .q10-booklet-view table {
+          display: block !important;
+          width: 100% !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch;
+        }
+        .q10-booklet-view .flex, .q10-booklet-view div[style*="display: flex"] {
+          flex-wrap: wrap;
+        }
+        .q10-booklet-view .cover-title {
+          font-size: 22pt !important;
+          word-break: break-word !important;
+          hyphens: auto !important;
+        }
+        .q10-booklet-view .cover-subtitle {
+          font-size: 14pt !important;
+          word-break: break-word !important;
+        }
+        .q10-booklet-view img {
+          max-width: 100%;
+          height: auto;
+        }
+        .q10-booklet-view .cover-outer-border { 
+          min-height: auto !important; 
+          padding: 4px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q10-booklet-view .cover-inner-border { 
+          padding: 15px 10px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q10-booklet-view .cover-student-name-container { 
+          padding: 0 !important; 
+          flex-direction: column !important; 
+          align-items: flex-start !important; 
+          width: 100% !important;
+        }
+      }
   `;
 
   return (
@@ -773,16 +827,16 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
           <div style={{ border: '1.5px solid #2e74b5', width: '100%', flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '230px', height: 'auto', objectFit: 'contain', marginTop: '25mm' }} />
             <div style={{ fontSize: '11pt', fontWeight: 'bold', color: '#903030', fontFamily: 'Arial, sans-serif', marginTop: '4mm' }}>RTO NO: 40954</div>
-            <div style={{ fontSize: '46pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '18mm' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '46pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '18mm' }}>Assessment Booklet</div>
             <div style={{ background: '#8faadc', height: '14px', width: '92%', marginTop: '6mm', marginBottom: '12mm' }}></div>
-            <div style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', lineHeight: '1.3', maxWidth: '450px' }}>
+            <div className="cover-subtitle" style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', lineHeight: '1.3', maxWidth: '450px' }}>
               {assessmentQuestions.metadata.code}<br />
               {assessmentQuestions.metadata.subtitle}
             </div>
 
             <div style={{ width: '100%', marginTop: 'auto', marginBottom: '35mm', display: 'flex', justifyContent: 'flex-start', paddingLeft: '12%' }}>
-              <div style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
-                Student Name: <span style={{ display: 'inline-block', borderBottom: '1.5px solid #000', width: '110mm', fontWeight: 'bold', color: '#000', fontFamily: '"Times New Roman", Times, serif', fontSize: '14pt', textAlign: 'left', paddingBottom: '2px', paddingLeft: '8px' }}>{studentName}</span>
+              <div className="cover-student-name-container" style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
+                Student Name: <span style={{ display: 'inline-block', borderBottom: '1.5px solid #000', width: '100%', fontWeight: 'bold', color: '#000', fontFamily: '"Times New Roman", Times, serif', fontSize: '14pt', textAlign: 'left', paddingBottom: '2px', paddingLeft: '8px' }}>{studentName}</span>
               </div>
             </div>
           </div>

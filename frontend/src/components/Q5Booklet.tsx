@@ -466,20 +466,20 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
             <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '160px', height: 'auto', objectFit: 'contain', marginTop: '10mm' }} />
             <div style={{ color: '#8b0000', fontSize: '11pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', marginTop: '2mm', marginBottom: '10mm' }}>RTO NO: 40954</div>
             
-            <div style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '3mm', letterSpacing: '0.5px' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '3mm', letterSpacing: '0.5px' }}>Assessment Booklet</div>
             
             <div style={{ background: '#8daac9', height: '10px', width: '90%', marginBottom: '8mm' }}></div>
             
-            <div style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', marginBottom: '2mm' }}>
+            <div className="cover-subtitle" style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', marginBottom: '2mm' }}>
               ICTCBL254
             </div>
-            <div style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', lineHeight: 1.3 }}>
+            <div className="cover-subtitle" style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', textAlign: 'center', lineHeight: 1.3 }}>
               Joint metallic conductor cable in<br />
               access network
             </div>
             
             <div style={{ width: '75%', marginTop: 'auto', display: 'flex', flexDirection: 'column', paddingBottom: '40mm' }}>
-              <div style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', width: '100%' }}>
+              <div className="cover-student-name-container" style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', width: '100%' }}>
                 Student Name: <span style={{ display: 'inline-block', borderBottom: '1.5px solid #888', flex: 1, minWidth: '60mm', paddingLeft: '8px', marginLeft: '6px', fontFamily: '"Times New Roman", Times, serif', textAlign: 'left', fontWeight: 'normal', height: '1.2em' }}>{studentName}</span>
               </div>
             </div>

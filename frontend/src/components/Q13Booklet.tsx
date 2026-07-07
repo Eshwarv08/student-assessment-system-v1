@@ -554,31 +554,31 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
 
       {/* PAGE 1: Cover */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
-        <div style={{ border: '1px solid #89b4e6', padding: '2px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        <div className="cover-outer-border" style={{ border: '1px solid #89b4e6', padding: '2px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
           <div style={{ border: '3px solid #89b4e6', padding: '1px', width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ border: '1px solid #89b4e6', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+            <div className="cover-inner-border" style={{ border: '1px solid #89b4e6', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
               <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '220px', height: 'auto', objectFit: 'contain', marginBottom: '3mm', marginTop: '15mm' }} />
               <div style={{ color: '#8b0000', fontSize: '11pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', marginBottom: '35mm' }}>
                 RTO NO: 40954
               </div>
 
-              <div style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '8mm', lineHeight: '1.2' }}>
+              <div className="cover-title" style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '8mm', lineHeight: '1.2' }}>
                 Assessor’s Marking<br />Guide
               </div>
 
               <div style={{ background: '#89b4e6', height: '14px', width: '100%', margin: '8mm 0 15mm 0' }}></div>
 
-              <div style={{ fontSize: '24pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm' }}>
+              <div className="cover-subtitle" style={{ fontSize: '24pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm' }}>
                 {assessmentQuestions.metadata.code}
               </div>
               
-              <div style={{ fontSize: '21pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '35mm' }}>
+              <div className="cover-subtitle" style={{ fontSize: '21pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '35mm' }}>
                 {assessmentQuestions.metadata.course}
               </div>
 
               <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
-                  Student Name: <span style={{ display: 'inline-block', borderBottom: '1.8px solid #000', width: '110mm', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
+                <div className="cover-student-name-container" style={{ fontSize: '14pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
+                  Student Name: <span style={{ display: 'inline-block', borderBottom: '1.8px solid #000', width: '100%', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
                 </div>
                 <div style={{ textAlign: 'center', fontSize: '11pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '18mm' }}>ACTA College Pty. Ltd</div>
               </div>

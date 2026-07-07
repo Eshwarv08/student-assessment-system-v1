@@ -440,18 +440,18 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
       {/* PAGE 1: Cover */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
         <div style={{ border: '3.5px solid #82b1d6', padding: '4px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ border: '1.2px solid #82b1d6', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+          <div className="cover-inner-border" style={{ border: '1.2px solid #82b1d6', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
             
             <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '220px', height: 'auto', objectFit: 'contain', marginBottom: '2mm', marginTop: '10mm' }} />
             <div style={{ fontSize: '13pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', color: '#8b0000', marginBottom: '8mm' }}>RTO NO: 40954</div>
             
-            <div style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '3mm', letterSpacing: '1px' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '3mm', letterSpacing: '1px' }}>Assessment Booklet</div>
             
             <div style={{ background: '#82b1d6', height: '14px', width: '100%', margin: '4mm 0', marginBottom: '8mm' }}></div>
             
-            <div style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm', letterSpacing: '0.6px', textAlign: 'center' }}>{assessmentQuestions.metadata.code}</div>
+            <div className="cover-subtitle" style={{ fontSize: '26pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm', letterSpacing: '0.6px', textAlign: 'center' }}>{assessmentQuestions.metadata.code}</div>
             
-            <div style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm', textAlign: 'center', padding: '0 10mm' }}>{assessmentQuestions.metadata.course}</div>
+            <div className="cover-subtitle" style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm', textAlign: 'center', padding: '0 10mm' }}>{assessmentQuestions.metadata.course}</div>
             
             <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div style={{ fontSize: '13.5pt', fontFamily: '"Times New Roman", Times, serif', color: '#333', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', width: '85%', margin: '0 auto' }}>

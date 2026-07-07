@@ -468,13 +468,13 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
       {/* ═══════════════════ PAGE 1 – COVER ═══════════════════ */}
       <div className="page" style={{ padding: '8mm 10mm' }}>
         <div style={{ border: '4px solid #5b9bd5', padding: '3px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ border: '1.5px solid #5b9bd5', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+          <div className="cover-inner-border" style={{ border: '1.5px solid #5b9bd5', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
             <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: '220px', height: 'auto', objectFit: 'contain', marginBottom: '2mm', marginTop: '15mm' }} />
             <div style={{ fontSize: '11pt', fontWeight: 'bold', color: '#8b0000', fontFamily: 'Arial, sans-serif', marginBottom: '8mm' }}>RTO NO: 40954</div>
-            <div style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm' }}>Assessment Booklet</div>
+            <div className="cover-title" style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm' }}>Assessment Booklet</div>
             <div style={{ background: '#9bc2e6', height: '14px', width: '100%', marginBottom: '12mm' }}></div>
 
-            <div style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '6mm', letterSpacing: '0.5px' }}>{assessmentQuestions.metadata.code}</div>
+            <div className="cover-subtitle" style={{ fontSize: '22pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '6mm', letterSpacing: '0.5px' }}>{assessmentQuestions.metadata.code}</div>
             <div style={{ fontSize: '18pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, textAlign: 'center', maxWidth: '80%' }}>
               Use electrical skills when working<br />
               with telecommunications<br />
@@ -482,7 +482,7 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
             </div>
 
             <div style={{ width: '100%', marginTop: 'auto', paddingTop: '15mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
+              <div className="cover-student-name-container" style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', width: '100%' }}>
                 Student Name: <span style={{ display: 'inline-block', borderBottom: '1.5px solid #000', width: '100mm', fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left' }}>{studentName}</span>
               </div>
               <div style={{ textAlign: 'center', fontSize: '9pt', fontFamily: '"Times New Roman", Times, serif', color: '#333', marginTop: '20mm' }}>ACTA College Pty. Ltd</div>
