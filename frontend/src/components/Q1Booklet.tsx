@@ -254,6 +254,9 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
           max-width: 100%;
           height: auto;
         }
+        .q1-booklet-view .cover-outer-border { min-height: auto !important; padding: 2px !important; }
+        .q1-booklet-view .cover-inner-border { padding: 15px !important; }
+        .q1-booklet-view .cover-student-name-container { padding: 0 !important; flex-direction: column !important; align-items: flex-start !important; }
       }
   `;
 
@@ -368,8 +371,8 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
 
             {/* ════════ COVER ════════ */}
             {pageConf.type === 'cover' && (
-              <div style={{ border: '1.5px solid #6b9bd2', padding: '3px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <div style={{ border: '3px solid #6b9bd2', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+              <div className="cover-outer-border" style={{ border: '1.5px solid #6b9bd2', padding: '3px', minHeight: '277mm', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div className="cover-inner-border" style={{ border: '3px solid #6b9bd2', padding: '12mm 14mm', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
                   <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: 'auto', height: '180px', objectFit: 'contain', marginBottom: '2mm', marginTop: '8mm' }} />
                   <div style={{ color: '#8b0000', fontSize: '10.5pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', marginBottom: '8mm' }}>RTO NO: 40954</div>
                   
@@ -386,9 +389,9 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   
                   <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12mm', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', width: '100%', padding: '0 15mm' }}>
+                    <div className="cover-student-name-container" style={{ fontSize: '13pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', width: '100%', padding: '0 15mm' }}>
                       <span style={{ marginRight: '10px' }}>Student Name:</span>
-                      <span style={{ display: 'inline-block', borderBottom: '1.5px solid #000', flex: 1, fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left', minHeight: '22px' }}>{studentName}</span>
+                      <span style={{ display: 'inline-block', borderBottom: '1.5px solid #000', flex: 1, fontWeight: 'bold', paddingLeft: '8px', fontFamily: 'Arial, sans-serif', textAlign: 'left', minHeight: '22px', width: '100%' }}>{studentName}</span>
                     </div>
                     <div style={{ textAlign: 'center', fontSize: '8pt', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginTop: '25mm', marginBottom: '10mm' }}>ACTA College Pty. Ltd</div>
                   </div>
