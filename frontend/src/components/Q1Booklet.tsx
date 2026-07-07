@@ -234,6 +234,7 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
           margin: 0 auto 15px auto !important;
           padding: 10px !important;
           box-sizing: border-box !important;
+          overflow: hidden;
         }
         .q1-booklet-view table {
           display: block !important;
@@ -245,18 +246,37 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
           flex-wrap: wrap;
         }
         .q1-booklet-view .cover-title {
-          font-size: 28pt !important;
+          font-size: 22pt !important;
+          word-break: break-word !important;
+          hyphens: auto !important;
         }
         .q1-booklet-view .cover-subtitle {
-          font-size: 16pt !important;
+          font-size: 14pt !important;
+          word-break: break-word !important;
         }
         .q1-booklet-view img {
           max-width: 100%;
           height: auto;
         }
-        .q1-booklet-view .cover-outer-border { min-height: auto !important; padding: 2px !important; }
-        .q1-booklet-view .cover-inner-border { padding: 15px !important; }
-        .q1-booklet-view .cover-student-name-container { padding: 0 !important; flex-direction: column !important; align-items: flex-start !important; }
+        .q1-booklet-view .cover-outer-border { 
+          min-height: auto !important; 
+          padding: 4px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q1-booklet-view .cover-inner-border { 
+          padding: 15px 10px !important; 
+          width: 100% !important; 
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        .q1-booklet-view .cover-student-name-container { 
+          padding: 0 !important; 
+          flex-direction: column !important; 
+          align-items: flex-start !important; 
+          width: 100% !important;
+        }
       }
   `;
 
