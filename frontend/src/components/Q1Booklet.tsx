@@ -678,7 +678,7 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                             <span>Date:</span>
                             <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
-                              <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                              <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                                 value={answers.student_date || submitDate || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                             </span>
                             <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers.student_date || submitDate || '')}</span>
@@ -1010,11 +1010,11 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                             const isChecked = answers[ansKey] === opt.value;
                             return (
                               <div key={oIdx} className="flex gap-2 mb-2 items-center text-[10.5pt]">
-                                <input 
+                                <input required={isStudent}  
                                   type="radio" 
                                   name={ansKey}
                                   checked={isChecked} 
-                                  onChange={() => setAnswers({ ...answers, [ansKey]: opt.value })} 
+                                  onChange={(e) => setAnswers({ ...answers, [ansKey]: opt.value })} 
                                   className="mt-0.5 cursor-pointer"
                                 />
                                 <label 
@@ -1057,7 +1057,7 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                               <div className="font-bold mb-2 whitespace-pre-wrap">{part.text}</div>
                               {part.options?.map((opt: any, oIdx: number) => (
                                 <div key={oIdx} className="flex gap-2 mb-1">
-                                  <input type="radio" checked={answers[part.name] === opt.value} onChange={(e) => setAnswers({ ...answers, [part.name]: opt.value })} />
+                                  <input required={isStudent} type="radio" checked={answers[part.name] === opt.value} onChange={(e) => setAnswers({ ...answers, [part.name]: opt.value })} />
                                   <label>{opt.text}</label>
                                 </div>
                               ))}
@@ -1067,7 +1067,7 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                           {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tIdx: number) => (
                             <div key={tIdx} className="mb-4 border border-gray-200 p-2">
                               {ti.image && <img src={ti.image} className="max-w-[200px] mb-2" alt="Diagram" />}
-                              <input type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
+                              <input required={isStudent} type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
                             </div>
                           ))}
 
@@ -1249,7 +1249,7 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                             <span>Date:</span>
                             <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
-                              <input
+                              <input required={isStudent} 
                                 type="date"
                                 style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', fontWeight: 'bold', cursor: 'pointer' }}
                                 value={answers.student_date || submitDate || ''}

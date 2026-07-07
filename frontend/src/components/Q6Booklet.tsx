@@ -117,7 +117,7 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span>Date:</span>
                   <span className="no-print flex-1" style={{ borderBottom: '1px solid #888', minHeight: '30px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers[`${taskKey}_student_date`] || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, [`${taskKey}_student_date`]: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block flex-1" style={{ borderBottom: '1px solid #888', minHeight: '30px' }}>
@@ -283,7 +283,7 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
               {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tiIdx: number) => (
                 <div key={tiIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                   {ti.label && <span style={{ minWidth: '40px' }}>{ti.label}</span>}
-                  <input type="text" style={{ border: '1.5px solid #000', outline: 'none', width: '200px', padding: '2px 4px' }}
+                  <input required={isStudent}  type="text" style={{ border: '1.5px solid #000', outline: 'none', width: '200px', padding: '2px 4px' }}
                     value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
                 </div>
               ))}
@@ -691,7 +691,7 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Date:</span>
                     <span className="no-print flex-1" style={{ borderBottom: '1.5px solid black', minHeight: '30px', position: 'relative' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', fontWeight: 'bold', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                      <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', fontWeight: 'bold', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                         value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                     </span>
                   </div>
@@ -937,7 +937,7 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
                       )}
                       <div className="flex items-center w-full gap-2">
                         <span className="font-bold">{ti.placeholder}</span>
-                        <input type="text" style={{ border: '1.5px solid #000' }} className="w-full outline-none p-1 bg-transparent"
+                        <input required={isStudent}  type="text" style={{ border: '1.5px solid #000' }} className="w-full outline-none p-1 bg-transparent"
                           value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
                       </div>
                     </div>
@@ -964,7 +964,7 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
                 )}
                 <div className="flex items-center w-[45%] gap-2">
                   <span className="font-bold">{q30.textInputs[4].placeholder}</span>
-                  <input type="text" style={{ border: '1.5px solid #000' }} className="w-full outline-none p-1 bg-transparent"
+                  <input required={isStudent}  type="text" style={{ border: '1.5px solid #000' }} className="w-full outline-none p-1 bg-transparent"
                     value={answers[q30.textInputs[4].name] || ''} onChange={(e) => setAnswers({ ...answers, [q30.textInputs[4].name]: e.target.value })} />
                 </div>
               </div>
@@ -1027,13 +1027,13 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
                     <td style={{ border: '1px solid #000', padding: '8px', fontWeight: 'bold', width: '25%' }}>{row.label}</td>
                     <td style={{ border: '1px solid #000', padding: '8px', width: '37.5%' }}>
                       {row.editable ? (
-                        <input type="text" style={{ width: '100%', outline: 'none', background: 'transparent' }}
+                        <input required={isStudent}  type="text" style={{ width: '100%', outline: 'none', background: 'transparent' }}
                           value={answers[row.id] || ''} onChange={(e) => setAnswers({ ...answers, [row.id]: e.target.value })} />
                       ) : row.value}
                     </td>
                     <td style={{ border: '1px solid #000', padding: '8px', width: '37.5%' }}>
                       {row.editable ? (
-                        <input type="text" style={{ width: '100%', outline: 'none', background: 'transparent' }}
+                        <input required={isStudent}  type="text" style={{ width: '100%', outline: 'none', background: 'transparent' }}
                           value={answers[`${row.id}_measured`] || ''} onChange={(e) => setAnswers({ ...answers, [`${row.id}_measured`]: e.target.value })} />
                       ) : row.value}
                     </td>
@@ -1212,7 +1212,7 @@ export const Q6Booklet: React.FC<Q6BookletProps> = ({ answers, setAnswers, stude
                     <span> Please refer to slide 30 and 31 of PowerPoint 2</span>
                   </div>
                 </div>
-                <textarea style={{ width: '100%', minHeight: '120px', border: 'none', outline: 'none', background: 'transparent', resize: 'vertical' }}
+                <textarea required={isStudent} style={{ width: '100%', minHeight: '120px', border: 'none', outline: 'none', background: 'transparent', resize: 'vertical' }}
                   value={answers.t3q15 || ''} onChange={(e) => setAnswers({ ...answers, t3q15: e.target.value })} />
               </td>
             </tr>

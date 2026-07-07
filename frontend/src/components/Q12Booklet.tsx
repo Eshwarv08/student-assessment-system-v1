@@ -262,7 +262,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
             
             {q.type === 'text' && (
               <>
-                <textarea className="no-print" style={{ width: '100%', minHeight: '80px', border: 'none', resize: 'vertical', background: 'transparent', outline: 'none', fontFamily: '"Times New Roman", Times, serif' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
+                <textarea required={isStudent} className="no-print" style={{ width: '100%', minHeight: '80px', border: 'none', resize: 'vertical', background: 'transparent', outline: 'none', fontFamily: '"Times New Roman", Times, serif' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
                 <div className="hidden print:block whitespace-pre-wrap">{answers[qKey]}</div>
               </>
             )}
@@ -299,7 +299,7 @@ export const Q12Booklet: React.FC<Q12BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ fontWeight: 'bold', marginBottom: '4px', whiteSpace: 'pre-wrap', fontSize: '10.5pt' }}>{part.text}</div>
                 {part.options?.map((opt: any, oIdx: number) => (
                   <label key={oIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginBottom: '4px' }}>
-                    <input type="radio" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: opt.value })} />
+                    <input required={isStudent} type="radio" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: opt.value })} />
                     <span style={{ fontSize: '10.5pt' }}>{opt.text}</span>
                   </label>
                 ))}

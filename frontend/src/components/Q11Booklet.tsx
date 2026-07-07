@@ -136,7 +136,7 @@ export const Q11Booklet: React.FC<Q11BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: isStudent ? 'default' : 'pointer' }}
                       value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskId}_student_date`] !== undefined ? compRecord[`${taskId}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })}  />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskId}_student_date`] !== undefined ? compRecord[`${taskId}_student_date`] : (submitDate || '')))}</span>
@@ -275,7 +275,7 @@ export const Q11Booklet: React.FC<Q11BookletProps> = ({ answers, setAnswers, onS
             
             {q.type === 'text' && (
               <>
-                <textarea className="no-print" style={{ width: '100%', minHeight: '80px', border: 'none', resize: 'vertical', background: 'transparent', outline: 'none', fontFamily: '"Times New Roman", Times, serif' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
+                <textarea required={isStudent} className="no-print" style={{ width: '100%', minHeight: '80px', border: 'none', resize: 'vertical', background: 'transparent', outline: 'none', fontFamily: '"Times New Roman", Times, serif' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
                 <div className="hidden print:block whitespace-pre-wrap">{answers[qKey]}</div>
               </>
             )}
@@ -691,7 +691,7 @@ export const Q11Booklet: React.FC<Q11BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                      <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                         value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_override !== undefined ? compRecord.student_sig_date_override : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_override !== undefined ? compRecord.student_sig_date_override : (submitDate || '')))}</span>

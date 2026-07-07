@@ -820,7 +820,7 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="flex items-center gap-2">
                   Date:
-                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <input required={isStudent} type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
                   <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px]">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
@@ -1141,7 +1141,8 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                     const isSelected = (answers['t1q1'] || '').toLowerCase() === opt.val;
                     return (
                       <div key={opt.val} className={`cursor-pointer hover:opacity-80`} style={{ marginTop: '4px' }} onClick={() => setAnswers({ ...answers, 't1q1': opt.val })}>
-                        <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
+                      <input type="radio" name="t1q1" required={isStudent} checked={answers['t1q1'] === opt.val || (answers['t1q1'] || '').toLowerCase() === opt.val || (answers['t1q1'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
+                      <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
                           <span className={isSelected ? 'text-red-600 font-bold' : ''}>{opt.val.toUpperCase()}.</span>
                           {isSelected && <span style={{ position: 'absolute', top: '-1px', left: '-4px', width: '20px', height: '20px', border: '2px solid red', borderRadius: '50%' }}></span>}
                         </span>
@@ -1182,7 +1183,8 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                     const isSelected = (answers['t1q2'] || '').toLowerCase() === opt.val;
                     return (
                       <div key={opt.val} className={`cursor-pointer hover:opacity-80`} style={{ marginTop: '4px' }} onClick={() => setAnswers({ ...answers, 't1q2': opt.val })}>
-                        <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
+                      <input type="radio" name="t1q2" required={isStudent} checked={answers['t1q2'] === opt.val || (answers['t1q2'] || '').toLowerCase() === opt.val || (answers['t1q2'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
+                      <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
                           <span className={isSelected ? 'text-red-600 font-bold' : ''}>{opt.val.toUpperCase()}.</span>
                           {isSelected && <span style={{ position: 'absolute', top: '-1px', left: '-4px', width: '20px', height: '20px', border: '2px solid red', borderRadius: '50%' }}></span>}
                         </span>
@@ -1223,7 +1225,8 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                     const isSelected = (answers['t1q3'] || '').toLowerCase() === opt.val;
                     return (
                       <div key={opt.val} className={`cursor-pointer hover:opacity-80`} style={{ marginTop: '4px' }} onClick={() => setAnswers({ ...answers, 't1q3': opt.val })}>
-                        <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
+                      <input type="radio" name="t1q3" required={isStudent} checked={answers['t1q3'] === opt.val || (answers['t1q3'] || '').toLowerCase() === opt.val || (answers['t1q3'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
+                      <span style={{ display: 'inline-block', width: '24px', position: 'relative' }}>
                           <span className={isSelected ? 'text-red-600 font-bold' : ''}>{opt.val.toUpperCase()}.</span>
                           {isSelected && <span style={{ position: 'absolute', top: '-1px', left: '-4px', width: '20px', height: '20px', border: '2px solid red', borderRadius: '50%' }}></span>}
                         </span>
@@ -1280,6 +1283,7 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                   const isSelected = (answers['t1q4'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q4': opt.val })}>
+                      <input type="radio" name="t1q4" required={isStudent} checked={answers['t1q4'] === opt.val || (answers['t1q4'] || '').toLowerCase() === opt.val || (answers['t1q4'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1324,6 +1328,7 @@ export const Q3Booklet: React.FC<Q3BookletProps> = ({ answers, setAnswers, onSub
                   const isSelected = (answers['t1q5'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q5': opt.val })}>
+                      <input type="radio" name="t1q5" required={isStudent} checked={answers['t1q5'] === opt.val || (answers['t1q5'] || '').toLowerCase() === opt.val || (answers['t1q5'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1369,6 +1374,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                   const isSelected = (answers['t1q6'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q6': opt.val })}>
+                      <input type="radio" name="t1q6" required={isStudent} checked={answers['t1q6'] === opt.val || (answers['t1q6'] || '').toLowerCase() === opt.val || (answers['t1q6'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1413,6 +1419,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                   const isSelected = (answers['t1q7'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q7': opt.val })}>
+                      <input type="radio" name="t1q7" required={isStudent} checked={answers['t1q7'] === opt.val || (answers['t1q7'] || '').toLowerCase() === opt.val || (answers['t1q7'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1457,6 +1464,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                   const isSelected = (answers['t1q8'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q8': opt.val })}>
+                      <input type="radio" name="t1q8" required={isStudent} checked={answers['t1q8'] === opt.val || (answers['t1q8'] || '').toLowerCase() === opt.val || (answers['t1q8'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1514,6 +1522,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                   const isSelected = (answers['t1q9'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q9': opt.val })}>
+                      <input type="radio" name="t1q9" required={isStudent} checked={answers['t1q9'] === opt.val || (answers['t1q9'] || '').toLowerCase() === opt.val || (answers['t1q9'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1558,6 +1567,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                   const isSelected = (answers['t1q10'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q10': opt.val })}>
+                      <input type="radio" name="t1q10" required={isStudent} checked={answers['t1q10'] === opt.val || (answers['t1q10'] || '').toLowerCase() === opt.val || (answers['t1q10'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1598,7 +1608,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>11. list at least five advantages that optical fibre cables have over conventional copper cables: (PC 3.3)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q11'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q11': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q11'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q11': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1634,7 +1644,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>12. Name the patch cord colours? (PC 1.1)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q12'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q12': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q12'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q12': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1670,7 +1680,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>13. With regards to fibre, explain elongation? (PC 4.2)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q13'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q13': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q13'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q13': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1719,7 +1729,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>14. List the equipment required for continuity test. (PC 2.4)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q14'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q14': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q14'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q14': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1755,7 +1765,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>15. Explain mechanical splicing? ( PC 2.2)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q15'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q15': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q15'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q15': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1791,7 +1801,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>16. What are the safety equipment required while working with optical fibre cables?</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q16'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q16': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q16'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q16': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1827,7 +1837,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>17. List the three losses in fibre installation</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q17'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q17': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q17'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q17': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1863,7 +1873,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>18. What are the precautions to be observed when handling optical fibre cable?</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q18'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q18': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q18'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q18': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -1916,6 +1926,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                   const isSelected = (answers['t1q19'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't1q19': opt.val })}>
+                      <input type="radio" name="t1q19" required={isStudent} checked={answers['t1q19'] === opt.val || (answers['t1q19'] || '').toLowerCase() === opt.val || (answers['t1q19'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -1956,7 +1967,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>20. What is the use of a PON Power meter</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q20'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q20': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t1q20'] || ''} onChange={(e) => setAnswers({ ...answers, 't1q20': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2012,7 +2023,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                 </div>
                 <div className="mt-1">
                   Date:
-                  <input
+                  <input required={isStudent} 
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
@@ -2247,7 +2258,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                 </div>
                 <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <input required={isStudent} type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
                   <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
@@ -2466,7 +2477,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                 </div>
                 <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <input required={isStudent} type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
                   <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
@@ -2644,7 +2655,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                 </div>
                 <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <input required={isStudent} type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
                   <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>
@@ -2825,7 +2836,7 @@ Wear…….glasses when working with fibre. Wash you’re ……. Before rubbing
                 </div>
                 <div className="flex items-center mt-1">
                   <span>Date:</span>
-                  <input type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
+                  <input required={isStudent} type="date" className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer flex-1 ml-2 font-bold text-xs" value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, 'st-date': e.target.value })} />
                   <span className="hidden print:inline border-b border-black flex-1 text-center min-h-[18px] ml-2">{formatDisplayDate(answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : ''))}</span>
                 </div>
               </td>

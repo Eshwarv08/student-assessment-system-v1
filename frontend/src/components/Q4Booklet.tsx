@@ -135,7 +135,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print flex-1" style={{ borderBottom: '1.5px solid black', minHeight: '18px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', fontWeight: 'bold', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', fontWeight: 'bold', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:block font-bold flex-1" style={{ borderBottom: '1.5px solid black', minHeight: '18px', paddingLeft: '4px', fontSize: '10pt' }}>
@@ -230,7 +230,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                       <div key={oIdx} className="flex gap-2 items-start">
                         <span className="w-4 text-right">{opt.value})</span>
                         <label className="flex items-center gap-2 cursor-pointer relative top-[-1px]">
-                          <input type="radio" checked={answers[opt.name || `t5q${q.id}`] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || `t5q${q.id}`]: opt.value })} />
+                          <input required={isStudent} type="radio" checked={answers[opt.name || `t5q${q.id}`] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || `t5q${q.id}`]: opt.value })} />
                           {opt.text}
                         </label>
                       </div>
@@ -244,8 +244,8 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 )}
                 {q.id === 17 && (
                   <div className="mt-2 text-[9pt]">
-                    <div>Tool A: <input type="text" className="border-none outline-none w-64 ml-2 bg-transparent border-b border-black/20" value={answers[`t5q17_a`] || ''} onChange={e => setAnswers({ ...answers, t5q17_a: e.target.value })} /></div>
-                    <div className="mt-1">Tool B: <input type="text" className="border-none outline-none w-64 ml-2 bg-transparent border-b border-black/20" value={answers[`t5q17_b`] || ''} onChange={e => setAnswers({ ...answers, t5q17_b: e.target.value })} /></div>
+                    <div>Tool A: <input required={isStudent} type="text" className="border-none outline-none w-64 ml-2 bg-transparent border-b border-black/20" value={answers[`t5q17_a`] || ''} onChange={e => setAnswers({ ...answers, t5q17_a: e.target.value })} /></div>
+                    <div className="mt-1">Tool B: <input required={isStudent} type="text" className="border-none outline-none w-64 ml-2 bg-transparent border-b border-black/20" value={answers[`t5q17_b`] || ''} onChange={e => setAnswers({ ...answers, t5q17_b: e.target.value })} /></div>
                   </div>
                 )}
               </div>
@@ -729,7 +729,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 <div className="flex items-center gap-1">
                   Date:
                   <span className="no-print border-b-[1.5px] border-black flex-1 min-h-[16px] relative inline-block">
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block border-b-[1.5px] border-black flex-1 min-h-[16px] font-bold text-center">
@@ -1149,7 +1149,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>
@@ -1418,7 +1418,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>
@@ -1664,7 +1664,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>
@@ -1879,7 +1879,7 @@ export const Q4Booklet: React.FC<Q4BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', width: '100px', display: 'inline-block', height: '18px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '9pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_date || (submitDate ? submitDate.split('T')[0] : '')} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block font-bold text-center" style={{ borderBottom: '1.5px solid black', width: '100px', height: '18px' }}>

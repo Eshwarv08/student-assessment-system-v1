@@ -333,39 +333,34 @@ const AssessmentForm: React.FC = () => {
   };
 
   const handleSubmit = async (e?: React.FormEvent) => {
+    let form: HTMLFormElement | null = null;
     if (e) {
-      e.preventDefault()
+      e.preventDefault();
+      form = e.currentTarget as HTMLFormElement;
     }
 
-    const hasAnyAnswer = Object.keys(answers).some(key => {
-      if (['st-name', 'st-id', 'st-date', 'student_signature_url'].includes(key)) return false;
-      const val = answers[key];
-      return val && (Array.isArray(val) ? val.length > 0 : String(val).trim() !== '');
-    });
     const isSigEmpty = isPdfBooklet ? !answers['student_signature_url'] : (!signaturePad.current || signaturePad.current.isEmpty());
 
-    if (!hasAnyAnswer || isSigEmpty) {
+    if (form && !form.checkValidity()) {
       setShowErrors(true);
+      showToast('Please fill in all the missing answers highlighted in red before submitting.', 'error');
+      
+      // Scroll to the first missing field
+      setTimeout(() => {
+        const firstInvalid = form!.querySelector(':invalid');
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+      return;
+    }
 
-      let message = '';
-      if (!hasAnyAnswer && isSigEmpty) {
-        message = 'Please fill in at least one answer and provide your signature before submitting.';
-      } else if (!hasAnyAnswer) {
-        message = 'Please fill in at least one answer before submitting.';
-      } else {
-        message = 'Please provide your signature before submitting.';
-      }
-
-      showToast(message, 'error');
+    if (isSigEmpty) {
+      setShowErrors(true);
+      showToast('Please provide your signature before submitting.', 'error');
 
       setTimeout(() => {
-        if (!hasAnyAnswer) {
-          const firstQuestionInput = document.querySelector('input[type="text"], textarea');
-          if (firstQuestionInput) {
-            (firstQuestionInput as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
-            (firstQuestionInput as HTMLElement).focus?.();
-          }
-        } else if (isSigEmpty && !isPdfBooklet && sigCanvas.current) {
+        if (!isPdfBooklet && sigCanvas.current) {
           sigCanvas.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 100);
@@ -877,7 +872,7 @@ const AssessmentForm: React.FC = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="student-mode">
+          <form onSubmit={handleSubmit} className={`student-mode ${showErrors ? 'show-errors' : ''}`} noValidate>
             {!isPdfBooklet ? (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12 bg-gray-50 p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-100 shadow-inner">

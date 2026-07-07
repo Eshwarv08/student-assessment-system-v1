@@ -133,7 +133,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
           <tr>
             <td colSpan={3} style={{ border: '1px solid #000', padding: '8px', minHeight: '60px' }}>
               {q.type === 'text' && (
-                <textarea className="no-print" style={{ width: '100%', border: 'none', padding: '4px', minHeight: '60px', resize: 'vertical', background: 'transparent', outline: 'none' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
+                <textarea required={isStudent} className="no-print" style={{ width: '100%', border: 'none', padding: '4px', minHeight: '60px', resize: 'vertical', background: 'transparent', outline: 'none' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
               )}
               {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
                 <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
@@ -168,7 +168,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tiIdx: number) => (
                 <div key={tiIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
                   <span style={{ minWidth: '20px' }}>{ti.placeholder}.</span>
-                  <input className="no-print" style={{ flex: 1, borderBottom: '1px solid #000', borderTop: 'none', borderLeft: 'none', borderRight: 'none', outline: 'none', background: 'transparent' }} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
+                  <input required={isStudent} className="no-print" style={{ flex: 1, borderBottom: '1px solid #000', borderTop: 'none', borderLeft: 'none', borderRight: 'none', outline: 'none', background: 'transparent' }} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
                   <div className="hidden print:block" style={{ flex: 1, borderBottom: '1px solid #000', minHeight: '20px' }}>{answers[ti.name]}</div>
                 </div>
               ))}
@@ -254,7 +254,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
 
           {q.type === 'text' && (
             <div style={{ border: '1px solid #000', padding: '4px', minHeight: '80px', marginTop: '8px' }}>
-              <textarea className="no-print" style={{ width: '100%', border: 'none', minHeight: '70px', outline: 'none', background: 'transparent' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
+              <textarea required={isStudent} className="no-print" style={{ width: '100%', border: 'none', minHeight: '70px', outline: 'none', background: 'transparent' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
               <div className="hidden print:block" style={{ minHeight: '70px', whiteSpace: 'pre-wrap' }}>{answers[qKey]}</div>
             </div>
           )}
@@ -262,7 +262,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
           {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tiIdx: number) => (
             <div key={tiIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
               <span style={{ minWidth: '20px' }}>{ti.placeholder}.</span>
-              <input className="no-print" style={{ flex: 1, borderBottom: '1px solid #000', borderTop: 'none', borderLeft: 'none', borderRight: 'none', outline: 'none', background: 'transparent' }} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
+              <input required={isStudent} className="no-print" style={{ flex: 1, borderBottom: '1px solid #000', borderTop: 'none', borderLeft: 'none', borderRight: 'none', outline: 'none', background: 'transparent' }} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
               <div className="hidden print:block" style={{ flex: 1, borderBottom: '1px solid #000', minHeight: '20px' }}>{answers[ti.name]}</div>
             </div>
           ))}
@@ -370,7 +370,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1px solid #000', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', fontWeight: 'bold' }} />
+                  <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1px solid #000', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', fontWeight: 'bold' }} />
                   <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', flex: 1, height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))}</span>
                 </div>
               </div>
@@ -490,7 +490,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
               )}
               <div style={{ paddingLeft: '0', marginTop: '8px' }}>
                 {q.type === 'text' && (
-                  <textarea className="no-print" style={{ width: '100%', border: 'none', borderBottom: '1px dashed #000', padding: '4px', minHeight: '60px', resize: 'vertical', background: 'transparent', outline: 'none' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
+                  <textarea required={isStudent} className="no-print" style={{ width: '100%', border: 'none', borderBottom: '1px dashed #000', padding: '4px', minHeight: '60px', resize: 'vertical', background: 'transparent', outline: 'none' }} value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} />
                 )}
                 {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
                   <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
@@ -525,7 +525,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                 {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tiIdx: number) => (
                   <div key={tiIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
                     <span style={{ minWidth: '20px' }}>{ti.placeholder}.</span>
-                    <input className="no-print" style={{ flex: 1, borderBottom: '1px solid #000', borderTop: 'none', borderLeft: 'none', borderRight: 'none', outline: 'none', background: 'transparent' }} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
+                    <input required={isStudent} className="no-print" style={{ flex: 1, borderBottom: '1px solid #000', borderTop: 'none', borderLeft: 'none', borderRight: 'none', outline: 'none', background: 'transparent' }} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
                     <div className="hidden print:block" style={{ flex: 1, borderBottom: '1px solid #000', minHeight: '20px' }}>{answers[ti.name]}</div>
                   </div>
                 ))}
@@ -552,15 +552,15 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       <tr>
                         <td style={{ border: '1px solid #000', padding: '6px' }} colSpan={2}>
                           <span style={{ fontWeight: 'bold' }}>Job title</span><br />
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_job_title || ''} onChange={(e) => setAnswers({ ...answers, t1q5_job_title: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_job_title || ''} onChange={(e) => setAnswers({ ...answers, t1q5_job_title: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_job_title}</span><br />
                           <span style={{ fontWeight: 'bold' }}>JSA NO</span><br />
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_jsa_no || ''} onChange={(e) => setAnswers({ ...answers, t1q5_jsa_no: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_jsa_no || ''} onChange={(e) => setAnswers({ ...answers, t1q5_jsa_no: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_jsa_no}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px', fontWeight: 'bold' }}>
                           Date:<br />
-                          <input type="date" className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={toDateInputValue(answers.t1q5_date || '')} onChange={(e) => setAnswers({ ...answers, t1q5_date: e.target.value })} />
+                          <input required={isStudent} type="date" className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={toDateInputValue(answers.t1q5_date || '')} onChange={(e) => setAnswers({ ...answers, t1q5_date: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_date}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px', fontWeight: 'bold' }}>
@@ -571,46 +571,46 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       <tr>
                         <td style={{ border: '1px solid #000', padding: '6px', width: '33%' }}>
                           <span style={{ fontWeight: 'bold' }}>Title of person:</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_title_person || ''} onChange={(e) => setAnswers({ ...answers, t1q5_title_person: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_title_person || ''} onChange={(e) => setAnswers({ ...answers, t1q5_title_person: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_title_person}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px', width: '33%' }} colSpan={2}>
                           <span style={{ fontWeight: 'bold' }}>Supervisor:</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_supervisor || ''} onChange={(e) => setAnswers({ ...answers, t1q5_supervisor: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_supervisor || ''} onChange={(e) => setAnswers({ ...answers, t1q5_supervisor: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_supervisor}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px', width: '34%' }}>
                           <span style={{ fontWeight: 'bold' }}>Analysis by:</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_analysis_by || ''} onChange={(e) => setAnswers({ ...answers, t1q5_analysis_by: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_analysis_by || ''} onChange={(e) => setAnswers({ ...answers, t1q5_analysis_by: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_analysis_by}</span>
                         </td>
                       </tr>
                       <tr>
                         <td style={{ border: '1px solid #000', padding: '6px' }}>
                           <span style={{ fontWeight: 'bold' }}>Plant/ location:</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_location || ''} onChange={(e) => setAnswers({ ...answers, t1q5_location: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_location || ''} onChange={(e) => setAnswers({ ...answers, t1q5_location: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_location}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px' }} colSpan={2}>
                           <span style={{ fontWeight: 'bold' }}>Department:</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_department || ''} onChange={(e) => setAnswers({ ...answers, t1q5_department: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_department || ''} onChange={(e) => setAnswers({ ...answers, t1q5_department: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_department}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px' }}>
                           <span style={{ fontWeight: 'bold' }}>Reviewed by:</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_reviewed_by || ''} onChange={(e) => setAnswers({ ...answers, t1q5_reviewed_by: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_reviewed_by || ''} onChange={(e) => setAnswers({ ...answers, t1q5_reviewed_by: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_reviewed_by}</span>
                         </td>
                       </tr>
                       <tr>
                         <td style={{ border: '1px solid #000', padding: '6px' }} colSpan={3}>
                           <span style={{ fontWeight: 'bold' }}>Required personal protective equipment</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_ppe || ''} onChange={(e) => setAnswers({ ...answers, t1q5_ppe: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_ppe || ''} onChange={(e) => setAnswers({ ...answers, t1q5_ppe: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_ppe}</span>
                         </td>
                         <td style={{ border: '1px solid #000', padding: '6px' }}>
                           <span style={{ fontWeight: 'bold' }}>Approved by:</span>
-                          <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_approved_by || ''} onChange={(e) => setAnswers({ ...answers, t1q5_approved_by: e.target.value })} />
+                          <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers.t1q5_approved_by || ''} onChange={(e) => setAnswers({ ...answers, t1q5_approved_by: e.target.value })} />
                           <span className="hidden print:inline-block">{answers.t1q5_approved_by}</span>
                         </td>
                       </tr>
@@ -627,15 +627,15 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                       {[0, 1, 2, 3].map(i => (
                         <tr key={i}>
                           <td style={{ border: '1px solid #000', padding: '6px', height: '30px' }}>
-                            <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers[`t1q5_step_${i}`] || ''} onChange={(e) => setAnswers({ ...answers, [`t1q5_step_${i}`]: e.target.value })} />
+                            <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers[`t1q5_step_${i}`] || ''} onChange={(e) => setAnswers({ ...answers, [`t1q5_step_${i}`]: e.target.value })} />
                             <span className="hidden print:inline-block">{answers[`t1q5_step_${i}`]}</span>
                           </td>
                           <td style={{ border: '1px solid #000', padding: '6px' }} colSpan={2}>
-                            <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers[`t1q5_hazard_${i}`] || ''} onChange={(e) => setAnswers({ ...answers, [`t1q5_hazard_${i}`]: e.target.value })} />
+                            <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers[`t1q5_hazard_${i}`] || ''} onChange={(e) => setAnswers({ ...answers, [`t1q5_hazard_${i}`]: e.target.value })} />
                             <span className="hidden print:inline-block">{answers[`t1q5_hazard_${i}`]}</span>
                           </td>
                           <td style={{ border: '1px solid #000', padding: '6px' }}>
-                            <input className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers[`t1q5_action_${i}`] || ''} onChange={(e) => setAnswers({ ...answers, [`t1q5_action_${i}`]: e.target.value })} />
+                            <input required={isStudent} className="no-print" style={{ width: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif' }} value={answers[`t1q5_action_${i}`] || ''} onChange={(e) => setAnswers({ ...answers, [`t1q5_action_${i}`]: e.target.value })} />
                             <span className="hidden print:inline-block">{answers[`t1q5_action_${i}`]}</span>
                           </td>
                         </tr>
@@ -1098,7 +1098,7 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
                     <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))}</div>
                   </div>
                 </div>
@@ -1339,14 +1339,14 @@ export const Q10Booklet: React.FC<Q10BookletProps> = ({ answers, setAnswers, onS
         <div style={{ border: '1px solid #000', padding: '12px', marginBottom: '16px', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt' }}>
           <p style={{ fontWeight: 'bold', margin: '0 0 4px 0' }}>A specific safety hazard on a typical cabling worksite</p>
           <p style={{ fontWeight: 'bold', margin: '0 0 8px 0' }}>Page: 50-53 from the reading material</p>
-          <textarea className="no-print" style={{ width: '100%', minHeight: '60px', border: '1px dashed #ccc', outline: 'none', background: 'transparent' }} value={answers.t2q1_safety_hazard || ''} onChange={(e) => setAnswers({ ...answers, t2q1_safety_hazard: e.target.value })} />
+          <textarea required={isStudent} className="no-print" style={{ width: '100%', minHeight: '60px', border: '1px dashed #ccc', outline: 'none', background: 'transparent' }} value={answers.t2q1_safety_hazard || ''} onChange={(e) => setAnswers({ ...answers, t2q1_safety_hazard: e.target.value })} />
           <div className="hidden print:block" style={{ minHeight: '60px', whiteSpace: 'pre-wrap' }}>{answers.t2q1_safety_hazard}</div>
 
           <div style={{ height: '24px' }}></div>
 
           <p style={{ fontWeight: 'bold', margin: '0 0 4px 0' }}>A specific environment hazard on a cabling worksite</p>
           <p style={{ fontWeight: 'bold', margin: '0 0 8px 0' }}>Page: 54 from the reading material</p>
-          <textarea className="no-print" style={{ width: '100%', minHeight: '60px', border: '1px dashed #ccc', outline: 'none', background: 'transparent' }} value={answers.t2q1_env_hazard || ''} onChange={(e) => setAnswers({ ...answers, t2q1_env_hazard: e.target.value })} />
+          <textarea required={isStudent} className="no-print" style={{ width: '100%', minHeight: '60px', border: '1px dashed #ccc', outline: 'none', background: 'transparent' }} value={answers.t2q1_env_hazard || ''} onChange={(e) => setAnswers({ ...answers, t2q1_env_hazard: e.target.value })} />
           <div className="hidden print:block" style={{ minHeight: '60px', whiteSpace: 'pre-wrap' }}>{answers.t2q1_env_hazard}</div>
         </div>
 

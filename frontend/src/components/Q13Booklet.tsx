@@ -281,7 +281,7 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_decl_date || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} 
                       onChange={(e) => setAnswers({ ...answers, student_decl_date: e.target.value })} 
                       max={new Date().toISOString().split('T')[0]} />
@@ -451,13 +451,13 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
           <div className="pl-0 sm:pl-6 mt-2">
             {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
               <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                <input type="radio" checked={answers[opt.name || qKey] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })} className="mt-0.5" />
+                <input required={isStudent} type="radio" checked={answers[opt.name || qKey] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })} className="mt-0.5" />
                 <label>{opt.text}</label>
               </div>
             ))}
             {q.type === 'options' && q.options?.map((opt: any, oIdx: number) => (
               <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                <input type="radio" checked={answers[qKey] === opt.value} onChange={() => setAnswers({ ...answers, [qKey]: opt.value })} className="mt-0.5" />
+                <input required={isStudent} type="radio" checked={answers[qKey] === opt.value} onChange={() => setAnswers({ ...answers, [qKey]: opt.value })} className="mt-0.5" />
                 <label>{opt.text}</label>
               </div>
             ))}
@@ -487,7 +487,7 @@ export const Q13Booklet: React.FC<Q13BookletProps> = ({ answers, setAnswers, onS
                   {q.textInputs?.map((ti: any, tIdx: number) => (
                     <div key={`input-${tIdx}`} className="flex items-end gap-2 w-full">
                       <span className="font-bold font-serif text-[11pt]">{ti.placeholder}.</span>
-                      <input 
+                      <input required={isStudent}  
                         type="text" 
                         className="border-b-[1.5px] border-black flex-1 outline-none bg-transparent font-serif text-[10pt]" 
                         value={answers[ti.name] || ''} 

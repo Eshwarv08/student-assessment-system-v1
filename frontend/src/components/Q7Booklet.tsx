@@ -184,7 +184,7 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
       <div className={q.type === 'multipart_radio' ? '' : 'p-3 pl-4'}>
           {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
             <div key={oIdx} className="flex gap-2 mb-1 items-center">
-              <input type="radio" checked={answers[opt.name || `t${taskKey.replace('task', '')}q${q.id}`] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || `t${taskKey.replace('task', '')}q${q.id}`]: opt.value })} className="mt-0.5" />
+              <input required={isStudent} type="radio" checked={answers[opt.name || `t${taskKey.replace('task', '')}q${q.id}`] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || `t${taskKey.replace('task', '')}q${q.id}`]: opt.value })} className="mt-0.5" />
               <label>{opt.text}</label>
             </div>
           ))}
@@ -203,7 +203,7 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
             );
           })}
           {q.type === 'text' && (
-            <textarea className="w-full border border-gray-300 p-2 min-h-[80px] resize-y"
+            <textarea required={isStudent} className="w-full border border-gray-300 p-2 min-h-[80px] resize-y"
               value={answers[`t${taskKey.replace('task', '')}q${q.id}`] || ''}
               onChange={(e) => setAnswers({ ...answers, [`t${taskKey.replace('task', '')}q${q.id}`]: e.target.value })}
               placeholder="(No response)" />
@@ -246,9 +246,9 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
                         {part.options?.map((opt: any, oIdx: number) => (
                           <div key={oIdx} className="flex gap-2 mb-1 items-center">
                             {q.id === 5 ? (
-                              <input type="checkbox" className="mt-0.5 w-[14px] h-[14px] border-[1.5px] border-black" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: answers[part.name] === opt.value ? '' : opt.value })} />
+                              <input required={isStudent} type="checkbox" className="mt-0.5 w-[14px] h-[14px] border-[1.5px] border-black" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: answers[part.name] === opt.value ? '' : opt.value })} />
                             ) : (
-                              <input type="radio" className="mt-0.5" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: opt.value })} />
+                              <input required={isStudent} type="radio" className="mt-0.5" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: opt.value })} />
                             )}
                             <label className={q.id === 5 ? 'font-bold' : ''}>{opt.text}</label>
                           </div>
@@ -274,7 +274,7 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
                       <div className="mb-2">What can the soffit be used when installing coaxial cable? Choose 1 option:</div>
                       {part.options?.map((opt: any, oIdx: number) => (
                         <div key={oIdx} className="flex gap-2 mb-1 items-center">
-                          <input type="checkbox" className="mt-0.5 w-[14px] h-[14px] border-[1.5px] border-black" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: answers[part.name] === opt.value ? '' : opt.value })} />
+                          <input required={isStudent} type="checkbox" className="mt-0.5 w-[14px] h-[14px] border-[1.5px] border-black" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: answers[part.name] === opt.value ? '' : opt.value })} />
                           <label>{opt.text}</label>
                         </div>
                       ))}
@@ -287,7 +287,7 @@ export const Q7Booklet: React.FC<Q7BookletProps> = ({ answers, setAnswers, onSub
                     <div className="font-bold mb-1 whitespace-pre-wrap">{part.text}</div>
                     {part.options?.map((opt: any, oIdx: number) => (
                       <div key={oIdx} className="flex gap-2 mb-1">
-                        <input type="radio" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: opt.value })} />
+                        <input required={isStudent} type="radio" checked={answers[part.name] === opt.value} onChange={() => setAnswers({ ...answers, [part.name]: opt.value })} />
                         <label>{opt.text}</label>
                       </div>
                     ))}

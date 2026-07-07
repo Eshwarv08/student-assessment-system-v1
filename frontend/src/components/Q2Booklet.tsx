@@ -955,7 +955,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-2">
                   Date:
-                  <input
+                  <input required={isStudent} 
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
@@ -1504,7 +1504,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <input
+                  <input required={isStudent} 
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
@@ -1876,7 +1876,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <input
+                  <input required={isStudent} 
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
@@ -2194,7 +2194,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <input
+                  <input required={isStudent} 
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}
@@ -2322,7 +2322,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>1. &nbsp; What are the safety equipment required while working with optical fibre cables? (PC 1.1)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q1'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q1': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q1'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q1': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2359,7 +2359,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>2. &nbsp; List the three fibre optic installations. (PC 1.2)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '70px', height: '80px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q2'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q2': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q2'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q2': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2396,7 +2396,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>3. &nbsp; What are the precautions to be observed when handling optical fibre cable? (PC 1.3)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '120px', height: '140px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q3'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q3': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q3'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q3': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2461,6 +2461,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   const isSelected = (answers['t4q4'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't4q4': opt.val })}>
+                      <input type="radio" name="t4q4" required={isStudent} checked={answers['t4q4'] === opt.val || (answers['t4q4'] || '').toLowerCase() === opt.val || (answers['t4q4'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.val.toUpperCase()}. &nbsp; {opt.text}
                     </div>
@@ -2502,7 +2503,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>5. &nbsp; What is the significance of conducting a pre-installation test? (PC 1.5)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '60px', height: '70px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q5'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q5': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q5'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q5': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2557,10 +2558,10 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
               <td style={{ border: '1px solid #777', padding: '8px 12px', width: '50%', verticalAlign: 'top' }}>
                 <div className="text-xs font-bold text-slate-500 mb-1">Student Matches:</div>
                 <div className="space-y-1 text-red-600 font-bold text-xs italic">
-                  <div className="flex items-center gap-1">S/M 9/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_a'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_a': e.target.value })} /> microns</div>
-                  <div className="flex items-center gap-1">S/M 10/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_b'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_b': e.target.value })} /> microns</div>
-                  <div className="flex items-center gap-1">M/M 50/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_c'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_c': e.target.value })} /> microns</div>
-                  <div className="flex items-center gap-1">M/M 62.5/125: <input className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_d'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_d': e.target.value })} /> microns</div>
+                  <div className="flex items-center gap-1">S/M 9/125: <input required={isStudent} className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_a'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_a': e.target.value })} /> microns</div>
+                  <div className="flex items-center gap-1">S/M 10/125: <input required={isStudent} className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_b'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_b': e.target.value })} /> microns</div>
+                  <div className="flex items-center gap-1">M/M 50/125: <input required={isStudent} className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_c'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_c': e.target.value })} /> microns</div>
+                  <div className="flex items-center gap-1">M/M 62.5/125: <input required={isStudent} className="w-16 bg-transparent border-b border-gray-400 outline-none text-center" value={answers['t4q6_d'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q6_d': e.target.value })} /> microns</div>
                 </div>
               </td>
             </tr>
@@ -2598,7 +2599,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>7. &nbsp; Mention the steps involved in aerial installation (PC 3.2)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '100px', height: '110px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q7'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q7': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q7'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q7': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2635,7 +2636,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             <tr><td style={{ border: '1px solid #777', padding: '6px 10px', fontSize: '9.5pt', fontWeight: 'bold', background: '#f5f5f5' }}>8. &nbsp; Name the types of connectors used in connecting ends of optical fibres. (pc 3.2)</td></tr>
             <tr>
               <td style={{ border: '1px solid #777', minHeight: '60px', height: '70px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q8'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q8': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q8'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q8': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2700,6 +2701,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                   const isSelected = (answers['t4q9'] || '').toLowerCase() === opt.val;
                   return (
                     <div key={opt.val} className={`choice-item ${isSelected ? 'font-bold text-red-600' : ''} cursor-pointer hover:opacity-80`} style={{ marginTop: '3px' }} onClick={() => setAnswers({ ...answers, 't4q9': opt.val })}>
+                      <input type="radio" name="t4q9" required={isStudent} checked={answers['t4q9'] === opt.val || (answers['t4q9'] || '').toLowerCase() === opt.val || (answers['t4q9'] || '').toLowerCase() === String(opt.val).toLowerCase()} onChange={()=>{}} className="hidden-validation-radio" style={{ opacity: 0, position: 'absolute', width: '1px', height: '1px', pointerEvents: 'none' }} />
                       <span className={`cb ${isSelected ? 'checked' : ''}`} style={{ marginRight: '6px' }}></span>
                       {opt.text}
                     </div>
@@ -2747,7 +2749,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
             </tr>
             <tr>
               <td colSpan={2} style={{ border: '1px solid #777', minHeight: '60px', height: '70px', padding: '10px 12px', verticalAlign: 'top', color: '#cc0000', fontStyle: 'italic', fontWeight: 'bold', whiteSpace: 'pre-wrap' }}>
-                <textarea className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q10'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q10': e.target.value })} placeholder="No answer provided" />
+                <textarea required={isStudent} className="w-full bg-transparent outline-none resize-y min-h-[60px]" style={{ color: 'inherit', font: 'inherit' }} value={answers['t4q10'] || ''} onChange={(e) => setAnswers({ ...answers, 't4q10': e.target.value })} placeholder="No answer provided" />
               </td>
             </tr>
             <tr>
@@ -2803,7 +2805,7 @@ export const Q2Booklet: React.FC<Q2BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div className="mt-1">
                   Date:
-                  <input
+                  <input required={isStudent} 
                     type="date"
                     className="no-print border-b border-dashed border-gray-400 outline-none text-slate-800 bg-transparent px-1 cursor-pointer text-xs ml-1 font-bold"
                     value={answers['st-date'] || (submission?.submitted_at ? submission.submitted_at.split('T')[0] : '')}

@@ -138,7 +138,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', fontWeight: 'bold' }} />
+                  <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', fontWeight: 'bold' }} />
                   <div className="hidden print:block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '20px', paddingLeft: '4px', fontWeight: 'bold' }}>{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))}</div>
                 </div>
               </div>
@@ -258,11 +258,11 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
           <div className="flex gap-2 font-bold mb-2 text-[10pt]"><span>{q.id}.</span><span className="whitespace-pre-wrap">{q.text}</span></div>
           <div className="pl-0 mt-2">
             {q.type === 'text' && (
-              <textarea className="w-full border border-gray-300 p-2 min-h-[80px] resize-y" value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} placeholder="(No response)" />
+              <textarea required={isStudent} className="w-full border border-gray-300 p-2 min-h-[80px] resize-y" value={answers[qKey] || ''} onChange={(e) => setAnswers({ ...answers, [qKey]: e.target.value })} placeholder="(No response)" />
             )}
             {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
               <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                <input type="radio" checked={answers[opt.name || qKey] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })} />
+                <input required={isStudent} type="radio" checked={answers[opt.name || qKey] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })} />
                 <label>{opt.text}</label>
               </div>
             ))}
@@ -283,7 +283,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
             {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tIdx: number) => (
               <div key={tIdx} className="mb-3 border border-gray-200 p-2">
                 {ti.image && <img src={ti.image} className="max-w-[200px] mb-2" alt="Diagram" />}
-                <input type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
+                <input required={isStudent} type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({ ...answers, [ti.name]: e.target.value })} />
               </div>
             ))}
           </div>
@@ -677,7 +677,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
                     <div className="hidden print:block border-b-[1.5px] border-[#888] flex-1 text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))}</div>
                   </div>
                 </div>
@@ -1070,7 +1070,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task1 !== undefined ? compRecord.student_sig_date_task1 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task1 !== undefined ? compRecord.student_sig_date_task1 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
                     <div className="hidden print:block border-b border-[#888] w-[120px] text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task1 !== undefined ? compRecord.student_sig_date_task1 : (submitDate || '')))}</div>
                   </div>
                 </div>
@@ -1326,7 +1326,7 @@ export const Q9Booklet: React.FC<Q9BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ minWidth: '60px' }}>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task2 !== undefined ? compRecord.student_sig_date_task2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
+                    <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task2 !== undefined ? compRecord.student_sig_date_task2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ width: '120px', border: 'none', borderBottom: '1px solid #888', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', color: '#1e3a8a', fontWeight: 'bold', cursor: 'pointer' }} />
                     <div className="hidden print:block border-b border-[#888] w-[120px] text-[#1e3a8a] font-bold text-center min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_task2 !== undefined ? compRecord.student_sig_date_task2 : (submitDate || '')))}</div>
                   </div>
                 </div>

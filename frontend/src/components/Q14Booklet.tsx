@@ -197,7 +197,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '24px', position: 'relative' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                       value={answers.student_decl_date || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} 
                       onChange={(e) => setAnswers({ ...answers, student_decl_date: e.target.value })} 
                       max={new Date().toISOString().split('T')[0]} />
@@ -341,7 +341,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
           <div className="pl-0 sm:pl-6 mt-2">
             {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
               <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                <input type="radio" checked={answers[opt.name || qKey] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })} className="mt-0.5" />
+                <input required={isStudent} type="radio" checked={answers[opt.name || qKey] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || qKey]: opt.value })} className="mt-0.5" />
                 <label>{opt.text}</label>
               </div>
             ))}
@@ -363,7 +363,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               } else {
                  return (
                    <div key={oIdx} className="flex gap-2 mb-2 items-center">
-                     <input type="radio" checked={answers[qKey] === opt.value} onChange={() => setAnswers({ ...answers, [qKey]: opt.value })} className="mt-0.5" />
+                     <input required={isStudent} type="radio" checked={answers[qKey] === opt.value} onChange={() => setAnswers({ ...answers, [qKey]: opt.value })} className="mt-0.5" />
                      <label>{opt.text}</label>
                    </div>
                  );
@@ -380,7 +380,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
             {q.type === 'text_inputs' && q.textInputs?.map((ti: any, tIdx: number) => (
               <div key={tIdx} className="mb-4 border border-gray-200 p-2">
                 {ti.image && <img src={ti.image} className="max-w-[200px] mb-2" alt="Diagram" />}
-                <input type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({...answers, [ti.name]: e.target.value})} />
+                <input required={isStudent} type="text" className="border-b border-black w-full outline-none p-1 bg-transparent" placeholder={ti.placeholder} value={answers[ti.name] || ''} onChange={(e) => setAnswers({...answers, [ti.name]: e.target.value})} />
               </div>
             ))}
           </div>
@@ -738,7 +738,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', flex: 1, display: 'inline-block', height: '20px', position: 'relative' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
+                      <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: '"Times New Roman", Times, serif', fontSize: '10pt', margin: 0, padding: '0 0 0 4px', cursor: 'pointer' }}
                         value={answers.student_decl_date || (submitDate ? new Date(submitDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0])} 
                         onChange={(e) => setAnswers({ ...answers, student_decl_date: e.target.value })}   max={new Date().toISOString().split('T')[0]} />
                     </span>
@@ -934,7 +934,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <label style={{ display: 'flex', gap: '8px', cursor: 'pointer', alignItems: 'flex-start' }}>
-                    <div className="no-print" style={{ marginTop: '2px' }}><input type="checkbox" checked={answers['t1_q3'] === 'a'} onChange={() => setAnswers({...answers, t1_q3: 'a'})} /></div>
+                    <div className="no-print" style={{ marginTop: '2px' }}><input required={isStudent} type="checkbox" checked={answers['t1_q3'] === 'a'} onChange={() => setAnswers({...answers, t1_q3: 'a'})} /></div>
                     <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', justifyContent: 'center', alignItems: 'center' }}>{answers['t1_q3'] === 'a' && <div style={{ width: '8px', height: '8px', background: '#000' }}></div>}</div>
                     <div style={{ lineHeight: '1.3' }}>
                       Handling lead- in cables<br/>
@@ -946,7 +946,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                     </div>
                   </label>
                   <label style={{ display: 'flex', gap: '8px', cursor: 'pointer', alignItems: 'flex-start' }}>
-                    <div className="no-print" style={{ marginTop: '2px' }}><input type="checkbox" checked={answers['t1_q3'] === 'e'} onChange={() => setAnswers({...answers, t1_q3: 'e'})} /></div>
+                    <div className="no-print" style={{ marginTop: '2px' }}><input required={isStudent} type="checkbox" checked={answers['t1_q3'] === 'e'} onChange={() => setAnswers({...answers, t1_q3: 'e'})} /></div>
                     <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', justifyContent: 'center', alignItems: 'center' }}>{answers['t1_q3'] === 'e' && <div style={{ width: '8px', height: '8px', background: '#000' }}></div>}</div>
                     <div style={{ lineHeight: '1.3' }}>
                       Identifying cabling products<br/>
@@ -962,7 +962,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
               <td style={{ border: '1.5px solid black', padding: '8px', verticalAlign: 'top' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <label style={{ display: 'flex', gap: '8px', cursor: 'pointer', alignItems: 'flex-start' }}>
-                    <div className="no-print" style={{ marginTop: '2px' }}><input type="checkbox" checked={answers['t1_q4'] === 'a'} onChange={() => setAnswers({...answers, t1_q4: 'a'})} /></div>
+                    <div className="no-print" style={{ marginTop: '2px' }}><input required={isStudent} type="checkbox" checked={answers['t1_q4'] === 'a'} onChange={() => setAnswers({...answers, t1_q4: 'a'})} /></div>
                     <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', justifyContent: 'center', alignItems: 'center' }}>{answers['t1_q4'] === 'a' && <div style={{ width: '8px', height: '8px', background: '#000' }}></div>}</div>
                     <div style={{ lineHeight: '1.3' }}>
                       Handling lead- in cables<br/>
@@ -974,7 +974,7 @@ export const Q14Booklet: React.FC<Q14BookletProps> = ({ answers, setAnswers, onS
                     </div>
                   </label>
                   <label style={{ display: 'flex', gap: '8px', cursor: 'pointer', alignItems: 'flex-start' }}>
-                    <div className="no-print" style={{ marginTop: '2px' }}><input type="checkbox" checked={answers['t1_q4'] === 'e'} onChange={() => setAnswers({...answers, t1_q4: 'e'})} /></div>
+                    <div className="no-print" style={{ marginTop: '2px' }}><input required={isStudent} type="checkbox" checked={answers['t1_q4'] === 'e'} onChange={() => setAnswers({...answers, t1_q4: 'e'})} /></div>
                     <div className="hidden print:flex" style={{ width: '14px', height: '14px', border: '1px solid #000', marginTop: '2px', justifyContent: 'center', alignItems: 'center' }}>{answers['t1_q4'] === 'e' && <div style={{ width: '8px', height: '8px', background: '#000' }}></div>}</div>
                     <div style={{ lineHeight: '1.3' }}>
                       Identifying cabling products<br/>

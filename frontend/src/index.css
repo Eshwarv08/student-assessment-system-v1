@@ -91,3 +91,27 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Student Validation Errors */
+.student-mode.show-errors input:invalid,
+.student-mode.show-errors textarea:invalid {
+  border: 2px solid #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.05) !important;
+  outline: none;
+}
+
+.student-mode.show-errors input[type="radio"]:invalid {
+  outline: 2px solid #ef4444 !important;
+  outline-offset: 1px;
+}
+
+/* Custom Radio Validation Errors */
+.student-mode.show-errors input.hidden-validation-radio:invalid + span.cb {
+  border: 2px solid #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+/* Also handle case where we use checkboxes disguised as radio */
+.student-mode.show-errors input.hidden-validation-checkbox:invalid + span.cb-sq {
+  border: 2px solid #ef4444 !important;
+}

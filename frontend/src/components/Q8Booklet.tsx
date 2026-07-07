@@ -137,7 +137,7 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
-                  <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer' }} />
+                  <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1px solid black', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer' }} />
                   <div className="hidden print:block" style={{ borderBottom: '1px solid black', flex: 1, height: '20px', paddingLeft: '4px' }}>{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord[`${taskKey}_student_date`] !== undefined ? compRecord[`${taskKey}_student_date`] : (submitDate || '')))}</div>
                 </div>
               </div>
@@ -249,7 +249,7 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
         <div style={{ padding: '0', background: '#fff' }}>
             {q.type === 'text' && (
               <>
-                <textarea className="no-print" value={answers[qKey] || ''} onChange={(e) => isStudent && setAnswers({ ...answers, [qKey]: e.target.value })} disabled={!isStudent} style={{ width: '100%', minHeight: '100px', border: 'none', background: 'transparent', outline: 'none', padding: '8px', fontSize: '10pt', resize: 'vertical' }} />
+                <textarea required={isStudent} className="no-print" value={answers[qKey] || ''} onChange={(e) => isStudent && setAnswers({ ...answers, [qKey]: e.target.value })} disabled={!isStudent} style={{ width: '100%', minHeight: '100px', border: 'none', background: 'transparent', outline: 'none', padding: '8px', fontSize: '10pt', resize: 'vertical' }} />
                 <div className="hidden print:block" style={{ padding: '8px', minHeight: '100px', whiteSpace: 'pre-wrap', fontSize: '10pt' }}>{answers[qKey]}</div>
               </>
             )}
@@ -259,7 +259,7 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
                 {q.textInputs?.map((ti: any, tIdx: number) => (
                   <div key={tIdx} style={{ marginBottom: '8px', fontSize: '10pt', display: 'flex' }}>
                     <span style={{ marginRight: '4px' }}>{ti.placeholder}</span>
-                    <input type="text" className="no-print" value={answers[ti.name] || ''} onChange={(e) => isStudent && setAnswers({ ...answers, [ti.name]: e.target.value })} disabled={!isStudent} style={{ border: 'none', outline: 'none', background: 'transparent', flex: 1 }} />
+                    <input required={isStudent} type="text" className="no-print" value={answers[ti.name] || ''} onChange={(e) => isStudent && setAnswers({ ...answers, [ti.name]: e.target.value })} disabled={!isStudent} style={{ border: 'none', outline: 'none', background: 'transparent', flex: 1 }} />
                     <div className="hidden print:block">{answers[ti.name] || ''}</div>
                   </div>
                 ))}
@@ -267,7 +267,7 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
             )}
             {q.type !== 'text' && q.type !== 'text_inputs' && (
               <div style={{ padding: '8px' }}>
-                <textarea className="no-print" value={answers[qKey] || ''} onChange={(e) => isStudent && setAnswers({ ...answers, [qKey]: e.target.value })} disabled={!isStudent} style={{ width: '100%', minHeight: '80px', border: 'none', background: 'transparent', outline: 'none', fontSize: '10pt', resize: 'vertical' }} />
+                <textarea required={isStudent} className="no-print" value={answers[qKey] || ''} onChange={(e) => isStudent && setAnswers({ ...answers, [qKey]: e.target.value })} disabled={!isStudent} style={{ width: '100%', minHeight: '80px', border: 'none', background: 'transparent', outline: 'none', fontSize: '10pt', resize: 'vertical' }} />
               </div>
             )}
         </div>
@@ -631,7 +631,7 @@ export const Q8Booklet: React.FC<Q8BookletProps> = ({ answers, setAnswers, onSub
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span>Date:</span>
-                    <input type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px dotted #aaa', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer' }} />
+                    <input required={isStudent} type="date" className="no-print" value={toDateInputValue(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} style={{ flex: 1, border: 'none', borderBottom: '1.5px dotted #aaa', background: 'transparent', outline: 'none', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer' }} />
                     <span className="hidden print:block border-b-[1.5px] border-dotted border-[#aaa] flex-1 min-h-[20px]">{formatDisplayDate(answers.student_date !== undefined ? answers.student_date : (compRecord.student_sig_date_page2 !== undefined ? compRecord.student_sig_date_page2 : (submitDate || '')))}</span>
                   </div>
                 </div>

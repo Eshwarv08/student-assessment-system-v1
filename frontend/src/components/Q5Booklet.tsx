@@ -129,7 +129,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Date:</span>
                   <span className="no-print" style={{ borderBottom: '1.5px solid black', flex: 1, display: 'inline-block', height: '30px', paddingLeft: '4px' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'pointer' : 'default' }} className={!isStudent ? 'pointer-events-none' : ''}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'pointer' : 'default' }} className={!isStudent ? 'pointer-events-none' : ''}
                       value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1.5px solid black', flex: 1, height: '30px', paddingLeft: '4px', fontWeight: 'bold' }}>
@@ -222,7 +222,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
         <td colSpan={3} style={{ padding: '8px 12px', minHeight: '120px', border: '1px solid #000', borderTop: 'none' }}>
           {q.type === 'radio' && q.options?.map((opt: any, oIdx: number) => (
             <div key={oIdx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
-              <input type="radio" checked={answers[opt.name || `t1q${q.id}`] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || `t1q${q.id}`]: opt.value })} />
+              <input required={isStudent} type="radio" checked={answers[opt.name || `t1q${q.id}`] === opt.value} onChange={() => setAnswers({ ...answers, [opt.name || `t1q${q.id}`]: opt.value })} />
               <label>{opt.text}</label>
             </div>
           ))}
@@ -707,7 +707,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                 <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                   <span>Date: </span>
                   <span className="no-print" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
-                    <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
+                    <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
                       value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                   </span>
                   <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '120px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
@@ -1141,7 +1141,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
+                      <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
                         value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
@@ -1223,8 +1223,8 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
               </tr>
             </thead>
             <tbody>
-              <tr><td style={{ border: '1px solid #000', padding: '6px' }}>Pressure Dome test</td><td style={{ border: '1px solid #000', padding: '6px' }}><input type="text" style={{ width: '100%', border: 'none', outline: 'none', background: 'transparent' }} value={answers.task3_test1 || ''} onChange={e => setAnswers({ ...answers, task3_test1: e.target.value })} /></td></tr>
-              <tr><td style={{ border: '1px solid #000', padding: '6px' }}>Air leakage test</td><td style={{ border: '1px solid #000', padding: '6px' }}><input type="text" style={{ width: '100%', border: 'none', outline: 'none', background: 'transparent' }} value={answers.task3_test2 || ''} onChange={e => setAnswers({ ...answers, task3_test2: e.target.value })} /></td></tr>
+              <tr><td style={{ border: '1px solid #000', padding: '6px' }}>Pressure Dome test</td><td style={{ border: '1px solid #000', padding: '6px' }}><input required={isStudent} type="text" style={{ width: '100%', border: 'none', outline: 'none', background: 'transparent' }} value={answers.task3_test1 || ''} onChange={e => setAnswers({ ...answers, task3_test1: e.target.value })} /></td></tr>
+              <tr><td style={{ border: '1px solid #000', padding: '6px' }}>Air leakage test</td><td style={{ border: '1px solid #000', padding: '6px' }}><input required={isStudent} type="text" style={{ width: '100%', border: 'none', outline: 'none', background: 'transparent' }} value={answers.task3_test2 || ''} onChange={e => setAnswers({ ...answers, task3_test2: e.target.value })} /></td></tr>
             </tbody>
           </table>
 
@@ -1239,7 +1239,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
               {["Wire cutter", "Wire striper", "Pair compression tool", "Jointing Jig", "Pressure dome kit"].map((tool, idx) => (
                 <tr key={idx}>
                   <td style={{ border: '1px solid #000', padding: '6px' }}>{tool}</td>
-                  <td style={{ border: '1px solid #000', padding: '6px' }}><input type="text" style={{ width: '100%', border: 'none', outline: 'none', background: 'transparent' }} value={answers[`task3_tool_${idx}`] || ''} onChange={e => setAnswers({ ...answers, [`task3_tool_${idx}`]: e.target.value })} /></td>
+                  <td style={{ border: '1px solid #000', padding: '6px' }}><input required={isStudent} type="text" style={{ width: '100%', border: 'none', outline: 'none', background: 'transparent' }} value={answers[`task3_tool_${idx}`] || ''} onChange={e => setAnswers({ ...answers, [`task3_tool_${idx}`]: e.target.value })} /></td>
                 </tr>
               ))}
             </tbody>
@@ -1283,7 +1283,7 @@ export const Q5Booklet: React.FC<Q5BookletProps> = ({ answers, setAnswers, onSub
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span>Date:</span>
                     <span className="no-print" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center', display: 'inline-block' }}>
-                      <input type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
+                      <input required={isStudent}  type="date" style={{ width: '100%', height: '100%', outline: 'none', border: 'none', background: 'transparent', fontFamily: "'Times New Roman', serif", fontSize: '10pt', margin: 0, padding: 0, cursor: isStudent ? 'default' : 'pointer' }}
                         value={answers.student_date || submitDate?.split('T')[0] || ''} onChange={(e) => setAnswers({ ...answers, student_date: e.target.value })} />
                     </span>
                     <span className="hidden print:inline-block" style={{ borderBottom: '1px solid #000', width: '100px', minHeight: '30px', marginLeft: '4px', textAlign: 'center' }}>
