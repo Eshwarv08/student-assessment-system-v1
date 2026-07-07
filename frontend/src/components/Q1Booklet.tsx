@@ -225,6 +225,36 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
           margin: 0 !important; padding: 12mm 14mm !important; box-shadow: none !important; border: none !important;
         }
       }
+      @media screen and (max-width: 800px) {
+        .q1-booklet-view { padding: 10px; overflow-x: hidden; width: 100%; max-width: 100vw; box-sizing: border-box; }
+        .q1-booklet-view .page {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-height: auto !important;
+          margin: 0 auto 15px auto !important;
+          padding: 10px !important;
+          box-sizing: border-box !important;
+        }
+        .q1-booklet-view table {
+          display: block !important;
+          width: 100% !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch;
+        }
+        .q1-booklet-view .flex, .q1-booklet-view div[style*="display: flex"] {
+          flex-wrap: wrap;
+        }
+        .q1-booklet-view .cover-title {
+          font-size: 28pt !important;
+        }
+        .q1-booklet-view .cover-subtitle {
+          font-size: 16pt !important;
+        }
+        .q1-booklet-view img {
+          max-width: 100%;
+          height: auto;
+        }
+      }
   `;
 
   return (
@@ -343,15 +373,15 @@ export const Q1Booklet: React.FC<Q1BookletProps> = ({ answers, setAnswers, onSub
                   <img src="/assets/acta-logo.png" alt="ACTA Logo" style={{ width: 'auto', height: '180px', objectFit: 'contain', marginBottom: '2mm', marginTop: '8mm' }} />
                   <div style={{ color: '#8b0000', fontSize: '10.5pt', fontWeight: 'bold', fontFamily: 'Arial, sans-serif', marginBottom: '8mm' }}>RTO NO: 40954</div>
                   
-                  <div style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '6mm', letterSpacing: '1px' }}>Assessment Booklet</div>
+                  <div className="cover-title" style={{ fontSize: '42pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '6mm', letterSpacing: '1px' }}>Assessment Booklet</div>
                   
                   <div style={{ background: '#8ba8d4', height: '14px', width: '100%', marginBottom: '8mm' }}></div>
                   
-                  <div style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm' }}>
+                  <div className="cover-subtitle" style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', marginBottom: '4mm' }}>
                     ICTCBL246&ICTCBL247
                   </div>
                   
-                  <div style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm', padding: '0 5mm' }}>
+                  <div className="cover-subtitle" style={{ fontSize: '20pt', fontWeight: 'bold', fontFamily: '"Times New Roman", Times, serif', color: '#000', lineHeight: 1.35, marginBottom: '25mm', padding: '0 5mm' }}>
                     Install, Maintain and Modify Customer<br />Premises Communications Cabling:<br />ACMA Restricted Rule & Open Rule
                   </div>
                   
